@@ -133,18 +133,72 @@
   function enhanceRegisterTooltips(html) {
     if (!html || typeof html !== 'string') return html;
     if (!registerLookup || Object.keys(registerLookup).length === 0) return html;
+
     // Phân tách cả thẻ HTML và các khối KaTeX $...$, $$...$$ để bảo toàn cú pháp
     const parts = html.split(/(<[^>]+>|\$\$[\s\S]*?\$\$|\$[^\$]+?\$)/g);
-    const regex = /\b(x[0-9]|x[12][0-9]|x3[01]|zero|ra|sp|gp|tp|t[0-6]|s[0-9]|s1[01]|a[0-7]|fp)\b/g;
+    const regex = /\b(?:x[0-9]|x[12][0-9]|x3[01]|zero|ra|sp|gp|tp|t[0-6]|s[0-9]|s1[01]|a[0-7]|fp)\b/g;
+
+    let inCode = false;
+
     return parts.map((part, idx) => {
-      // Chỉ thay thế trên các đoạn văn bản thuần ngoài thẻ và ngoài công thức KaTeX
-      if (idx % 2 === 0) {
-        return part.replace(regex, (match) => {
-          const info = registerLookup[match];
-          return info ? `<span class="reg-tip" data-reg="${match}">${match}</span>` : match;
-        });
+      // Nếu là thẻ HTML hoặc khối công thức KaTeX
+      if (idx % 2 === 1) {
+        if (/^<\s*(code|pre|kbd)\b/i.test(part)) {
+          inCode = true;
+        } else if (/^<\/\s*(code|pre|kbd)\s*>/i.test(part)) {
+          inCode = false;
+        }
+        return part;
       }
-      return part;
+
+      // Đoạn văn bản thuần
+      return part.replace(regex, (match, offset) => {
+        const info = registerLookup[match];
+        if (!info) return match;
+
+        // Đặc biệt xử lý từ "ra" để tránh nhầm lẫn với từ tiếng Việt thông thường (vào-ra, chỉ ra, xảy ra, ra ngoài...)
+        if (match.toLowerCase() === 'ra') {
+          const before = part.slice(0, offset);
+          const after = part.slice(offset + match.length);
+
+          // 1. Luôn loại trừ nếu có gạch nối hoặc gạch chéo: vào-ra, -ra, /ra, ra-
+          if (/[-–—/]\s*$/.test(before) || /^\s*[-–—/]/.test(after)) {
+            return match;
+          }
+
+          // 2. Loại trừ cụm từ tiếng Việt theo sau: ra ngoài, ra đời, ra ngăn xếp, ra RAM, ra cổng, ra âm, ra dương...
+          if (/^\s+(?:ngoài|đời|sao|lệnh|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|các|nhiều|màn|thiết|bộ\s+nhớ|cổng|khỏi|đây|đó|hơn|kém|nhất|kết\s+quả|đáp\s+án|ngăn\s+xếp|RAM|ngoại\s+vi|phần|vào|trước|sau|giây|bit|byte|âm|dương)\b/i.test(after)) {
+            return match;
+          }
+
+          // 3. Loại trừ nếu đi sau động từ tiếng Việt phổ biến (chỉ ra, tạo ra, xảy ra, đưa ra, xuất ra, sinh ra...)
+          if (/(?:vào|đầu|ngõ|chân|cổng|mô-đun|thiết\s+bị|chỉ|tạo|xảy|đưa|xuất|sinh|rút|viết|tìm|bỏ|phát|diễn|đi|lấy|đổi|tính|dịch|chuyển|cắt|chia|đặt|nhận|nhìn|bay|thải|mang|gây|bắn|hóa|nhớ|nghĩ|lộ|mở|bước|rơi|chảy|phun|trút|gửi|truyền|lưu|nhảy|suy|kết\s+luận)\s+$/i.test(before)) {
+            return match;
+          }
+
+          // 4. Nếu nằm trong thẻ <code> hoặc <pre>, luôn coi là thanh ghi/mã lệnh
+          if (inCode) {
+            return `<span class="reg-tip" data-reg="${match}">${match}</span>`;
+          }
+
+          // 5. Nếu ngoài thẻ code, CHỈ coi là thanh ghi khi có ngữ cảnh hợp ngữ rõ ràng:
+          const inParens = /\(\s*$/.test(before) && /^\s*\)/.test(after);
+          const withX1 = /x1\s*\(\s*$/i.test(before);
+          const withRegWord = /(?:thanh\s+ghi(?:\s+(?:số\s+)?(?:1|x1))?|register)\s+$/i.test(before);
+          const withAsmOp = /(?:jal|jalr|sw|lw|jr|mv)\s+$/i.test(before);
+          const withDollar = /\$\s*$/.test(before);
+          const inRegList = /(?:zero|x0|x1|[ast]\d)\s*,\s*$/i.test(before) || /^\s*,\s*(?:sp|x\d|[ast]\d)/i.test(after);
+
+          if (inParens || withX1 || withRegWord || withAsmOp || withDollar || inRegList) {
+            return `<span class="reg-tip" data-reg="${match}">${match}</span>`;
+          }
+
+          // Không thỏa mãn các điều kiện trên -> coi là từ tiếng Việt, không gắn tooltip
+          return match;
+        }
+
+        return `<span class="reg-tip" data-reg="${match}">${match}</span>`;
+      });
     }).join('');
   }
 
@@ -2246,6 +2300,7 @@
     jumpToGroup,
     startExam,
     getSectionQuestions,
-    getGroupQuestions
+    getGroupQuestions,
+    enhanceRegisterTooltips
   };
 })();
