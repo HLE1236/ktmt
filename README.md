@@ -1,71 +1,95 @@
-# KTMT Hub - Nền tảng Ôn luyện & Thi thử Kiến trúc máy tính (RISC-V)
+# Ôn tập Kiến trúc máy tính (KTMT - HUST)
 
-Ứng dụng web ôn tập trắc nghiệm, bài tập và lý thuyết môn **Kiến trúc máy tính** (Học phần IT3030, IT3034, IT3283 - Đại học Bách Khoa Hà Nội), bám sát 100% nội dung giáo trình `KTMT.pdf`.
-
----
-
-## 🚀 Tính năng nổi bật
-
-- **Ngân hàng 199 câu hỏi chuẩn hóa:** Phủ trọn vẹn 137 bài tập gốc (1.1–1.35, 2.1–2.25, 4.1–4.59, 5.1–5.18) và lý thuyết 4 chương.
-- **Chế độ Luyện tập linh hoạt:** Hỗ trợ cả **Trắc nghiệm 4 lựa chọn** (Kahoot/Quizizz) và **Tự điền đáp án** (daotao.ai).
-- **Giải thích chi tiết:** Từng bước giải thích rõ ràng, công thức toán KaTeX và trích dẫn số trang chính xác trong `KTMT.pdf`.
-- **4 Công cụ Mô phỏng & Tính toán KTMT:**
-  1. *Hiệu năng CPU & Cache:* Tính $T_0, t_{\text{CPU}}$, MIPS, CPI hiệu dụng có tính đến Cache Penalty.
-  2. *Little-Endian & Memory Banks:* Phân bố địa chỉ byte vào $K=4$ hoặc $K=8$ băng nhớ vật lý.
-  3. *Chuyển đổi số & Chuẩn IEEE 754 32-bit:* Phân rã trực quan Bit dấu ($S$), Mũ lệch ($e$) và Định trị ($m$).
-  4. *Dịch ngược mã máy RISC-V 32-bit:* Giải mã 6 định dạng (R, I, S, B, U, J) sang mã Assembly.
-- **Phòng Thi thử (Exam Mode):** Đề Giữa kỳ (25 câu / 30 phút) và Cuối kỳ (40 câu / 50 phút) với đồng hồ đếm ngược và chấm điểm tự động.
-- **Sổ tay câu sai (Mistake Notebook):** Tự động gom các câu làm sai và hỗ trợ luyện tập lại đến khi thành thạo.
-- **Thẻ ghi nhớ (Flashcards):** Ôn nhanh công thức và bảng 32 thanh ghi RISC-V với hiệu ứng lật thẻ 3D.
-- **Giao diện hiện đại & Local 100%:** Thiết kế tối giản Notion / daotao.ai, hỗ trợ Dark Mode / Light Mode, tích hợp xem tài liệu PDF gốc trực tiếp trong ứng dụng.
+Trang web ôn tập trắc nghiệm và bài tập môn Kiến trúc máy tính (mã học phần IT3030, IT3034, IT3283 - Bách Khoa). Toàn bộ lý thuyết, câu hỏi và bài tập đều được chia đúng theo từng mục và từng nhóm trong giáo trình `KTMT.pdf` để học đến đâu làm bài test đến đó cho tiện.
 
 ---
 
-## 📖 Hướng dẫn sử dụng
+## 1. Cách mở và chạy web
 
-### Cách 1: Mở trực tiếp (Không cần cài đặt)
-Nhấp đúp chuột vào file `index.html` để mở trực tiếp trên trình duyệt (Chrome, Edge, Brave, Firefox).
+Dự án này là web tĩnh thuần (HTML, CSS, JavaScript), không cần cài Node.js, không cần database hay backend gì cả. 
 
-### Cách 2: Chạy qua Local Web Server
+### Cách 1: Mở thẳng bằng trình duyệt (Nhanh nhất)
+1. Tải cả thư mục này về máy (hoặc dùng `git clone https://github.com/HLE1236/ktmt.git`).
+2. Nhấp đúp chuột vào file `index.html`.
+3. Trình duyệt (Chrome, Edge, Cốc Cốc, Firefox...) sẽ mở trang web lên và dùng được ngay.
+
+### Cách 2: Chạy qua Live Server (nếu dùng VS Code)
+- Mở thư mục này trong VS Code.
+- Cài extension **Live Server** (nếu chưa có).
+- Nhấp chuột phải vào file `index.html` chọn **Open with Live Server**.
+
+### Cách 3: Dùng Python (nếu máy có sẵn Python)
+Mở terminal tại thư mục này và gõ:
 ```bash
-# Khởi động web server bằng Python
-python -m http.server 8080
+python -m http.server 8000
 ```
-Sau đó truy cập: `http://localhost:8080` trên trình duyệt.
+Sau đó mở trình duyệt vào địa chỉ: `http://localhost:8000`.
 
-### ⌨️ Phím tắt thao tác nhanh
-- `1`, `2`, `3`, `4` hoặc `A`, `B`, `C`, `D`: Chọn đáp án tương ứng.
-- `Enter` hoặc `Phím mũi tên phải`: Chuyển sang câu tiếp theo.
-- `Phím mũi tên trái`: Quay lại câu trước.
-- `Phím Space`: Lật thẻ ghi nhớ (ở tab Flashcards).
+> **Dữ liệu lưu ở đâu?**  
+> Điểm số, lịch sử làm bài, danh sách câu sai và ghi chú cá nhân đều được lưu trực tiếp trên trình duyệt của bạn (LocalStorage). Tắt tab hoặc tắt máy bật lại vẫn còn nguyên, không sợ mất.
 
 ---
 
-## 📁 Cấu trúc thư mục
+## 2. Các phần chính trên web
 
-```
-├── index.html                   # Giao diện chính của ứng dụng
-├── KTMT.pdf                     # Giáo trình tham chiếu gốc (ĐHBK Hà Nội)
-├── README.md                    # Hướng dẫn sử dụng
-├── css/
-│   └── style.css                # Giao diện tối giản (Light / Dark mode)
-├── js/
-│   ├── data-theory.js           # Cẩm nang lý thuyết 4 chương & bảng 32 thanh ghi
-│   ├── data-questions-ch1-ch2.js # Ngân hàng câu hỏi Chương 1 & Chương 2
-│   ├── data-questions-ch3.js    # Ngân hàng câu hỏi Chương 3 (Tập lệnh RISC-V)
-│   ├── data-questions-ch4.js    # Ngân hàng câu hỏi Chương 4 (Số học máy tính)
-│   ├── data-questions.js        # Tổng hợp, chuẩn hóa và xáo trộn 199 câu hỏi
-│   ├── tools.js                 # Thuật toán 4 bộ công cụ tính toán
-│   └── app.js                   # Engine điều hướng, Luyện tập, Thi thử, LocalStorage
-└── tests/
-    └── run_all.js               # Bộ kiểm thử tự động toàn diện
-```
+### 📖 Lý thuyết
+- Chia thành 2 phần y hệt trong file `KTMT.pdf`:
+  - **Phần 1: Lý thuyết trọng tâm** (1.1.1 Khái niệm cơ bản, 1.1.2 Phân loại, 1.1.3 Kiến trúc Flynn, 1.1.4 Đánh giá hiệu năng).
+  - **Phần 2: Toàn bộ bài tập theo nhóm** (Nhóm 1 đến Nhóm 6...).
+- Dưới mỗi công thức tính toán đều có sẵn nút **"Luyện tập dạng này"** để làm thử ngay vài câu tương ứng.
+- Ở cuối mỗi mục (đặc biệt là mục 1.1.4 Hiệu năng) có nút **"Làm bài test toàn bộ phần này (39 câu)"** để kiểm tra lại toàn bộ kiến thức vừa học.
+
+### 🎯 Luyện tập
+- Làm từng câu trắc nghiệm theo từng chương hoặc theo từng nhóm bài tập.
+- Mỗi câu sau khi chọn đáp án sẽ hiện ngay lời giải chi tiết, chỉ rõ lỗi hay lừa trong đề và trích dẫn số trang trong file `KTMT.pdf` để tiện mở lại sách xem.
+- Có nút chuyển đổi giữa **Trắc nghiệm (chọn A/B/C/D)** và **Tự điền đáp án** (gõ số/chữ giống kiểu daotao.ai).
+- Trên đầu mỗi câu có nút **"Xem lý thuyết"** để nhảy nhanh về phần lý thuyết liên quan nếu quên kiến thức.
+
+### ⏱️ Phòng thi thử
+- Có sẵn 2 chế độ thi chuẩn:
+  - **Đề Giữa kỳ**: 25 câu làm trong 30 phút (gồm Chương 1 và Chương 2).
+  - **Đề Cuối kỳ**: 40 câu làm trong 50 phút (bao quát cả 4 chương).
+- **Test theo chuyên đề**: Có thể chọn thi riêng toàn bộ câu hỏi của 1 mục lý thuyết (như mục 1.1.4) hoặc thi riêng 1 nhóm bài tập cụ thể.
+- Có đồng hồ đếm ngược, bảng chọn câu (Palette) để xem câu nào làm rồi, câu nào chưa, có nút gắn cờ xem lại và nộp bài chấm thang điểm 10.
+
+### 📕 Sổ tay câu sai & Flashcards
+- **Sổ tay câu sai**: Câu nào bạn làm sai lúc luyện tập hoặc thi thử sẽ tự động được gom về đây để luyện lại cho nhớ.
+- **Flashcards**: Lật thẻ để ôn nhanh các công thức quan trọng và bảng tra cứu 32 thanh ghi của RISC-V (`x0`-`x31`, tên ABI, chức năng).
+
+### 🛠️ Công cụ hỗ trợ tính toán
+Gồm 4 công cụ nhỏ giúp tính nhanh khi làm bài tập:
+1. **Tính hiệu năng CPU**: Tính chu kỳ xung nhịp $T_0$, thời gian $t_{CPU}$, MIPS và CPI trung bình.
+2. **Mô phỏng phân bố bộ nhớ (Little-Endian)**: Nhập địa chỉ byte và số băng nhớ ($K=4$ hoặc $K=8$) để xem byte nằm ở băng nào và địa chỉ từ nhớ.
+3. **Chuyển đổi số thực IEEE 754 (32-bit)**: Nhập số thập phân bất kỳ, tool sẽ tách bit dấu ($S$), bit mũ ($E$) và phần định trị ($M$) kèm mã Hex.
+4. **Dịch ngược lệnh RISC-V**: Nhập mã hex 32-bit (ví dụ `0x00500093`), tool sẽ giải mã ra định dạng lệnh (R, I, S, B, U, J) và câu lệnh Assembly tương ứng.
 
 ---
 
-## 🧪 Kiểm thử tự động (Automated Tests)
+## 3. Phím tắt thao tác nhanh
 
-Chạy bộ kiểm thử tự động 370+ test cases để kiểm tra tính toàn vẹn hệ thống:
-```bash
-node tests/run_all.js
-```
+Khi đang làm bài ở mục **Luyện tập**:
+- Phím `1`, `2`, `3`, `4` hoặc `A`, `B`, `C`, `D`: Chọn đáp án.
+- Phím `Enter` hoặc `Mũi tên phải (→)`: Sang câu tiếp theo.
+- Phím `Mũi tên trái (←)`: Quay lại câu trước.
+
+Khi đang ở mục **Flashcards**:
+- Phím `Space` hoặc `Enter`: Lật mặt thẻ để xem đáp án.
+- Phím `Mũi tên phải (→)` / `Mũi tên trái (←)`: Chuyển thẻ tiếp theo hoặc thẻ trước.
+
+---
+
+## 4. Cấu trúc file trong thư mục
+
+- `index.html`: File giao diện chính, mở file này để học.
+- `KTMT.pdf`: File tài liệu giáo trình gốc để đối chiếu khi cần.
+- `css/style.css`: File định dạng giao diện (đã tối ưu màu tương phản dễ nhìn, có sẵn giao diện Sáng / Tối).
+- `js/`: Thư mục chứa dữ liệu câu hỏi và mã xử lý:
+  - `data-theory.js`: Tóm tắt lý thuyết 4 chương và liên kết bài tập.
+  - `data-questions-ch1-ch2.js`, `data-questions-ch3.js`, `data-questions-ch4.js`: Ngân hàng 199 câu hỏi trắc nghiệm chia theo từng chương.
+  - `tools.js`: Mã xử lý cho 4 bộ công cụ tính toán.
+  - `app.js`: Xử lý chuyển tab, đếm giờ, làm bài thi và lưu tiến độ học.
+- `tests/run_all.js`: File script test kiểm tra lỗi dữ liệu câu hỏi.
+
+---
+
+Chúc bạn ôn thi tốt và đạt điểm cao môn KTMT!
