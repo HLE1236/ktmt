@@ -1168,26 +1168,25 @@
     "pdfPage": 122,
     "printedPage": 121,
     "relatedTheoryId": "4.1.6",
-    "questionType": "multiple",
+    "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Cho số thực 32-bit theo chuẩn IEEE 754 viết theo hệ Hexa có 3 chữ số có ý nghĩa lớn nhất (bên trái) là <code>7F8</code>, phần còn lại chưa được biết. Khẳng định nào dưới đây có khả năng đúng? (Chọn các khả năng đúng)",
+    "question": "Cho số thực 32-bit theo chuẩn IEEE 754 viết theo hệ Hexa có 3 chữ số có ý nghĩa lớn nhất (bên trái) là <code>7F8</code>, phần còn lại chưa được biết. Khẳng định nào dưới đây có khả năng đúng?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "1. Số thực này biểu diễn giá trị dương xác định",
-      "2. Số thực này bằng 0",
-      "3. Số thực này biểu diễn NaN (Not a Number)",
-      "4. Số thực này biểu diễn vô cùng"
+      "Khẳng định 3 và 4 đều có khả năng đúng (NaN hoặc Vô cùng)",
+      "Khẳng định 1: Số thực này biểu diễn giá trị dương xác định",
+      "Khẳng định 2: Số thực này bằng 0",
+      "Chỉ khẳng định 1 và 2 có khả năng đúng"
     ],
-    "correctIndex": 2,
+    "correctIndex": 0,
     "correctIndices": [
-      2,
-      3
+      0
     ],
-    "explanation": "<ul><li><code>7F8</code> $= 0111\\;1111\\;1000_{(2)}$. Cả 8 bit trường mũ đều là 1 ($e = 255$).</li><li>Nếu 20 bit còn lại đều bằng 0 ($m = 0$) &rarr; Biểu diễn <strong>vô cùng ($+\\infty$)</strong>.</li><li>Nếu trong 20 bit còn lại có ít nhất 1 bit bằng 1 ($m \\neq 0$) &rarr; Biểu diễn <strong>NaN (Not a Number)</strong>.</li><li><strong>Đáp án đúng: Khẳng định 3 và 4 đều có khả năng đúng.</strong></li></ul>"
+    "explanation": "<ul><li><code>7F8</code> $= 0111\\;1111\\;1000_{(2)}$. Cả 8 bit trường mũ đều là 1 ($e = 255$).</li><li>Nếu 20 bit còn lại đều bằng 0 ($m = 0$) &rarr; Biểu diễn <strong>vô cùng ($+\\infty$)</strong>.</li><li>Nếu trong 20 bit còn lại có ít nhất 1 bit bằng 1 ($m \\neq 0$) &rarr; Biểu diễn <strong>NaN (Not a Number)</strong>.</li><li><strong>Đáp án đúng: Khẳng định 3 và 4 đều có khả năng đúng (NaN hoặc Vô cùng).</strong></li></ul>"
   },
   {
     "id": "c4-5.18b",

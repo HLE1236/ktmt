@@ -232,7 +232,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Theo nguyên lý hoạt động cơ bản của máy tính (mô hình von Neumann), mọi chương trình khi đang chạy (đang thực hiện) đều phải được nạp vào <strong>Bộ nhớ chính (Main Memory / RAM)</strong>.</li><li>Bộ nhớ ngoài (ổ cứng) chỉ lưu trữ phần mềm và dữ liệu khi chưa chạy. Cache và Tập thanh ghi chỉ lưu tạm một phần rất nhỏ dữ liệu/lệnh mà CPU đang dùng tức thời.</li><li><strong>Đáp án đúng: A (Bộ nhớ chính).</strong></li></ul>"
+    "explanation": "<ul><li>Theo nguyên lý hoạt động cơ bản của máy tính (mô hình von Neumann), mọi chương trình khi đang chạy (đang thực hiện) đều phải được nạp vào <strong>Bộ nhớ chính (Main Memory / RAM)</strong>.</li><li>Bộ nhớ ngoài (ổ cứng) chỉ lưu trữ phần mềm và dữ liệu khi chưa chạy. Cache và Tập thanh ghi chỉ lưu tạm một phần rất nhỏ dữ liệu/lệnh mà CPU đang dùng tức thời.</li><li><strong>Đáp án đúng: Bộ nhớ chính.</strong></li></ul>"
   },
   {
     "id": "c1-1.2",
@@ -265,7 +265,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Trong phân cấp bộ nhớ, Cache L1 nằm sát nhân CPU nhất nên có tốc độ nhanh nhất nhưng dung lượng nhỏ nhất (vài chục KB), tiếp theo là Cache L2 (vài trăm KB), rồi đến Cache L3 (vài MB đến vài chục MB).</li><li>Lớn hơn Cache là Bộ nhớ chính (RAM - vài GB đến vài chục GB), và lớn nhất là Bộ nhớ ngoài (SSD/HDD - hàng trăm GB đến hàng TB).</li><li><strong>Đáp án đúng: A (Cache L1 &lt; Cache L2 &lt; Cache L3 &lt; Bộ nhớ chính &lt; Bộ nhớ ngoài).</strong></li></ul>"
+    "explanation": "<ul><li>Trong phân cấp bộ nhớ, Cache L1 nằm sát nhân CPU nhất nên có tốc độ nhanh nhất nhưng dung lượng nhỏ nhất (vài chục KB), tiếp theo là Cache L2 (vài trăm KB), rồi đến Cache L3 (vài MB đến vài chục MB).</li><li>Lớn hơn Cache là Bộ nhớ chính (RAM - vài GB đến vài chục GB), và lớn nhất là Bộ nhớ ngoài (SSD/HDD - hàng trăm GB đến hàng TB).</li><li><strong>Đáp án đúng: Cache L1 &lt; Cache L2 &lt; Cache L3 &lt; Bộ nhớ chính &lt; Bộ nhớ ngoài.</strong></li></ul>"
   },
   {
     "id": "c1-1.3",
@@ -298,7 +298,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Ta kiểm tra từng phương án dựa trên nguyên tắc dung lượng $L1 < L2 < L3 < \\text{RAM} < \\text{SSD}$:</p><ul><li>Phương án B sai vì Cache L3 lên tới 16GB (quá lớn, ngang RAM) và RAM 2TB lớn hơn cả SSD 1TB.</li><li>Phương án C sai vì Cache L2 là 256GB (lớn hơn Cache L3 8MB và RAM 8GB).</li><li>Phương án D sai vì Cache L1 là 16MB (lớn hơn Cache L2 256KB).</li><li>Phương án A hoàn toàn hợp lý: 64KB &lt; 256KB &lt; 8MB &lt; 8GB &lt; 512GB.</li><li><strong>Đáp án đúng: A.</strong></li></ul>"
+    "explanation": "<p>Ta kiểm tra các cấu hình dựa trên nguyên tắc phân cấp dung lượng $L1 < L2 < L3 < \\text{RAM} < \\text{SSD}$:</p><ul><li>Cấu hình có Cache L3 lên tới 16GB (ngang RAM) và RAM 2TB (lớn hơn SSD 1TB) là không hợp lý.</li><li>Cấu hình có Cache L2 là 256GB (lớn hơn Cache L3 8MB và RAM 8GB) là sai quy tắc phân cấp.</li><li>Cấu hình có Cache L1 là 16MB (lớn hơn Cache L2 256KB) là sai quy tắc phân cấp.</li><li>Cấu hình hợp lý và chính xác: <strong>Cache L1: 64KB &lt; Cache L2: 256KB &lt; Cache L3: 8MB &lt; RAM: 8GB &lt; SSD: 512GB</strong>.</li><li><strong>Đáp án đúng: Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, RAM: 8GB, SSD: 512GB.</strong></li></ul>"
   },
   {
     "id": "c1-1.4",
@@ -331,7 +331,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Cẩn thận bẫy thứ tự liệt kê: ở câu này đề bài đưa thông số RAM lên đầu dòng để đánh lạc hướng.</li><li>Loại B vì Cache L3 = 16GB và RAM = 2TB. Loại C vì Cache L1 = 16MB &gt; Cache L2 = 256KB. Loại D vì Cache L2 = 256GB.</li><li><strong>Đáp án đúng: RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB.</strong></li></ul>"
+    "explanation": "<ul><li>Cẩn thận bẫy thứ tự liệt kê: ở câu này đề bài đưa thông số RAM lên đầu dòng để đánh lạc hướng.</li><li>Loại các cấu hình sai quy tắc phân cấp: Cache L3 = 16GB và RAM = 2TB; Cache L1 = 16MB &gt; Cache L2 = 256KB; Cache L2 = 256GB.</li><li>Cấu hình hợp lý thỏa mãn $L1 &lt; L2 &lt; L3 &lt; \\text{RAM} &lt; \\text{SSD}$: <strong>RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB</strong>.</li><li><strong>Đáp án đúng: RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB.</strong></li></ul>"
   },
   {
     "id": "c1-1.5",
@@ -1114,7 +1114,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1 – Tính $CPI$ trung bình:</strong><br>$$CPI_{\\text{TB}} = (0.40 \\times 1) + (0.35 \\times 3) + (0.25 \\times 5) = 0.4 + 1.05 + 1.25 = 2.7$$</li><li><strong>Bước 2 – Tính tổng thời gian thực thi $t_{\\text{CPU}}$:</strong><br>Biết $IC = 2\\text{ tỷ lệnh} = 2 \\times 10^9\\text{ lệnh}$ và $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$:<br>$$t_{\\text{CPU}} = \\frac{IC \\times CPI_{\\text{TB}}}{f_0} = \\frac{2 \\times 10^9 \\times 2.7}{4 \\times 10^9} = \\frac{5.4}{4} = 1.35\\text{ giây}$$</li></ol><p><strong>Đáp án đúng: C (1.35 giây).</strong></p>"
+    "explanation": "<ol><li><strong>Bước 1 – Tính $CPI$ trung bình:</strong><br>$$CPI_{\\text{TB}} = (0.40 \\times 1) + (0.35 \\times 3) + (0.25 \\times 5) = 0.4 + 1.05 + 1.25 = 2.7$$</li><li><strong>Bước 2 – Tính tổng thời gian thực thi $t_{\\text{CPU}}$:</strong><br>Biết $IC = 2\\text{ tỷ lệnh} = 2 \\times 10^9\\text{ lệnh}$ và $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$:<br>$$t_{\\text{CPU}} = \\frac{IC \\times CPI_{\\text{TB}}}{f_0} = \\frac{2 \\times 10^9 \\times 2.7}{4 \\times 10^9} = \\frac{5.4}{4} = 1.35\\text{ giây}$$</li></ol><p><strong>Đáp án đúng: 1.35 giây.</strong></p>"
   },
   {
     "id": "c1-1.23a",
@@ -1589,7 +1589,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Công thức: $n = t \\times f_0$; $IC = \\dfrac{n}{CPI}$.</p><ul><li><strong>P1:</strong> $n_1 = 10 \\times 2 \\times 10^9 = 20 \\times 10^9\\text{ chu kỳ}$; $IC_1 = \\dfrac{20 \\times 10^9}{1.5} \\approx 13.33 \\times 10^9\\text{ lệnh}$.</li><li><strong>P2:</strong> $n_2 = 10 \\times 1.5 \\times 10^9 = 15 \\times 10^9\\text{ chu kỳ}$; $IC_2 = \\dfrac{15 \\times 10^9}{1.0} = 15 \\times 10^9\\text{ lệnh}$.</li><li><strong>P3:</strong> $n_3 = 10 \\times 3 \\times 10^9 = 30 \\times 10^9\\text{ chu kỳ}$; $IC_3 = \\dfrac{30 \\times 10^9}{2.5} = 12 \\times 10^9\\text{ lệnh}$.</li></ul><p><strong>Đáp án đúng: A.</strong></p>"
+    "explanation": "<p>Công thức: $n = t \\times f_0$; $IC = \\dfrac{n}{CPI}$.</p><ul><li><strong>P1:</strong> $n_1 = 10 \\times 2 \\times 10^9 = 20 \\times 10^9\\text{ chu kỳ}$; $IC_1 = \\dfrac{20 \\times 10^9}{1.5} \\approx 13.33 \\times 10^9\\text{ lệnh}$.</li><li><strong>P2:</strong> $n_2 = 10 \\times 1.5 \\times 10^9 = 15 \\times 10^9\\text{ chu kỳ}$; $IC_2 = \\dfrac{15 \\times 10^9}{1.0} = 15 \\times 10^9\\text{ lệnh}$.</li><li><strong>P3:</strong> $n_3 = 10 \\times 3 \\times 10^9 = 30 \\times 10^9\\text{ chu kỳ}$; $IC_3 = \\dfrac{30 \\times 10^9}{2.5} = 12 \\times 10^9\\text{ lệnh}$.</li></ul><p><strong>Đáp án đúng: P1: n = 20×10^9, IC ≈ 13.33×10^9; P2: n = 15×10^9, IC = 15×10^9; P3: n = 30×10^9, IC = 12×10^9.</strong></p>"
   },
   {
     "id": "c1-1.32c",
@@ -1622,7 +1622,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li>Giảm thời gian $30\\% \\implies t_{\\text{mới}} = 0.7 \\times t_{\\text{cũ}}$.</li><li>Tăng CPI $20\\% \\implies CPI_{\\text{mới}} = 1.2 \\times CPI_{\\text{cũ}}$.</li><li>Vì số lệnh $IC$ không đổi:<br>$$f_{\\text{mới}} = \\frac{IC \\times CPI_{\\text{mới}}}{t_{\\text{mới}}} = \\frac{1.2}{0.7} \\times f_{\\text{cũ}} = \\frac{12}{7} \\times f_{\\text{cũ}}$$</li><li>Thay số:<br>• $f_{1\\text{ mới}} = \\dfrac{12}{7} \\times 2 = \\dfrac{24}{7} \\approx 3.43\\text{ GHz}$<br>• $f_{2\\text{ mới}} = \\dfrac{12}{7} \\times 1.5 = \\dfrac{18}{7} \\approx 2.57\\text{ GHz}$<br>• $f_{3\\text{ mới}} = \\dfrac{12}{7} \\times 3 = \\dfrac{36}{7} \\approx 5.14\\text{ GHz}$</li></ol><p><strong>Đáp án đúng: A.</strong></p>"
+    "explanation": "<ol><li>Giảm thời gian $30\\% \\implies t_{\\text{mới}} = 0.7 \\times t_{\\text{cũ}}$.</li><li>Tăng CPI $20\\% \\implies CPI_{\\text{mới}} = 1.2 \\times CPI_{\\text{cũ}}$.</li><li>Vì số lệnh $IC$ không đổi:<br>$$f_{\\text{mới}} = \\frac{IC \\times CPI_{\\text{mới}}}{t_{\\text{mới}}} = \\frac{1.2}{0.7} \\times f_{\\text{cũ}} = \\frac{12}{7} \\times f_{\\text{cũ}}$$</li><li>Thay số:<br>• $f_{1\\text{ mới}} = \\dfrac{12}{7} \\times 2 = \\dfrac{24}{7} \\approx 3.43\\text{ GHz}$<br>• $f_{2\\text{ mới}} = \\dfrac{12}{7} \\times 1.5 = \\dfrac{18}{7} \\approx 2.57\\text{ GHz}$<br>• $f_{3\\text{ mới}} = \\dfrac{12}{7} \\times 3 = \\dfrac{36}{7} \\approx 5.14\\text{ GHz}$</li></ol><p><strong>Đáp án đúng: P1: 3.43 GHz (24/7), P2: 2.57 GHz (18/7), P3: 5.14 GHz (36/7).</strong></p>"
   },
   {
     "id": "c1-1.33",
@@ -2566,7 +2566,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1:</strong> Bus dữ liệu là $32\\text{ bit} = 4\\text{ byte}$, nên bộ nhớ chia thành $K = 4$ băng nhớ (đánh số Băng 0, 1, 2, 3).</li><li><strong>Bước 2:</strong> Lấy chữ số Hexa cuối cùng của địa chỉ <code>0x10011647</code> là chữ số <strong>7</strong>.</li><li><strong>Bước 3:</strong> Thực hiện phép chia lấy dư cho 4: $$7 \\bmod 4 = 3$$</li><li>Vậy byte nhớ này nằm trên <strong>Băng 3</strong>.</li></ol><p><strong>Đáp án đúng: B (Băng 3).</strong></p>"
+    "explanation": "<ol><li><strong>Bước 1:</strong> Bus dữ liệu là $32\\text{ bit} = 4\\text{ byte}$, nên bộ nhớ chia thành $K = 4$ băng nhớ (đánh số Băng 0, 1, 2, 3).</li><li><strong>Bước 2:</strong> Lấy chữ số Hexa cuối cùng của địa chỉ <code>0x10011647</code> là chữ số <strong>7</strong>.</li><li><strong>Bước 3:</strong> Thực hiện phép chia lấy dư cho 4: $$7 \\bmod 4 = 3$$</li><li>Vậy byte nhớ này nằm trên <strong>Băng 3</strong>.</li></ol><p><strong>Đáp án đúng: Băng 3.</strong></p>"
   },
   {
     "id": "c2-2.17a",
@@ -2788,7 +2788,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Trong phương pháp Vào-ra bằng chương trình, <strong>CPU</strong> phải trực tiếp thực hiện các lệnh kiểm tra trạng thái và đọc/ghi dữ liệu với cổng vào-ra.</li><li><strong>Đáp án đúng: B (CPU).</strong></li></ul>"
+    "explanation": "<ul><li>Trong phương pháp Vào-ra bằng chương trình, <strong>CPU</strong> phải trực tiếp thực hiện các lệnh kiểm tra trạng thái và đọc/ghi dữ liệu với cổng vào-ra.</li><li><strong>Đáp án đúng: CPU.</strong></li></ul>"
   },
   {
     "id": "c2-2.20",
@@ -2968,26 +2968,25 @@
     "pdfPage": 50,
     "printedPage": 49,
     "relatedTheoryId": "2.1.2",
-    "questionType": "multiple",
+    "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Những khẳng định nào dưới đây đúng về PIC? (Chọn nhiều đáp án)",
+    "question": "Khẳng định nào dưới đây là đầy đủ và chính xác nhất về bộ điều khiển ngắt PIC?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Trong PIC, yêu cầu ngắt có mức ưu tiên cao nhất sẽ không thể bị cấm và do đó được gửi tới CPU đầu tiên",
-      "Các đường vào yêu cầu ngắt của PIC có quy định mức ưu tiên",
-      "Đây là 1 phương pháp nối ghép ngắt (cụ thể là hỏi vòng bằng phần cứng)",
-      "PIC là viết tắt của Programmable Interrupt Controller"
+      "Cả 2 ý: PIC là Programmable Interrupt Controller và các đường vào IR0-IR7 có quy định mức ưu tiên",
+      "Yêu cầu ngắt có mức ưu tiên cao nhất trong PIC sẽ không thể bị cấm và gửi tới CPU đầu tiên",
+      "PIC là một phương pháp hỏi vòng bằng phần cứng (daisy chain)",
+      "PIC chỉ dùng cho ngắt mềm, không thể dùng cho ngắt cứng từ ngoại vi"
     ],
-    "correctIndex": 1,
+    "correctIndex": 0,
     "correctIndices": [
-      1,
-      3
+      0
     ],
-    "explanation": "<ul><li><strong>PIC là viết tắt của Programmable Interrupt Controller</strong> (Bộ điều khiển ngắt khả trình).</li><li><strong>Các đường vào yêu cầu ngắt (IR0...IR7) của PIC có quy định mức ưu tiên.</strong></li><li>Ý A sai vì mọi ngắt qua PIC đều nối vào chân INTR của CPU nên đều là ngắt có thể bị che (cấm). Ý C sai vì PIC là phương pháp ngắt ưu tiên phần cứng độc lập, không phải hỏi vòng (daisy chain/polling).</li><li><strong>Đáp án đúng: Chọn B và D.</strong></li></ul>"
+    "explanation": "<ul><li><strong>PIC là viết tắt của Programmable Interrupt Controller</strong> (Bộ điều khiển ngắt khả trình).</li><li><strong>Các đường vào yêu cầu ngắt (IR0...IR7) của PIC có quy định mức ưu tiên.</strong></li><li>Khẳng định yêu cầu ngắt cao nhất không thể bị cấm là sai vì mọi ngắt qua PIC đều nối vào chân INTR của CPU nên đều là ngắt có thể bị che (cấm).</li><li>Khẳng định hỏi vòng là sai vì PIC là phương pháp ngắt ưu tiên phần cứng độc lập (không phải daisy chain/polling).</li><li><strong>Đáp án đúng: Cả 2 ý: PIC là Programmable Interrupt Controller và các đường vào IR0-IR7 có quy định mức ưu tiên.</strong></li></ul>"
   },
   {
     "id": "c2-2.25a",
@@ -3002,27 +3001,25 @@
     "pdfPage": 50,
     "printedPage": 49,
     "relatedTheoryId": "2.1.1",
-    "questionType": "multiple",
+    "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Những đặc điểm nào sau đây là ưu điểm của ổ cứng bán dẫn SSD so với ổ đĩa từ HDD? (Chọn nhiều đáp án)",
+    "question": "Những đặc điểm nào sau đây là tổ hợp các ưu điểm của ổ cứng bán dẫn SSD so với ổ đĩa từ HDD?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Giá thành trên mỗi đơn vị lưu trữ (GB) rẻ hơn",
-      "Không gây tiếng ồn khi hoạt động",
-      "Tốc độ truy xuất dữ liệu nhanh hơn và độ trễ thấp hơn",
-      "Khả năng chống sốc vật lý tốt hơn"
+      "Gồm cả 3 đặc điểm: Không gây tiếng ồn, Tốc độ nhanh & độ trễ thấp, Chống sốc vật lý tốt",
+      "Giá thành trên mỗi đơn vị lưu trữ (GB) rẻ hơn HDD rất nhiều",
+      "Tốc độ đọc ghi chậm hơn nhưng khả năng chịu nhiệt độ cao vượt trội",
+      "Độ bền chu kỳ ghi/xóa vô hạn và giá thành rẻ hơn"
     ],
-    "correctIndex": 1,
+    "correctIndex": 0,
     "correctIndices": [
-      1,
-      2,
-      3
+      0
     ],
-    "explanation": "<ul><li>SSD dùng chip nhớ bán dẫn Flash (không có đĩa quay cơ học như HDD) nên có 3 ưu điểm vượt trội: <strong>Không gây tiếng ồn (2), Tốc độ truy xuất nhanh và độ trễ thấp (3), Chống sốc vật lý tốt hơn (4)</strong>.</li><li>Nhược điểm của SSD là giá thành trên mỗi GB đắt hơn HDD (nên ý 1 sai).</li><li><strong>Đáp án đúng: Chọn 2, 3 và 4.</strong></li></ul>"
+    "explanation": "<ul><li>SSD dùng chip nhớ bán dẫn Flash (không có đĩa quay cơ học như HDD) nên có 3 ưu điểm vượt trội: <strong>Không gây tiếng ồn, Tốc độ truy xuất nhanh và độ trễ thấp, Chống sốc vật lý tốt hơn</strong>.</li><li>Nhược điểm của SSD là giá thành trên mỗi GB đắt hơn HDD.</li><li><strong>Đáp án đúng: Gồm cả 3 đặc điểm: Không gây tiếng ồn, Tốc độ nhanh & độ trễ thấp, Chống sốc vật lý tốt.</strong></li></ul>"
   },
   {
     "id": "c2-2.25b",

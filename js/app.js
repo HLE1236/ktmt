@@ -1023,10 +1023,12 @@
     const expContainer = document.getElementById('practice-explanation-container');
     const expHeader = document.getElementById('practice-explanation-header');
     if (expContainer && expHeader) {
+      const correctOptText = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
+      const ansDisplay = correctOptText ? `${q.correctAnswer}: ${correctOptText}` : q.correctAnswer;
       expHeader.className = `explanation-header ${isCorrect ? 'correct' : 'incorrect'}`;
       expHeader.innerHTML = isCorrect 
-        ? `<span>🎉 Chính xác! Đáp án đúng là <strong>${q.correctAnswer}</strong></span>` 
-        : `<span>❌ Chưa chính xác! Đáp án đúng là <strong>${q.correctAnswer}</strong></span>`;
+        ? `<span>🎉 Chính xác! Đáp án đúng là <strong>${ansDisplay}</strong></span>` 
+        : `<span>❌ Chưa chính xác! Đáp án đúng là <strong>${ansDisplay}</strong></span>`;
       expContainer.style.display = 'block';
       renderMath(expContainer);
     }
@@ -1361,6 +1363,10 @@
     examQuestions.forEach((q, idx) => {
       const userAns = examAnswers[idx];
       const isCorrect = userAns === q.correctAnswer;
+      const userOpt = (userAns && q.options) ? q.options.find(o => o.key === userAns) : null;
+      const userDisplay = userAns ? `${userAns}${userOpt && userOpt.text ? '. ' + userOpt.text : ''}` : '(Chưa điền)';
+      const correctOpt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
+      const correctDisplay = `${q.correctAnswer}${correctOpt ? '. ' + correctOpt : ''}`;
       html += `
         <div style="background-color: var(--bg-surface); border: 1px solid ${isCorrect ? 'var(--success-border)' : 'var(--error-border)'}; border-radius: var(--radius-md); padding: 18px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
@@ -1371,7 +1377,7 @@
           </div>
           <div style="margin-bottom: 8px;">${enhanceRegisterTooltips(q.question)}</div>
           <div style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 6px;">
-            Đáp án của bạn: <strong>${userAns || '(Chưa điền)'}</strong> | Đáp án đúng: <strong style="color: var(--success);">${q.correctAnswer}</strong>
+            Đáp án của bạn: <strong>${userDisplay}</strong> | Đáp án đúng: <strong style="color: var(--success);">${correctDisplay}</strong>
           </div>
           <div style="font-size: 0.85rem; background-color: var(--bg-muted); padding: 10px; border-radius: 6px; margin-top: 8px;">
             <strong>Giải thích:</strong> ${enhanceRegisterTooltips(q.explanation)}
@@ -1437,6 +1443,8 @@
     const counterEl = document.getElementById('flashcard-counter');
     if (counterEl) counterEl.textContent = `Thẻ ${currentFlashcardIndex + 1} / ${flashcardQueue.length}`;
 
+    const flashCorrectOpt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
+    const flashAnsDisplay = flashCorrectOpt ? `${q.correctAnswer}. ${flashCorrectOpt}` : q.correctAnswer;
     cardContainer.innerHTML = `
       <div class="flashcard-inner" id="flashcard-inner-box">
         <div class="flashcard-front">
@@ -1445,7 +1453,7 @@
           <div class="flashcard-hint">💡 Nhấn vào thẻ hoặc phím Space để lật xem đáp án & giải thích</div>
         </div>
         <div class="flashcard-back">
-          <div class="flashcard-type" style="color: var(--success);">Đáp án: ${q.correctAnswer}</div>
+          <div class="flashcard-type" style="color: var(--success);">Đáp án đúng: ${flashAnsDisplay}</div>
           <div style="font-size: 0.95rem; line-height: 1.6; overflow-y: auto; max-height: 250px;">
             ${enhanceRegisterTooltips(q.explanation)}
           </div>
@@ -1519,7 +1527,7 @@
             ${enhanceRegisterTooltips(q.question)}
           </div>
           <div style="background-color: var(--bg-muted); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;">
-            <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">Đáp án đúng: ${q.correctAnswer}</div>
+            <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">Đáp án đúng: ${q.correctAnswer}${q.options && q.options[q.correctIndex] ? '. ' + q.options[q.correctIndex].text : ''}</div>
             <div style="color: var(--text-secondary);">${enhanceRegisterTooltips(q.explanation)}</div>
           </div>
         </div>

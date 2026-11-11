@@ -82,13 +82,30 @@
       });
     }
 
+    // Đồng bộ nội dung và ký tự đáp án đúng trong phần giải thích
+    var correctOptionText = formattedOptions[newCorrectIdx] ? formattedOptions[newCorrectIdx].text : '';
+    var updatedExplanation = q.explanation || '';
+    if (updatedExplanation) {
+      var dapanRegex = /<strong>\s*(?:Đáp án(?:\s*đúng|\s*chuẩn)?|Đáp số)\s*:[\s\S]*?<\/strong>/gi;
+      var newDapanHtml = correctOptionText
+        ? '<strong>Đáp án đúng: ' + newCorrectLetter + ' (' + correctOptionText + ').</strong>'
+        : '<strong>Đáp án đúng: ' + newCorrectLetter + '.</strong>';
+
+      if (dapanRegex.test(updatedExplanation)) {
+        updatedExplanation = updatedExplanation.replace(dapanRegex, newDapanHtml);
+      } else {
+        updatedExplanation = updatedExplanation + '<p>' + newDapanHtml + '</p>';
+      }
+    }
+
     return Object.assign({}, q, {
       group: group,
       examTag: examTag,
       correctIndex: newCorrectIdx,
       correctAnswer: newCorrectLetter,
       options: formattedOptions,
-      acceptedAnswers: accepted
+      acceptedAnswers: accepted,
+      explanation: updatedExplanation
     });
   });
 

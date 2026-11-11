@@ -298,7 +298,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Theo quy ước gọi hàm chuẩn của RISC-V: các thanh ghi tạm thời (<code>t0 – t6</code>) là <strong>caller-saved</strong> (bên gọi chỉ lưu khi thực sự cần dùng tiếp sau lời gọi hàm, không phải “luôn luôn”), còn các thanh ghi lưu trữ (<code>s0 – s11</code>) là <strong>callee-saved</strong> (bên được gọi chỉ lưu nếu có sửa đổi).</li><li><strong>Đáp án đúng: A (hoặc B trong đề gốc: t0-t6 là caller-saved, s0-s11 là callee-saved).</strong></li></ul>"
+    "explanation": "<ul><li>Theo quy ước gọi hàm chuẩn của RISC-V: các thanh ghi tạm thời (<code>t0 – t6</code>) là <strong>caller-saved</strong> (bên gọi chỉ lưu khi thực sự cần dùng tiếp sau lời gọi hàm, không phải “luôn luôn”), còn các thanh ghi lưu trữ (<code>s0 – s11</code>) là <strong>callee-saved</strong> (bên được gọi chỉ lưu nếu có sửa đổi).</li><li><strong>Đáp án đúng: Trong một số quy ước gọi hàm, thanh ghi tạm thời là “caller-saved”, còn thanh ghi lưu trữ là “callee-saved”.</strong></li></ul>"
   },
   {
     "id": "c3-4.2a",
@@ -654,26 +654,25 @@
     "pdfPage": 67,
     "printedPage": 66,
     "relatedTheoryId": "3.1.3",
-    "questionType": "multiple",
+    "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Những lệnh nào sau đây có thể dùng để <strong>xóa nội dung của thanh ghi s0 về 0</strong> (clear the content of s0)? (Chọn nhiều đáp án)",
+    "question": "Những lệnh nào sau đây có thể dùng để <strong>xóa nội dung của thanh ghi s0 về 0</strong> (clear the content of s0)?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "AND s0, s0, zero",
-      "XOR s0, s0, s0",
-      "XOR s0, s0, zero",
-      "AND s0, s0, s0"
+      "Cả 2 lệnh: AND s0, s0, zero và XOR s0, s0, s0",
+      "Chỉ duy nhất lệnh: XOR s0, s0, zero",
+      "Chỉ duy nhất lệnh: AND s0, s0, s0",
+      "Cả 2 lệnh: XOR s0, s0, zero và AND s0, s0, s0"
     ],
     "correctIndex": 0,
     "correctIndices": [
-      0,
-      1
+      0
     ],
-    "explanation": "<ul><li><code>AND s0, s0, zero</code>: Bất kỳ bit nào AND với 0 đều bằng 0 &rarr; $s0 = 0$ (Đúng).</li><li><code>XOR s0, s0, s0</code>: Hai bit giống hệt nhau XOR với nhau đều bằng 0 &rarr; $s0 = 0$ (Đúng).</li><li><code>XOR s0, s0, zero</code> và <code>AND s0, s0, s0</code> đều giữ nguyên giá trị cũ của s0.</li><li><strong>Đáp án đúng: Chọn cả A và B.</strong></li></ul>"
+    "explanation": "<ul><li><code>AND s0, s0, zero</code>: Bất kỳ bit nào AND với 0 đều bằng 0 &rarr; $s0 = 0$ (Đúng).</li><li><code>XOR s0, s0, s0</code>: Hai bit giống hệt nhau XOR với nhau đều bằng 0 &rarr; $s0 = 0$ (Đúng).</li><li><code>XOR s0, s0, zero</code> và <code>AND s0, s0, s0</code> đều giữ nguyên giá trị cũ của s0 (không xóa về 0).</li><li><strong>Đáp án đúng: Cả 2 lệnh: AND s0, s0, zero và XOR s0, s0, s0.</strong></li></ul>"
   },
   {
     "id": "c3-4.10",
@@ -2115,7 +2114,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Khởi tạo: $a1 = 14$, tổng $s0 = 0$, biến chạy $s1 = 0$.</li><li>Điều kiện thoát: $14 < s1$. Chương trình tính tổng các số chẵn từ 0 đến 14: $$a0 = s0 = 0 + 2 + 4 + 6 + 8 + 10 + 12 + 14 = \\mathbf{56}$$</li><li><strong>Đáp án đúng: C (56).</strong></li></ul>"
+    "explanation": "<ul><li>Khởi tạo: $a1 = 14$, tổng $s0 = 0$, biến chạy $s1 = 0$.</li><li>Điều kiện thoát: $14 < s1$. Chương trình tính tổng các số chẵn từ 0 đến 14: $$a0 = s0 = 0 + 2 + 4 + 6 + 8 + 10 + 12 + 14 = \\mathbf{56}$$</li><li><strong>Đáp án đúng: 56.</strong></li></ul>"
   },
   {
     "id": "c3-4.44",
@@ -2249,7 +2248,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li><strong>Nguyên tắc khôi phục ngăn xếp:</strong> Lúc cất vào ở độ lệch nào so với <code>sp</code> thì lúc đọc ra (<code>lw</code>) phải lấy ở đúng độ lệch đó <strong>trước khi cộng trả lại sp</strong>.</li><li>Ở đầu hàm cất $s3$ vào <code>4(sp)</code> và $s2$ vào <code>0(sp)</code>. Khi khôi phục: đọc <code>lw s2, 0(sp)</code> và <code>lw s3, 4(sp)</code> trước, rồi mới <code>addi sp, sp, 8</code>.</li><li><strong>Đáp án đúng: A.</strong></li></ul>"
+    "explanation": "<ul><li><strong>Nguyên tắc khôi phục ngăn xếp:</strong> Lúc cất vào ở độ lệch nào so với <code>sp</code> thì lúc đọc ra (<code>lw</code>) phải lấy ở đúng độ lệch đó <strong>trước khi cộng trả lại sp</strong>.</li><li>Ở đầu hàm cất $s3$ vào <code>4(sp)</code> và $s2$ vào <code>0(sp)</code>. Khi khôi phục: đọc <code>lw s2, 0(sp)</code> và <code>lw s3, 4(sp)</code> trước, rồi mới <code>addi sp, sp, 8</code>.</li><li><strong>Đáp án đúng: lw s2, 0(sp) -> lw s3, 4(sp) -> addi sp, sp, 8.</strong></li></ul>"
   },
   {
     "id": "c3-4.49",
@@ -2297,28 +2296,25 @@
     "pdfPage": 96,
     "printedPage": 95,
     "relatedTheoryId": "3.1.4",
-    "questionType": "multiple",
+    "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Lệnh nào sau đây trong RISC-V yêu cầu trường <code>opcode</code>? (Chọn nhiều đáp án)",
+    "question": "Những lệnh nào sau đây trong RISC-V bắt buộc phải có trường <code>opcode</code>?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "ori",
-      "sw",
-      "j (jal)",
-      "bge (beq)"
+      "Tất cả 4 lệnh (ori, sw, j, bge) đều bắt buộc có trường opcode",
+      "Chỉ các lệnh kiểu I (như ori) và kiểu S (như sw)",
+      "Chỉ các lệnh rẽ nhánh và nhảy (như bge, j)",
+      "Chỉ các lệnh số học và logic, các lệnh nhảy không có opcode"
     ],
     "correctIndex": 0,
     "correctIndices": [
-      0,
-      1,
-      2,
-      3
+      0
     ],
-    "explanation": "<p>Mọi câu lệnh mã máy của RISC-V (cả 6 khuôn dạng R, I, S, B, U, J) đều <strong>bắt buộc phải có trường opcode</strong> (7 bit từ bit 6 đến bit 0) để bộ điều khiển nhận diện nhóm lệnh.</p><p><strong>Đáp án đúng: Chọn tất cả các lệnh (A, B, C, D).</strong></p>"
+    "explanation": "<p>Mọi câu lệnh mã máy của RISC-V (cả 6 khuôn dạng R, I, S, B, U, J) đều <strong>bắt buộc phải có trường opcode</strong> (7 bit từ bit 6 đến bit 0) để bộ điều khiển nhận diện nhóm lệnh.</p><p><strong>Đáp án đúng: Tất cả 4 lệnh (ori, sw, j, bge) đều bắt buộc có trường opcode.</strong></p>"
   },
   {
     "id": "c3-4.51",
@@ -2566,7 +2562,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Giải mã <code>0x02945063</code> ra các bit của trường imm kiểu B: $imm = 32_{(10)} = \\text{0x20}$.</li><li>Trong RISC-V, địa chỉ đích cộng trực tiếp vào PC của chính câu lệnh:<br>$$\\text{BTA} = \\text{PC} + imm = \\text{0x00404014} + \\text{0x20} = \\mathbf{\\text{0x00404034}}$$</li><li><strong>Đáp án đúng: B (0x00404034).</strong></li></ul>"
+    "explanation": "<ul><li>Giải mã <code>0x02945063</code> ra các bit của trường imm kiểu B: $imm = 32_{(10)} = \\text{0x20}$.</li><li>Trong RISC-V, địa chỉ đích cộng trực tiếp vào PC của chính câu lệnh:<br>$$\\text{BTA} = \\text{PC} + imm = \\text{0x00404014} + \\text{0x20} = \\mathbf{\\text{0x00404034}}$$</li><li><strong>Đáp án đúng: 0x00404034.</strong></li></ul>"
   },
   {
     "id": "c3-4.56b",
@@ -2603,7 +2599,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Trong RISC-V, độ lệch cộng trực tiếp vào chính PC của lệnh rẽ nhánh: $\\text{Target PC} = \\text{0x2000} - 12 = \\text{0x2000} - \\text{0x0C} = \\mathbf{\\text{0x1FF4}}$.</p><p><strong>Đáp án đúng: A (0x1FF4).</strong></p>"
+    "explanation": "<p>Trong RISC-V, độ lệch cộng trực tiếp vào chính PC của lệnh rẽ nhánh: $\\text{Target PC} = \\text{0x2000} - 12 = \\text{0x2000} - \\text{0x0C} = \\mathbf{\\text{0x1FF4}}$.</p><p><strong>Đáp án đúng: 0x1FF4.</strong></p>"
   },
   {
     "id": "c3-4.57",
