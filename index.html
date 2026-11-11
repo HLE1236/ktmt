@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KTMT Hub - Nền tảng Ôn luyện Kiến trúc máy tính RISC-V (HUST)</title>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX CSS & JS for Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Canvas Confetti for Celebration Effects -->
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app-layout">
+    
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <span style="font-size: 1.4rem;">🏛️</span>
+          <span>KTMT Hub</span>
+          <span class="brand-badge">RISC-V</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Tổng quan</div>
+        <div class="nav-item active" data-tab="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Bảng điều khiển</span>
+        </div>
+
+        <div class="nav-section-title">Lý thuyết & Bài tập</div>
+        <div class="nav-item" data-tab="theory">
+          <span class="nav-icon">📖</span>
+          <span>Cẩm nang lý thuyết</span>
+        </div>
+        <div class="nav-item" data-tab="practice">
+          <span class="nav-icon">🎯</span>
+          <span>Luyện tập câu hỏi</span>
+          <span class="nav-badge" id="nav-total-q-badge">199</span>
+        </div>
+        <div class="nav-item" data-tab="exam">
+          <span class="nav-icon">⏱️</span>
+          <span>Thi thử (GK / CK)</span>
+        </div>
+        <div class="nav-item" data-tab="flashcard">
+          <span class="nav-icon">🗂️</span>
+          <span>Thẻ ghi nhớ (Flashcards)</span>
+        </div>
+
+        <div class="nav-section-title">Mô phỏng & Công cụ</div>
+        <div class="nav-item" data-tab="tools">
+          <span class="nav-icon">🛠️</span>
+          <span>Công cụ tính toán KTMT</span>
+        </div>
+
+        <div class="nav-section-title">Cá nhân hóa</div>
+        <div class="nav-item" data-tab="mistakes">
+          <span class="nav-icon">⚠️</span>
+          <span>Sổ tay câu sai</span>
+          <span class="nav-badge danger" id="nav-mistake-badge" style="display: none;">0</span>
+        </div>
+        <div class="nav-item" data-tab="stats">
+          <span class="nav-icon">📈</span>
+          <span>Thống kê & Sao lưu</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>ĐHBK Hà Nội • IT3030</span>
+        <button id="btn-sidebar-open-pdf" class="icon-btn" title="Mở file KTMT.pdf gốc" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(1)">
+          📄 PDF
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <div id="main-container">
+      
+      <!-- Top Navigation Header -->
+      <header id="top-header">
+        <div class="header-left">
+          <button id="btn-toggle-sidebar" class="header-toggle-sidebar" title="Mở danh mục">☰</button>
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="global-search-input" placeholder="Tìm câu hỏi, công thức, thanh ghi..." autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="header-btn" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(1)">
+            📄 Xem giáo trình PDF
+          </button>
+          <button class="header-btn" id="btn-theme-toggle" title="Chuyển chế độ sáng/tối">
+            <span id="theme-toggle-icon">🌙</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD -->
+      <main id="tab-dashboard" class="tab-view active">
+        <div class="dashboard-hero">
+          <h1 class="hero-title">Ôn tập & Luyện thi Kiến trúc máy tính</h1>
+          <p class="hero-sub">
+            Ngân hàng 199 câu hỏi trắc nghiệm & tự luận được trích xuất và giải thích chi tiết theo giáo trình <strong>KTMT.pdf</strong> (ĐHBK Hà Nội - Học phần IT3030, IT3034, IT3283).
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="btn-dash-start-practice">Bắt đầu luyện tập ngay 🚀</button>
+            <button class="btn btn-secondary" id="btn-dash-start-exam">Vào phòng thi thử ⏱️</button>
+            <button class="btn btn-secondary" id="btn-dash-open-pdf">Mở file PDF gốc 📄</button>
+          </div>
+        </div>
+
+        <!-- Quick Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">📚</div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-total-questions">199</div>
+              <div class="stat-label">Tổng số câu trong ngân hàng</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">✅</div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-answered-count">0</div>
+              <div class="stat-label">Câu hỏi đã hoàn thành</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">🎯</div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-accuracy">0%</div>
+              <div class="stat-label">Độ chính xác trung bình</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">⚠️</div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-mistakes-count">0</div>
+              <div class="stat-label">Câu trong Sổ tay câu sai</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Chapters Overview -->
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Các chương học tập theo chuẩn HUST</h2>
+        <div class="chapters-overview">
+          
+          <!-- Chapter 1 -->
+          <div class="chapter-card" data-chapter="1">
+            <div class="chapter-card-header">
+              <span class="chapter-num">Chương 1</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">PDF: Trang 1-28</span>
+            </div>
+            <div class="chapter-card-title">Giới thiệu chung & Hiệu năng máy tính</div>
+            <div class="chapter-card-desc">
+              Phân loại máy tính, các định luật Moore/Amdahl, tính toán thời gian CPU ($t_{\text{CPU}}$), chu kỳ xung nhịp $T_0$, CPI và chỉ số MIPS.
+            </div>
+            <div class="chapter-progress-bar">
+              <div class="chapter-progress-fill" id="dash-ch1-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chapter-progress-meta">
+              <span>Tiến độ ôn tập</span>
+              <span id="dash-ch1-meta">0/49 câu (0%)</span>
+            </div>
+          </div>
+
+          <!-- Chapter 2 -->
+          <div class="chapter-card" data-chapter="2">
+            <div class="chapter-card-header">
+              <span class="chapter-num">Chương 2</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">PDF: Trang 29-50</span>
+            </div>
+            <div class="chapter-card-title">Hệ thống máy tính & Bộ nhớ</div>
+            <div class="chapter-card-desc">
+              Bus truyền thông, phân cấp bộ nhớ (Cache, SRAM, DRAM), cấu trúc Little-Endian và kỹ thuật xen kẽ mô-đun nhớ (Memory Banks).
+            </div>
+            <div class="chapter-progress-bar">
+              <div class="chapter-progress-fill" id="dash-ch2-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chapter-progress-meta">
+              <span>Tiến độ ôn tập</span>
+              <span id="dash-ch2-meta">0/37 câu (0%)</span>
+            </div>
+          </div>
+
+          <!-- Chapter 3 -->
+          <div class="chapter-card" data-chapter="3">
+            <div class="chapter-card-header">
+              <span class="chapter-num">Chương 3</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">PDF: Trang 56-103</span>
+            </div>
+            <div class="chapter-card-title">Kiến trúc tập lệnh RISC-V</div>
+            <div class="chapter-card-desc">
+              32 thanh ghi chuẩn RISC-V, các định dạng lệnh (R, I, S, B, U, J), dịch mã máy nhị phân/hex và chuyển đổi mã C sang Assembly.
+            </div>
+            <div class="chapter-progress-bar">
+              <div class="chapter-progress-fill" id="dash-ch3-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chapter-progress-meta">
+              <span>Tiến độ ôn tập</span>
+              <span id="dash-ch3-meta">0/78 câu (0%)</span>
+            </div>
+          </div>
+
+          <!-- Chapter 4 -->
+          <div class="chapter-card" data-chapter="4">
+            <div class="chapter-card-header">
+              <span class="chapter-num">Chương 4</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">PDF: Trang 104-122</span>
+            </div>
+            <div class="chapter-card-title">Số học máy tính (Computer Arithmetic)</div>
+            <div class="chapter-card-desc">
+              Biểu diễn số bù 2, bộ cộng ALU (Half/Full Adder, Ripple-Carry), thuật toán nhân Booth và chuẩn số thực dấu phẩy động IEEE 754.
+            </div>
+            <div class="chapter-progress-bar">
+              <div class="chapter-progress-fill" id="dash-ch4-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chapter-progress-meta">
+              <span>Tiến độ ôn tập</span>
+              <span id="dash-ch4-meta">0/35 câu (0%)</span>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- TAB 2: THEORY HANDBOOK -->
+      <main id="tab-theory" class="tab-view">
+        <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
+          <button class="btn btn-secondary theory-tab-btn active" data-chapter="1">Chương 1: Hiệu năng</button>
+          <button class="btn btn-secondary theory-tab-btn" data-chapter="2">Chương 2: Hệ thống nhớ</button>
+          <button class="btn btn-secondary theory-tab-btn" data-chapter="3">Chương 3: Tập lệnh RISC-V</button>
+          <button class="btn btn-secondary theory-tab-btn" data-chapter="4">Chương 4: Số học máy tính</button>
+        </div>
+
+        <div class="theory-layout">
+          <!-- Left Table of Contents -->
+          <aside class="theory-sidebar" id="theory-toc-container">
+            <div style="font-weight: 700; font-size: 0.88rem; margin-bottom: 12px; color: var(--text-muted); text-transform: uppercase;">
+              Mục lục chương
+            </div>
+            <div id="theory-toc"></div>
+          </aside>
+
+          <!-- Right Content Body -->
+          <article class="theory-content-body">
+            <div class="theory-header-box">
+              <div>
+                <h1 id="theory-chapter-title" style="font-size: 1.6rem; font-weight: 800;">Chương 1: Hiệu năng máy tính</h1>
+                <p id="theory-chapter-desc" style="color: var(--text-secondary); margin-top: 4px;">Tổng hợp công thức và bẫy đề thi</p>
+              </div>
+              <span class="badge" id="theory-pdf-page-badge" style="cursor: pointer; background-color: var(--primary-light); color: var(--primary); padding: 6px 12px;">
+                PDF Trang 1-28
+              </span>
+            </div>
+
+            <div id="theory-content-body">
+              <!-- Content injected by app.js -->
+            </div>
+          </article>
+        </div>
+      </main>
+
+      <!-- TAB 3: PRACTICE MODE -->
+      <main id="tab-practice" class="tab-view">
+        
+        <!-- Filter Controls Bar -->
+        <div class="quiz-filter-bar">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 0.85rem;">Chương:</label>
+            <select id="practice-filter-chapter" class="filter-select">
+              <option value="all">Tất cả các chương (199 câu)</option>
+              <option value="1">Chương 1: Hiệu năng máy tính</option>
+              <option value="2">Chương 2: Hệ thống máy tính</option>
+              <option value="3">Chương 3: Tập lệnh RISC-V</option>
+              <option value="4">Chương 4: Số học máy tính</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 0.85rem;">Phân loại:</label>
+            <select id="practice-filter-tag" class="filter-select">
+              <option value="all">Tất cả đề thi</option>
+              <option value="GK">Giữa kỳ (GK)</option>
+              <option value="CK">Cuối kỳ (CK)</option>
+              <option value="SLIDE">Bài tập Slide</option>
+              <option value="LT">Lý thuyết</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 0.85rem;">Bài tập:</label>
+            <select id="practice-filter-group" class="filter-select">
+              <option value="all">Tất cả bài tập</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer;">
+              <input type="checkbox" id="practice-shuffle-toggle" />
+              <span>Trộn ngẫu nhiên câu hỏi</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question Counter & Progress Bar -->
+        <div style="max-width: 860px; margin: 0 auto 12px auto; display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span id="practice-question-counter">Câu 1 / 199</span>
+          <span>Chế độ: <strong>Luyện tập tự do</strong></span>
+        </div>
+        <div style="max-width: 860px; margin: 0 auto 20px auto; height: 6px; background-color: var(--border-subtle); border-radius: var(--radius-full); overflow: hidden;">
+          <div id="practice-progress-fill" style="height: 100%; width: 1%; background-color: var(--primary); transition: width 0.3s ease;"></div>
+        </div>
+
+        <!-- Quiz Card Container -->
+        <div class="quiz-card-container">
+          <div class="quiz-card" id="practice-card-content">
+            <!-- Dynamic Content Injected via app.js -->
+          </div>
+        </div>
+      </main>
+
+      <!-- TAB 4: EXAM MODE -->
+      <main id="tab-exam" class="tab-view">
+        <div class="exam-container">
+          
+          <!-- Setup Screen -->
+          <div id="exam-setup-view" class="exam-setup-card">
+            <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 8px;">Phòng Thi Thử Trực Tuyến</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">
+              Mô phỏng kỳ thi Giữa kỳ và Cuối kỳ môn Kiến trúc máy tính theo đúng ma trận đề thi tại ĐH Bách Khoa Hà Nội. Có đồng hồ đếm ngược và chấm điểm tự động.
+            </p>
+
+            <div class="exam-preset-grid">
+              
+              <div class="exam-preset-card" id="btn-exam-start-gk">
+                <span class="badge badge-tag-gk" style="margin-bottom: 12px; display: inline-block;">Đề thi Giữa kỳ</span>
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Thi Giữa Kỳ KTMT</h3>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
+                  Trọng tâm Chương 1 (Hiệu năng) & Chương 2 (Hệ thống máy tính, Little-Endian, Cache).
+                </p>
+                <div style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">
+                  ⏱️ 30 phút • 25 câu hỏi • Thang điểm 10
+                </div>
+              </div>
+
+              <div class="exam-preset-card" id="btn-exam-start-ck">
+                <span class="badge badge-tag-ck" style="margin-bottom: 12px; display: inline-block;">Đề thi Cuối kỳ</span>
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Thi Cuối Kỳ Toàn Diện</h3>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
+                  Bao quát toàn bộ 4 chương: Hiệu năng, Hệ thống nhớ, Tập lệnh RISC-V và Số học máy tính (ALU, IEEE 754).
+                </p>
+                <div style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">
+                  ⏱️ 50 phút • 40 câu hỏi • Thang điểm 10
+                </div>
+              </div>
+
+            </div>
+
+            <div style="background-color: var(--bg-muted); border-radius: var(--radius-md); padding: 18px; font-size: 0.88rem; color: var(--text-secondary);">
+              <strong>💡 Lưu ý phòng thi:</strong>
+              <ul style="margin: 8px 0 0 20px;">
+                <li>Hệ thống tự động chấm điểm và chuyển toàn bộ câu làm sai vào <strong>Sổ tay câu sai</strong> khi nộp bài.</li>
+                <li>Bạn có thể gắn cờ (flag) những câu phân vân để xem lại trước khi ấn nộp bài.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Active Exam Screen (Hidden initially) -->
+          <div id="exam-active-view" style="display: none;">
+            
+            <div class="exam-timer-bar">
+              <div>
+                <span style="font-weight: 600; color: var(--text-secondary); font-size: 0.88rem;">Thời gian còn lại:</span>
+                <span class="timer-display" id="exam-timer-text">30:00</span>
+              </div>
+              <button class="btn btn-primary" id="btn-exam-submit-confirm">
+                Nộp bài thi 🏁
+              </button>
+            </div>
+
+            <!-- Question Numbers Palette -->
+            <div class="exam-palette" id="exam-palette-grid"></div>
+
+            <!-- Exam Question Card -->
+            <div class="quiz-card" id="exam-question-card"></div>
+
+          </div>
+
+          <!-- Result Screen (Hidden initially) -->
+          <div id="exam-result-view" style="display: none;"></div>
+
+        </div>
+      </main>
+
+      <!-- TAB 5: FLASHCARDS -->
+      <main id="tab-flashcard" class="tab-view">
+        <div style="max-width: 650px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 700;">Thẻ ghi nhớ Kiến trúc máy tính</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Lật thẻ để ghi nhớ công thức, tên thanh ghi và định dạng lệnh RISC-V</p>
+          </div>
+          <select id="flashcard-filter-chapter" class="filter-select">
+            <option value="all">Tất cả các chương</option>
+            <option value="1">Chương 1: Hiệu năng</option>
+            <option value="2">Chương 2: Hệ thống nhớ</option>
+            <option value="3">Chương 3: Tập lệnh RISC-V</option>
+            <option value="4">Chương 4: Số học máy tính</option>
+          </select>
+        </div>
+
+        <div style="text-align: center; font-size: 0.9rem; font-weight: 600; color: var(--primary);" id="flashcard-counter">
+          Thẻ 1 / 199
+        </div>
+
+        <div class="flashcard-wrapper" id="flashcard-card-box">
+          <!-- Injected via app.js -->
+        </div>
+
+        <div class="flashcard-controls">
+          <button class="btn btn-secondary" id="btn-flashcard-prev">← Thẻ trước</button>
+          <button class="btn btn-primary" id="btn-flashcard-flip">Lật thẻ (Space) 🔄</button>
+          <button class="btn btn-secondary" id="btn-flashcard-next">Thẻ tiếp theo →</button>
+          <button class="btn btn-secondary" id="btn-flashcard-shuffle" title="Xáo trộn ngẫu nhiên">🔀</button>
+        </div>
+      </main>
+
+      <!-- TAB 6: INTERACTIVE TOOLS -->
+      <main id="tab-tools" class="tab-view">
+        <div style="margin-bottom: 24px;">
+          <h2 style="font-size: 1.4rem; font-weight: 800;">4 Công cụ Mô phỏng & Tính toán KTMT</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            Bộ công cụ trực quan hóa hỗ trợ học tập và kiểm tra kết quả bài tập theo giáo trình
+          </p>
+        </div>
+
+        <div class="tools-tabs">
+          <button class="tool-tab-btn active" data-tool="perf">⚡ 1. Tính Hiệu năng CPU & Cache</button>
+          <button class="tool-tab-btn" data-tool="memory">💾 2. Little-Endian & Memory Banks</button>
+          <button class="tool-tab-btn" data-tool="ieee">🔢 3. Chuyển đổi Số & IEEE 754</button>
+          <button class="tool-tab-btn" data-tool="riscv">⚙️ 4. Dịch ngược RISC-V 32-bit</button>
+        </div>
+
+        <!-- Tool 1: Performance Calculator -->
+        <div class="tool-panel active" id="tool-panel-perf">
+          <div class="tool-grid">
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">Thông số đầu vào:</h3>
+              <div class="tool-input-group">
+                <label>Tần số xung nhịp ($f_0$):</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="number" step="0.1" class="tool-input" id="calc-f0" value="2.0" />
+                  <select class="tool-input" id="calc-f-unit" style="width: 100px;">
+                    <option value="GHz">GHz</option>
+                    <option value="MHz">MHz</option>
+                  </select>
+                </div>
+              </div>
+              <div class="tool-input-group">
+                <label>Số lượng chỉ lệnh ($IC$):</label>
+                <input type="number" class="tool-input" id="calc-ic" value="1000000" />
+              </div>
+              <div class="tool-input-group">
+                <label>Số chu kỳ trung bình trên mỗi lệnh ($CPI_{\text{base}}$):</label>
+                <input type="number" step="0.1" class="tool-input" id="calc-cpi" value="1.5" />
+              </div>
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin: 16px 0 8px 0; color: var(--primary);">
+                Tham số Cache Miss (Tùy chọn):
+              </h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="tool-input-group">
+                  <label>Tỉ lệ Miss I-Cache:</label>
+                  <input type="number" step="0.01" class="tool-input" id="calc-miss-i" value="0.02" />
+                </div>
+                <div class="tool-input-group">
+                  <label>Tỉ lệ lệnh truy xuất nhớ:</label>
+                  <input type="number" step="0.05" class="tool-input" id="calc-pmem" value="0.30" />
+                </div>
+                <div class="tool-input-group">
+                  <label>Tỉ lệ Miss D-Cache:</label>
+                  <input type="number" step="0.01" class="tool-input" id="calc-miss-d" value="0.05" />
+                </div>
+                <div class="tool-input-group">
+                  <label>Miss Penalty (chu kỳ):</label>
+                  <input type="number" class="tool-input" id="calc-penalty" value="50" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="tool-result-box">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--primary);">
+                  Kết quả tính toán:
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                  <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Chu kỳ xung nhịp ($T_0 = 1/f_0$):</span>
+                    <strong style="font-size: 1.3rem; font-family: var(--font-mono);" id="perf-res-t0">0.500 ns</strong>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Thời gian CPU ($t_{\text{CPU}} = \frac{IC \times CPI}{f_0}$):</span>
+                    <strong style="font-size: 1.3rem; font-family: var(--font-mono);" id="perf-res-tcpu">0.000750 s</strong>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">Chỉ số hiệu năng MIPS ($f_0 / CPI$):</span>
+                    <strong style="font-size: 1.3rem; font-family: var(--font-mono); color: var(--success);" id="perf-res-mips">1333.33</strong>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); display: block;">CPI hiệu dụng có tính đến Cache Penalty:</span>
+                    <strong style="font-size: 1.3rem; font-family: var(--font-mono); color: var(--purple);" id="perf-res-eff-cpi">3.250</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tool 2: Memory Banks Simulator -->
+        <div class="tool-panel" id="tool-panel-memory">
+          <div class="tool-grid">
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">Cấu hình bộ nhớ:</h3>
+              <div class="tool-input-group">
+                <label>Độ rộng Bus dữ liệu (Data Bus Width):</label>
+                <select class="tool-input" id="mem-sim-bus">
+                  <option value="32">32-bit (K = 4 Banks: Bank 0, 1, 2, 3)</option>
+                  <option value="64">64-bit (K = 8 Banks: Bank 0..7)</option>
+                </select>
+              </div>
+              <div class="tool-input-group">
+                <label>Địa chỉ Byte cần truy xuất (Hex hoặc Dec):</label>
+                <input type="text" class="tool-input" id="mem-sim-addr" value="0x1004" placeholder="Ví dụ: 0x1004, 4100..." />
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px;">
+                <strong>Công thức:</strong> Số mô-đun nhớ $K = \text{DataBus}/8$.<br/>
+                Vị trí Bank chứa byte $= \text{Địa chỉ} \bmod K$.
+              </div>
+            </div>
+
+            <div>
+              <div class="tool-result-box">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--primary);">
+                  Phân bố trên các Modun nhớ (Memory Banks):
+                </h3>
+                <div style="margin-bottom: 12px; font-size: 0.9rem;">
+                  Số lượng Bank ($K$): <strong id="mem-res-banks-count">4</strong> | 
+                  Nằm tại Bank: <strong id="mem-res-bank-index" style="color: var(--primary); font-size: 1.1rem;">0</strong> |
+                  Địa chỉ từ: <strong id="mem-res-word-addr" style="font-family: var(--font-mono);">0x401</strong>
+                </div>
+                <div class="memory-banks-grid" id="mem-banks-grid-display"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tool 3: Number & IEEE 754 Converter -->
+        <div class="tool-panel" id="tool-panel-ieee">
+          <div class="tool-grid">
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">Nhập số thực float:</h3>
+              <div class="tool-input-group">
+                <label>Giá trị số thực thập phân:</label>
+                <input type="number" step="any" class="tool-input" id="ieee-float-input" value="-12.375" />
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Chuẩn IEEE 754 đơn 32-bit gồm:<br/>
+                • 1 bit dấu ($S$)<br/>
+                • 8 bit mũ lệch ($e = E + 127$)<br/>
+                • 23 bit định trị phần lẻ ($m$)
+              </div>
+            </div>
+
+            <div>
+              <div class="tool-result-box">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--primary);">
+                  Biểu diễn nhị phân IEEE 754 (32-bit):
+                </h3>
+                <div style="font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono); margin-bottom: 8px;" id="ieee-res-hex">
+                  0xC1460000
+                </div>
+                
+                <div class="ieee-bit-ribbon">
+                  <div class="ieee-bit-sign" title="Sign (1 bit)">S</div>
+                  <div class="ieee-bit-exp" title="Exponent (8 bits)">Exponent (8b)</div>
+                  <div class="ieee-bit-mantissa" title="Fraction/Mantissa (23 bits)">Mantissa (23b)</div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; margin-top: 12px;">
+                  <div>Bit dấu ($S$): <strong id="ieee-res-sign">1 (- Âm)</strong></div>
+                  <div>Trường mũ ($e$): <strong id="ieee-res-exp" style="font-family: var(--font-mono);">10000010 (130 - 127 = 3)</strong></div>
+                  <div>Trường định trị ($m$): <strong id="ieee-res-mantissa" style="font-family: var(--font-mono);">10001100000000000000000</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tool 4: RISC-V Disassembler -->
+        <div class="tool-panel" id="tool-panel-riscv">
+          <div class="tool-grid">
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">Mã máy 32-bit:</h3>
+              <div class="tool-input-group">
+                <label>Mã máy Hexadecimal (32-bit):</label>
+                <input type="text" class="tool-input" id="riscv-hex-input" value="0x00500093" placeholder="0x00500093..." />
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-secondary);">
+                Ví dụ mẫu:<br/>
+                • <code>0x00500093</code>: <code>addi x1, x0, 5</code> (I-Type)<br/>
+                • <code>0x00A48533</code>: <code>add x10, x9, x10</code> (R-Type)<br/>
+                • <code>0x00028067</code>: <code>jalr x0, 0(x5)</code> (I-Type)
+              </div>
+            </div>
+
+            <div>
+              <div class="tool-result-box">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--primary);">
+                  Lệnh Hợp ngữ RISC-V tương ứng:
+                </h3>
+                <div style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-mono); color: var(--success); margin-bottom: 12px;" id="riscv-dec-asm">
+                  addi x1, x0, 5
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem;">
+                  <div>Định dạng lệnh: <strong id="riscv-dec-type">I-Type</strong></div>
+                  <div>Mã Opcode: <strong id="riscv-dec-opcode" style="font-family: var(--font-mono);">0x13</strong></div>
+                  <div>Phân tích trường: <strong id="riscv-dec-fields" style="font-family: var(--font-mono); font-size: 0.82rem;">rd: x1 | rs1: x0 | imm: 5</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- TAB 7: SỔ TAY CÂU SAI -->
+      <main id="tab-mistakes" class="tab-view">
+        <div id="mistakes-container">
+          <!-- Injected via app.js -->
+        </div>
+      </main>
+
+      <!-- TAB 8: THỐNG KÊ & SAO LƯU -->
+      <main id="tab-stats" class="tab-view">
+        <div id="stats-view-content">
+          <!-- Injected via app.js -->
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+  
+  <!-- PDF Viewer Modal -->
+  <div class="modal-overlay" id="modal-pdf">
+    <div class="modal-dialog large">
+      <div class="modal-header">
+        <div class="modal-title">📄 Tài liệu gốc: KTMT.pdf (ĐHBK Hà Nội)</div>
+        <button class="icon-btn modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 0; display: flex; flex-direction: column;">
+        <iframe id="pdf-modal-iframe" src="" style="width: 100%; height: 100%; border: none; flex: 1;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <a id="pdf-open-new-tab-btn" href="KTMT.pdf" target="_blank" class="btn btn-secondary" style="font-size: 0.85rem;">
+          Mở trong tab mới ↗
+        </a>
+        <button class="btn btn-primary modal-close-btn">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note Editor Modal -->
+  <div class="modal-overlay" id="modal-note">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">✏️ Ghi chú cá nhân cho câu hỏi</div>
+        <button class="icon-btn modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <textarea id="note-modal-textarea" rows="6" class="tool-input" style="width: 100%; resize: vertical;" placeholder="Nhập ghi chú cá nhân của bạn, mẹo nhớ nhanh hoặc công thức cần lưu ý..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close-btn">Hủy</button>
+        <button class="btn btn-primary" id="note-modal-save-btn">Lưu ghi chú</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- ==================== APPLICATION SCRIPTS ==================== -->
+  <script src="js/data-theory.js"></script>
+  <script src="js/data-questions-ch1-ch2.js"></script>
+  <script src="js/data-questions-ch3.js"></script>
+  <script src="js/data-questions-ch4.js"></script>
+  <script src="js/data-questions.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

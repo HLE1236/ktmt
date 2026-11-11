@@ -1,0 +1,1623 @@
+/**
+ * KTMT QUIZIZZ & LEARNING PLATFORM - CORE APPLICATION
+ * Computer Architecture (RISC-V) - HUST IT3030/IT3034/IT3283
+ */
+
+(function () {
+  'use strict';
+
+  // ==========================================
+  // STATE MANAGEMENT & LOCAL STORAGE
+  // ==========================================
+  const STORAGE_KEY = 'ktmt_learning_platform_v1';
+
+  const defaultState = {
+    theme: 'light',
+    bookmarks: [],      // Array of question IDs
+    mistakes: [],       // Array of question IDs
+    history: {},        // { [qid]: { answered: true, isCorrect: true, lastAnswer: 'A', timestamp: ... } }
+    notes: {},          // { [qid]: "Personal note" }
+    flashcardMastered: [], // Array of question IDs
+    studyStreak: 1,
+    lastStudyDate: new Date().toISOString().split('T')[0]
+  };
+
+  function loadState() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY);
+      return data ? Object.assign({}, defaultState, JSON.parse(data)) : Object.assign({}, defaultState);
+    } catch (e) {
+      console.error('Failed to load state from localStorage:', e);
+      return Object.assign({}, defaultState);
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+    } catch (e) {
+      console.error('Failed to save state to localStorage:', e);
+    }
+  }
+
+  const appState = loadState();
+
+  // Update streak
+  (function updateStreak() {
+    const today = new Date().toISOString().split('T')[0];
+    if (appState.lastStudyDate !== today) {
+      const prevDate = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      if (appState.lastStudyDate === prevDate) {
+        appState.studyStreak += 1;
+      } else {
+        appState.studyStreak = 1;
+      }
+      appState.lastStudyDate = today;
+      saveState();
+    }
+  })();
+
+  // ==========================================
+  // RUNTIME DATA ACCESSORS
+  // ==========================================
+  const allQuestions = window.KTMT_QUESTIONS || [];
+  const questionMap = window.KTMT_QUESTION_MAP || {};
+  const chaptersList = window.KTMT_CHAPTERS || [];
+  const theorySections = window.KTMT_THEORY || [];
+  const registerLookup = window.RISCV_REGISTER_LOOKUP || window.RISCV_REGISTERS || {};
+
+  let currentTab = 'dashboard';
+  
+  // Practice runtime state
+  let practiceQueue = [];
+  let currentPracticeIndex = 0;
+  let practiceMode = 'mcq'; // 'mcq' or 'fill'
+  let practiceAnswerSubmitted = false;
+
+  // Exam runtime state
+  let examQuestions = [];
+  let currentExamIndex = 0;
+  let examAnswers = {};     // { [idx]: selectedOption }
+  let examFlags = {};       // { [idx]: boolean }
+  let examTimerInterval = null;
+  let examTimeRemaining = 0; // in seconds
+  let examTotalTime = 0;
+
+  // Flashcards runtime state
+  let flashcardQueue = [];
+  let currentFlashcardIndex = 0;
+  let isCardFlipped = false;
+
+  // ==========================================
+  // UTILITIES & HELPERS
+  // ==========================================
+  function showToast(msg, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = msg;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 300);
+    }, 2800);
+  }
+
+  function shuffleArray(array) {
+    const arr = array.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function renderMath(container) {
+    if (window.renderMathInElement && container) {
+      try {
+        window.renderMathInElement(container, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      } catch (err) {
+        console.warn('KaTeX rendering error:', err);
+      }
+    }
+  }
+
+  // Wraps register occurrences with interactive tooltips safely outside KaTeX & tags
+  function enhanceRegisterTooltips(html) {
+    if (!html || typeof html !== 'string') return html;
+    if (!registerLookup || Object.keys(registerLookup).length === 0) return html;
+    // Phân tách cả thẻ HTML và các khối KaTeX $...$, $$...$$ để bảo toàn cú pháp
+    const parts = html.split(/(<[^>]+>|\$\$[\s\S]*?\$\$|\$[^\$]+?\$)/g);
+    const regex = /\b(x[0-9]|x[12][0-9]|x3[01]|zero|ra|sp|gp|tp|t[0-6]|s[0-9]|s1[01]|a[0-7]|fp)\b/g;
+    return parts.map((part, idx) => {
+      // Chỉ thay thế trên các đoạn văn bản thuần ngoài thẻ và ngoài công thức KaTeX
+      if (idx % 2 === 0) {
+        return part.replace(regex, (match) => {
+          const info = registerLookup[match];
+          return info ? `<span class="reg-tip" data-reg="${match}">${match}</span>` : match;
+        });
+      }
+      return part;
+    }).join('');
+  }
+
+  // ==========================================
+  // REGISTER HOVER TOOLTIP POPUP
+  // ==========================================
+  const floatingTooltip = document.createElement('div');
+  floatingTooltip.id = 'reg-floating-tooltip';
+  document.body.appendChild(floatingTooltip);
+
+  document.addEventListener('mouseover', (e) => {
+    const tipTarget = e.target.closest('.reg-tip');
+    if (tipTarget) {
+      const reg = tipTarget.getAttribute('data-reg');
+      const info = registerLookup[reg];
+      if (info) {
+        floatingTooltip.innerHTML = `
+          <div class="tip-title">Thanh ghi: ${reg.toUpperCase()} (${info.alias || info.num})</div>
+          <div><strong>Mã nhị phân:</strong> <code>${info.bin || ''}</code></div>
+          <div><strong>Quy ước lưu trữ:</strong> ${info.saved || ''}</div>
+          <div style="margin-top:4px; font-size:0.75rem; color:#cbd5e1;">${info.role || ''}</div>
+        `;
+        floatingTooltip.style.display = 'block';
+        const rect = tipTarget.getBoundingClientRect();
+        floatingTooltip.style.left = `${Math.min(rect.left + window.scrollX, window.innerWidth - 280)}px`;
+        floatingTooltip.style.top = `${rect.bottom + window.scrollY + 6}px`;
+      }
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('.reg-tip')) {
+      floatingTooltip.style.display = 'none';
+    }
+  });
+
+  // ==========================================
+  // THEME CONTROLLER
+  // ==========================================
+  function applyTheme(theme) {
+    appState.theme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    const themeIcon = document.getElementById('theme-toggle-icon');
+    if (themeIcon) {
+      themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+    saveState();
+  }
+
+  // ==========================================
+  // TAB NAVIGATION
+  // ==========================================
+  function switchTab(tabId) {
+    currentTab = tabId;
+    document.querySelectorAll('.tab-view').forEach(view => {
+      view.classList.remove('active');
+    });
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    const targetView = document.getElementById(`tab-${tabId}`);
+    const targetNav = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+
+    if (targetView) targetView.classList.add('active');
+    if (targetNav) targetNav.classList.add('active');
+
+    // Tab-specific initializations
+    if (tabId === 'dashboard') {
+      renderDashboard();
+    } else if (tabId === 'theory') {
+      renderTheory();
+    } else if (tabId === 'practice') {
+      if (practiceQueue.length === 0) {
+        initPracticeQueue();
+      }
+      renderPracticeQuestion();
+    } else if (tabId === 'flashcard') {
+      initFlashcards();
+    } else if (tabId === 'mistakes') {
+      renderMistakesList();
+    } else if (tabId === 'stats') {
+      renderStats();
+    }
+
+    // Close mobile sidebar if open
+    document.getElementById('sidebar')?.classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ==========================================
+  // DASHBOARD VIEW
+  // ==========================================
+  function renderDashboard() {
+    const totalQ = allQuestions.length;
+    const answeredCount = Object.keys(appState.history).length;
+    const correctCount = Object.values(appState.history).filter(h => h.isCorrect).length;
+    const mistakeCount = appState.mistakes.length;
+    const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+
+    const elTotal = document.getElementById('dash-total-questions');
+    const elAnswered = document.getElementById('dash-answered-count');
+    const elAccuracy = document.getElementById('dash-accuracy');
+    const elMistakes = document.getElementById('dash-mistakes-count');
+
+    if (elTotal) elTotal.textContent = totalQ;
+    if (elAnswered) elAnswered.textContent = answeredCount;
+    if (elAccuracy) elAccuracy.textContent = `${accuracy}%`;
+    if (elMistakes) elMistakes.textContent = mistakeCount;
+
+    // Update chapter cards progress
+    [1, 2, 3, 4].forEach(chNum => {
+      const chQuestions = allQuestions.filter(q => q.chapter === chNum);
+      const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
+      const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;
+
+      const fillEl = document.getElementById(`dash-ch${chNum}-fill`);
+      const metaEl = document.getElementById(`dash-ch${chNum}-meta`);
+      if (fillEl) fillEl.style.width = `${pct}%`;
+      if (metaEl) metaEl.textContent = `${chCorrect.length}/${chQuestions.length} câu (${pct}%)`;
+    });
+
+    // Update nav badge count for mistakes
+    const mistakeBadge = document.getElementById('nav-mistake-badge');
+    if (mistakeBadge) {
+      mistakeBadge.textContent = mistakeCount;
+      mistakeBadge.style.display = mistakeCount > 0 ? 'inline-block' : 'none';
+    }
+  }
+
+  // ==========================================
+  // THEORY VIEW
+  // ==========================================
+  let currentTheoryChapter = 1;
+
+  function renderTheory(chapterNum = currentTheoryChapter) {
+    currentTheoryChapter = chapterNum;
+    const chapterObj = chaptersList.find(c => c.id === chapterNum) || chaptersList[0] || {};
+    const sections = theorySections.filter(s => s.chapter === chapterNum);
+
+    // Render Table of Contents
+    const tocContainer = document.getElementById('theory-toc');
+    if (tocContainer) {
+      tocContainer.innerHTML = '';
+      sections.forEach((sec, idx) => {
+        const item = document.createElement('a');
+        item.className = `theory-toc-item ${idx === 0 ? 'active' : ''}`;
+        item.textContent = `${sec.code} - ${sec.title}`;
+        item.href = `#sec-${sec.id}`;
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('.theory-toc-item').forEach(el => el.classList.remove('active'));
+          item.classList.add('active');
+          const target = document.getElementById(`sec-${sec.id}`);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+        tocContainer.appendChild(item);
+      });
+    }
+
+    // Render Chapter Header & Actions
+    const titleEl = document.getElementById('theory-chapter-title');
+    const descEl = document.getElementById('theory-chapter-desc');
+    const pageBadge = document.getElementById('theory-pdf-page-badge');
+    if (titleEl) titleEl.textContent = chapterObj.title ? `${chapterObj.code}: ${chapterObj.title}` : `Chương ${chapterNum}`;
+    if (descEl) descEl.textContent = chapterObj.subtitle || 'Tài liệu ôn tập bám sát giáo trình KTMT.pdf';
+    if (pageBadge) {
+      pageBadge.textContent = `PDF Trang ${chapterObj.pdfPageStart || 1}`;
+      pageBadge.onclick = () => openPdfModal(chapterObj.pdfPageStart || 1);
+    }
+
+    // Render Content Sections
+    const contentEl = document.getElementById('theory-content-body');
+    if (contentEl) {
+      let html = '';
+      sections.forEach(sec => {
+        html += `<section id="sec-${sec.id}" class="theory-section-box" style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">`;
+        html += `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <h2 style="font-size: 1.3rem; color: var(--primary); margin: 0;">${sec.code}. ${sec.title}</h2>
+            <button class="btn btn-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(${sec.pdfPage})" style="padding: 4px 10px; font-size: 0.8rem;">
+              📄 Mở xem Trang ${sec.pdfPage} (KTMT.pdf)
+            </button>
+          </div>
+        `;
+        
+        if (sec.summary) {
+          html += `<div style="background-color: var(--bg-muted); border-left: 3px solid var(--primary); padding: 10px 14px; border-radius: 4px; font-size: 0.9rem; margin-bottom: 16px;">
+            <strong>Tóm tắt trọng tâm:</strong> ${sec.summary}
+          </div>`;
+        }
+
+        html += enhanceRegisterTooltips(sec.content);
+
+        if (sec.linkedGroups && sec.linkedGroups.length > 0) {
+          html += `
+            <div style="margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 0.85rem; color: var(--text-secondary);">Nhóm bài tập thực hành liên quan: <strong>Bài ${sec.linkedGroups.join(', Bài ')}</strong></span>
+              <button class="btn btn-primary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupPractice('${sec.linkedGroups[0]}')" style="padding: 6px 14px; font-size: 0.82rem;">
+                Luyện tập nhóm này ngay 🎯
+              </button>
+            </div>
+          `;
+        }
+
+        html += `</section>`;
+      });
+
+      contentEl.innerHTML = html;
+      renderMath(contentEl);
+    }
+
+    // Update active tab buttons in theory header
+    document.querySelectorAll('.theory-tab-btn').forEach(btn => {
+      const ch = parseInt(btn.getAttribute('data-chapter'));
+      btn.classList.toggle('active', ch === chapterNum);
+    });
+  }
+
+  // ==========================================
+  // PRACTICE MODE ENGINE
+  // ==========================================
+  function initPracticeQueue() {
+    const chFilter = document.getElementById('practice-filter-chapter')?.value || 'all';
+    const tagFilter = document.getElementById('practice-filter-tag')?.value || 'all';
+    const groupFilter = document.getElementById('practice-filter-group')?.value || 'all';
+    const isShuffle = document.getElementById('practice-shuffle-toggle')?.checked || false;
+
+    let filtered = allQuestions.slice();
+
+    if (chFilter !== 'all') {
+      const chNum = parseInt(chFilter);
+      filtered = filtered.filter(q => q.chapter === chNum);
+    }
+    if (tagFilter !== 'all') {
+      filtered = filtered.filter(q => q.examTag === tagFilter);
+    }
+    if (groupFilter !== 'all') {
+      filtered = filtered.filter(q => q.group === groupFilter);
+    }
+
+    if (isShuffle) {
+      filtered = shuffleArray(filtered);
+    }
+
+    practiceQueue = filtered;
+    currentPracticeIndex = 0;
+    practiceAnswerSubmitted = false;
+
+    updateGroupDropdownOptions(chFilter);
+  }
+
+  function updateGroupDropdownOptions(chFilter) {
+    const groupSelect = document.getElementById('practice-filter-group');
+    if (!groupSelect) return;
+    const currentVal = groupSelect.value;
+    groupSelect.innerHTML = '<option value="all">Tất cả bài tập</option>';
+
+    let targetQuestions = allQuestions;
+    if (chFilter !== 'all') {
+      targetQuestions = allQuestions.filter(q => q.chapter === parseInt(chFilter));
+    }
+    const uniqueGroups = Array.from(new Set(targetQuestions.map(q => q.group))).sort((a, b) => {
+      return parseFloat(a) - parseFloat(b);
+    });
+
+    uniqueGroups.forEach(grp => {
+      const opt = document.createElement('option');
+      opt.value = grp;
+      opt.textContent = `Bài ${grp}`;
+      groupSelect.appendChild(opt);
+    });
+
+    if (uniqueGroups.includes(currentVal)) {
+      groupSelect.value = currentVal;
+    }
+  }
+
+  function renderPracticeQuestion() {
+    const container = document.getElementById('practice-card-content');
+    if (!container) return;
+
+    if (practiceQueue.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 48px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Không tìm thấy câu hỏi phù hợp</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 20px;">Hãy thay đổi bộ lọc chương hoặc nhóm bài tập ở thanh bên trên.</p>
+          <button class="btn btn-primary" id="btn-reset-filters">Đặt lại bộ lọc</button>
+        </div>
+      `;
+      document.getElementById('btn-reset-filters')?.addEventListener('click', () => {
+        document.getElementById('practice-filter-chapter').value = 'all';
+        document.getElementById('practice-filter-tag').value = 'all';
+        document.getElementById('practice-filter-group').value = 'all';
+        initPracticeQueue();
+        renderPracticeQuestion();
+      });
+      return;
+    }
+
+    const q = practiceQueue[currentPracticeIndex];
+    practiceAnswerSubmitted = false;
+
+    // Counter & Progress
+    const counterEl = document.getElementById('practice-question-counter');
+    const progressBar = document.getElementById('practice-progress-fill');
+    if (counterEl) counterEl.textContent = `Câu ${currentPracticeIndex + 1} / ${practiceQueue.length}`;
+    if (progressBar) progressBar.style.width = `${((currentPracticeIndex + 1) / practiceQueue.length) * 100}%`;
+
+    const isBookmarked = appState.bookmarks.includes(q.id);
+    const hasNote = Boolean(appState.notes[q.id]);
+
+    let tagBadgeClass = 'badge-tag-lt';
+    if (q.examTag === 'GK') tagBadgeClass = 'badge-tag-gk';
+    if (q.examTag === 'CK') tagBadgeClass = 'badge-tag-ck';
+
+    let html = `
+      <div class="quiz-header-meta">
+        <div class="badge-tags">
+          <span class="badge badge-chapter">Chương ${q.chapter}</span>
+          <span class="badge badge-group">Bài ${q.group}</span>
+          <span class="badge ${tagBadgeClass}">${q.examTag}</span>
+          <span class="badge" style="background-color: var(--bg-muted); color: var(--text-secondary); cursor: pointer;" id="btn-view-pdf-page">
+            📄 Trang ${q.pdfPage} (KTMT.pdf)
+          </span>
+        </div>
+        <div class="quiz-actions-top">
+          <button class="icon-btn ${isBookmarked ? 'active' : ''}" id="btn-toggle-bookmark" title="Đánh dấu câu này">
+            ${isBookmarked ? '★' : '☆'}
+          </button>
+          <button class="icon-btn ${hasNote ? 'active' : ''}" id="btn-open-note" title="Ghi chú cá nhân">
+            ✏️
+          </button>
+        </div>
+      </div>
+
+      <div class="quiz-question-text" id="quiz-q-text">
+        ${enhanceRegisterTooltips(q.question)}
+      </div>
+    `;
+
+    // Question Body: MCQ vs Fill-in
+    if (practiceMode === 'mcq') {
+      html += `<div class="options-grid" id="practice-options-grid">`;
+      q.options.forEach((opt, idx) => {
+        const key = opt.key || ['A', 'B', 'C', 'D'][idx];
+        html += `
+          <button class="option-btn" data-key="${key}" data-index="${idx}">
+            <div class="option-key">${key}</div>
+            <div class="option-content">${enhanceRegisterTooltips(opt.text)}</div>
+          </button>
+        `;
+      });
+      html += `</div>`;
+    } else {
+      html += `
+        <div class="fill-in-box">
+          <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
+            Chế độ tự điền đáp án (daotao.ai style):
+          </label>
+          <div class="fill-in-input-wrap">
+            <input type="text" class="fill-in-input" id="practice-fill-input" placeholder="Nhập đáp án của bạn (ví dụ: 0x..., 1.25, -42, addi)..." autofocus autocomplete="off" />
+            <button class="btn btn-primary" id="btn-submit-fill">Kiểm tra</button>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">
+            Nhấn Enter để kiểm tra đáp án. Hệ thống tự động chuẩn hóa chữ hoa/thường và khoảng trắng.
+          </div>
+        </div>
+      `;
+    }
+
+    // Explanation Block (hidden by default)
+    html += `
+      <div class="explanation-container" id="practice-explanation-container">
+        <div class="explanation-header" id="practice-explanation-header"></div>
+        <div class="explanation-body" id="practice-explanation-body">
+          ${enhanceRegisterTooltips(q.explanation)}
+        </div>
+        <div class="explanation-meta">
+          <span>📚 Nguồn: <strong>Trang ${q.pdfPage} trong KTMT.pdf</strong></span>
+          <button class="btn btn-secondary btn-sm" id="btn-open-pdf-exp" style="padding: 4px 10px; font-size: 0.8rem;">
+            Mở xem trang ${q.pdfPage} 📄
+          </button>
+        </div>
+      </div>
+
+      <div class="quiz-nav-bottom">
+        <button class="btn btn-secondary" id="btn-prev-question" ${currentPracticeIndex === 0 ? 'disabled' : ''}>
+          ← Câu trước
+        </button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary" id="btn-toggle-input-mode">
+            ${practiceMode === 'mcq' ? 'Chuyển sang Tự điền ✍️' : 'Chuyển sang Trắc nghiệm 🔘'}
+          </button>
+          <button class="btn btn-primary" id="btn-next-question">
+            Câu tiếp theo →
+          </button>
+        </div>
+      </div>
+    `;
+
+    container.innerHTML = html;
+    renderMath(container);
+
+    // Event Listeners
+    document.getElementById('btn-view-pdf-page')?.addEventListener('click', () => openPdfModal(q.pdfPage));
+    document.getElementById('btn-open-pdf-exp')?.addEventListener('click', () => openPdfModal(q.pdfPage));
+
+    document.getElementById('btn-toggle-bookmark')?.addEventListener('click', () => {
+      toggleBookmark(q.id);
+      renderPracticeQuestion();
+    });
+
+    document.getElementById('btn-open-note')?.addEventListener('click', () => {
+      openNoteModal(q.id);
+    });
+
+    document.getElementById('btn-toggle-input-mode')?.addEventListener('click', () => {
+      practiceMode = practiceMode === 'mcq' ? 'fill' : 'mcq';
+      renderPracticeQuestion();
+    });
+
+    document.getElementById('btn-prev-question')?.addEventListener('click', () => {
+      if (currentPracticeIndex > 0) {
+        currentPracticeIndex--;
+        renderPracticeQuestion();
+      }
+    });
+
+    document.getElementById('btn-next-question')?.addEventListener('click', () => {
+      if (currentPracticeIndex < practiceQueue.length - 1) {
+        currentPracticeIndex++;
+        renderPracticeQuestion();
+      } else {
+        showToast('Bạn đã hoàn thành danh sách câu hỏi này! 🎉', 'success');
+      }
+    });
+
+    // Handle MCQ Selection
+    if (practiceMode === 'mcq') {
+      const optionButtons = container.querySelectorAll('.option-btn');
+      optionButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (practiceAnswerSubmitted) return;
+          const selectedKey = btn.getAttribute('data-key');
+          submitPracticeAnswer(selectedKey, q);
+        });
+      });
+    } else {
+      const inputEl = document.getElementById('practice-fill-input');
+      const submitBtn = document.getElementById('btn-submit-fill');
+      const handleFillSubmit = () => {
+        if (practiceAnswerSubmitted) return;
+        const val = inputEl.value.trim();
+        if (!val) {
+          showToast('Vui lòng nhập câu trả lời của bạn.', 'error');
+          return;
+        }
+        submitPracticeAnswer(val, q);
+      };
+
+      submitBtn?.addEventListener('click', handleFillSubmit);
+      inputEl?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleFillSubmit();
+      });
+    }
+  }
+
+  function submitPracticeAnswer(answer, q) {
+    practiceAnswerSubmitted = true;
+    let isCorrect = false;
+
+    if (practiceMode === 'mcq') {
+      isCorrect = (answer === q.correctAnswer);
+      const optionButtons = document.querySelectorAll('.option-btn');
+      optionButtons.forEach(btn => {
+        btn.classList.add('disabled');
+        const key = btn.getAttribute('data-key');
+        if (key === q.correctAnswer) {
+          btn.classList.add('correct');
+        } else if (key === answer && !isCorrect) {
+          btn.classList.add('incorrect');
+        }
+      });
+    } else {
+      const normalizedUser = answer.toLowerCase().replace(/\s+/g, '');
+      const accepted = (q.acceptedAnswers || [q.correctAnswer]).map(a => String(a).toLowerCase().replace(/\s+/g, ''));
+      isCorrect = accepted.includes(normalizedUser);
+
+      const inputEl = document.getElementById('practice-fill-input');
+      if (inputEl) {
+        inputEl.disabled = true;
+        inputEl.style.borderColor = isCorrect ? 'var(--success)' : 'var(--error)';
+        inputEl.style.backgroundColor = isCorrect ? 'var(--success-light)' : 'var(--error-light)';
+      }
+    }
+
+    appState.history[q.id] = {
+      answered: true,
+      isCorrect: isCorrect,
+      lastAnswer: answer,
+      timestamp: Date.now()
+    };
+
+    if (!isCorrect) {
+      if (!appState.mistakes.includes(q.id)) {
+        appState.mistakes.push(q.id);
+      }
+    } else {
+      triggerConfetti();
+    }
+    saveState();
+
+    // Show Explanation
+    const expContainer = document.getElementById('practice-explanation-container');
+    const expHeader = document.getElementById('practice-explanation-header');
+    if (expContainer && expHeader) {
+      expHeader.className = `explanation-header ${isCorrect ? 'correct' : 'incorrect'}`;
+      expHeader.innerHTML = isCorrect 
+        ? `<span>🎉 Chính xác! Đáp án đúng là <strong>${q.correctAnswer}</strong></span>` 
+        : `<span>❌ Chưa chính xác! Đáp án đúng là <strong>${q.correctAnswer}</strong></span>`;
+      expContainer.style.display = 'block';
+      renderMath(expContainer);
+    }
+  }
+
+  function toggleBookmark(qid) {
+    const idx = appState.bookmarks.indexOf(qid);
+    if (idx >= 0) {
+      appState.bookmarks.splice(idx, 1);
+      showToast('Đã bỏ đánh dấu câu hỏi.');
+    } else {
+      appState.bookmarks.push(qid);
+      showToast('Đã lưu câu hỏi vào danh sách đánh dấu! ⭐', 'success');
+    }
+    saveState();
+  }
+
+  function triggerConfetti() {
+    if (window.confetti) {
+      window.confetti({
+        particleCount: 45,
+        spread: 60,
+        origin: { y: 0.7 }
+      });
+    }
+  }
+
+  // ==========================================
+  // EXAM MODE ENGINE
+  // ==========================================
+  function startExam(presetType, customConfig = {}) {
+    let pool = allQuestions.slice();
+    let durationMins = 30;
+    let questionCount = 25;
+
+    if (presetType === 'gk') {
+      pool = pool.filter(q => q.chapter === 1 || q.chapter === 2);
+      durationMins = 30;
+      questionCount = 25;
+    } else if (presetType === 'ck') {
+      pool = pool.slice();
+      durationMins = 50;
+      questionCount = 40;
+    } else if (presetType === 'custom') {
+      if (customConfig.chapters && customConfig.chapters.length > 0) {
+        pool = pool.filter(q => customConfig.chapters.includes(q.chapter));
+      }
+      durationMins = customConfig.time || 30;
+      questionCount = Math.min(customConfig.count || 25, pool.length);
+    }
+
+    examQuestions = shuffleArray(pool).slice(0, questionCount);
+    examAnswers = {};
+    examFlags = {};
+    currentExamIndex = 0;
+    examTotalTime = durationMins * 60;
+    examTimeRemaining = examTotalTime;
+
+    document.getElementById('exam-setup-view').style.display = 'none';
+    document.getElementById('exam-active-view').style.display = 'block';
+    document.getElementById('exam-result-view').style.display = 'none';
+
+    renderExamQuestion();
+    renderExamPalette();
+
+    if (examTimerInterval) clearInterval(examTimerInterval);
+    examTimerInterval = setInterval(() => {
+      examTimeRemaining--;
+      updateExamTimerDisplay();
+      if (examTimeRemaining <= 0) {
+        clearInterval(examTimerInterval);
+        submitExam();
+        showToast('Hết giờ làm bài!', 'error');
+      }
+    }, 1000);
+    updateExamTimerDisplay();
+  }
+
+  function updateExamTimerDisplay() {
+    const timerEl = document.getElementById('exam-timer-text');
+    if (!timerEl) return;
+    const mins = Math.floor(examTimeRemaining / 60);
+    const secs = examTimeRemaining % 60;
+    timerEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    if (examTimeRemaining < 300) {
+      timerEl.classList.add('danger');
+    } else {
+      timerEl.classList.remove('danger');
+    }
+  }
+
+  function renderExamPalette() {
+    const paletteEl = document.getElementById('exam-palette-grid');
+    if (!paletteEl) return;
+    paletteEl.innerHTML = '';
+
+    examQuestions.forEach((q, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'palette-btn';
+      if (idx === currentExamIndex) btn.classList.add('active');
+      if (examAnswers[idx] !== undefined) btn.classList.add('answered');
+      if (examFlags[idx]) btn.classList.add('flagged');
+      btn.textContent = idx + 1;
+      btn.addEventListener('click', () => {
+        currentExamIndex = idx;
+        renderExamQuestion();
+        renderExamPalette();
+      });
+      paletteEl.appendChild(btn);
+    });
+  }
+
+  function renderExamQuestion() {
+    const container = document.getElementById('exam-question-card');
+    if (!container) return;
+    const q = examQuestions[currentExamIndex];
+    const isFlagged = examFlags[currentExamIndex];
+    const selectedAnswer = examAnswers[currentExamIndex];
+
+    let html = `
+      <div class="quiz-header-meta">
+        <div class="badge-tags">
+          <span class="badge badge-chapter">Chương ${q.chapter}</span>
+          <span class="badge badge-group">Bài ${q.group}</span>
+          <span class="badge">${q.examTag}</span>
+        </div>
+        <button class="icon-btn ${isFlagged ? 'active' : ''}" id="btn-exam-flag">
+          ${isFlagged ? '★ Đã đánh dấu' : '☆ Đánh dấu xem lại'}
+        </button>
+      </div>
+
+      <div class="quiz-question-text">
+        <strong>Câu ${currentExamIndex + 1}:</strong> ${enhanceRegisterTooltips(q.question)}
+      </div>
+
+      <div class="options-grid">
+    `;
+
+    q.options.forEach((opt, idx) => {
+      const key = opt.key || ['A', 'B', 'C', 'D'][idx];
+      const isSelected = selectedAnswer === key;
+      html += `
+        <button class="option-btn ${isSelected ? 'correct' : ''}" data-key="${key}">
+          <div class="option-key">${key}</div>
+          <div class="option-content">${enhanceRegisterTooltips(opt.text)}</div>
+        </button>
+      `;
+    });
+
+    html += `
+      </div>
+      <div class="quiz-nav-bottom">
+        <button class="btn btn-secondary" id="btn-exam-prev" ${currentExamIndex === 0 ? 'disabled' : ''}>← Câu trước</button>
+        <button class="btn btn-primary" id="btn-exam-next">
+          ${currentExamIndex === examQuestions.length - 1 ? 'Nộp bài 🏁' : 'Câu tiếp theo →'}
+        </button>
+      </div>
+    `;
+
+    container.innerHTML = html;
+    renderMath(container);
+
+    document.getElementById('btn-exam-flag')?.addEventListener('click', () => {
+      examFlags[currentExamIndex] = !examFlags[currentExamIndex];
+      renderExamQuestion();
+      renderExamPalette();
+    });
+
+    container.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-key');
+        examAnswers[currentExamIndex] = key;
+        renderExamQuestion();
+        renderExamPalette();
+      });
+    });
+
+    document.getElementById('btn-exam-prev')?.addEventListener('click', () => {
+      if (currentExamIndex > 0) {
+        currentExamIndex--;
+        renderExamQuestion();
+        renderExamPalette();
+      }
+    });
+
+    document.getElementById('btn-exam-next')?.addEventListener('click', () => {
+      if (currentExamIndex < examQuestions.length - 1) {
+        currentExamIndex++;
+        renderExamQuestion();
+        renderExamPalette();
+      } else {
+        confirmSubmitExam();
+      }
+    });
+  }
+
+  function confirmSubmitExam() {
+    const answeredCount = Object.keys(examAnswers).length;
+    const totalCount = examQuestions.length;
+    const unanswered = totalCount - answeredCount;
+
+    let confirmMsg = `Bạn đã hoàn thành ${answeredCount}/${totalCount} câu hỏi.`;
+    if (unanswered > 0) {
+      confirmMsg += ` Vẫn còn ${unanswered} câu chưa điền đáp án! Bạn có chắc chắn muốn nộp bài?`;
+    } else {
+      confirmMsg += ' Bạn có chắc chắn muốn nộp bài thi?';
+    }
+
+    if (confirm(confirmMsg)) {
+      submitExam();
+    }
+  }
+
+  function submitExam() {
+    if (examTimerInterval) clearInterval(examTimerInterval);
+
+    let correctCount = 0;
+    const wrongQuestions = [];
+
+    examQuestions.forEach((q, idx) => {
+      const userAns = examAnswers[idx];
+      const isCorrect = userAns === q.correctAnswer;
+      if (isCorrect) {
+        correctCount++;
+      } else {
+        wrongQuestions.push({ question: q, userAns: userAns });
+        if (!appState.mistakes.includes(q.id)) {
+          appState.mistakes.push(q.id);
+        }
+      }
+      appState.history[q.id] = {
+        answered: true,
+        isCorrect: isCorrect,
+        lastAnswer: userAns || 'Chưa trả lời',
+        timestamp: Date.now()
+      };
+    });
+
+    saveState();
+
+    document.getElementById('exam-active-view').style.display = 'none';
+    const resultView = document.getElementById('exam-result-view');
+    resultView.style.display = 'block';
+
+    const score = ((correctCount / examQuestions.length) * 10).toFixed(1);
+    const timeSpent = examTotalTime - examTimeRemaining;
+    const minsSpent = Math.floor(timeSpent / 60);
+    const secsSpent = timeSpent % 60;
+
+    let html = `
+      <div style="text-align: center; margin-bottom: 28px;">
+        <div style="font-size: 3rem; margin-bottom: 8px;">${score >= 8.0 ? '🏆' : score >= 5.0 ? '👏' : '💪'}</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 6px;">Điểm số của bạn: ${score} / 10</h2>
+        <p style="color: var(--text-secondary);">
+          Đúng <strong>${correctCount}/${examQuestions.length}</strong> câu • Thời gian làm bài: <strong>${minsSpent} phút ${secsSpent} giây</strong>
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 30px;">
+        <button class="btn btn-primary" id="btn-exam-retry">Làm đề khác 🔄</button>
+        <button class="btn btn-secondary" id="btn-view-mistakes-tab">Vào Sổ tay câu sai 📖</button>
+      </div>
+
+      <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;">Chi tiết bài làm:</h3>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+    `;
+
+    examQuestions.forEach((q, idx) => {
+      const userAns = examAnswers[idx];
+      const isCorrect = userAns === q.correctAnswer;
+      html += `
+        <div style="background-color: var(--bg-surface); border: 1px solid ${isCorrect ? 'var(--success-border)' : 'var(--error-border)'}; border-radius: var(--radius-md); padding: 18px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-weight: 700;">Câu ${idx + 1} (${q.group})</span>
+            <span style="font-weight: 700; color: ${isCorrect ? 'var(--success)' : 'var(--error)'};">
+              ${isCorrect ? '✓ Đúng' : '✗ Sai'}
+            </span>
+          </div>
+          <div style="margin-bottom: 8px;">${enhanceRegisterTooltips(q.question)}</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 6px;">
+            Đáp án của bạn: <strong>${userAns || '(Chưa điền)'}</strong> | Đáp án đúng: <strong style="color: var(--success);">${q.correctAnswer}</strong>
+          </div>
+          <div style="font-size: 0.85rem; background-color: var(--bg-muted); padding: 10px; border-radius: 6px; margin-top: 8px;">
+            <strong>Giải thích:</strong> ${enhanceRegisterTooltips(q.explanation)}
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    resultView.innerHTML = html;
+    renderMath(resultView);
+
+    if (score >= 8.0) triggerConfetti();
+
+    document.getElementById('btn-exam-retry')?.addEventListener('click', () => {
+      document.getElementById('exam-setup-view').style.display = 'block';
+      document.getElementById('exam-active-view').style.display = 'none';
+      document.getElementById('exam-result-view').style.display = 'none';
+    });
+
+    document.getElementById('btn-view-mistakes-tab')?.addEventListener('click', () => {
+      switchTab('mistakes');
+    });
+  }
+
+  // ==========================================
+  // FLASHCARDS ENGINE
+  // ==========================================
+  function initFlashcards() {
+    const chSelect = document.getElementById('flashcard-filter-chapter');
+    const chVal = chSelect ? chSelect.value : 'all';
+
+    let cards = allQuestions.slice();
+    if (chVal !== 'all') {
+      cards = cards.filter(q => q.chapter === parseInt(chVal));
+    }
+
+    flashcardQueue = cards;
+    currentFlashcardIndex = 0;
+    isCardFlipped = false;
+    renderFlashcard();
+  }
+
+  function renderFlashcard() {
+    const cardContainer = document.getElementById('flashcard-card-box');
+    if (!cardContainer || flashcardQueue.length === 0) return;
+
+    const q = flashcardQueue[currentFlashcardIndex];
+    isCardFlipped = false;
+
+    const counterEl = document.getElementById('flashcard-counter');
+    if (counterEl) counterEl.textContent = `Thẻ ${currentFlashcardIndex + 1} / ${flashcardQueue.length}`;
+
+    cardContainer.innerHTML = `
+      <div class="flashcard-inner" id="flashcard-inner-box">
+        <div class="flashcard-front">
+          <div class="flashcard-type">Chương ${q.chapter} • Bài ${q.group} • ${q.examTag}</div>
+          <div class="flashcard-main-text">${enhanceRegisterTooltips(q.question)}</div>
+          <div class="flashcard-hint">💡 Nhấn vào thẻ hoặc phím Space để lật xem đáp án & giải thích</div>
+        </div>
+        <div class="flashcard-back">
+          <div class="flashcard-type" style="color: var(--success);">Đáp án: ${q.correctAnswer}</div>
+          <div style="font-size: 0.95rem; line-height: 1.6; overflow-y: auto; max-height: 250px;">
+            ${enhanceRegisterTooltips(q.explanation)}
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">Trang ${q.pdfPage} (KTMT.pdf)</div>
+        </div>
+      </div>
+    `;
+
+    renderMath(cardContainer);
+
+    const innerBox = document.getElementById('flashcard-inner-box');
+    innerBox?.addEventListener('click', () => {
+      isCardFlipped = !isCardFlipped;
+      innerBox.classList.toggle('flipped', isCardFlipped);
+    });
+  }
+
+  // ==========================================
+  // SỔ TAY CÂU SAI (MISTAKES NOTEBOOK)
+  // ==========================================
+  function renderMistakesList() {
+    const container = document.getElementById('mistakes-container');
+    if (!container) return;
+
+    const mistakeQues = allQuestions.filter(q => appState.mistakes.includes(q.id));
+
+    if (mistakeQues.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 12px;">🎉</div>
+          <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Tuyệt vời! Bạn không có câu sai nào</h3>
+          <p style="color: var(--text-secondary); max-width: 480px; margin: 0 auto 20px auto;">
+            Mỗi khi làm bài tập hoặc thi thử có câu trả lời sai, câu đó sẽ tự động được thêm vào đây để bạn dễ dàng ôn luyện lại.
+          </p>
+          <button class="btn btn-primary" id="btn-goto-practice">Luyện tập thêm ngay</button>
+        </div>
+      `;
+      document.getElementById('btn-goto-practice')?.addEventListener('click', () => switchTab('practice'));
+      return;
+    }
+
+    let html = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 style="font-size: 1.4rem; font-weight: 700;">Sổ tay câu sai (${mistakeQues.length} câu)</h2>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);">Tập trung giải quyết các điểm yếu kiến trúc máy tính của bạn</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-primary" id="btn-practice-all-mistakes">Luyện tập lại các câu sai 🎯</button>
+          <button class="btn btn-secondary" id="btn-clear-mistakes">Xóa toàn bộ câu sai 🗑️</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+    `;
+
+    mistakeQues.forEach((q, idx) => {
+      html += `
+        <div class="quiz-card" style="margin-bottom: 0;">
+          <div class="quiz-header-meta">
+            <div class="badge-tags">
+              <span class="badge badge-chapter">Chương ${q.chapter}</span>
+              <span class="badge badge-group">Bài ${q.group}</span>
+              <span class="badge badge-tag-ck">${q.examTag}</span>
+              <span class="badge" style="background-color: var(--bg-muted); color: var(--text-secondary);">Trang ${q.pdfPage}</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" data-remove-id="${q.id}" style="padding: 4px 10px; font-size: 0.8rem;">
+              Đã thành thạo (Xóa khỏi danh sách) ✓
+            </button>
+          </div>
+          <div style="font-weight: 600; font-size: 1.05rem; margin-bottom: 12px;">
+            ${enhanceRegisterTooltips(q.question)}
+          </div>
+          <div style="background-color: var(--bg-muted); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;">
+            <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">Đáp án đúng: ${q.correctAnswer}</div>
+            <div style="color: var(--text-secondary);">${enhanceRegisterTooltips(q.explanation)}</div>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+    renderMath(container);
+
+    container.querySelectorAll('[data-remove-id]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-remove-id');
+        const idx = appState.mistakes.indexOf(id);
+        if (idx >= 0) {
+          appState.mistakes.splice(idx, 1);
+          saveState();
+          renderMistakesList();
+          renderDashboard();
+          showToast('Đã xóa câu hỏi khỏi Sổ tay câu sai! 👍', 'success');
+        }
+      });
+    });
+
+    document.getElementById('btn-clear-mistakes')?.addEventListener('click', () => {
+      if (confirm('Bạn có chắc chắn muốn xóa toàn bộ danh sách câu sai?')) {
+        appState.mistakes = [];
+        saveState();
+        renderMistakesList();
+        renderDashboard();
+        showToast('Đã làm trống sổ tay câu sai.');
+      }
+    });
+
+    document.getElementById('btn-practice-all-mistakes')?.addEventListener('click', () => {
+      practiceQueue = mistakeQues.slice();
+      currentPracticeIndex = 0;
+      switchTab('practice');
+    });
+  }
+
+  // ==========================================
+  // THỐNG KÊ & DỮ LIỆU
+  // ==========================================
+  function renderStats() {
+    const statsContainer = document.getElementById('stats-view-content');
+    if (!statsContainer) return;
+
+    const totalQ = allQuestions.length;
+    const answeredEntries = Object.entries(appState.history);
+    const totalAnswered = answeredEntries.length;
+    const correctCount = answeredEntries.filter(([_, h]) => h.isCorrect).length;
+    const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+
+    let html = `
+      <div class="stats-grid" style="margin-bottom: 32px;">
+        <div class="stat-card">
+          <div class="stat-icon blue">📊</div>
+          <div class="stat-info">
+            <div class="stat-value">${totalAnswered} / ${totalQ}</div>
+            <div class="stat-label">Số câu đã làm</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">🎯</div>
+          <div class="stat-info">
+            <div class="stat-value">${accuracy}%</div>
+            <div class="stat-label">Độ chính xác trung bình</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">⭐</div>
+          <div class="stat-info">
+            <div class="stat-value">${appState.bookmarks.length}</div>
+            <div class="stat-label">Câu đã đánh dấu</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red">⚠️</div>
+          <div class="stat-info">
+            <div class="stat-value">${appState.mistakes.length}</div>
+            <div class="stat-label">Câu cần ôn lại</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Tiến độ theo chương</h3>
+      <div style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px; margin-bottom: 32px;">
+    `;
+
+    [1, 2, 3, 4].forEach(chNum => {
+      const chQuestions = allQuestions.filter(q => q.chapter === chNum);
+      const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
+      const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;
+      const chTitle = chaptersList.find(c => c.id === chNum)?.title || `Chương ${chNum}`;
+
+      html += `
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.95rem; margin-bottom: 6px;">
+            <span>Chương ${chNum}: ${chTitle}</span>
+            <span>${chCorrect.length} / ${chQuestions.length} câu (${pct}%)</span>
+          </div>
+          <div class="chapter-progress-bar" style="height: 10px;">
+            <div class="chapter-progress-fill" style="width: ${pct}%;"></div>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `
+      </div>
+
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Sao lưu & Phục hồi dữ liệu học tập</h3>
+      <div style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px;">
+        <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.92rem;">
+          Toàn bộ lịch sử làm bài, danh sách câu sai, dấu trang và ghi chú được lưu an toàn trong trình duyệt của bạn. Bạn có thể xuất ra file JSON để đồng bộ sang máy khác hoặc dự phòng.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn btn-primary" id="btn-export-json">Xuất dữ liệu (.json) 💾</button>
+          <label class="btn btn-secondary" style="cursor: pointer; margin-bottom: 0;">
+            Nhập dữ liệu từ file 📥
+            <input type="file" id="input-import-json" accept=".json" style="display: none;" />
+          </label>
+          <button class="btn btn-secondary" id="btn-reset-all-data" style="color: var(--error);">
+            Xóa toàn bộ dữ liệu ⚠️
+          </button>
+        </div>
+      </div>
+    `;
+
+    statsContainer.innerHTML = html;
+
+    // JSON Export
+    document.getElementById('btn-export-json')?.addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ktmt-learning-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Đã tải xuống file sao lưu!');
+    });
+
+    // JSON Import
+    document.getElementById('input-import-json')?.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const imported = JSON.parse(event.target.result);
+          Object.assign(appState, imported);
+          saveState();
+          showToast('Nhập dữ liệu thành công! Đang tải lại...', 'success');
+          setTimeout(() => location.reload(), 1000);
+        } catch (err) {
+          showToast('File JSON không hợp lệ!', 'error');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // Reset Data
+    document.getElementById('btn-reset-all-data')?.addEventListener('click', () => {
+      if (confirm('Bạn có chắc chắn muốn xóa TOÀN BỘ dữ liệu học tập? Thao tác này không thể hoàn tác!')) {
+        localStorage.removeItem(STORAGE_KEY);
+        showToast('Đã xóa dữ liệu. Đang tải lại...');
+        setTimeout(() => location.reload(), 1000);
+      }
+    });
+  }
+
+  // ==========================================
+  // MODALS & NOTES
+  // ==========================================
+  function openPdfModal(page = 1) {
+    const modal = document.getElementById('modal-pdf');
+    const iframe = document.getElementById('pdf-modal-iframe');
+    const openNewTabLink = document.getElementById('pdf-open-new-tab-btn');
+    if (!modal || !iframe) return;
+
+    iframe.src = `KTMT.pdf#page=${page}`;
+    if (openNewTabLink) {
+      openNewTabLink.href = `KTMT.pdf#page=${page}`;
+    }
+    modal.classList.add('open');
+  }
+
+  function openNoteModal(qid) {
+    const modal = document.getElementById('modal-note');
+    const noteTextarea = document.getElementById('note-modal-textarea');
+    const saveBtn = document.getElementById('note-modal-save-btn');
+    if (!modal || !noteTextarea) return;
+
+    noteTextarea.value = appState.notes[qid] || '';
+    modal.classList.add('open');
+
+    saveBtn.onclick = () => {
+      const text = noteTextarea.value.trim();
+      if (text) {
+        appState.notes[qid] = text;
+      } else {
+        delete appState.notes[qid];
+      }
+      saveState();
+      modal.classList.remove('open');
+      showToast('Đã lưu ghi chú!', 'success');
+      renderPracticeQuestion();
+    };
+  }
+
+  // ==========================================
+  // INTERACTIVE TOOLS TAB CONTROLLER
+  // ==========================================
+  function initTools() {
+    // Tool Tab Navigation
+    document.querySelectorAll('.tool-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTool = btn.getAttribute('data-tool');
+        document.querySelectorAll('.tool-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById(`tool-panel-${targetTool}`)?.classList.add('active');
+      });
+    });
+
+    // Tool 1: CPU Performance Calculator
+    const calcPerf = () => {
+      const getNumVal = (id, fallback) => {
+        const el = document.getElementById(id);
+        if (!el) return fallback;
+        const v = parseFloat(el.value);
+        return isNaN(v) ? fallback : v;
+      };
+
+      const f0 = getNumVal('calc-f0', 2.0);
+      const fUnit = document.getElementById('calc-f-unit')?.value || 'GHz';
+      const ic = getNumVal('calc-ic', 1000000);
+      const cpi = getNumVal('calc-cpi', 1.5);
+
+      const pMissI = getNumVal('calc-miss-i', 0.02);
+      const pMem = getNumVal('calc-pmem', 0.3);
+      const pMissD = getNumVal('calc-miss-d', 0.05);
+      const penalty = getNumVal('calc-penalty', 50);
+
+      if (window.KTMT_TOOLS && window.KTMT_TOOLS.calcPerformance) {
+        const perf = window.KTMT_TOOLS.calcPerformance({
+          fVal: f0,
+          fUnit: fUnit,
+          icVal: ic,
+          icUnit: 'raw',
+          cpiVal: cpi,
+          mode: 'from_cpi'
+        });
+        const eff = window.KTMT_TOOLS.calcEffectiveCPI(cpi, penalty, pMissI * 100, pMissD * 100, pMem * 100);
+
+        const elT0 = document.getElementById('perf-res-t0');
+        const elTcpu = document.getElementById('perf-res-tcpu');
+        const elMips = document.getElementById('perf-res-mips');
+        const elEff = document.getElementById('perf-res-eff-cpi');
+
+        if (elT0) elT0.textContent = perf.T0_ns ? `${perf.T0_ns.toFixed(3)} ns` : '--';
+        if (elTcpu) elTcpu.textContent = perf.t_CPU_sec ? `${perf.t_CPU_sec.toFixed(6)} s` : '--';
+        if (elMips) elMips.textContent = perf.MIPS ? perf.MIPS.toFixed(2) : '--';
+        if (elEff) elEff.textContent = eff.effectiveCPI ? eff.effectiveCPI.toFixed(3) : '--';
+      }
+    };
+
+    ['calc-f0', 'calc-f-unit', 'calc-ic', 'calc-cpi', 'calc-miss-i', 'calc-pmem', 'calc-miss-d', 'calc-penalty'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', calcPerf);
+      document.getElementById(id)?.addEventListener('change', calcPerf);
+    });
+    calcPerf();
+
+    // Tool 2: Memory Banks Simulator
+    const simMemory = () => {
+      const addrInput = document.getElementById('mem-sim-addr')?.value || '0x1004';
+      const busWidth = parseInt(document.getElementById('mem-sim-bus')?.value) || 32;
+
+      if (window.KTMT_TOOLS && window.KTMT_TOOLS.simulateMemory) {
+        const res = window.KTMT_TOOLS.simulateMemory(busWidth, addrInput, "0x12345678");
+        const elBanks = document.getElementById('mem-res-banks-count');
+        const elIdx = document.getElementById('mem-res-bank-index');
+        const elWord = document.getElementById('mem-res-word-addr');
+
+        const firstByte = res.bytes && res.bytes[0];
+        if (elBanks) elBanks.textContent = res.K;
+        if (elIdx) elIdx.textContent = firstByte ? firstByte.bank : 0;
+        if (elWord) elWord.textContent = res.baseAddrHex;
+
+        // Render visual banks
+        const grid = document.getElementById('mem-banks-grid-display');
+        if (grid && res.banks) {
+          let gridHtml = '';
+          grid.style.gridTemplateColumns = `repeat(${res.K}, 1fr)`;
+          for (let b = 0; b < res.K; b++) {
+            const bytesInBank = res.banks[b] || [];
+            const hasBytes = bytesInBank.length > 0;
+            gridHtml += `
+              <div class="memory-bank-col ${hasBytes ? 'highlighted' : ''}">
+                <div class="bank-header">Bank ${b} ${hasBytes ? '🎯' : ''}</div>
+                <div class="bank-cells">
+            `;
+            if (hasBytes) {
+              bytesInBank.forEach(item => {
+                gridHtml += `<div class="bank-cell active-byte">${item.hexAddr}: 0x${item.val}</div>`;
+              });
+            } else {
+              gridHtml += `<div class="bank-cell" style="color:var(--text-muted);">(Trống)</div>`;
+            }
+            gridHtml += `</div></div>`;
+          }
+          grid.innerHTML = gridHtml;
+        }
+      }
+    };
+
+    document.getElementById('mem-sim-addr')?.addEventListener('input', simMemory);
+    document.getElementById('mem-sim-bus')?.addEventListener('change', simMemory);
+    simMemory();
+
+    // Tool 3: Number & IEEE 754 Converter
+    const convertIEEE = () => {
+      const floatInput = parseFloat(document.getElementById('ieee-float-input')?.value);
+      if (!isNaN(floatInput) && window.KTMT_TOOLS && window.KTMT_TOOLS.floatToIEEE754) {
+        const res = window.KTMT_TOOLS.floatToIEEE754(floatInput);
+        const elHex = document.getElementById('ieee-res-hex');
+        const elSign = document.getElementById('ieee-res-sign');
+        const elExp = document.getElementById('ieee-res-exp');
+        const elMant = document.getElementById('ieee-res-mantissa');
+
+        if (elHex) elHex.textContent = res.hex;
+        if (elSign) elSign.textContent = `${res.signBit} (${res.signBit === '0' ? '+ Dương' : '- Âm'})`;
+        if (elExp) elExp.textContent = `${res.expBits} (${res.biasedExp} - 127 = ${res.realE})`;
+        if (elMant) elMant.textContent = res.fracBits;
+      }
+    };
+
+    document.getElementById('ieee-float-input')?.addEventListener('input', convertIEEE);
+    convertIEEE();
+
+    // Tool 4: RISC-V Disassembler
+    const disasmRISCV = () => {
+      const hexInput = document.getElementById('riscv-hex-input')?.value.trim() || '0x00500093';
+
+      if (window.KTMT_TOOLS && window.KTMT_TOOLS.decodeRISCV) {
+        const dec = window.KTMT_TOOLS.decodeRISCV(hexInput);
+        const elType = document.getElementById('riscv-dec-type');
+        const elOp = document.getElementById('riscv-dec-opcode');
+        const elAsm = document.getElementById('riscv-dec-asm');
+        const elFields = document.getElementById('riscv-dec-fields');
+
+        if (elType) elType.textContent = dec.format || 'Unknown';
+        if (elOp) elOp.textContent = dec.opcode ? `0b${dec.opcode}` : '--';
+        if (elAsm) elAsm.textContent = dec.asmStr || 'Mã không hợp lệ';
+        if (elFields) elFields.textContent = `${dec.rd || ''} | ${dec.rs1 || ''} | ${dec.rs2 || ''} | imm: ${dec.immVal !== undefined ? dec.immVal : '--'}`;
+      }
+    };
+
+    document.getElementById('riscv-hex-input')?.addEventListener('input', disasmRISCV);
+    disasmRISCV();
+  }
+
+  // ==========================================
+  // GLOBAL KEYBOARD SHORTCUTS
+  // ==========================================
+  document.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+    if (currentTab === 'practice') {
+      if (['1', '2', '3', '4'].includes(e.key)) {
+        const idx = parseInt(e.key) - 1;
+        const btn = document.querySelector(`.option-btn[data-index="${idx}"]`);
+        btn?.click();
+      } else if (['a', 'b', 'c', 'd', 'A', 'B', 'C', 'D'].includes(e.key)) {
+        const key = e.key.toUpperCase();
+        const btn = document.querySelector(`.option-btn[data-key="${key}"]`);
+        btn?.click();
+      } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        document.getElementById('btn-next-question')?.click();
+      } else if (e.key === 'ArrowLeft') {
+        document.getElementById('btn-prev-question')?.click();
+      }
+    } else if (currentTab === 'flashcard') {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('flashcard-inner-box')?.click();
+      } else if (e.key === 'ArrowRight') {
+        document.getElementById('btn-flashcard-next')?.click();
+      } else if (e.key === 'ArrowLeft') {
+        document.getElementById('btn-flashcard-prev')?.click();
+      }
+    }
+  });
+
+  // Jump to specific group practice from theory page
+  function startGroupPractice(groupId) {
+    document.getElementById('practice-filter-chapter').value = 'all';
+    initPracticeQueue();
+    document.getElementById('practice-filter-group').value = groupId;
+    initPracticeQueue();
+    switchTab('practice');
+  }
+
+  // ==========================================
+  // INITIALIZATION ON DOM READY
+  // ==========================================
+  window.addEventListener('DOMContentLoaded', () => {
+    applyTheme(appState.theme);
+
+    // Sidebar navigation clicks
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const tab = item.getAttribute('data-tab');
+        if (tab) switchTab(tab);
+      });
+    });
+
+    // Mobile sidebar toggle
+    document.getElementById('btn-toggle-sidebar')?.addEventListener('click', () => {
+      document.getElementById('sidebar')?.classList.toggle('open');
+    });
+
+    // Theme toggle button
+    document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
+      applyTheme(appState.theme === 'dark' ? 'light' : 'dark');
+    });
+
+    // Top search bar
+    const searchInput = document.getElementById('global-search-input');
+    searchInput?.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (q.length >= 2) {
+        const matched = allQuestions.filter(item => 
+          item.question.toLowerCase().includes(q) || 
+          item.group.toLowerCase().includes(q) ||
+          item.explanation.toLowerCase().includes(q)
+        );
+        if (matched.length > 0) {
+          practiceQueue = matched;
+          currentPracticeIndex = 0;
+          switchTab('practice');
+        }
+      }
+    });
+
+    // Modal close buttons
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.modal-overlay')?.classList.remove('open');
+      });
+    });
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('open');
+      });
+    });
+
+    // Theory chapter tab buttons
+    document.querySelectorAll('.theory-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ch = parseInt(btn.getAttribute('data-chapter'));
+        renderTheory(ch);
+      });
+    });
+
+    // Flashcard buttons
+    document.getElementById('btn-flashcard-prev')?.addEventListener('click', () => {
+      if (currentFlashcardIndex > 0) {
+        currentFlashcardIndex--;
+        renderFlashcard();
+      }
+    });
+    document.getElementById('btn-flashcard-next')?.addEventListener('click', () => {
+      if (currentFlashcardIndex < flashcardQueue.length - 1) {
+        currentFlashcardIndex++;
+        renderFlashcard();
+      }
+    });
+    document.getElementById('btn-flashcard-flip')?.addEventListener('click', () => {
+      document.getElementById('flashcard-inner-box')?.click();
+    });
+    document.getElementById('btn-flashcard-shuffle')?.addEventListener('click', () => {
+      flashcardQueue = shuffleArray(flashcardQueue);
+      currentFlashcardIndex = 0;
+      renderFlashcard();
+      showToast('Đã trộn ngẫu nhiên thẻ ghi nhớ!');
+    });
+    document.getElementById('flashcard-filter-chapter')?.addEventListener('change', initFlashcards);
+
+    // Practice filter change events
+    ['practice-filter-chapter', 'practice-filter-tag', 'practice-filter-group', 'practice-shuffle-toggle'].forEach(id => {
+      document.getElementById(id)?.addEventListener('change', () => {
+        initPracticeQueue();
+        renderPracticeQuestion();
+      });
+    });
+
+    // Exam Presets
+    document.getElementById('btn-exam-start-gk')?.addEventListener('click', () => startExam('gk'));
+    document.getElementById('btn-exam-start-ck')?.addEventListener('click', () => startExam('ck'));
+    document.getElementById('btn-exam-submit-confirm')?.addEventListener('click', confirmSubmitExam);
+
+    // Dashboard quick action buttons
+    document.getElementById('btn-dash-start-practice')?.addEventListener('click', () => switchTab('practice'));
+    document.getElementById('btn-dash-start-exam')?.addEventListener('click', () => switchTab('exam'));
+    document.getElementById('btn-dash-open-pdf')?.addEventListener('click', () => openPdfModal(1));
+
+    // Dashboard chapter card clicks
+    document.querySelectorAll('.chapter-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const ch = parseInt(card.getAttribute('data-chapter'));
+        document.getElementById('practice-filter-chapter').value = String(ch);
+        initPracticeQueue();
+        switchTab('practice');
+      });
+    });
+
+    // Initialize tools
+    initTools();
+
+    // Initial render
+    switchTab('dashboard');
+  });
+
+  // Export for debugging & in-line event handlers
+  window.KTMT_APP = {
+    state: appState,
+    switchTab,
+    openPdfModal,
+    startGroupPractice
+  };
+})();
