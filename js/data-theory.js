@@ -51,7 +51,7 @@
     }
   });
 
-  // 2. Cấu trúc 4 Chương chuẩn
+  // 2. Cấu trúc 4 Chương chuẩn (Bám sát 100% mục lục và phân nhóm trong KTMT.pdf)
   root.KTMT_CHAPTERS = [
     {
       id: 1,
@@ -62,13 +62,13 @@
       printedPageStart: 4,
       theorySections: ["1.1.1", "1.1.2", "1.1.3", "1.1.4"],
       groups: [
-        { id: "1.1", title: "Câu hỏi Ôn tập Lý thuyết Chương 1" },
-        { id: "1.2.1", title: "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ" },
-        { id: "1.2.2", title: "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (t_CPU)" },
-        { id: "1.2.3", title: "Nhóm 3: Bài tập về chỉ số tốc độ MIPS" },
-        { id: "1.2.4", title: "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh" },
-        { id: "1.2.5", title: "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý" },
-        { id: "1.2.6", title: "Nhóm 6: CPI hiệu dụng và Phân loại kiến trúc máy tính" }
+        { id: "1.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 1", type: "theory", pdfPage: 4, exercises: "Lý thuyết 1.1 - 1.6", count: 6, summary: "Kiến thức nền tảng: Mô hình von Neumann, phân loại máy tính, các mức dịch chương trình và phân loại Flynn." },
+        { id: "1.2.1", title: "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ", type: "exercise", pdfPage: 10, exercises: "Bài tập 1.1 - 1.5", count: 5, summary: "Mô hình von Neumann (CPU, RAM, I/O, Bus), thứ tự phân cấp dung lượng bộ nhớ (Register < L1 < L2 < L3 < RAM < SSD/HDD) và mẹo chọn cấu hình PC." },
+        { id: "1.2.2", title: "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)", type: "exercise", pdfPage: 13, exercises: "Bài tập 1.6 - 1.12", count: 7, summary: "Công thức cơ bản: T0 = 1/f0; tCPU = n * T0 = (IC * CPI)/f0. Mẹo nhanh: f0 (GHz) và T0 (ns) triệt tiêu số mũ 10^9 và 10^-9." },
+        { id: "1.2.3", title: "Nhóm 3: Bài tập về chỉ số tốc độ MIPS", type: "exercise", pdfPage: 16, exercises: "Bài tập 1.13 - 1.19", count: 7, summary: "MIPS = IC / (tCPU * 10^6) = f0 (MHz) / CPI = [f0 (GHz) * 1000] / CPI. Đơn vị đo số triệu lệnh thực thi trong 1 giây." },
+        { id: "1.2.4", title: "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh", type: "exercise", pdfPage: 19, exercises: "Bài tập 1.20 - 1.27", count: 8, summary: "CPI_TB = (sum CPI_i * IC_i) / (sum IC_i) hoặc CPI_TB = sum (p_i% * CPI_i). Sau đó thay vào tính tCPU = (IC * CPI_TB) / f0." },
+        { id: "1.2.5", title: "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý", type: "exercise", pdfPage: 22, exercises: "Bài tập 1.28 - 1.32", count: 12, summary: "P = 1 / tCPU. So sánh: P_A / P_B = t_B / t_A (máy chạy ít thời gian hơn là máy nhanh hơn). Bài toán thay đổi f0 khi giảm thời gian và tăng CPI." },
+        { id: "1.2.6", title: "Nhóm 6: CPI hiệu dụng và Phân loại kiến trúc máy tính", type: "exercise", pdfPage: 29, exercises: "Bài tập 1.33 - 1.35", count: 4, summary: "CPI_hiệu dụng = CPI_cơ bản + Chu kỳ phạt trượt lệnh (100% * miss_I * penalty) + Chu kỳ phạt trượt dữ liệu (%LoadStore * miss_D * penalty). Phân loại Flynn: Multicore = MIMD bộ nhớ dùng chung; chưa có thực tế = MISD." }
       ]
     },
     {
@@ -80,11 +80,11 @@
       printedPageStart: 31,
       theorySections: ["2.1.1", "2.1.2", "2.1.3"],
       groups: [
-        { id: "2.1", title: "Câu hỏi Ôn tập Lý thuyết Chương 2" },
-        { id: "2.2.1", title: "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ" },
-        { id: "2.2.2", title: "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ" },
-        { id: "2.2.3", title: "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)" },
-        { id: "2.2.4", title: "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ" }
+        { id: "2.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 2", type: "theory", pdfPage: 31, exercises: "Lý thuyết 2.1 - 2.6", count: 6, summary: "Cấu trúc CPU, chu trình thực hiện lệnh, phân loại ngắt và cấu trúc kết nối bus hệ thống." },
+        { id: "2.2.1", title: "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ", type: "exercise", pdfPage: 37, exercises: "Bài tập 2.1 - 2.6", count: 6, summary: "3 giai đoạn: Nhận lệnh (PC -> Bus địa chỉ, M[PC] -> IR, PC += 4), Giải mã (CU), Thực thi (ALU/Register). Nguyên tắc ngăn nhớ: Giá trị thay đổi nhưng địa chỉ luôn cố định." },
+        { id: "2.2.2", title: "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ", type: "exercise", pdfPage: 39, exercises: "Bài tập 2.7 - 2.16", count: 10, summary: "Công thức không gian nhớ: M = 2^N (byte hoặc word). Số đường bus địa chỉ: N = log2(M). Số đường bus dữ liệu xác định số bit truyền song song trên mỗi chu kỳ." },
+        { id: "2.2.3", title: "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)", type: "exercise", pdfPage: 44, exercises: "Bài tập 2.17 - 2.22", count: 6, summary: "Số modul nhớ: K = Bus dữ liệu / 8. Vị trí Bank chứa byte = Địa chỉ mod K. Địa chỉ byte bên trong modul = floor(Địa chỉ / K)." },
+        { id: "2.2.4", title: "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ", type: "exercise", pdfPage: 47, exercises: "Bài tập 2.23 - 2.31", count: 9, summary: "So sánh hiệu suất: Polling (CPU bận 100%) < Interrupt-driven (giải phóng CPU lúc chờ) < DMA (giải phóng CPU cả lúc truyền khối dữ liệu). DMAC không có thanh ghi PC." }
       ]
     },
     {
@@ -96,15 +96,15 @@
       printedPageStart: 56,
       theorySections: ["3.1.1", "3.1.2", "3.1.3", "3.1.4"],
       groups: [
-        { id: "3.1", title: "Câu hỏi Ôn tập Lý thuyết Chương 3 (RISC-V)" },
-        { id: "3.2.1", title: "Nhóm 1: Thanh ghi, Phương thức định địa chỉ và Kiểm tra hợp lệ" },
-        { id: "3.2.2", title: "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi" },
-        { id: "3.2.3", title: "Nhóm 3: Lệnh so sánh (slt, sltu, blt, bltu) và Rẽ nhánh cơ bản" },
-        { id: "3.2.4", title: "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, sw) theo thứ tự Little-Endian" },
-        { id: "3.2.5", title: "Nhóm 5: Chuyển đổi câu lệnh C sang Hợp ngữ RISC-V (Mảng, Con trỏ, Rẽ nhánh)" },
-        { id: "3.2.6", title: "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi" },
-        { id: "3.2.7", title: "Nhóm 7: Chương trình con, Ngăn xếp (Stack) và Lệnh jal / jalr" },
-        { id: "3.2.8", title: "Nhóm 8: Dịch Mã máy ↔ Hợp ngữ, Tính địa chỉ đích và Lập trình Vào-Ra" }
+        { id: "3.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 3 (RISC-V)", type: "theory", pdfPage: 56, exercises: "Lý thuyết 3.1 - 3.8", count: 8, summary: "Nguyên lý thiết kế RISC, 32 thanh ghi RV32I, quy tắc Little-Endian và 4 phương thức định địa chỉ." },
+        { id: "3.2.1", title: "Nhóm 1: Thanh ghi, Phương thức định địa chỉ và Kiểm tra hợp lệ", type: "exercise", pdfPage: 63, exercises: "Bài tập 4.1 - 4.11", count: 11, summary: "Phân biệt 4 phương thức định địa chỉ: Định địa chỉ tức thì, Thanh ghi, Cơ sở (Base) và Tương đối PC. Nhận diện các lệnh hợp lệ/không hợp lệ trong RISC-V." },
+        { id: "3.2.2", title: "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi", type: "exercise", pdfPage: 67, exercises: "Bài tập 4.12 - 4.25", count: 20, summary: "add, sub, addi, and, or, xor, sll, srl, sra. Lưu ý dải hằng số 12-bit có dấu [-2048, 2047], lệnh lui nạp 20 bit cao và kỹ thuật đảo bit qua xori rd, rs1, -1." },
+        { id: "3.2.3", title: "Nhóm 3: Lệnh so sánh (slt, sltu, blt, bltu) và Rẽ nhánh cơ bản", type: "exercise", pdfPage: 75, exercises: "Bài tập 4.26 - 4.28", count: 6, summary: "So sánh có dấu (slt, blt, bge) coi MSB=1 là số âm; so sánh không dấu (sltu, bltu, bgeu) coi mọi số đều dương. Lệnh rẽ nhánh beq, bne." },
+        { id: "3.2.4", title: "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, sw) theo thứ tự Little-Endian", type: "exercise", pdfPage: 77, exercises: "Bài tập 4.29 - 4.32", count: 8, summary: "Quy tắc byte có trọng số thấp nhất (LSB) nằm ở địa chỉ bộ nhớ nhỏ nhất. Lệnh nạp mở rộng dấu (lh, lb) vs mở rộng 0 (lhu, lbu), lệnh cất sw, sh, sb." },
+        { id: "3.2.5", title: "Nhóm 5: Chuyển đổi câu lệnh C sang Hợp ngữ RISC-V (Mảng, Con trỏ, Rẽ nhánh)", type: "exercise", pdfPage: 82, exercises: "Bài tập 4.33 - 4.41", count: 6, summary: "Công thức địa chỉ phần tử mảng: &A[i] = Base + i * 4 (dùng slli temp, i, 2 rồi add temp, temp, base). Chuyển đổi if-else, switch-case sang hợp ngữ." },
+        { id: "3.2.6", title: "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi", type: "exercise", pdfPage: 89, exercises: "Bài tập 4.42 - 4.45", count: 3, summary: "Công thức đếm tổng số lệnh thực thi trong vòng lặp: Số lệnh khởi tạo ngoài vòng lặp + N * (Số lệnh thân vòng lặp + lệnh rẽ nhánh) + 1 lệnh rẽ nhánh thoát cuối cùng." },
+        { id: "3.2.7", title: "Nhóm 7: Chương trình con, Ngăn xếp (Stack) và Lệnh jal / jalr", type: "exercise", pdfPage: 93, exercises: "Bài tập 4.46 - 4.49", count: 4, summary: "Quy ước thanh ghi: s0-s11 là callee-saved (phải cất vào ngăn xếp nếu dùng), a0-a7 là tham số & kết quả trả về, ra là địa chỉ trở về hàm. Đỉnh ngăn xếp phát triển giảm dần (sp -= 16)." },
+        { id: "3.2.8", title: "Nhóm 8: Dịch Mã máy ↔ Hợp ngữ, Tính địa chỉ đích và Lập trình Vào-Ra", type: "exercise", pdfPage: 96, exercises: "Bài tập 4.50 - 4.59", count: 12, summary: "6 khuôn dạng lệnh: R, I, S, B, U, J. Tính địa chỉ đích rẽ nhánh: Target = PC + (imm << 1). Cổng Vào-Ra ánh xạ bộ nhớ (Memory-mapped I/O)." }
       ]
     },
     {
@@ -116,12 +116,12 @@
       printedPageStart: 104,
       theorySections: ["4.1.1", "4.1.2", "4.1.3", "4.1.4", "4.1.5", "4.1.6"],
       groups: [
-        { id: "4.1", title: "Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)" },
-        { id: "4.2.1", title: "Nhóm 1: Nhận diện Cổng logic và Biểu thức Đại số Boolean" },
-        { id: "4.2.2", title: "Nhóm 2: Chuyển đổi và So sánh Số nguyên có dấu (Mã bù 2)" },
-        { id: "4.2.3", title: "Nhóm 3: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)" },
-        { id: "4.2.4", title: "Nhóm 4: Lệnh Chia và Lấy phần dư số nguyên (div, rem)" },
-        { id: "4.2.5", title: "Nhóm 5: Số thực dấu phẩy động chuẩn IEEE 754 32-bit" }
+        { id: "4.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)", type: "theory", pdfPage: 104, exercises: "Lý thuyết 4.1 - 4.8", count: 8, summary: "Hệ nhị phân, bù 2, nguyên lý mạch cộng ALU, phép nhân/chia và chuẩn IEEE 754." },
+        { id: "4.2.1", title: "Nhóm 1: Nhận diện Cổng logic và Biểu thức Đại số Boolean", type: "exercise", pdfPage: 111, exercises: "Bài tập 5.1 - 5.2", count: 3, summary: "Nhận dạng 6 cổng logic cơ bản (AND, OR, NOT, NAND, NOR, XOR), bảng chân lý và biến đổi biểu thức Boolean." },
+        { id: "4.2.2", title: "Nhóm 2: Chuyển đổi và So sánh Số nguyên có dấu (Mã bù 2)", type: "exercise", pdfPage: 112, exercises: "Bài tập 5.3 - 5.7", count: 7, summary: "Giá trị bù 2: A = -a_{n-1}*2^{n-1} + sum a_i*2^i. Đổi dấu số bù 2: Đảo tất cả các bit rồi cộng thêm 1. Dải giá trị n-bit: [-2^{n-1}, 2^{n-1} - 1]." },
+        { id: "4.2.3", title: "Nhóm 3: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)", type: "exercise", pdfPage: 115, exercises: "Bài tập 5.8 - 5.12", count: 6, summary: "Tràn số học chỉ xảy ra khi cộng 2 số cùng dấu mà ra kết quả trái dấu. Phép trừ A - B chuyển thành A + (-B). Dấu hiệu tràn trên mạch cộng: Cin != Cout ở bit dấu (MSB)." },
+        { id: "4.2.4", title: "Nhóm 4: Lệnh Chia và Lấy phần dư số nguyên (div, rem)", type: "exercise", pdfPage: 118, exercises: "Bài tập 5.13", count: 1, summary: "Mở rộng RV32M: div rd, rs1, rs2 (lấy phần thương), rem rd, rs1, rs2 (lấy phần dư). Dấu của phần dư rem luôn cùng dấu với số bị chia (dividend rs1)." },
+        { id: "4.2.5", title: "Nhóm 5: Số thực dấu phẩy động chuẩn IEEE 754 32-bit", type: "exercise", pdfPage: 119, exercises: "Bài tập 5.14 - 5.18", count: 10, summary: "Cấu trúc 32-bit: 1 bit dấu S, 8 bit mũ e = E + 127, 23 bit định trị m. Giá trị = (-1)^S * (1.m) * 2^(e - 127). Quy tắc đổi nhanh thập phân sang Hex 32-bit." }
       ]
     }
   ];
@@ -327,6 +327,14 @@
           </ul>
         </div>
 
+        <div class="formula-practice-inline">
+          <span>📝 <strong>Dạng bài liên quan trong PDF: Nhóm 2 - Tính T0, CPI và tCPU (7 câu)</strong></span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-outline-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.2', 'exam')">⏱️ Test</button>
+            <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.2', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+
         <div class="callout callout-formula">
           <div class="callout-title">📐 Công thức 3: Tính $CPI$ trung bình khi chương trình có nhiều loại lệnh</div>
           <ul>
@@ -339,11 +347,27 @@
           </ul>
         </div>
 
+        <div class="formula-practice-inline">
+          <span>📝 <strong>Dạng bài liên quan trong PDF: Nhóm 4 - Tính CPI trung bình nhiều lớp lệnh (8 câu)</strong></span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-outline-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.4', 'exam')">⏱️ Test</button>
+            <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.4', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+
         <div class="callout callout-formula">
           <div class="callout-title">📐 Công thức 4: So sánh hiệu năng giữa hai máy tính</div>
           <p>Hiệu năng ($P$) tỷ lệ nghịch với thời gian thực thi ($t$): máy nào chạy hết <strong>ít thời gian hơn</strong> thì máy đó <strong>nhanh hơn</strong>:</p>
           <p>$$P = \\frac{1}{t_{\\text{CPU}}} \\quad \\Longrightarrow \\quad \\frac{P_A}{P_B} = \\frac{t_B}{t_A}$$</p>
           <p><em>Lưu ý:</em> Khi đề hỏi <strong>“Máy A nhanh hơn máy B bao nhiêu lần?”</strong> (hoặc “P2 nhanh hơn P1 bao nhiêu lần?”), ta lấy <strong>thời gian của máy B chia cho thời gian của máy A</strong> ($t_B / t_A$, hoặc $t_1 / t_2$).</p>
+        </div>
+
+        <div class="formula-practice-inline">
+          <span>📝 <strong>Dạng bài liên quan trong PDF: Nhóm 5 - So sánh hiệu năng CPU (12 câu)</strong></span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-outline-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.5', 'exam')">⏱️ Test</button>
+            <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.5', 'practice')">🎯 Luyện tập</button>
+          </div>
         </div>
 
         <div class="callout callout-formula">
@@ -356,10 +380,26 @@
           </ul>
         </div>
 
+        <div class="formula-practice-inline">
+          <span>📝 <strong>Dạng bài liên quan trong PDF: Nhóm 3 - Bài tập chỉ số MIPS (7 câu)</strong></span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-outline-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.3', 'exam')">⏱️ Test</button>
+            <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.3', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+
         <div class="callout callout-formula">
           <div class="callout-title">📐 Công thức 6 (Đề Cuối kỳ): Tính $CPI$ hiệu dụng (Effective / Actual CPI) khi có Cache Miss</div>
           <p>Mọi lệnh ($100\\%$) đều phải đọc từ Cache lệnh (I-cache), nhưng chỉ có các lệnh Load/Store ($p_{\\text{mem}}\\%$) mới truy cập Cache dữ liệu (D-cache):</p>
           <p>$$CPI_{\\text{hiệu dụng}} = CPI_{\\text{cơ bản}} + (100\\% \\times \\text{MissRate}_{\\text{I-cache}} \\times \\text{Penalty}) + (p_{\\text{mem}}\\% \\times \\text{MissRate}_{\\text{D-cache}} \\times \\text{Penalty})$$</p>
+        </div>
+
+        <div class="formula-practice-inline">
+          <span>📝 <strong>Dạng bài liên quan trong PDF: Nhóm 6 - CPI hiệu dụng & Phân loại Flynn (4 câu)</strong></span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-outline-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.6', 'exam')">⏱️ Test</button>
+            <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.6', 'practice')">🎯 Luyện tập</button>
+          </div>
         </div>
       `
     },

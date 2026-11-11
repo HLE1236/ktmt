@@ -228,6 +228,8 @@
       renderMistakesList();
     } else if (tabId === 'stats') {
       renderStats();
+    } else if (tabId === 'exam') {
+      populateExamTargetDropdown();
     }
 
     // Close mobile sidebar if open
@@ -276,29 +278,79 @@
   }
 
   // ==========================================
-  // THEORY VIEW
+  // THEORY VIEW & ASSESSMENT ENGINE
   // ==========================================
   let currentTheoryChapter = 1;
+
+  // Lấy toàn bộ câu hỏi liên quan đến một mục lý thuyết
+  function getSectionQuestions(sectionId) {
+    const sec = theorySections.find(s => s.id === sectionId);
+    if (!sec) return [];
+    return allQuestions.filter(q => {
+      if (q.relatedTheoryId === sectionId) return true;
+      if (sec.linkedGroups && sec.linkedGroups.includes(q.groupId || q.group)) return true;
+      return false;
+    });
+  }
+
+  // Lấy toàn bộ câu hỏi của một nhóm bài tập
+  function getGroupQuestions(groupId) {
+    return allQuestions.filter(q => (q.groupId || q.group) === groupId);
+  }
 
   function renderTheory(chapterNum = currentTheoryChapter) {
     currentTheoryChapter = chapterNum;
     const chapterObj = chaptersList.find(c => c.id === chapterNum) || chaptersList[0] || {};
     const sections = theorySections.filter(s => s.chapter === chapterNum);
 
-    // Render Table of Contents
+    // Render Table of Contents (Phân chia đúng 2 Phần theo giáo trình KTMT.pdf)
     const tocContainer = document.getElementById('theory-toc');
     if (tocContainer) {
       tocContainer.innerHTML = '';
+
+      // Header Phần 1
+      const headerPart1 = document.createElement('div');
+      headerPart1.className = 'theory-toc-section-header';
+      headerPart1.textContent = `📌 ${chapterNum}.1 Phần 1: Lý thuyết trọng tâm`;
+      tocContainer.appendChild(headerPart1);
+
       sections.forEach((sec, idx) => {
         const item = document.createElement('a');
         item.className = `theory-toc-item ${idx === 0 ? 'active' : ''}`;
-        item.textContent = `${sec.code} - ${sec.title}`;
+        const secQuestions = getSectionQuestions(sec.id);
+        item.innerHTML = `<span>${sec.code} ${sec.title.split('(')[0]}</span><span class="toc-count-pill" title="Tổng số câu trắc nghiệm mục này">${secQuestions.length} câu</span>`;
         item.href = `#sec-${sec.id}`;
         item.addEventListener('click', (e) => {
           e.preventDefault();
           document.querySelectorAll('.theory-toc-item').forEach(el => el.classList.remove('active'));
           item.classList.add('active');
           const target = document.getElementById(`sec-${sec.id}`);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+        tocContainer.appendChild(item);
+      });
+
+      // Header Phần 2 (Bài tập theo nhóm chuẩn PDF)
+      const headerPart2 = document.createElement('div');
+      headerPart2.className = 'theory-toc-section-header';
+      headerPart2.textContent = `📝 ${chapterNum}.2 Phần 2: Toàn bộ bài tập theo nhóm`;
+      tocContainer.appendChild(headerPart2);
+
+      const chapterGroups = (chapterObj.groups || []).filter(g => g.type === 'exercise' || g.id !== `${chapterNum}.1`);
+      chapterGroups.forEach(grp => {
+        const grpQuestions = getGroupQuestions(grp.id);
+        const item = document.createElement('a');
+        item.className = 'theory-toc-item group-item';
+        const displayTitle = grp.title.length > 28 ? grp.title.substring(0, 26) + '...' : grp.title;
+        item.innerHTML = `<span>${displayTitle}</span><span class="toc-count-pill">${grpQuestions.length} câu</span>`;
+        item.href = `#group-sec-${grp.id}`;
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('.theory-toc-item').forEach(el => el.classList.remove('active'));
+          item.classList.add('active');
+          const target = document.getElementById(`group-sec-${grp.id}`) || document.getElementById(`sec-part2-${chapterNum}`);
           if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
@@ -322,7 +374,19 @@
     const contentEl = document.getElementById('theory-content-body');
     if (contentEl) {
       let html = '';
+
+      // Banner Phần 1
+      html += `
+        <div style="margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--primary);">
+          <span class="badge" style="background-color: var(--primary); color: white; margin-bottom: 6px; display: inline-block;">PHẦN 1 GIÁO TRÌNH KTMT.PDF</span>
+          <h2 style="font-size: 1.45rem; color: var(--primary); margin: 4px 0 0 0;">
+            ${chapterNum}.1 Phần 1: Lý thuyết trọng tâm
+          </h2>
+        </div>
+      `;
+
       sections.forEach(sec => {
+        const secQuestions = getSectionQuestions(sec.id);
         html += `<section id="sec-${sec.id}" class="theory-section-box" style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">`;
         html += `
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
@@ -341,19 +405,118 @@
 
         html += enhanceRegisterTooltips(sec.content);
 
+        // THẺ ĐÁNH GIÁ & BÀI TEST TOÀN DIỆN CHO MỤC NÀY
+        let groupsBreakdownHtml = '';
         if (sec.linkedGroups && sec.linkedGroups.length > 0) {
-          html += `
-            <div style="margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-              <span style="font-size: 0.85rem; color: var(--text-secondary);">Nhóm bài tập thực hành liên quan: <strong>Bài ${sec.linkedGroups.join(', Bài ')}</strong></span>
-              <button class="btn btn-primary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupPractice('${sec.linkedGroups[0]}')" style="padding: 6px 14px; font-size: 0.82rem;">
-                Luyện tập nhóm này ngay 🎯
-              </button>
+          groupsBreakdownHtml = `
+            <div class="assessment-groups-container">
+              <div class="assessment-groups-title">Các dạng bài tập thực hành thuộc phần này (Chuẩn phân nhóm PDF):</div>
+              <div class="assessment-groups-list">
+                ${sec.linkedGroups.map(grpId => {
+                  const grpObj = (chapterObj.groups || []).find(g => g.id === grpId) || { id: grpId, title: `Nhóm ${grpId}` };
+                  const qCount = getGroupQuestions(grpId).length;
+                  return `
+                    <div class="assessment-group-row">
+                      <div class="assessment-group-info">
+                        <span class="group-id-badge">${grpId}</span>
+                        <span class="group-name"><strong>${grpObj.title}</strong> (${qCount} câu)</span>
+                      </div>
+                      <div class="assessment-group-actions">
+                        <button class="btn btn-outline-primary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('${grpId}', 'exam')" title="Làm bài kiểm tra tính điểm cho nhóm này">
+                          ⏱️ Test (${qCount} câu)
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('${grpId}', 'practice')" title="Luyện tập tự do có giải thích ngay cho nhóm này">
+                          🎯 Luyện tập
+                        </button>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
             </div>
           `;
         }
 
+        html += `
+          <div class="theory-assessment-card" id="assessment-${sec.id}">
+            <div class="assessment-header">
+              <div class="assessment-badge">📋 BÀI TEST TỔNG HỢP MỤC ${sec.code}</div>
+              <div class="assessment-count-badge">${secQuestions.length} câu trắc nghiệm</div>
+            </div>
+            <h3 class="assessment-title">Kiểm tra kiến thức: ${sec.title}</h3>
+            <p class="assessment-desc">
+              Học xong phần này? Hãy làm ngay bài test gồm <strong>toàn bộ ${secQuestions.length} câu hỏi trắc nghiệm liên quan trực tiếp</strong> đến mục này (tổng hợp từ đề thi Giữa kỳ, Cuối kỳ và bài tập giáo trình KTMT.pdf).
+            </p>
+
+            <div class="assessment-main-actions">
+              <button class="btn btn-primary" onclick="window.KTMT_APP && window.KTMT_APP.startSectionTest('${sec.id}', 'exam')">
+                ⏱️ Làm Bài Test Toàn Bộ Phần Này (${secQuestions.length} câu)
+              </button>
+              <button class="btn btn-secondary" onclick="window.KTMT_APP && window.KTMT_APP.startSectionTest('${sec.id}', 'practice')">
+                🎯 Luyện Tập Tự Do Toàn Bộ (${secQuestions.length} câu)
+              </button>
+            </div>
+
+            ${groupsBreakdownHtml}
+          </div>
+        `;
+
         html += `</section>`;
       });
+
+      // SECTION 2: TOÀN BỘ BÀI TẬP VÀ HƯỚNG DẪN GIẢI CHUẨN PDF
+      const exerciseGroups = (chapterObj.groups || []).filter(g => g.type === 'exercise' || g.id !== `${chapterNum}.1`);
+      if (exerciseGroups.length > 0) {
+        html += `
+          <section id="sec-part2-${chapterNum}" class="theory-section-box" style="margin-top: 50px; padding-top: 32px; border-top: 3px solid var(--primary);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span class="badge" style="background-color: var(--primary); color: white; margin-bottom: 6px; display: inline-block;">PHẦN 2 GIÁO TRÌNH KTMT.PDF</span>
+                <h2 style="font-size: 1.45rem; color: var(--primary); margin: 4px 0 0 0;">
+                  ${chapterNum}.2 Phần 2: Toàn bộ bài tập Chương ${chapterNum} và Hướng dẫn giải
+                </h2>
+                <p style="color: var(--text-secondary); margin-top: 6px; font-size: 0.92rem;">
+                  Phân nhóm chính xác 100% theo các nhóm bài tập trong giáo trình KTMT.pdf. Chọn nhóm bất kỳ để làm bài test hoặc luyện tập.
+                </p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(${exerciseGroups[0].pdfPage || chapterObj.pdfPageStart})" style="padding: 6px 14px; font-size: 0.82rem;">
+                📄 Mở xem Phần 2 trong KTMT.pdf
+              </button>
+            </div>
+
+            <div class="part2-groups-grid">
+              ${exerciseGroups.map(grp => {
+                const grpQuestions = getGroupQuestions(grp.id);
+                return `
+                  <div class="part2-group-card" id="group-sec-${grp.id}">
+                    <div>
+                      <div class="part2-group-card-header">
+                        <span class="group-id-badge">${grp.id}</span>
+                        <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(${grp.pdfPage})" title="Xem trang ${grp.pdfPage} trong PDF">
+                          📄 Trang ${grp.pdfPage}
+                        </button>
+                      </div>
+                      <div class="part2-group-title">${grp.title}</div>
+                      <div class="part2-group-meta">
+                        ${grp.exercises ? `<strong>${grp.exercises}</strong> • ` : ''}${grpQuestions.length} câu trắc nghiệm
+                      </div>
+                      ${grp.summary ? `<div class="part2-group-summary"><strong>Tóm tắt dạng bài:</strong> ${grp.summary}</div>` : ''}
+                    </div>
+                    <div class="part2-group-actions">
+                      <button class="btn btn-primary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('${grp.id}', 'exam')" style="flex: 1;">
+                        ⏱️ Làm bài Test (${grpQuestions.length} câu)
+                      </button>
+                      <button class="btn btn-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('${grp.id}', 'practice')">
+                        🎯 Luyện tập
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </section>
+        `;
+      }
 
       contentEl.innerHTML = html;
       renderMath(contentEl);
@@ -385,7 +548,17 @@
       filtered = filtered.filter(q => q.examTag === tagFilter);
     }
     if (groupFilter !== 'all') {
-      filtered = filtered.filter(q => q.group === groupFilter);
+      if (groupFilter.startsWith('sec-')) {
+        const secId = groupFilter.replace('sec-', '');
+        const sec = theorySections.find(s => s.id === secId);
+        filtered = filtered.filter(q => {
+          if (q.relatedTheoryId === secId) return true;
+          if (sec && sec.linkedGroups && sec.linkedGroups.includes(q.groupId || q.group)) return true;
+          return false;
+        });
+      } else {
+        filtered = filtered.filter(q => (q.groupId || q.group) === groupFilter);
+      }
     }
 
     if (isShuffle) {
@@ -395,34 +568,104 @@
     practiceQueue = filtered;
     currentPracticeIndex = 0;
     practiceAnswerSubmitted = false;
-
-    updateGroupDropdownOptions(chFilter);
   }
 
   function updateGroupDropdownOptions(chFilter) {
     const groupSelect = document.getElementById('practice-filter-group');
     if (!groupSelect) return;
     const currentVal = groupSelect.value;
-    groupSelect.innerHTML = '<option value="all">Tất cả bài tập</option>';
+    groupSelect.innerHTML = '';
 
-    let targetQuestions = allQuestions;
-    if (chFilter !== 'all') {
-      targetQuestions = allQuestions.filter(q => q.chapter === parseInt(chFilter));
+    if (chFilter === 'all') {
+      const optAll = document.createElement('option');
+      optAll.value = 'all';
+      optAll.textContent = `Tất cả bài tập (${allQuestions.length} câu)`;
+      groupSelect.appendChild(optAll);
+
+      chaptersList.forEach(ch => {
+        const chSections = theorySections.filter(s => s.chapter === ch.id);
+        if (chSections.length > 0) {
+          const optGroupSec = document.createElement('optgroup');
+          optGroupSec.label = `--- ${ch.code}: Theo Mục Lý Thuyết ---`;
+          chSections.forEach(s => {
+            const qCount = getSectionQuestions(s.id).length;
+            const opt = document.createElement('option');
+            opt.value = 'sec-' + s.id;
+            opt.textContent = `Mục ${s.code}: ${s.title.substring(0, 30)}... (${qCount} câu)`;
+            optGroupSec.appendChild(opt);
+          });
+          groupSelect.appendChild(optGroupSec);
+        }
+
+        const optGroupGrp = document.createElement('optgroup');
+        optGroupGrp.label = `--- ${ch.code}: Theo Nhóm Bài Tập (Chuẩn PDF) ---`;
+        (ch.groups || []).forEach(g => {
+          const qCount = getGroupQuestions(g.id).length;
+          const opt = document.createElement('option');
+          opt.value = g.id;
+          opt.textContent = `${g.title} (${qCount} câu)`;
+          optGroupGrp.appendChild(opt);
+        });
+        groupSelect.appendChild(optGroupGrp);
+      });
+    } else {
+      const chNum = parseInt(chFilter);
+      const ch = chaptersList.find(c => c.id === chNum);
+      const chQuestions = allQuestions.filter(q => q.chapter === chNum);
+
+      const optAll = document.createElement('option');
+      optAll.value = 'all';
+      optAll.textContent = `Tất cả câu hỏi Chương ${chNum} (${chQuestions.length} câu)`;
+      groupSelect.appendChild(optAll);
+
+      if (ch) {
+        const chSections = theorySections.filter(s => s.chapter === chNum);
+        if (chSections.length > 0) {
+          const optGroupSec = document.createElement('optgroup');
+          optGroupSec.label = `📋 LÀM BÀI THEO MỤC LÝ THUYẾT (TẤT CẢ CÂU LIÊN QUAN)`;
+          chSections.forEach(s => {
+            const qCount = getSectionQuestions(s.id).length;
+            const opt = document.createElement('option');
+            opt.value = 'sec-' + s.id;
+            opt.textContent = `Mục ${s.code}: ${s.title} (Toàn bộ ${qCount} câu)`;
+            optGroupSec.appendChild(opt);
+          });
+          groupSelect.appendChild(optGroupSec);
+        }
+
+        const optGroupGrp = document.createElement('optgroup');
+        optGroupGrp.label = `📝 LÀM BÀI THEO TỪNG NHÓM (PHẦN 2 - CHUẨN PDF)`;
+        (ch.groups || []).forEach(g => {
+          const qCount = getGroupQuestions(g.id).length;
+          const opt = document.createElement('option');
+          opt.value = g.id;
+          opt.textContent = `${g.title} (${qCount} câu)`;
+          optGroupGrp.appendChild(opt);
+        });
+        groupSelect.appendChild(optGroupGrp);
+      }
     }
-    const uniqueGroups = Array.from(new Set(targetQuestions.map(q => q.group))).sort((a, b) => {
-      return parseFloat(a) - parseFloat(b);
-    });
 
-    uniqueGroups.forEach(grp => {
-      const opt = document.createElement('option');
-      opt.value = grp;
-      opt.textContent = `Bài ${grp}`;
-      groupSelect.appendChild(opt);
-    });
-
-    if (uniqueGroups.includes(currentVal)) {
+    if (groupSelect.options && Array.from(groupSelect.options).some(o => o.value === currentVal)) {
       groupSelect.value = currentVal;
     }
+  }
+
+  function getQuestionGroupInfo(q) {
+    let groupTitle = `Bài ${q.group}`;
+    let linkedSec = null;
+    const ch = chaptersList.find(c => c.id === q.chapter);
+    if (ch && ch.groups) {
+      const grp = ch.groups.find(g => g.id === q.group);
+      if (grp) {
+        groupTitle = grp.title;
+      }
+    }
+    const sec = theorySections.find(s => s.chapter === q.chapter && s.linkedGroups && s.linkedGroups.includes(q.group));
+    if (sec) {
+      linkedSec = sec;
+    }
+    return { groupTitle, linkedSec };
   }
 
   function renderPracticeQuestion() {
@@ -464,15 +707,24 @@
     if (q.examTag === 'GK') tagBadgeClass = 'badge-tag-gk';
     if (q.examTag === 'CK') tagBadgeClass = 'badge-tag-ck';
 
+    const grpInfo = getQuestionGroupInfo(q);
+
     let html = `
       <div class="quiz-header-meta">
         <div class="badge-tags">
           <span class="badge badge-chapter">Chương ${q.chapter}</span>
-          <span class="badge badge-group">Bài ${q.group}</span>
+          <span class="badge badge-group" title="${grpInfo.groupTitle}">
+            ${grpInfo.groupTitle.length > 32 ? grpInfo.groupTitle.substring(0, 32) + '...' : grpInfo.groupTitle}
+          </span>
           <span class="badge ${tagBadgeClass}">${q.examTag}</span>
           <span class="badge" style="background-color: var(--bg-muted); color: var(--text-secondary); cursor: pointer;" id="btn-view-pdf-page">
             📄 Trang ${q.pdfPage} (KTMT.pdf)
           </span>
+          ${grpInfo.linkedSec ? `
+            <button class="btn btn-outline-primary btn-xs" style="padding: 2px 8px; font-size: 0.76rem; border-radius: 9999px;" onclick="window.KTMT_APP && window.KTMT_APP.jumpToTheory('${grpInfo.linkedSec.id}')" title="Xem lý thuyết mục ${grpInfo.linkedSec.code}: ${grpInfo.linkedSec.title}">
+              📖 Xem lý thuyết: Mục ${grpInfo.linkedSec.code}
+            </button>
+          ` : ''}
         </div>
         <div class="quiz-actions-top">
           <button class="icon-btn ${isBookmarked ? 'active' : ''}" id="btn-toggle-bookmark" title="Đánh dấu câu này">
@@ -703,29 +955,52 @@
     let pool = allQuestions.slice();
     let durationMins = 30;
     let questionCount = 25;
+    let examTitle = 'Phòng Thi Thử KTMT';
 
     if (presetType === 'gk') {
       pool = pool.filter(q => q.chapter === 1 || q.chapter === 2);
       durationMins = 30;
       questionCount = 25;
+      examTitle = 'Đề thi Giữa kỳ KTMT (Chương 1 & 2 - 25 câu)';
     } else if (presetType === 'ck') {
       pool = pool.slice();
       durationMins = 50;
       questionCount = 40;
+      examTitle = 'Đề thi Cuối kỳ KTMT (Toàn diện 4 chương - 40 câu)';
+    } else if (presetType === 'section') {
+      pool = (customConfig.questions || []).slice();
+      questionCount = pool.length;
+      durationMins = customConfig.time || Math.max(15, Math.ceil(questionCount * 1.5));
+      examTitle = customConfig.title || 'Bài kiểm tra theo mục lý thuyết';
+    } else if (presetType === 'group') {
+      pool = (customConfig.questions || []).slice();
+      questionCount = pool.length;
+      durationMins = customConfig.time || Math.max(8, Math.ceil(questionCount * 1.5));
+      examTitle = customConfig.title || 'Bài kiểm tra theo nhóm bài tập';
     } else if (presetType === 'custom') {
       if (customConfig.chapters && customConfig.chapters.length > 0) {
         pool = pool.filter(q => customConfig.chapters.includes(q.chapter));
       }
       durationMins = customConfig.time || 30;
       questionCount = Math.min(customConfig.count || 25, pool.length);
+      examTitle = customConfig.title || 'Bài thi tùy chỉnh';
     }
 
-    examQuestions = shuffleArray(pool).slice(0, questionCount);
+    if (presetType === 'section' || presetType === 'group') {
+      examQuestions = pool.slice(); // Giữ nguyên toàn bộ câu hỏi của mục/nhóm đó
+    } else {
+      examQuestions = shuffleArray(pool).slice(0, questionCount);
+    }
     examAnswers = {};
     examFlags = {};
     currentExamIndex = 0;
     examTotalTime = durationMins * 60;
     examTimeRemaining = examTotalTime;
+
+    const titleEl = document.getElementById('exam-active-title');
+    if (titleEl) {
+      titleEl.innerHTML = `<span>⏱️</span> <span>${examTitle}</span>`;
+    }
 
     document.getElementById('exam-setup-view').style.display = 'none';
     document.getElementById('exam-active-view').style.display = 'block';
@@ -787,12 +1062,15 @@
     const q = examQuestions[currentExamIndex];
     const isFlagged = examFlags[currentExamIndex];
     const selectedAnswer = examAnswers[currentExamIndex];
+    const grpInfo = getQuestionGroupInfo(q);
 
     let html = `
       <div class="quiz-header-meta">
         <div class="badge-tags">
           <span class="badge badge-chapter">Chương ${q.chapter}</span>
-          <span class="badge badge-group">Bài ${q.group}</span>
+          <span class="badge badge-group" title="${grpInfo.groupTitle}">
+            ${grpInfo.groupTitle.length > 35 ? grpInfo.groupTitle.substring(0, 35) + '...' : grpInfo.groupTitle}
+          </span>
           <span class="badge">${q.examTag}</span>
         </div>
         <button class="icon-btn ${isFlagged ? 'active' : ''}" id="btn-exam-flag">
@@ -1483,13 +1761,158 @@
     }
   });
 
-  // Jump to specific group practice from theory page
+  // ==========================================
+  // ASSESSMENT & NAVIGATION ACTIONS
+  // ==========================================
+  function startSectionTest(sectionId, mode = 'exam') {
+    const sec = theorySections.find(s => s.id === sectionId);
+    const questions = getSectionQuestions(sectionId);
+    if (!questions || questions.length === 0) {
+      showToast(`Chưa có câu hỏi trắc nghiệm cho mục ${sectionId}`, 'info');
+      return;
+    }
+
+    const secTitle = sec ? `Mục ${sec.code}: ${sec.title}` : `Mục ${sectionId}`;
+
+    if (mode === 'exam') {
+      switchTab('exam');
+      startExam('section', {
+        questions: questions,
+        time: Math.max(15, Math.ceil(questions.length * 1.5)),
+        title: `Bài kiểm tra: ${secTitle} (${questions.length} câu)`
+      });
+      showToast(`Bắt đầu làm bài test ${secTitle} (${questions.length} câu)! 🚀`, 'success');
+    } else {
+      // Practice mode
+      if (sec) {
+        const chSelect = document.getElementById('practice-filter-chapter');
+        if (chSelect) {
+          chSelect.value = String(sec.chapter);
+          updateGroupDropdownOptions(String(sec.chapter));
+        }
+      }
+      const grpSelect = document.getElementById('practice-filter-group');
+      if (grpSelect) {
+        grpSelect.value = 'sec-' + sectionId;
+      }
+      initPracticeQueue();
+      switchTab('practice');
+      showToast(`Đang luyện tập toàn bộ ${questions.length} câu hỏi thuộc ${secTitle}! 🎯`, 'success');
+    }
+  }
+
+  function startGroupTest(groupId, mode = 'exam') {
+    const questions = getGroupQuestions(groupId);
+    if (!questions || questions.length === 0) {
+      showToast(`Chưa có câu hỏi trắc nghiệm cho nhóm ${groupId}`, 'info');
+      return;
+    }
+
+    let grpTitle = `Nhóm bài tập ${groupId}`;
+    let chNum = 1;
+    chaptersList.forEach(ch => {
+      (ch.groups || []).forEach(g => {
+        if (g.id === groupId) {
+          grpTitle = g.title;
+          chNum = ch.id;
+        }
+      });
+    });
+
+    if (mode === 'exam') {
+      switchTab('exam');
+      startExam('group', {
+        questions: questions,
+        time: Math.max(8, Math.ceil(questions.length * 1.5)),
+        title: `Bài kiểm tra: ${grpTitle} (${questions.length} câu)`
+      });
+      showToast(`Bắt đầu làm bài test ${grpTitle} (${questions.length} câu)! 🚀`, 'success');
+    } else {
+      // Practice mode
+      const chSelect = document.getElementById('practice-filter-chapter');
+      if (chSelect) {
+        chSelect.value = String(chNum);
+        updateGroupDropdownOptions(String(chNum));
+      }
+      const grpSelect = document.getElementById('practice-filter-group');
+      if (grpSelect) {
+        grpSelect.value = groupId;
+      }
+      initPracticeQueue();
+      switchTab('practice');
+      showToast(`Đang luyện tập ${questions.length} câu của ${grpTitle}! 🎯`, 'success');
+    }
+  }
+
+  // Alias for backward compatibility
   function startGroupPractice(groupId) {
-    document.getElementById('practice-filter-chapter').value = 'all';
-    initPracticeQueue();
-    document.getElementById('practice-filter-group').value = groupId;
-    initPracticeQueue();
-    switchTab('practice');
+    startGroupTest(groupId, 'practice');
+  }
+
+  // Chuyển thẳng đến mục lý thuyết và cuộn mượt
+  function jumpToTheory(theorySecId) {
+    if (!theorySecId) return;
+    const parts = theorySecId.split('.');
+    const chNum = parseInt(parts[0]) || 1;
+
+    switchTab('theory');
+    renderTheory(chNum);
+
+    setTimeout(() => {
+      const targetEl = document.getElementById(`theory-sec-${theorySecId}`) || document.getElementById(`group-sec-${theorySecId}`);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        targetEl.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+        targetEl.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.45)';
+        targetEl.style.borderColor = 'var(--primary)';
+        setTimeout(() => {
+          targetEl.style.boxShadow = '';
+          targetEl.style.borderColor = '';
+        }, 2500);
+      }
+    }, 120);
+  }
+
+  // Điền dữ liệu vào dropdown chọn bài test theo mục tiêu trong tab Phòng thi
+  function populateExamTargetDropdown() {
+    const select = document.getElementById('exam-select-target');
+    if (!select) return;
+    const currentVal = select.value;
+    select.innerHTML = '';
+
+    // Nhóm 1: Theo mục lý thuyết trọng tâm
+    const ogSec = document.createElement('optgroup');
+    ogSec.label = '⭐ BÀI TEST TOÀN DIỆN THEO MỤC LÝ THUYẾT (TẤT CẢ CÂU LIÊN QUAN)';
+    theorySections.forEach(sec => {
+      const qCount = getSectionQuestions(sec.id).length;
+      if (qCount > 0) {
+        const opt = document.createElement('option');
+        opt.value = 'sec-' + sec.id;
+        opt.textContent = `Mục ${sec.code}: ${sec.title} (Toàn bộ ${qCount} câu)`;
+        ogSec.appendChild(opt);
+      }
+    });
+    select.appendChild(ogSec);
+
+    // Nhóm 2: Theo từng nhóm bài tập chuẩn PDF
+    const ogGrp = document.createElement('optgroup');
+    ogGrp.label = '📚 BÀI TEST THEO TỪNG NHÓM BÀI TẬP (PHẦN 2 CHUẨN KTMT.PDF)';
+    chaptersList.forEach(ch => {
+      (ch.groups || []).forEach(g => {
+        const qCount = getGroupQuestions(g.id).length;
+        if (qCount > 0) {
+          const opt = document.createElement('option');
+          opt.value = g.id;
+          opt.textContent = `${g.title} (${qCount} câu)`;
+          ogGrp.appendChild(opt);
+        }
+      });
+    });
+    select.appendChild(ogGrp);
+
+    if (currentVal && select.options && Array.from(select.options).some(o => o.value === currentVal)) {
+      select.value = currentVal;
+    }
   }
 
   // ==========================================
@@ -1586,9 +2009,18 @@
       });
     });
 
-    // Exam Presets
+    // Exam Presets & Target Exam
     document.getElementById('btn-exam-start-gk')?.addEventListener('click', () => startExam('gk'));
     document.getElementById('btn-exam-start-ck')?.addEventListener('click', () => startExam('ck'));
+    document.getElementById('btn-start-target-exam')?.addEventListener('click', () => {
+      const val = document.getElementById('exam-select-target')?.value;
+      if (!val) return;
+      if (val.startsWith('sec-')) {
+        startSectionTest(val.replace('sec-', ''), 'exam');
+      } else {
+        startGroupTest(val, 'exam');
+      }
+    });
     document.getElementById('btn-exam-submit-confirm')?.addEventListener('click', confirmSubmitExam);
 
     // Dashboard quick action buttons
@@ -1609,6 +2041,9 @@
     // Initialize tools
     initTools();
 
+    // Populate exam target dropdown
+    populateExamTargetDropdown();
+
     // Initial render
     switchTab('dashboard');
   });
@@ -1618,6 +2053,12 @@
     state: appState,
     switchTab,
     openPdfModal,
-    startGroupPractice
+    startSectionTest,
+    startGroupTest,
+    startGroupPractice,
+    jumpToTheory,
+    startExam,
+    getSectionQuestions,
+    getGroupQuestions
   };
 })();

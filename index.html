@@ -365,6 +365,20 @@
                 </div>
               </div>
 
+              <div class="exam-preset-card" id="btn-exam-start-target-card" style="border-left: 4px solid var(--accent); cursor: default;">
+                <span class="badge" style="background-color: var(--accent); color: white; margin-bottom: 12px; display: inline-block;">Kiểm tra Chuyên đề</span>
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Test theo Mục / Dạng bài</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">
+                  Làm bài test toàn bộ câu hỏi của 1 mục lý thuyết hoặc 1 nhóm bài tập chuẩn PDF:
+                </p>
+                <select id="exam-select-target" class="filter-select" style="width: 100%; margin-bottom: 10px; font-size: 0.82rem;">
+                  <!-- Dynamically populated via JS -->
+                </select>
+                <button class="btn btn-primary btn-sm" id="btn-start-target-exam" style="width: 100%; font-size: 0.85rem; padding: 8px 12px;">
+                  Bắt đầu bài kiểm tra ⏱️
+                </button>
+              </div>
+
             </div>
 
             <div style="background-color: var(--bg-muted); border-radius: var(--radius-md); padding: 18px; font-size: 0.88rem; color: var(--text-secondary);">
@@ -378,6 +392,7 @@
 
           <!-- Active Exam Screen (Hidden initially) -->
           <div id="exam-active-view" style="display: none;">
+            <div id="exam-active-title" style="font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"></div>
             
             <div class="exam-timer-bar">
               <div>
