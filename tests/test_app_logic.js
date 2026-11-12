@@ -246,10 +246,10 @@ console.log('Testing Exam Workflow & Scoring Logic...');
 
 // Test 3.1 Exam Presets (GK, CK, Custom)
 {
-  // GK preset: Chapters 1 & 2 only, 25 questions
+  // GK preset: Chapters 1 & 2 only (chuẩn 67 câu: 49 Ch1 + 18 Ch2 thuần), 25 questions
   const gkPool = allQuestions.filter(q => q.chapter === 1 || q.chapter === 2);
   const gkCount = Math.min(25, gkPool.length);
-  const passGK = gkPool.length === 86 && gkCount === 25;
+  const passGK = gkPool.length === 67 && gkCount === 25;
 
   // CK preset: All chapters, 40 questions
   const ckPool = allQuestions.slice();

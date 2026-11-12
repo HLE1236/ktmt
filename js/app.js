@@ -312,13 +312,15 @@
     if (elMistakes) elMistakes.textContent = mistakeCount;
 
     // Update chapter cards progress
-    [1, 2, 3, 4].forEach(chNum => {
+    [1, 2, 3, 4, 6, 7].forEach(chNum => {
       const chQuestions = allQuestions.filter(q => q.chapter === chNum);
       const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
       const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;
 
+      const countEl = document.getElementById(`dash-ch${chNum}-count`);
       const fillEl = document.getElementById(`dash-ch${chNum}-fill`);
       const metaEl = document.getElementById(`dash-ch${chNum}-meta`);
+      if (countEl) countEl.textContent = `${chQuestions.length} câu`;
       if (fillEl) fillEl.style.width = `${pct}%`;
       if (metaEl) metaEl.textContent = `${chCorrect.length}/${chQuestions.length} câu (${pct}%)`;
     });
@@ -345,11 +347,21 @@
       if (['lt-1.3', 'lt-1.6', 'c1-1.35a', 'c1-1.35b'].includes(q.id)) return '1.1.3';
       return '1.1.4'; // lt-1.5, nhóm 1.2.2 (7c), 1.2.3 (7c), 1.2.4 (8c), 1.2.5 (12c), c1-1.33, c1-1.34
     }
-    // CHƯƠNG 2 (37 câu)
+    // CHƯƠNG 2 (18 câu chuẩn)
     if (q.chapter === 2) {
       if (['lt-2.1', 'c2-2.1', 'c2-2.2', 'c2-2.3', 'c2-2.4'].includes(q.id)) return '2.1.1';
-      if (q.group === '2.2.4' || ['lt-2.2', 'lt-2.3', 'c2-2.5', 'c2-2.6'].includes(q.id)) return '2.1.2';
-      return '2.1.3'; // lt-2.4, lt-2.5, lt-2.6, nhóm 2.2.2 (10c), nhóm 2.2.3 (6c)
+      if (['lt-2.2', 'lt-2.3', 'c2-2.5', 'c2-2.6'].includes(q.id)) return '2.1.2';
+      return '2.1.3'; // lt-2.4, lt-2.5, lt-2.6, c2-2.7 -> c2-2.12
+    }
+    // CHƯƠNG 6 (8 câu - Băng nhớ & SSD/HDD)
+    if (q.chapter === 6) {
+      if (['c2-2.25a', 'c2-2.25b'].includes(q.id) || q.group === '6.2.2' || q.groupId === '6.2.2') return '6.1.2';
+      return '6.1.1'; // c2-2.16 -> c2-2.18c (Băng nhớ đan xen)
+    }
+    // CHƯƠNG 7 (11 câu - MMIO, Polling, DMA)
+    if (q.chapter === 7) {
+      if (['c2-2.13', 'c2-2.14', 'c2-2.15a', 'c2-2.15b'].includes(q.id) || q.group === '7.2.1' || q.groupId === '7.2.1') return '7.1.1';
+      return '7.1.2'; // c2-2.19 -> c2-2.24 (Polling, PIC, DMA)
     }
     // CHƯƠNG 3 (78 câu)
     if (q.chapter === 3) {
@@ -1618,7 +1630,7 @@
       <div style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px; margin-bottom: 32px;">
     `;
 
-    [1, 2, 3, 4].forEach(chNum => {
+    [1, 2, 3, 4, 6, 7].forEach(chNum => {
       const chQuestions = allQuestions.filter(q => q.chapter === chNum);
       const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
       const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;

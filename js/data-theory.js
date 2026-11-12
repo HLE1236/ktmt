@@ -75,16 +75,14 @@
       id: 2,
       code: "Chương 2",
       title: "Hệ thống máy tính",
-      subtitle: "CPU (CU, ALU, RF), Chu trình lệnh (PC, IR, SP), Ngắt (Interrupt), 3 phương pháp Vào-Ra (Polling, Interrupt, DMA), Hệ thống Bus và Băng nhớ vật lý.",
+      subtitle: "CPU (CU, ALU, Registers), Chu trình lệnh (Fetch, Decode, Execute, PC, IR, SP), Khái niệm Ngắt cơ bản, Hệ thống Bus (Bus địa chỉ, Bus dữ liệu, Bus điều khiển) và Liên kết PCIe.",
       pdfPageStart: 32,
       printedPageStart: 31,
       theorySections: ["2.1.1", "2.1.2", "2.1.3"],
       groups: [
         { id: "2.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 2", type: "theory", pdfPage: 31, exercises: "Lý thuyết 2.1 - 2.6", count: 6, summary: "Cấu trúc CPU, chu trình thực hiện lệnh, phân loại ngắt và cấu trúc kết nối bus hệ thống." },
         { id: "2.2.1", title: "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ", type: "exercise", pdfPage: 37, exercises: "Bài tập 2.1 - 2.6", count: 6, summary: "3 giai đoạn: Nhận lệnh (PC -> Bus địa chỉ, M[PC] -> IR, PC += 4), Giải mã (CU), Thực thi (ALU/Register). Nguyên tắc ngăn nhớ: Giá trị thay đổi nhưng địa chỉ luôn cố định." },
-        { id: "2.2.2", title: "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ", type: "exercise", pdfPage: 39, exercises: "Bài tập 2.7 - 2.16", count: 10, summary: "Công thức không gian nhớ: M = 2^N (byte hoặc word). Số đường bus địa chỉ: N = log2(M). Số đường bus dữ liệu xác định số bit truyền song song trên mỗi chu kỳ." },
-        { id: "2.2.3", title: "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)", type: "exercise", pdfPage: 44, exercises: "Bài tập 2.17 - 2.22", count: 6, summary: "Số modul nhớ: K = Bus dữ liệu / 8. Vị trí Bank chứa byte = Địa chỉ mod K. Địa chỉ byte bên trong modul = floor(Địa chỉ / K)." },
-        { id: "2.2.4", title: "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ", type: "exercise", pdfPage: 47, exercises: "Bài tập 2.23 - 2.31", count: 9, summary: "So sánh hiệu suất: Polling (CPU bận 100%) < Interrupt-driven (giải phóng CPU lúc chờ) < DMA (giải phóng CPU cả lúc truyền khối dữ liệu). DMAC không có thanh ghi PC." }
+        { id: "2.2.2", title: "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ", type: "exercise", pdfPage: 39, exercises: "Bài tập 2.7 - 2.12", count: 6, summary: "Công thức không gian nhớ: M = 2^N (byte hoặc word). Số đường bus địa chỉ: N = log2(M). Số đường bus dữ liệu xác định số bit truyền song song trên mỗi chu kỳ." }
       ]
     },
     {
@@ -122,6 +120,32 @@
         { id: "4.2.3", title: "Nhóm 3: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)", type: "exercise", pdfPage: 115, exercises: "Bài tập 5.8 - 5.12", count: 6, summary: "Tràn số học chỉ xảy ra khi cộng 2 số cùng dấu mà ra kết quả trái dấu. Phép trừ A - B chuyển thành A + (-B). Dấu hiệu tràn trên mạch cộng: Cin != Cout ở bit dấu (MSB)." },
         { id: "4.2.4", title: "Nhóm 4: Lệnh Chia và Lấy phần dư số nguyên (div, rem)", type: "exercise", pdfPage: 118, exercises: "Bài tập 5.13", count: 1, summary: "Mở rộng RV32M: div rd, rs1, rs2 (lấy phần thương), rem rd, rs1, rs2 (lấy phần dư). Dấu của phần dư rem luôn cùng dấu với số bị chia (dividend rs1)." },
         { id: "4.2.5", title: "Nhóm 5: Số thực dấu phẩy động chuẩn IEEE 754 32-bit", type: "exercise", pdfPage: 119, exercises: "Bài tập 5.14 - 5.18", count: 10, summary: "Cấu trúc 32-bit: 1 bit dấu S, 8 bit mũ e = E + 127, 23 bit định trị m. Giá trị = (-1)^S * (1.m) * 2^(e - 127). Quy tắc đổi nhanh thập phân sang Hex 32-bit." }
+      ]
+    },
+    {
+      id: 6,
+      code: "Chương 6",
+      title: "Bộ nhớ máy tính",
+      subtitle: "Tổ chức Băng nhớ vật lý đan xen (Interleaved Memory Banks) và Thiết bị lưu trữ ngoài (Ổ đĩa HDD vs Ổ bán dẫn SSD).",
+      pdfPageStart: 44,
+      printedPageStart: 43,
+      theorySections: ["6.1.1", "6.1.2"],
+      groups: [
+        { id: "6.2.1", title: "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)", type: "exercise", pdfPage: 44, exercises: "Bài tập 2.16 - 2.18c", count: 6, summary: "Bus dữ liệu m-bit -> K = m/8 băng nhớ đan xen theo byte. Vị trí băng chứa byte = Địa chỉ mod K. Địa chỉ bên trong băng = floor(Địa chỉ / K)." },
+        { id: "6.2.2", title: "Nhóm 2: Thiết bị lưu trữ ngoài HDD & SSD", type: "exercise", pdfPage: 50, exercises: "Bài tập 2.25a - 2.25b", count: 2, summary: "So sánh ổ cứng cơ học HDD và ổ thể rắn SSD (chip Flash NAND, tốc độ truy xuất, độ bền ghi xóa, kịch bản ứng dụng Server vs Camera)." }
+      ]
+    },
+    {
+      id: 7,
+      code: "Chương 7",
+      title: "Hệ thống vào-ra",
+      subtitle: "Không gian địa chỉ I/O (MMIO vs Isolated I/O), Phương pháp điều khiển Vào-Ra (Programmed I/O / Polling, Ngắt PIC, DMA / DMAC).",
+      pdfPageStart: 42,
+      printedPageStart: 41,
+      theorySections: ["7.1.1", "7.1.2"],
+      groups: [
+        { id: "7.2.1", title: "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)", type: "exercise", pdfPage: 42, exercises: "Bài tập 2.13 - 2.15b", count: 4, summary: "Bản đồ bộ nhớ (Memory-mapped I/O) chia sẻ cùng không gian RAM, dùng lệnh lw/sw. Vào-ra riêng biệt (Isolated I/O) dùng cổng I/O riêng, lệnh IN/OUT chuyên biệt." },
+        { id: "7.2.2", title: "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)", type: "exercise", pdfPage: 47, exercises: "Bài tập 2.19 - 2.24", count: 7, summary: "Hiệu suất: Polling (CPU bận 100%) < Interrupt-driven (giải phóng CPU lúc chờ) < DMA (truyền khối không qua CPU). Cấu trúc DMAC và bộ điều khiển ngắt PIC." }
       ]
     }
   ];
@@ -412,7 +436,7 @@
       title: "Chi tiết các thành phần cơ bản của máy tính",
       pdfPage: 32,
       printedPage: 31,
-      linkedGroups: ["2.1", "2.2.1", "2.2.4"],
+      linkedGroups: ["2.1", "2.2.1"],
       summary: "Cấu tạo bên trong CPU (CU, ALU, RF), Hệ thống Bộ nhớ (nguyên tắc vàng của ngăn nhớ) và Hệ thống Vào-Ra (Thiết bị ngoại vi vs Mô-đun vào-ra).",
       content: `
         <h4>1. Bộ xử lý trung tâm (CPU - Central Processing Unit)</h4>
@@ -450,7 +474,7 @@
       title: "Ba hoạt động cơ bản của máy tính (Chu trình lệnh, Ngắt, Vào-Ra)",
       pdfPage: 33,
       printedPage: 32,
-      linkedGroups: ["2.1", "2.2.1", "2.2.4"],
+      linkedGroups: ["2.1", "2.2.1"],
       summary: "Chu trình lệnh (Fetch - Decode - Execute), thanh ghi PC & IR, quy trình 5 bước xử lý Ngắt (Interrupt), PIC, và so sánh 3 phương pháp Vào-Ra (Polling, Interrupt-driven, DMA).",
       content: `
         <h4>1. Hoạt động thực hiện chương trình (Chu trình lệnh - Instruction Cycle)</h4>
@@ -513,7 +537,7 @@
       title: "Liên kết hệ thống (Cấu trúc Bus, Không gian địa chỉ và Băng nhớ)",
       pdfPage: 35,
       printedPage: 34,
-      linkedGroups: ["2.1", "2.2.2", "2.2.3"],
+      linkedGroups: ["2.1", "2.2.2"],
       summary: "3 loại Bus (Bus địa chỉ 1 chiều, Bus dữ liệu 2 chiều, Bus điều khiển), công thức tính Không gian địa chỉ 2^N, công thức chia Băng nhớ vật lý (Memory Banks) và liên kết điểm-điểm (QPI, PCIe).",
       content: `
         <h4>1. Ba loại Bus chức năng trong Bus hệ thống</h4>
@@ -1097,6 +1121,170 @@
           </li>
         </ul>
       `
+    },
+    // ==================== CHƯƠNG 6 (BỘ NHỚ MÁY TÍNH) ====================
+    {
+      id: "6.1.1",
+      chapter: 6,
+      code: "6.1.1",
+      title: "Tổ chức Băng nhớ vật lý đan xen (Interleaved Memory Banks)",
+      pdfPage: 44,
+      printedPage: 43,
+      linkedGroups: ["6.2.1"],
+      summary: "Bus dữ liệu m-bit, số băng nhớ K = m/8, vị trí băng chứa byte = Địa chỉ mod K.",
+      content: `
+        <h4>1. Nguyên lý tổ chức băng nhớ đan xen (Low-order interleaving)</h4>
+        <p>Để tăng băng thông truy xuất bộ nhớ, bộ nhớ chính được chia thành nhiều khối vật lý độc lập gọi là các <strong>băng nhớ (Memory Banks / Mô-đun nhớ)</strong> có thể hoạt động song song.</p>
+        <p>Số lượng băng nhớ vật lý $K$ được quyết định bởi độ rộng của Bus dữ liệu kết nối giữa CPU và Bộ nhớ chính:</p>
+        <div class="callout callout-formula">
+          <div class="callout-title">📐 Công thức xác định số lượng Băng nhớ vật lý ($K$)</div>
+          <p>$$K = \\frac{\\text{Độ rộng Bus dữ liệu (bit)}}{8\\text{ bit/byte}}$$</p>
+          <ul>
+            <li>Bus dữ liệu $32\\text{ bit} \\implies K = \\frac{32}{8} = 4$ băng nhớ (Băng 0, 1, 2, 3).</li>
+            <li>Bus dữ liệu $64\\text{ bit} \\implies K = \\frac{64}{8} = 8$ băng nhớ (Băng 0 đến Băng 7).</li>
+          </ul>
+        </div>
+
+        <h4>2. Xác định vị trí băng nhớ chứa byte có địa chỉ $X$</h4>
+        <ul>
+          <li><strong>Vị trí băng nhớ chứa byte:</strong> $\\text{Bank} = X \\bmod K$.</li>
+          <li><strong>Mẹo làm nhanh với địa chỉ Hexa:</strong>
+            <ul>
+              <li>Với $K = 4$: Lấy chữ số Hex cuối cùng đổi ra nhị phân (2 bit cuối) hoặc chia lấy dư cho 4.</li>
+              <li>Với $K = 8$: Lấy chữ số Hex cuối cùng chia lấy dư cho 8 (ví dụ: chữ số cuối là <code>7</code> $\\implies$ Băng 7; chữ số cuối là <code>D</code> (13) $\\implies 13 \\bmod 8 = 5 \\implies$ Băng 5).</li>
+            </ul>
+          </li>
+          <li><strong>Địa chỉ của byte bên trong từng băng nhớ:</strong> $\\text{Offset} = \\lfloor X / K \\rfloor$.</li>
+        </ul>
+      `
+    },
+    {
+      id: "6.1.2",
+      chapter: 6,
+      code: "6.1.2",
+      title: "Thiết bị lưu trữ ngoài (Ổ đĩa HDD và Ổ bán dẫn SSD)",
+      pdfPage: 50,
+      printedPage: 49,
+      linkedGroups: ["6.2.2"],
+      summary: "So sánh đặc điểm và kịch bản ứng dụng giữa ổ từ HDD và ổ bán dẫn SSD.",
+      content: `
+        <h4>1. So sánh ổ đĩa cứng cơ học HDD và ổ thể rắn SSD</h4>
+        <table class="theory-table">
+          <thead>
+            <tr>
+              <th>Đặc trưng</th>
+              <th>Ổ đĩa từ (HDD)</th>
+              <th>Ổ bán dẫn thể rắn (SSD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cơ chế hoạt động</strong></td>
+              <td>Đĩa quay cơ học, đầu từ chuyển động để đọc/ghi</td>
+              <td>Vi mạch bán dẫn Flash NAND (hoàn toàn điện tử, không cơ học)</td>
+            </tr>
+            <tr>
+              <td><strong>Tốc độ & Độ trễ</strong></td>
+              <td>Chậm (có độ trễ tìm rãnh Seek Time và chờ quay)</td>
+              <td>Rất nhanh, độ trễ truy xuất ngẫu nhiên cực thấp</td>
+            </tr>
+            <tr>
+              <td><strong>Tiếng ồn & Chống sốc</strong></td>
+              <td>Phát ra tiếng ồn khi quay, dễ hỏng khi rơi sốc vật lý</td>
+              <td>Hoàn toàn im lặng, khả năng chống sốc vật lý xuất sắc</td>
+            </tr>
+            <tr>
+              <td><strong>Chi phí / Dung lượng</strong></td>
+              <td>Giá trên mỗi GB rất rẻ</td>
+              <td>Giá trên mỗi GB cao hơn HDD</td>
+            </tr>
+            <tr>
+              <td><strong>Độ bền ghi xóa</strong></td>
+              <td>Ghi đè từ tính liên tục gần như không giới hạn</td>
+              <td>Có giới hạn số chu kỳ ghi/xóa (TBW - Terabytes Written)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>2. Kịch bản ứng dụng thực tế</h4>
+        <ul>
+          <li><strong>Ưu tiên dùng SSD:</strong> Ổ cài đặt Hệ điều hành (Windows, Linux), máy tính chơi game (giảm thời gian load), Laptop di động, Smartphone, Tablet.</li>
+          <li><strong>Ưu tiên dùng HDD:</strong> Hệ thống lưu trữ mạng (NAS), máy chủ dữ liệu lớn (Data Center), hệ thống camera giám sát ghi hình 24/7 (cần ghi đè liên tục dung lượng khổng lồ với chi phí thấp).</li>
+        </ul>
+      `
+    },
+
+    // ==================== CHƯƠNG 7 (HỆ THỐNG VÀO-RA) ====================
+    {
+      id: "7.1.1",
+      chapter: 7,
+      code: "7.1.1",
+      title: "Không gian địa chỉ Vào-Ra (MMIO vs Isolated I/O)",
+      pdfPage: 42,
+      printedPage: 41,
+      linkedGroups: ["7.2.1"],
+      summary: "Vào-ra theo bản đồ bộ nhớ (Memory-Mapped I/O) vs Vào-ra riêng biệt (Isolated I/O).",
+      content: `
+        <h4>1. Vào-ra theo bản đồ bộ nhớ (Memory-Mapped I/O - MMIO)</h4>
+        <ul>
+          <li><strong>Nguyên tắc:</strong> Cổng vào-ra của thiết bị ngoại vi được đánh địa chỉ nằm <em>chung không gian địa chỉ</em> với bộ nhớ chính (RAM).</li>
+          <li><strong>Tập lệnh sử dụng:</strong> CPU sử dụng chính các lệnh đọc/ghi bộ nhớ thông thường (<code>lw</code>, <code>sw</code>, <code>lb</code>, <code>sb</code> trong RISC-V) để trao đổi dữ liệu với thiết bị vào-ra.</li>
+          <li><strong>Ưu điểm:</strong> Không cần bổ sung tập lệnh I/O đặc biệt, mạch điều khiển CPU đơn giản.</li>
+          <li><strong>Nhược điểm:</strong> Chiếm dụng một phần không gian địa chỉ của bộ nhớ chính.</li>
+        </ul>
+
+        <h4>2. Vào-ra riêng biệt (Isolated I/O / Port-Mapped I/O)</h4>
+        <ul>
+          <li><strong>Nguyên tắc:</strong> Không gian địa chỉ cho cổng vào-ra tách biệt hoàn toàn với không gian địa chỉ của bộ nhớ chính.</li>
+          <li><strong>Tập lệnh sử dụng:</strong> CPU bắt buộc phải có tập lệnh I/O chuyên biệt (như <code>IN</code>, <code>OUT</code> trong vi xử lý Intel x86).</li>
+          <li><strong>Đặc điểm:</strong> Bus điều khiển cần có các tín hiệu đọc/ghi cổng riêng (<code>IOR</code>, <code>IOW</code>) tách biệt với <code>MEMR</code>, <code>MEMW</code>.</li>
+          <li><strong>Dung lượng quản lý:</strong> Nếu bus địa chỉ cổng vào-ra rộng $k$ bit, số cổng vào-ra tối đa là $2^k$ cổng (ví dụ: $16\\text{ bit} \\implies 2^{16} = 65536$ cổng, từ <code>0x0000</code> đến <code>0xFFFF</code>).</li>
+        </ul>
+      `
+    },
+    {
+      id: "7.1.2",
+      chapter: 7,
+      code: "7.1.2",
+      title: "Các phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
+      pdfPage: 47,
+      printedPage: 46,
+      linkedGroups: ["7.2.2"],
+      summary: "So sánh hiệu suất 3 phương pháp Vào-Ra (Polling < Ngắt < DMA), bộ điều khiển PIC và vi mạch DMAC.",
+      content: `
+        <h4>1. Ba phương pháp điều khiển Vào-Ra cốt lõi</h4>
+        <ul>
+          <li><strong>1. Vào-ra bằng chương trình (Programmed I/O hay Polling - Thăm dò):</strong>
+            <ul>
+              <li>CPU trực tiếp điều khiển toàn bộ quá trình truyền dữ liệu.</li>
+              <li>Trong lúc chờ thiết bị ngoại vi hoàn thành và sẵn sàng, CPU bị “khóa” trong một vòng lặp kiểm tra bit trạng thái liên tục (<em>busy waiting</em>).</li>
+              <li><strong>Hiệu suất CPU thấp nhất</strong> vì lãng phí chu kỳ xử lý của CPU.</li>
+            </ul>
+          </li>
+          <li><strong>2. Vào-ra điều khiển bằng ngắt (Interrupt-driven I/O):</strong>
+            <ul>
+              <li>CPU ra lệnh vào-ra cho mô-đun rồi tiếp tục thực hiện chương trình khác.</li>
+              <li>Khi thiết bị ngoại vi sẵn sàng, mô-đun vào-ra sẽ gửi tín hiệu ngắt (<code>INTR</code>) tới CPU. CPU tạm dừng việc đang làm để xử lý trao đổi dữ liệu.</li>
+              <li><strong>Giải phóng CPU</strong> trong suốt khoảng thời gian chờ thiết bị ngoại vi sẵn sàng.</li>
+              <li><em>Bộ điều khiển ngắt khả trình (PIC - Programmable Interrupt Controller):</em> Tiếp nhận nhiều đường yêu cầu ngắt (IR0-IR7) từ nhiều thiết bị, có phân định mức ưu tiên để gửi tới CPU.</li>
+            </ul>
+          </li>
+          <li><strong>3. Truy cập bộ nhớ trực tiếp (DMA - Direct Memory Access):</strong>
+            <ul>
+              <li>CPU giao phó toàn quyền điều khiển đường truyền Bus cho vi mạch chuyên dụng <strong>DMAC (DMA Controller)</strong>.</li>
+              <li>DMAC truyền dữ liệu theo từng khối lớn trực tiếp giữa Thiết bị vào-ra và Bộ nhớ chính (RAM) mà <strong>hoàn toàn không đi qua CPU</strong>.</li>
+              <li><strong>Cấu tạo của DMAC gồm 4 khối:</strong> Logic điều khiển, Bộ đếm dữ liệu (Data counter), Thanh ghi địa chỉ (Address register), Thanh ghi dữ liệu (Data register). <strong>Lưu ý: DMAC không có thanh ghi PC (Bộ đếm chương trình)</strong> vì DMAC không thực thi mã lệnh.</li>
+              <li><strong>Kỹ thuật DMA trong suốt (Transparent DMA):</strong> DMAC chỉ tranh thủ dùng Bus vào những chu kỳ mà CPU đang xử lý nội bộ (không dùng Bus). Đây là cách tối ưu nhất vì không làm chậm CPU nhưng phức tạp nhất về mặt thiết kế phần cứng.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="callout callout-formula">
+          <div class="callout-title">📐 Thứ tự hiệu suất sử dụng CPU tăng dần (từ thấp đến cao)</div>
+          <p class="formula-highlight">Programmed I/O (Polling) &rarr; Interrupt-driven I/O &rarr; DMA</p>
+        </div>
+      `
     }
+
   ];
 })(typeof window !== "undefined" ? window : globalThis);

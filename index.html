@@ -177,18 +177,18 @@
           <div class="chapter-card" data-chapter="2">
             <div class="chapter-card-header">
               <span class="chapter-num">Chương 2</span>
-              <span style="font-size: 0.8rem; color: var(--text-muted);">PDF: Trang 29-50</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Slide: 1-44</span>
             </div>
-            <div class="chapter-card-title">Hệ thống máy tính & Bộ nhớ</div>
+            <div class="chapter-card-title">Hệ thống máy tính</div>
             <div class="chapter-card-desc">
-              Bus truyền thông, phân cấp bộ nhớ (Cache, SRAM, DRAM), cấu trúc Little-Endian và kỹ thuật xen kẽ mô-đun nhớ (Memory Banks).
+              Cấu trúc CPU (CU, ALU, Registers), Chu trình lệnh (Fetch, Decode, Execute, PC, IR), Hoạt động ngắt cơ bản, Hệ thống Bus và Liên kết PCIe.
             </div>
             <div class="chapter-progress-bar">
               <div class="chapter-progress-fill" id="dash-ch2-fill" style="width: 0%;"></div>
             </div>
             <div class="chapter-progress-meta">
               <span>Tiến độ ôn tập</span>
-              <span id="dash-ch2-meta">0/37 câu (0%)</span>
+              <span id="dash-ch2-meta">0/18 câu (0%)</span>
             </div>
           </div>
 
@@ -230,6 +230,44 @@
             </div>
           </div>
 
+          <!-- Chapter 6 -->
+          <div class="chapter-card" data-chapter="6">
+            <div class="chapter-card-header">
+              <span class="chapter-num">Chương 6</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Slide: 24-28, 54-56</span>
+            </div>
+            <div class="chapter-card-title">Bộ nhớ máy tính</div>
+            <div class="chapter-card-desc">
+              Tổ chức Băng nhớ vật lý đan xen (Interleaved Memory Banks) và So sánh thiết bị lưu trữ ngoài HDD & SSD.
+            </div>
+            <div class="chapter-progress-bar">
+              <div class="chapter-progress-fill" id="dash-ch6-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chapter-progress-meta">
+              <span>Tiến độ ôn tập</span>
+              <span id="dash-ch6-meta">0/8 câu (0%)</span>
+            </div>
+          </div>
+
+          <!-- Chapter 7 -->
+          <div class="chapter-card" data-chapter="7">
+            <div class="chapter-card-header">
+              <span class="chapter-num">Chương 7</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Slide: 15-45</span>
+            </div>
+            <div class="chapter-card-title">Hệ thống vào-ra</div>
+            <div class="chapter-card-desc">
+              Không gian địa chỉ I/O (MMIO vs Isolated I/O) và Các phương pháp điều khiển Vào-Ra (Programmed I/O / Polling, Ngắt PIC, DMA).
+            </div>
+            <div class="chapter-progress-bar">
+              <div class="chapter-progress-fill" id="dash-ch7-fill" style="width: 0%;"></div>
+            </div>
+            <div class="chapter-progress-meta">
+              <span>Tiến độ ôn tập</span>
+              <span id="dash-ch7-meta">0/11 câu (0%)</span>
+            </div>
+          </div>
+
         </div>
       </main>
 
@@ -237,9 +275,11 @@
       <main id="tab-theory" class="tab-view">
         <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
           <button class="btn btn-secondary theory-tab-btn active" data-chapter="1">Chương 1: Hiệu năng</button>
-          <button class="btn btn-secondary theory-tab-btn" data-chapter="2">Chương 2: Hệ thống nhớ</button>
+          <button class="btn btn-secondary theory-tab-btn" data-chapter="2">Chương 2: Hệ thống máy tính</button>
           <button class="btn btn-secondary theory-tab-btn" data-chapter="3">Chương 3: Tập lệnh RISC-V</button>
           <button class="btn btn-secondary theory-tab-btn" data-chapter="4">Chương 4: Số học máy tính</button>
+          <button class="btn btn-secondary theory-tab-btn" data-chapter="6">Chương 6: Bộ nhớ</button>
+          <button class="btn btn-secondary theory-tab-btn" data-chapter="7">Chương 7: Vào-ra</button>
         </div>
 
         <div class="theory-layout">
@@ -279,10 +319,12 @@
             <label style="font-weight: 600; font-size: 0.85rem;">Chương:</label>
             <select id="practice-filter-chapter" class="filter-select">
               <option value="all">Tất cả các chương (199 câu)</option>
-              <option value="1">Chương 1: Hiệu năng máy tính</option>
-              <option value="2">Chương 2: Hệ thống máy tính</option>
-              <option value="3">Chương 3: Tập lệnh RISC-V</option>
-              <option value="4">Chương 4: Số học máy tính</option>
+              <option value="1">Chương 1: Hiệu năng máy tính (49 câu)</option>
+              <option value="2">Chương 2: Hệ thống máy tính (18 câu chuẩn)</option>
+              <option value="3">Chương 3: Tập lệnh RISC-V (78 câu)</option>
+              <option value="4">Chương 4: Số học máy tính (35 câu)</option>
+              <option value="6">Chương 6: Bộ nhớ máy tính (Băng nhớ & SSD - 8 câu)</option>
+              <option value="7">Chương 7: Hệ thống vào-ra (MMIO & DMA - 11 câu)</option>
             </select>
 
             <label style="font-weight: 600; font-size: 0.85rem;">Phân loại:</label>
@@ -423,9 +465,11 @@
           <select id="flashcard-filter-chapter" class="filter-select">
             <option value="all">Tất cả các chương</option>
             <option value="1">Chương 1: Hiệu năng</option>
-            <option value="2">Chương 2: Hệ thống nhớ</option>
+            <option value="2">Chương 2: Hệ thống máy tính</option>
             <option value="3">Chương 3: Tập lệnh RISC-V</option>
             <option value="4">Chương 4: Số học máy tính</option>
+            <option value="6">Chương 6: Bộ nhớ máy tính</option>
+            <option value="7">Chương 7: Hệ thống vào-ra</option>
           </select>
         </div>
 

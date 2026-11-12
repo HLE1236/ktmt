@@ -232,7 +232,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Theo nguyên lý hoạt động cơ bản của máy tính (mô hình von Neumann), mọi chương trình khi đang chạy (đang thực hiện) đều phải được nạp vào <strong>Bộ nhớ chính (Main Memory / RAM)</strong>.</li><li>Bộ nhớ ngoài (ổ cứng) chỉ lưu trữ phần mềm và dữ liệu khi chưa chạy. Cache và Tập thanh ghi chỉ lưu tạm một phần rất nhỏ dữ liệu/lệnh mà CPU đang dùng tức thời.</li><li><strong>Đáp án đúng: Bộ nhớ chính.</strong></li></ul>"
+    "explanation": "<ul><li>Theo nguyên lý hoạt động cơ bản của máy tính (mô hình von Neumann), mọi chương trình khi đang chạy (đang thực hiện) đều phải được nạp vào <strong>Bộ nhớ chính (Main Memory / RAM)</strong>.</li><li>Bộ nhớ ngoài (ổ cứng) chỉ lưu trữ phần mềm và dữ liệu khi chưa chạy. Cache và Tập thanh ghi chỉ lưu tạm một phần rất nhỏ dữ liệu/lệnh mà CPU đang dùng tức thời.</li><li><strong>Đáp án đúng: A (Bộ nhớ chính).</strong></li></ul>"
   },
   {
     "id": "c1-1.2",
@@ -265,7 +265,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Trong phân cấp bộ nhớ, Cache L1 nằm sát nhân CPU nhất nên có tốc độ nhanh nhất nhưng dung lượng nhỏ nhất (vài chục KB), tiếp theo là Cache L2 (vài trăm KB), rồi đến Cache L3 (vài MB đến vài chục MB).</li><li>Lớn hơn Cache là Bộ nhớ chính (RAM - vài GB đến vài chục GB), và lớn nhất là Bộ nhớ ngoài (SSD/HDD - hàng trăm GB đến hàng TB).</li><li><strong>Đáp án đúng: Cache L1 &lt; Cache L2 &lt; Cache L3 &lt; Bộ nhớ chính &lt; Bộ nhớ ngoài.</strong></li></ul>"
+    "explanation": "<ul><li>Trong phân cấp bộ nhớ, Cache L1 nằm sát nhân CPU nhất nên có tốc độ nhanh nhất nhưng dung lượng nhỏ nhất (vài chục KB), tiếp theo là Cache L2 (vài trăm KB), rồi đến Cache L3 (vài MB đến vài chục MB).</li><li>Lớn hơn Cache là Bộ nhớ chính (RAM - vài GB đến vài chục GB), và lớn nhất là Bộ nhớ ngoài (SSD/HDD - hàng trăm GB đến hàng TB).</li><li><strong>Đáp án đúng: A (Cache L1 &lt; Cache L2 &lt; Cache L3 &lt; Bộ nhớ chính &lt; Bộ nhớ ngoài).</strong></li></ul>"
   },
   {
     "id": "c1-1.3",
@@ -298,7 +298,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Ta kiểm tra các cấu hình dựa trên nguyên tắc phân cấp dung lượng $L1 < L2 < L3 < \\text{RAM} < \\text{SSD}$:</p><ul><li>Cấu hình có Cache L3 lên tới 16GB (ngang RAM) và RAM 2TB (lớn hơn SSD 1TB) là không hợp lý.</li><li>Cấu hình có Cache L2 là 256GB (lớn hơn Cache L3 8MB và RAM 8GB) là sai quy tắc phân cấp.</li><li>Cấu hình có Cache L1 là 16MB (lớn hơn Cache L2 256KB) là sai quy tắc phân cấp.</li><li>Cấu hình hợp lý và chính xác: <strong>Cache L1: 64KB &lt; Cache L2: 256KB &lt; Cache L3: 8MB &lt; RAM: 8GB &lt; SSD: 512GB</strong>.</li><li><strong>Đáp án đúng: Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, RAM: 8GB, SSD: 512GB.</strong></li></ul>"
+    "explanation": "<p>Ta kiểm tra từng phương án dựa trên nguyên tắc dung lượng $L1 < L2 < L3 < \\text{RAM} < \\text{SSD}$:</p><ul><li>Phương án B sai vì Cache L3 lên tới 16GB (quá lớn, ngang RAM) và RAM 2TB lớn hơn cả SSD 1TB.</li><li>Phương án C sai vì Cache L2 là 256GB (lớn hơn Cache L3 8MB và RAM 8GB).</li><li>Phương án D sai vì Cache L1 là 16MB (lớn hơn Cache L2 256KB).</li><li>Phương án A hoàn toàn hợp lý: 64KB &lt; 256KB &lt; 8MB &lt; 8GB &lt; 512GB.</li><li><strong>Đáp án đúng: A.</strong></li></ul>"
   },
   {
     "id": "c1-1.4",
@@ -331,7 +331,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Cẩn thận bẫy thứ tự liệt kê: ở câu này đề bài đưa thông số RAM lên đầu dòng để đánh lạc hướng.</li><li>Loại các cấu hình sai quy tắc phân cấp: Cache L3 = 16GB và RAM = 2TB; Cache L1 = 16MB &gt; Cache L2 = 256KB; Cache L2 = 256GB.</li><li>Cấu hình hợp lý thỏa mãn $L1 &lt; L2 &lt; L3 &lt; \\text{RAM} &lt; \\text{SSD}$: <strong>RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB</strong>.</li><li><strong>Đáp án đúng: RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB.</strong></li></ul>"
+    "explanation": "<ul><li>Cẩn thận bẫy thứ tự liệt kê: ở câu này đề bài đưa thông số RAM lên đầu dòng để đánh lạc hướng.</li><li>Loại B vì Cache L3 = 16GB và RAM = 2TB. Loại C vì Cache L1 = 16MB &gt; Cache L2 = 256KB. Loại D vì Cache L2 = 256GB.</li><li><strong>Đáp án đúng: RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB.</strong></li></ul>"
   },
   {
     "id": "c1-1.5",
@@ -1114,7 +1114,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1 – Tính $CPI$ trung bình:</strong><br>$$CPI_{\\text{TB}} = (0.40 \\times 1) + (0.35 \\times 3) + (0.25 \\times 5) = 0.4 + 1.05 + 1.25 = 2.7$$</li><li><strong>Bước 2 – Tính tổng thời gian thực thi $t_{\\text{CPU}}$:</strong><br>Biết $IC = 2\\text{ tỷ lệnh} = 2 \\times 10^9\\text{ lệnh}$ và $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$:<br>$$t_{\\text{CPU}} = \\frac{IC \\times CPI_{\\text{TB}}}{f_0} = \\frac{2 \\times 10^9 \\times 2.7}{4 \\times 10^9} = \\frac{5.4}{4} = 1.35\\text{ giây}$$</li></ol><p><strong>Đáp án đúng: 1.35 giây.</strong></p>"
+    "explanation": "<ol><li><strong>Bước 1 – Tính $CPI$ trung bình:</strong><br>$$CPI_{\\text{TB}} = (0.40 \\times 1) + (0.35 \\times 3) + (0.25 \\times 5) = 0.4 + 1.05 + 1.25 = 2.7$$</li><li><strong>Bước 2 – Tính tổng thời gian thực thi $t_{\\text{CPU}}$:</strong><br>Biết $IC = 2\\text{ tỷ lệnh} = 2 \\times 10^9\\text{ lệnh}$ và $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$:<br>$$t_{\\text{CPU}} = \\frac{IC \\times CPI_{\\text{TB}}}{f_0} = \\frac{2 \\times 10^9 \\times 2.7}{4 \\times 10^9} = \\frac{5.4}{4} = 1.35\\text{ giây}$$</li></ol><p><strong>Đáp án đúng: C (1.35 giây).</strong></p>"
   },
   {
     "id": "c1-1.23a",
@@ -1589,7 +1589,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Công thức: $n = t \\times f_0$; $IC = \\dfrac{n}{CPI}$.</p><ul><li><strong>P1:</strong> $n_1 = 10 \\times 2 \\times 10^9 = 20 \\times 10^9\\text{ chu kỳ}$; $IC_1 = \\dfrac{20 \\times 10^9}{1.5} \\approx 13.33 \\times 10^9\\text{ lệnh}$.</li><li><strong>P2:</strong> $n_2 = 10 \\times 1.5 \\times 10^9 = 15 \\times 10^9\\text{ chu kỳ}$; $IC_2 = \\dfrac{15 \\times 10^9}{1.0} = 15 \\times 10^9\\text{ lệnh}$.</li><li><strong>P3:</strong> $n_3 = 10 \\times 3 \\times 10^9 = 30 \\times 10^9\\text{ chu kỳ}$; $IC_3 = \\dfrac{30 \\times 10^9}{2.5} = 12 \\times 10^9\\text{ lệnh}$.</li></ul><p><strong>Đáp án đúng: P1: n = 20×10^9, IC ≈ 13.33×10^9; P2: n = 15×10^9, IC = 15×10^9; P3: n = 30×10^9, IC = 12×10^9.</strong></p>"
+    "explanation": "<p>Công thức: $n = t \\times f_0$; $IC = \\dfrac{n}{CPI}$.</p><ul><li><strong>P1:</strong> $n_1 = 10 \\times 2 \\times 10^9 = 20 \\times 10^9\\text{ chu kỳ}$; $IC_1 = \\dfrac{20 \\times 10^9}{1.5} \\approx 13.33 \\times 10^9\\text{ lệnh}$.</li><li><strong>P2:</strong> $n_2 = 10 \\times 1.5 \\times 10^9 = 15 \\times 10^9\\text{ chu kỳ}$; $IC_2 = \\dfrac{15 \\times 10^9}{1.0} = 15 \\times 10^9\\text{ lệnh}$.</li><li><strong>P3:</strong> $n_3 = 10 \\times 3 \\times 10^9 = 30 \\times 10^9\\text{ chu kỳ}$; $IC_3 = \\dfrac{30 \\times 10^9}{2.5} = 12 \\times 10^9\\text{ lệnh}$.</li></ul><p><strong>Đáp án đúng: A.</strong></p>"
   },
   {
     "id": "c1-1.32c",
@@ -1622,7 +1622,7 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li>Giảm thời gian $30\\% \\implies t_{\\text{mới}} = 0.7 \\times t_{\\text{cũ}}$.</li><li>Tăng CPI $20\\% \\implies CPI_{\\text{mới}} = 1.2 \\times CPI_{\\text{cũ}}$.</li><li>Vì số lệnh $IC$ không đổi:<br>$$f_{\\text{mới}} = \\frac{IC \\times CPI_{\\text{mới}}}{t_{\\text{mới}}} = \\frac{1.2}{0.7} \\times f_{\\text{cũ}} = \\frac{12}{7} \\times f_{\\text{cũ}}$$</li><li>Thay số:<br>• $f_{1\\text{ mới}} = \\dfrac{12}{7} \\times 2 = \\dfrac{24}{7} \\approx 3.43\\text{ GHz}$<br>• $f_{2\\text{ mới}} = \\dfrac{12}{7} \\times 1.5 = \\dfrac{18}{7} \\approx 2.57\\text{ GHz}$<br>• $f_{3\\text{ mới}} = \\dfrac{12}{7} \\times 3 = \\dfrac{36}{7} \\approx 5.14\\text{ GHz}$</li></ol><p><strong>Đáp án đúng: P1: 3.43 GHz (24/7), P2: 2.57 GHz (18/7), P3: 5.14 GHz (36/7).</strong></p>"
+    "explanation": "<ol><li>Giảm thời gian $30\\% \\implies t_{\\text{mới}} = 0.7 \\times t_{\\text{cũ}}$.</li><li>Tăng CPI $20\\% \\implies CPI_{\\text{mới}} = 1.2 \\times CPI_{\\text{cũ}}$.</li><li>Vì số lệnh $IC$ không đổi:<br>$$f_{\\text{mới}} = \\frac{IC \\times CPI_{\\text{mới}}}{t_{\\text{mới}}} = \\frac{1.2}{0.7} \\times f_{\\text{cũ}} = \\frac{12}{7} \\times f_{\\text{cũ}}$$</li><li>Thay số:<br>• $f_{1\\text{ mới}} = \\dfrac{12}{7} \\times 2 = \\dfrac{24}{7} \\approx 3.43\\text{ GHz}$<br>• $f_{2\\text{ mới}} = \\dfrac{12}{7} \\times 1.5 = \\dfrac{18}{7} \\approx 2.57\\text{ GHz}$<br>• $f_{3\\text{ mới}} = \\dfrac{12}{7} \\times 3 = \\dfrac{36}{7} \\approx 5.14\\text{ GHz}$</li></ol><p><strong>Đáp án đúng: A.</strong></p>"
   },
   {
     "id": "c1-1.33",
@@ -2388,17 +2388,17 @@
   },
   {
     "id": "c2-2.13",
-    "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
+    "chapter": 7,
+    "groupId": "7.2.1",
+    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
     "exerciseCode": "Bài tập 2.13",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 16",
+    "source": "Chương 7 (Slide 15-18) & Ôn tập Cuối kỳ P2 - Câu 16",
     "examTags": [
       "CK"
     ],
     "pdfPage": 42,
     "printedPage": 41,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "7.1.1",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2421,17 +2421,17 @@
   },
   {
     "id": "c2-2.14",
-    "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
+    "chapter": 7,
+    "groupId": "7.2.1",
+    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
     "exerciseCode": "Bài tập 2.14",
-    "source": "Ôn tập Giữa kỳ - Câu 27",
+    "source": "Chương 7 (Slide 15-18) & Ôn tập CK / GK",
     "examTags": [
-      "GK"
+      "CK"
     ],
     "pdfPage": 43,
     "printedPage": 42,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "7.1.1",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2454,17 +2454,17 @@
   },
   {
     "id": "c2-2.15a",
-    "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
+    "chapter": 7,
+    "groupId": "7.2.1",
+    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
     "exerciseCode": "Bài tập 2.15a",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.1",
+    "source": "Chương 7 (Slide 18: Isolated I/O) & Đề Cuối kỳ 2021.2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 44,
     "printedPage": 43,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "7.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập dung lượng bộ nhớ (ví dụ: 64 GiB):",
@@ -2493,17 +2493,17 @@
   },
   {
     "id": "c2-2.15b",
-    "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
+    "chapter": 7,
+    "groupId": "7.2.1",
+    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
     "exerciseCode": "Bài tập 2.15b",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.2",
+    "source": "Chương 7 (Slide 18: Isolated I/O) & Đề Cuối kỳ 2021.2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 44,
     "printedPage": 43,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "7.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập số cổng vào-ra tối đa (ví dụ: 65536):",
@@ -2532,17 +2532,17 @@
   },
   {
     "id": "c2-2.16",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)",
+    "chapter": 6,
+    "groupId": "6.2.1",
+    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
     "exerciseCode": "Bài tập 2.16",
-    "source": "Đề Cuối kỳ 2022.2 - #38a80d, 2024.1 - #cbb2f4 & Ôn tập Cuối kỳ P2 - Câu 32",
+    "source": "Chương 6 (Slide 24-28: Băng nhớ đan xen) & Đề Cuối kỳ 2022.2, 2024.1",
     "examTags": [
       "CK"
     ],
     "pdfPage": 45,
     "printedPage": 44,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "6.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập tên băng nhớ (ví dụ: Băng 3 hoặc 3):",
@@ -2566,13 +2566,13 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1:</strong> Bus dữ liệu là $32\\text{ bit} = 4\\text{ byte}$, nên bộ nhớ chia thành $K = 4$ băng nhớ (đánh số Băng 0, 1, 2, 3).</li><li><strong>Bước 2:</strong> Lấy chữ số Hexa cuối cùng của địa chỉ <code>0x10011647</code> là chữ số <strong>7</strong>.</li><li><strong>Bước 3:</strong> Thực hiện phép chia lấy dư cho 4: $$7 \\bmod 4 = 3$$</li><li>Vậy byte nhớ này nằm trên <strong>Băng 3</strong>.</li></ol><p><strong>Đáp án đúng: Băng 3.</strong></p>"
+    "explanation": "<ol><li><strong>Bước 1:</strong> Bus dữ liệu là $32\\text{ bit} = 4\\text{ byte}$, nên bộ nhớ chia thành $K = 4$ băng nhớ (đánh số Băng 0, 1, 2, 3).</li><li><strong>Bước 2:</strong> Lấy chữ số Hexa cuối cùng của địa chỉ <code>0x10011647</code> là chữ số <strong>7</strong>.</li><li><strong>Bước 3:</strong> Thực hiện phép chia lấy dư cho 4: $$7 \\bmod 4 = 3$$</li><li>Vậy byte nhớ này nằm trên <strong>Băng 3</strong>.</li></ol><p><strong>Đáp án đúng: B (Băng 3).</strong></p>"
   },
   {
     "id": "c2-2.17a",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)",
+    "chapter": 6,
+    "groupId": "6.2.1",
+    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
     "exerciseCode": "Bài tập 2.17a",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.3",
     "examTags": [
@@ -2580,7 +2580,7 @@
     ],
     "pdfPage": 45,
     "printedPage": 44,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "6.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thứ tự băng nhớ (ví dụ: 1 hoặc Băng 1):",
@@ -2608,9 +2608,9 @@
   },
   {
     "id": "c2-2.17b",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)",
+    "chapter": 6,
+    "groupId": "6.2.1",
+    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
     "exerciseCode": "Bài tập 2.17b",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.3",
     "examTags": [
@@ -2618,7 +2618,7 @@
     ],
     "pdfPage": 46,
     "printedPage": 45,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "6.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thứ tự băng nhớ (ví dụ: 5 hoặc Băng 5):",
@@ -2646,9 +2646,9 @@
   },
   {
     "id": "c2-2.18a",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)",
+    "chapter": 6,
+    "groupId": "6.2.1",
+    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
     "exerciseCode": "Bài tập 2.18a",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 4 & Ôn tập Cuối kỳ P2 - Câu 26",
     "examTags": [
@@ -2656,7 +2656,7 @@
     ],
     "pdfPage": 46,
     "printedPage": 45,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "6.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập địa chỉ Hexa (ví dụ: 0x000A504C):",
@@ -2684,9 +2684,9 @@
   },
   {
     "id": "c2-2.18b",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)",
+    "chapter": 6,
+    "groupId": "6.2.1",
+    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
     "exerciseCode": "Bài tập 2.18b",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 4 & Ôn tập Cuối kỳ P2 - Câu 44",
     "examTags": [
@@ -2694,7 +2694,7 @@
     ],
     "pdfPage": 47,
     "printedPage": 46,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "6.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập danh sách băng nhớ cách nhau dấu phẩy (ví dụ: 4, 5, 6, 7):",
@@ -2721,9 +2721,9 @@
   },
   {
     "id": "c2-2.18c",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Bài toán xác định Băng nhớ vật lý (Memory Banks)",
+    "chapter": 6,
+    "groupId": "6.2.1",
+    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
     "exerciseCode": "Bài tập 2.18c",
     "source": "Ôn tập Cuối kỳ P2 - Câu 44",
     "examTags": [
@@ -2731,7 +2731,7 @@
     ],
     "pdfPage": 47,
     "printedPage": 46,
-    "relatedTheoryId": "2.1.3",
+    "relatedTheoryId": "6.1.1",
     "questionType": "single",
     "canFillBlank": true,
     "fillPrompt": "Nhập danh sách băng nhớ cách nhau dấu phẩy (ví dụ: 0, 1, 2, 3):",
@@ -2758,18 +2758,17 @@
   },
   {
     "id": "c2-2.19",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.19",
     "source": "Đề Cuối kỳ 2022.2 - #169b6e & Ôn tập Giữa kỳ - Câu 21",
     "examTags": [
-      "CK",
-      "GK"
+      "CK"
     ],
     "pdfPage": 47,
     "printedPage": 46,
-    "relatedTheoryId": "2.1.2",
+    "relatedTheoryId": "7.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2788,21 +2787,21 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Trong phương pháp Vào-ra bằng chương trình, <strong>CPU</strong> phải trực tiếp thực hiện các lệnh kiểm tra trạng thái và đọc/ghi dữ liệu với cổng vào-ra.</li><li><strong>Đáp án đúng: CPU.</strong></li></ul>"
+    "explanation": "<ul><li>Trong phương pháp Vào-ra bằng chương trình, <strong>CPU</strong> phải trực tiếp thực hiện các lệnh kiểm tra trạng thái và đọc/ghi dữ liệu với cổng vào-ra.</li><li><strong>Đáp án đúng: B (CPU).</strong></li></ul>"
   },
   {
     "id": "c2-2.20",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.20",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 22",
+    "source": "Chương 7 (Slide 19-24: Programmed I/O) & Ôn tập Cuối kỳ P2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 48,
     "printedPage": 47,
-    "relatedTheoryId": "2.1.2",
+    "relatedTheoryId": "7.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2825,17 +2824,17 @@
   },
   {
     "id": "c2-2.21",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.21",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 27",
+    "source": "Chương 7 (Slide 20, 45: Hiệu suất I/O) & Ôn tập Cuối kỳ P2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 48,
     "printedPage": 47,
-    "relatedTheoryId": "2.1.2",
+    "relatedTheoryId": "7.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2858,17 +2857,17 @@
   },
   {
     "id": "c2-2.22",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.22",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 62",
+    "source": "Chương 7 (Slide 36, 44: DMA) & Ôn tập Cuối kỳ P2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 49,
     "printedPage": 48,
-    "relatedTheoryId": "2.1.2",
+    "relatedTheoryId": "7.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2891,42 +2890,46 @@
   },
   {
     "id": "c2-2.23a",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.23a",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 45",
+    "source": "Chương 7 (Slide 37-38: Cấu trúc DMAC) & Ôn tập Cuối kỳ P2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 49,
     "printedPage": 48,
-    "relatedTheoryId": "2.1.2",
+    "relatedTheoryId": "7.1.2",
     "questionType": "multiple",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Bộ điều khiển DMA (DMAC) gồm những thành phần nào dưới đây?",
+    "question": "Bộ điều khiển DMA (DMAC) gồm những thành phần nào dưới đây? (Chọn nhiều đáp án)",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Logic điều khiển, Bộ đếm dữ liệu (Data counter), Thanh ghi địa chỉ và Thanh ghi dữ liệu",
-      "Thanh ghi con trỏ lệnh (PC), ALU và Bộ đếm dữ liệu",
-      "Thanh ghi con trỏ lệnh (PC), Thanh ghi cờ trạng thái và Bộ giải mã lệnh",
-      "Chỉ gồm Thanh ghi dữ liệu và Thanh ghi con trỏ lệnh (PC)"
+      "Thanh ghi con trỏ lệnh (PC)",
+      "Logic điều khiển",
+      "Bộ đếm dữ liệu (Data counter)",
+      "Thanh ghi địa chỉ",
+      "Thanh ghi dữ liệu"
     ],
-    "correctIndex": 0,
+    "correctIndex": 1,
     "correctIndices": [
-      0
+      1,
+      2,
+      3,
+      4
     ],
-    "explanation": "<ul><li>DMAC không thực thi chương trình nên <strong>không có Thanh ghi con trỏ lệnh (PC)</strong>.</li><li>DMAC gồm 4 thành phần chính: <strong>Logic điều khiển, Bộ đếm dữ liệu (Data counter), Thanh ghi địa chỉ, và Thanh ghi dữ liệu</strong>.</li></ul>"
+    "explanation": "<ul><li>DMAC không thực thi chương trình nên <strong>không có Thanh ghi con trỏ lệnh (PC)</strong>.</li><li>DMAC gồm 4 thành phần: <strong>Logic điều khiển, Bộ đếm dữ liệu (Data counter), Thanh ghi địa chỉ, và Thanh ghi dữ liệu</strong>.</li><li><strong>Đáp án đúng: Chọn các ý 2, 3, 4, 5 (loại bỏ ý 1).</strong></li></ul>"
   },
   {
     "id": "c2-2.23b",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.23b",
     "source": "Ôn tập Cuối kỳ P2 - Câu 57",
     "examTags": [
@@ -2934,7 +2937,7 @@
     ],
     "pdfPage": 49,
     "printedPage": 48,
-    "relatedTheoryId": "2.1.2",
+    "relatedTheoryId": "7.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -2957,42 +2960,43 @@
   },
   {
     "id": "c2-2.24",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 7,
+    "groupId": "7.2.2",
+    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
     "exerciseCode": "Bài tập 2.24",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 54",
+    "source": "Chương 7 (Slide 34: Bộ điều khiển ngắt PIC) & Ôn tập Cuối kỳ P2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 50,
     "printedPage": 49,
-    "relatedTheoryId": "2.1.2",
-    "questionType": "single",
+    "relatedTheoryId": "7.1.2",
+    "questionType": "multiple",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Khẳng định nào dưới đây là đầy đủ và chính xác nhất về bộ điều khiển ngắt PIC?",
+    "question": "Những khẳng định nào dưới đây đúng về PIC? (Chọn nhiều đáp án)",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Cả 2 ý: PIC là Programmable Interrupt Controller và các đường vào IR0-IR7 có quy định mức ưu tiên",
-      "Yêu cầu ngắt có mức ưu tiên cao nhất trong PIC sẽ không thể bị cấm và gửi tới CPU đầu tiên",
-      "PIC là một phương pháp hỏi vòng bằng phần cứng (daisy chain)",
-      "PIC chỉ dùng cho ngắt mềm, không thể dùng cho ngắt cứng từ ngoại vi"
+      "Trong PIC, yêu cầu ngắt có mức ưu tiên cao nhất sẽ không thể bị cấm và do đó được gửi tới CPU đầu tiên",
+      "Các đường vào yêu cầu ngắt của PIC có quy định mức ưu tiên",
+      "Đây là 1 phương pháp nối ghép ngắt (cụ thể là hỏi vòng bằng phần cứng)",
+      "PIC là viết tắt của Programmable Interrupt Controller"
     ],
-    "correctIndex": 0,
+    "correctIndex": 1,
     "correctIndices": [
-      0
+      1,
+      3
     ],
-    "explanation": "<ul><li><strong>PIC là viết tắt của Programmable Interrupt Controller</strong> (Bộ điều khiển ngắt khả trình).</li><li><strong>Các đường vào yêu cầu ngắt (IR0...IR7) của PIC có quy định mức ưu tiên.</strong></li><li>Khẳng định yêu cầu ngắt cao nhất không thể bị cấm là sai vì mọi ngắt qua PIC đều nối vào chân INTR của CPU nên đều là ngắt có thể bị che (cấm).</li><li>Khẳng định hỏi vòng là sai vì PIC là phương pháp ngắt ưu tiên phần cứng độc lập (không phải daisy chain/polling).</li><li><strong>Đáp án đúng: Cả 2 ý: PIC là Programmable Interrupt Controller và các đường vào IR0-IR7 có quy định mức ưu tiên.</strong></li></ul>"
+    "explanation": "<ul><li><strong>PIC là viết tắt của Programmable Interrupt Controller</strong> (Bộ điều khiển ngắt khả trình).</li><li><strong>Các đường vào yêu cầu ngắt (IR0...IR7) của PIC có quy định mức ưu tiên.</strong></li><li>Ý A sai vì mọi ngắt qua PIC đều nối vào chân INTR của CPU nên đều là ngắt có thể bị che (cấm). Ý C sai vì PIC là phương pháp ngắt ưu tiên phần cứng độc lập, không phải hỏi vòng (daisy chain/polling).</li><li><strong>Đáp án đúng: Chọn B và D.</strong></li></ul>"
   },
   {
     "id": "c2-2.25a",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 6,
+    "groupId": "6.2.2",
+    "groupTitle": "Nhóm 2: Thiết bị lưu trữ ngoài HDD & SSD",
     "exerciseCode": "Bài tập 2.25a",
     "source": "Ôn tập Cuối kỳ P2 - Câu 51",
     "examTags": [
@@ -3000,59 +3004,64 @@
     ],
     "pdfPage": 50,
     "printedPage": 49,
-    "relatedTheoryId": "2.1.1",
-    "questionType": "single",
+    "relatedTheoryId": "6.1.2",
+    "questionType": "multiple",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Những đặc điểm nào sau đây là tổ hợp các ưu điểm của ổ cứng bán dẫn SSD so với ổ đĩa từ HDD?",
+    "question": "Những đặc điểm nào sau đây là ưu điểm của ổ cứng bán dẫn SSD so với ổ đĩa từ HDD? (Chọn nhiều đáp án)",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Gồm cả 3 đặc điểm: Không gây tiếng ồn, Tốc độ nhanh & độ trễ thấp, Chống sốc vật lý tốt",
-      "Giá thành trên mỗi đơn vị lưu trữ (GB) rẻ hơn HDD rất nhiều",
-      "Tốc độ đọc ghi chậm hơn nhưng khả năng chịu nhiệt độ cao vượt trội",
-      "Độ bền chu kỳ ghi/xóa vô hạn và giá thành rẻ hơn"
+      "Giá thành trên mỗi đơn vị lưu trữ (GB) rẻ hơn",
+      "Không gây tiếng ồn khi hoạt động",
+      "Tốc độ truy xuất dữ liệu nhanh hơn và độ trễ thấp hơn",
+      "Khả năng chống sốc vật lý tốt hơn"
     ],
-    "correctIndex": 0,
+    "correctIndex": 1,
     "correctIndices": [
-      0
+      1,
+      2,
+      3
     ],
-    "explanation": "<ul><li>SSD dùng chip nhớ bán dẫn Flash (không có đĩa quay cơ học như HDD) nên có 3 ưu điểm vượt trội: <strong>Không gây tiếng ồn, Tốc độ truy xuất nhanh và độ trễ thấp, Chống sốc vật lý tốt hơn</strong>.</li><li>Nhược điểm của SSD là giá thành trên mỗi GB đắt hơn HDD.</li><li><strong>Đáp án đúng: Gồm cả 3 đặc điểm: Không gây tiếng ồn, Tốc độ nhanh & độ trễ thấp, Chống sốc vật lý tốt.</strong></li></ul>"
+    "explanation": "<ul><li>SSD dùng chip nhớ bán dẫn Flash (không có đĩa quay cơ học như HDD) nên có 3 ưu điểm vượt trội: <strong>Không gây tiếng ồn (2), Tốc độ truy xuất nhanh và độ trễ thấp (3), Chống sốc vật lý tốt hơn (4)</strong>.</li><li>Nhược điểm của SSD là giá thành trên mỗi GB đắt hơn HDD (nên ý 1 sai).</li><li><strong>Đáp án đúng: Chọn 2, 3 và 4.</strong></li></ul>"
   },
   {
     "id": "c2-2.25b",
-    "chapter": 2,
-    "groupId": "2.2.4",
-    "groupTitle": "Nhóm 4: Các phương pháp Vào-Ra (Polling, Interrupt, DMA) và Thiết bị lưu trữ",
+    "chapter": 6,
+    "groupId": "6.2.2",
+    "groupTitle": "Nhóm 2: Thiết bị lưu trữ ngoài HDD & SSD",
     "exerciseCode": "Bài tập 2.25b",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 24",
+    "source": "Chương 6 (Slide 54-56: Ổ đĩa SSD vs HDD) & Ôn tập Cuối kỳ P2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 51,
     "printedPage": 50,
-    "relatedTheoryId": "2.1.1",
+    "relatedTheoryId": "6.1.2",
     "questionType": "multiple",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Trong thực tế hiện nay, nhận định nào sau đây là CHÍNH XÁC về việc sử dụng ổ cứng HDD và ổ thể rắn SSD?",
+    "question": "Trong thực tế hiện nay, những nhận định nào sau đây là đúng về việc sử dụng HDD và SSD trên các thiết bị? (Chọn nhiều đáp án)",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "HDD vẫn được sử dụng phổ biến trong Server lưu trữ (NAS) / Data Center nhờ dung lượng lớn và giá thành rẻ hơn SSD",
-      "Camera giám sát 24/7 luôn ưu tiên dùng SSD vì chip nhớ SSD có số lần ghi xóa vô hạn",
-      "SSD không thể dùng làm ổ cài hệ điều hành trên Laptop vì tốc độ khởi động chậm hơn HDD cơ học",
-      "Các thiết bị Smartphone và Tablet hiện nay đều sử dụng ổ đĩa từ tính HDD thu nhỏ"
+      "HDD vẫn được sử dụng phổ biến trong các hệ thống Server lưu trữ (NAS) hoặc trung tâm dữ liệu nhờ ưu thế về dung lượng lớn và giá thành rẻ",
+      "Camera giám sát (CCTV) ghi hình 24/7 thường ưu tiên dùng SSD vì SSD có tuổi thọ ghi xóa dữ liệu cao hơn HDD khi hoạt động liên tục",
+      "Các máy chơi game thế hệ mới (như PS5, Xbox Series X) sử dụng SSD để giảm thời gian chờ tải màn chơi (loading screen)",
+      "SSD thường được ưu tiên dùng làm ổ cài đặt hệ điều hành trên Laptop và PC để tăng tốc độ khởi động máy",
+      "Các thiết bị di động nhỏ gọn như Smartphone và Tablet sử dụng chip nhớ có nguyên lý tương tự HDD"
     ],
     "correctIndex": 0,
     "correctIndices": [
-      0
+      0,
+      2,
+      3
     ],
-    "explanation": "<ul><li><strong>Nhận định đúng:</strong> HDD vẫn có ưu thế lớn trong lưu trữ dữ liệu trung tâm nhờ chi phí trên mỗi GB thấp.</li><li>Chip nhớ SSD có giới hạn chu kỳ ghi/xóa nên camera giám sát 24/7 ưu tiên HDD chuyên dụng (WD Purple); smartphone dùng bộ nhớ Flash NAND bán dẫn chứ không dùng HDD.</li></ul>"
+    "explanation": "<ul><li><strong>Nhận định đúng: 1, 3 và 4.</strong></li><li>Nhận định 2 sai vì chip Flash của SSD có giới hạn số lần ghi xóa nên camera ghi đè 24/7 thường dùng ổ cứng cơ học HDD chuyên dụng (như WD Purple).</li><li>Nhận định 5 sai vì smartphone/tablet dùng bộ nhớ bán dẫn Flash (nguyên lý giống SSD, không phải HDD).</li><li><strong>Đáp án đúng: Chọn 1, 3 và 4.</strong></li></ul>"
   }
 ];
 })(typeof window !== 'undefined' ? window : globalThis);
