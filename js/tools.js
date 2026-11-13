@@ -40,6 +40,8 @@
     var n_cycles = (IC > 0 && CPI > 0) ? IC * CPI : 0;
     var t_CPU_sec = (n_cycles > 0 && f0_Hz > 0) ? n_cycles / f0_Hz : 0;
     var t_CPU_ms = t_CPU_sec * 1000;
+    var fpOps = params.fpOps > 0 ? params.fpOps : 0;
+    var mflops = (fpOps > 0 && t_CPU_sec > 0) ? fpOps / (t_CPU_sec * 1e6) : 0;
 
     return {
       f0_Hz: f0_Hz,
@@ -49,9 +51,70 @@
       IC: IC,
       CPI: CPI,
       MIPS: MIPS,
+      MFLOPS: mflops,
       n_cycles: n_cycles,
       t_CPU_sec: t_CPU_sec,
       t_CPU_ms: t_CPU_ms
+    };
+  };
+
+  /**
+   * Tính CPI trung bình (CPI_TB) từ nhiều nhóm lệnh (Chương 1.1.3).
+   * @param {Array<{weight: number, cpi: number}>} classes Mảng cặp {weight (IC_i hoặc %), cpi}
+   * @param {boolean} isPercent true nếu weight là tỷ lệ %, false nếu là số lệnh IC_i
+   */
+  Tools.calcWeightedCPI = function (classes, isPercent) {
+    if (!Array.isArray(classes) || classes.length === 0) {
+      return { totalWeight: 0, totalCycles: 0, cpiTB: 0 };
+    }
+    var totalW = 0;
+    var weightedSum = 0;
+    classes.forEach(function (cls) {
+      var w = Number(cls.weight) || 0;
+      var c = Number(cls.cpi) || 0;
+      if (w > 0 && c > 0) {
+        totalW += w;
+        weightedSum += w * c;
+      }
+    });
+    if (isPercent) {
+      var divisor = totalW > 0 ? totalW : 100;
+      return {
+        totalWeight: totalW,
+        totalCycles: weightedSum,
+        cpiTB: totalW > 0 ? (weightedSum / divisor) : 0
+      };
+    }
+    return {
+      totalWeight: totalW,
+      totalCycles: weightedSum,
+      cpiTB: totalW > 0 ? (weightedSum / totalW) : 0
+    };
+  };
+
+  /**
+   * So sánh hiệu năng giữa hai máy tính A và B (P_A / P_B = t_B / t_A).
+   */
+  Tools.comparePerformance = function (mA, mB) {
+    var calcOne = function (m) {
+      var fHz = m.fUnit === "MHz" ? (m.fVal * 1e6) : (m.fUnit === "Hz" ? m.fVal : m.fVal * 1e9);
+      var ic = m.ic > 0 ? m.ic : 1;
+      var cpi = m.cpi > 0 ? m.cpi : 1;
+      return fHz > 0 ? (ic * cpi) / fHz : 0;
+    };
+    var tA = mA.tCPU > 0 ? mA.tCPU : calcOne(mA);
+    var tB = mB.tCPU > 0 ? mB.tCPU : calcOne(mB);
+    var ratioAB = (tA > 0 && tB > 0) ? (tB / tA) : 0; // P_A / P_B
+    var ratioBA = (tA > 0 && tB > 0) ? (tA / tB) : 0; // P_B / P_A
+    var winner = ratioAB > 1.0001 ? "A" : (ratioAB > 0 && ratioAB < 0.9999 ? "B" : "tie");
+    var fasterBy = winner === "A" ? ratioAB : (winner === "B" ? ratioBA : 1);
+    return {
+      tA: tA,
+      tB: tB,
+      ratioAB: ratioAB,
+      ratioBA: ratioBA,
+      winner: winner,
+      fasterBy: fasterBy
     };
   };
 

@@ -1,5 +1,5 @@
 // Dữ liệu câu hỏi bài tập và lý thuyết Chương 1 & Chương 2
-// Tự động tạo dựa trên file KTMT.pdf - IT3030 / IT3034 / IT3283
+// Tự động tạo dựa trên file KTMT_GK.pdf - IT3030 / IT3034 / IT3283
 
 (function(root) {
   root.KTMT_QUESTIONS_CH1_CH2 = [
@@ -9,7 +9,40 @@
     "groupId": "1.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
     "exerciseCode": "Lý thuyết 1.1",
-    "source": "Lý thuyết mục 1.1.1 - Khái niệm cơ bản",
+    "source": "Mục 1.1.1 - Bốn thành phần cơ bản",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": 4,
+    "printedPage": 3,
+    "relatedTheoryId": "1.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Mọi máy tính từ điện thoại thông minh, PC cho đến siêu máy tính đều được cấu tạo từ 4 thành phần cơ bản nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Bộ xử lý trung tâm (CPU), Bộ nhớ chính, Hệ thống vào-ra, Liên kết hệ thống",
+      "CPU, Ổ đĩa SSD/HDD, Chuột/Bàn phím, Màn hình",
+      "Đơn vị điều khiển (CU), Đơn vị số học logic (ALU), Tập thanh ghi, Cache",
+      "Hệ điều hành, Trình biên dịch, Phần cứng, Người sử dụng"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo mục 1.1.1 (Trang 3, KTMT_GK.pdf), 4 bộ phận cơ bản gồm: <strong>CPU</strong>, <strong>Bộ nhớ chính (Main Memory)</strong>, <strong>Hệ thống vào-ra (I/O)</strong> và <strong>Liên kết hệ thống (System Interconnection)</strong>.</p>"
+  },
+  {
+    "id": "lt-1.2",
+    "chapter": 1,
+    "groupId": "1.1",
+    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
+    "exerciseCode": "Lý thuyết 1.2",
+    "source": "Mục 1.1.1 - Phân loại máy tính",
     "examTags": [
       "LT"
     ],
@@ -20,29 +53,62 @@
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Mọi máy tính từ điện thoại thông minh, PC cho đến siêu máy tính đều được cấu tạo từ 4 thành phần cốt lõi nào?",
+    "question": "Loại máy tính nào được đặt ẩn bên trong một thiết bị khác và thiết kế chuyên dụng cho một chức năng cụ thể (nếu có kết nối mạng gọi là thiết bị IoT)?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "CPU, Bộ nhớ chính, Hệ thống Vào-Ra, Liên kết hệ thống (Bus)",
-      "CPU, Bộ nhớ ngoài (SSD/HDD), Chuột/Bàn phím, Màn hình",
-      "Bộ điều khiển (CU), Bộ số học logic (ALU), Thanh ghi, Bộ nhớ Cache",
-      "Hệ điều hành, Trình biên dịch, Phần cứng, Người sử dụng"
+      "Máy tính nhúng (Embedded Computers)",
+      "Thiết bị di động cá nhân (PMD)",
+      "Máy chủ (Servers)",
+      "Máy tính quy mô kho (Warehouse-Scale Computers)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 1.1.1 trong PDF, 4 thành phần cơ bản của mọi máy tính gồm:</p><ol><li><strong>Bộ xử lý trung tâm (CPU):</strong> Điều khiển hoạt động và trực tiếp xử lý dữ liệu.</li><li><strong>Bộ nhớ chính (RAM):</strong> Chứa lệnh và dữ liệu của chương trình đang được thực hiện.</li><li><strong>Hệ thống vào-ra (I/O):</strong> Trao đổi thông tin giữa máy tính với bên ngoài.</li><li><strong>Liên kết hệ thống (Bus):</strong> Kết nối và vận chuyển thông tin giữa CPU, Bộ nhớ chính và I/O.</li></ol>"
+    "explanation": "<p>Máy tính nhúng (<em>Embedded Computers</em>) được tích hợp ẩn trong thiết bị chuyên dụng (lò vi sóng, ô tô, router...); khi kết nối Internet tạo thành thiết bị <strong>IoT</strong>.</p>"
   },
   {
-    "id": "lt-1.2",
+    "id": "lt-1.3",
     "chapter": 1,
     "groupId": "1.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
-    "exerciseCode": "Lý thuyết 1.2",
-    "source": "Lý thuyết mục 1.1.2 - Phân loại máy tính",
+    "exerciseCode": "Lý thuyết 1.3",
+    "source": "Mục 1.1.2 - Ba khía cạnh KTMT",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": 5,
+    "printedPage": 4,
+    "relatedTheoryId": "1.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khía cạnh nào của Kiến trúc máy tính đóng vai trò là <strong>giao diện giữa phần mềm và phần cứng</strong>, nghiên cứu máy tính theo cách nhìn của người lập trình hợp ngữ?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Kiến trúc tập lệnh (Instruction Set Architecture - ISA)",
+      "Tổ chức máy tính (Computer Organization / Microarchitecture)",
+      "Thiết kế phần cứng vật lý (Hardware Packaging)",
+      "Phân cấp bộ nhớ (Memory Hierarchy)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>ISA (Instruction Set Architecture)</strong> là giao diện giữa phần mềm và phần cứng; cùng một ISA (như x86, ARM, RISC-V) có thể có nhiều tổ chức/vi kiến trúc và phần cứng khác nhau.</p>"
+  },
+  {
+    "id": "lt-1.4",
+    "chapter": 1,
+    "groupId": "1.1",
+    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
+    "exerciseCode": "Lý thuyết 1.4",
+    "source": "Mục 1.1.2 - Các mức dịch ngôn ngữ",
     "examTags": [
       "LT"
     ],
@@ -53,87 +119,21 @@
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Loại máy tính nào được đặt ẩn bên trong một thiết bị khác (ô tô, máy giặt, tivi) nhằm phục vụ điều khiển chuyên dụng?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Máy tính nhúng / Thiết bị IoT (Embedded Computers)",
-      "Thiết bị di động cá nhân (PMD)",
-      "Máy tính cá nhân (PC)",
-      "Máy tính quy mô kho (WSC)"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Theo mục 1.1.2 trong PDF:</p><ul><li><strong>Máy tính nhúng (Embedded Computers):</strong> Được đặt ẩn bên trong thiết bị khác để điều khiển chuyên dụng. Khi có kết nối Internet thì được gọi là thiết bị IoT.</li><li>PMD là điện thoại thông minh, máy tính bảng; PC là máy bàn, laptop; WSC là cụm siêu máy tính quy mô kho.</li></ul>"
-  },
-  {
-    "id": "lt-1.3",
-    "chapter": 1,
-    "groupId": "1.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
-    "exerciseCode": "Lý thuyết 1.3",
-    "source": "Lý thuyết mục 1.1.3 - Ba khía cạnh kiến trúc máy tính",
-    "examTags": [
-      "LT"
-    ],
-    "pdfPage": 7,
-    "printedPage": 6,
-    "relatedTheoryId": "1.1.3",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Khía cạnh nào đóng vai trò là <strong>giao diện giữa phần cứng và phần mềm</strong>, thể hiện cách nhìn máy tính của người lập trình hợp ngữ?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Kiến trúc tập lệnh (ISA - Instruction Set Architecture)",
-      "Tổ chức máy tính (Vi kiến trúc - Microarchitecture)",
-      "Phần cứng (Hardware / Mạch điện tử)",
-      "Hệ điều hành (Operating System)"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Theo mục 1.1.3 trong PDF:</p><ul><li><strong>ISA (Instruction Set Architecture):</strong> Giao diện giữa phần cứng và phần mềm, là cách nhìn máy tính của người lập trình hợp ngữ (như RISC-V, x86, ARM).</li><li><strong>Vi kiến trúc (Microarchitecture):</strong> Thiết kế phần cứng cụ thể bên trong chip để thực thi tập lệnh đó (pipeline, cache, bus).</li><li><strong>Phần cứng:</strong> Quy trình bán dẫn, chế tạo mạch vật lý.</li></ul>"
-  },
-  {
-    "id": "lt-1.4",
-    "chapter": 1,
-    "groupId": "1.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
-    "exerciseCode": "Lý thuyết 1.4",
-    "source": "Lý thuyết mục 1.1.3 - Quá trình dịch chương trình",
-    "examTags": [
-      "LT"
-    ],
-    "pdfPage": 7,
-    "printedPage": 6,
-    "relatedTheoryId": "1.1.3",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Công cụ nào thực hiện nhiệm vụ chuyển đổi từ <strong>Hợp ngữ (Assembly)</strong> sang <strong>Ngôn ngữ máy (Mã nhị phân 0 và 1)</strong>?",
+    "question": "Trong chuỗi chuyển đổi 3 mức ngôn ngữ của chương trình, công cụ nào thực hiện nhiệm vụ dịch từ <strong>Hợp ngữ (Assembly)</strong> sang <strong>Ngôn ngữ máy (Mã nhị phân)</strong>?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "Trình hợp dịch (Assembler)",
       "Trình biên dịch (Compiler)",
-      "Trình liên kết (Linker)",
-      "Trình nạp (Loader)"
+      "Hệ điều hành (Operating System)",
+      "Bộ xử lý trung tâm (CPU)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 1.1.3 trong PDF:</p><ul><li><strong>Biên dịch (Compiler):</strong> Dịch Ngôn ngữ bậc cao (C/C++) &rarr; Hợp ngữ (Assembly).</li><li><strong>Hợp dịch (Assembler):</strong> Dịch Hợp ngữ (Assembly) &rarr; Ngôn ngữ máy (Binary Machine Code).</li></ul>"
+    "explanation": "<p>Quy trình chuẩn: Ngôn ngữ bậc cao $\\xrightarrow{\\text{Compiler}}$ Hợp ngữ $\\xrightarrow{\\text{Assembler}}$ Ngôn ngữ máy (bit 0 và 1).</p>"
   },
   {
     "id": "lt-1.5",
@@ -141,32 +141,32 @@
     "groupId": "1.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
     "exerciseCode": "Lý thuyết 1.5",
-    "source": "Lý thuyết mục 1.1.4 - Bảng đổi đơn vị",
+    "source": "Mục 1.1.2 - Lịch sử & 7 ý tưởng lớn",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 8,
-    "printedPage": 7,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 6,
+    "printedPage": 5,
+    "relatedTheoryId": "1.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Một pico-giây (1 ps) và một nano-giây (1 ns) lần lượt bằng bao nhiêu giây?",
+    "question": "Máy tính nào thiết kế năm 1952 theo nguyên lý <strong>chương trình lưu trữ trong bộ nhớ (stored program)</strong> của John von Neumann và xử lý theo số nhị phân?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "1 ps = 10^-12 s và 1 ns = 10^-9 s",
-      "1 ps = 10^-9 s và 1 ns = 10^-6 s",
-      "1 ps = 10^-6 s và 1 ns = 10^-3 s",
-      "1 ps = 10^-15 s và 1 ns = 10^-12 s"
+      "Máy tính IAS",
+      "Máy tính ENIAC",
+      "Vi xử lý Intel 4004",
+      "Máy tính IBM-PC"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo bảng đổi đơn vị mục 1.1.4 trong PDF:</p><ul><li>$1\\text{ ms} = 10^{-3}\\text{ s}$</li><li>$1\\text{ }\\mu\\text{s} = 10^{-6}\\text{ s}$</li><li>$1\\text{ ns} = 10^{-9}\\text{ s}$</li><li>$1\\text{ ps} = 10^{-12}\\text{ s}$</li></ul>"
+    "explanation": "<p>Theo mục 1.1.2 (Trang 5), ENIAC (1946) xử lý thập phân, còn <strong>máy tính IAS (1952)</strong> do John von Neumann thiết kế hoạt động theo nguyên lý chương trình lưu trữ (stored program) và xử lý nhị phân.</p>"
   },
   {
     "id": "lt-1.6",
@@ -174,257 +174,169 @@
     "groupId": "1.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 1",
     "exerciseCode": "Lý thuyết 1.6",
-    "source": "Lý thuyết mục 1.2.6 - Phân loại Flynn",
+    "source": "Mục 1.1.3 - Quy đổi đơn vị & MIPS",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 31,
-    "printedPage": 30,
+    "pdfPage": 9,
+    "printedPage": 8,
     "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Kiến trúc máy tính xử lý đồ họa GPU hoặc xử lý vector (thực hiện cùng 1 lệnh trên nhiều luồng dữ liệu đồng thời) thuộc loại nào trong phân loại của Flynn?",
+    "question": "Phát biểu nào sau đây đúng về hạn chế của chỉ số tốc độ thực thi <strong>MIPS</strong>?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "SIMD (Single Instruction, Multiple Data)",
-      "SISD (Single Instruction, Single Data)",
-      "MIMD (Multiple Instruction, Multiple Data)",
-      "MISD (Multiple Instruction, Single Data)"
+      "Không thể dùng MIPS để so sánh trực tiếp hiệu năng giữa hai máy tính khác Kiến trúc tập lệnh (khác ISA)",
+      "MIPS luôn tỷ lệ thuận tuyệt đối với tốc độ hoàn thành mọi chương trình bất kể bộ lệnh",
+      "Chỉ số MIPS của một bộ xử lý là hằng số bất biến cho mọi chương trình khác nhau",
+      "MIPS đo tổng thời gian tính bằng nano-giây để thực hiện một phép toán dấu phẩy động"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 1.2.6 trong PDF:</p><ul><li><strong>SIMD (Single Instruction, Multiple Data):</strong> Xử lý vector, card đồ họa GPU (1 lệnh điều khiển nhiều dữ liệu cùng lúc).</li><li><strong>SISD:</strong> Máy tính đơn lõi cổ điển.</li><li><strong>MISD:</strong> Chưa tồn tại máy tính thương mại thực tế.</li><li><strong>MIMD:</strong> Máy tính đa lõi (multicore) hoặc hệ thống phân tán.</li></ul>"
+    "explanation": "<p>Theo mục 1.1.3 (Trang 8): MIPS thay đổi theo từng chương trình, không phản ánh khối lượng công việc của mỗi lệnh và <strong>không dùng để so sánh hai máy khác ISA</strong>.</p>"
   },
   {
     "id": "c1-1.1",
     "chapter": 1,
     "groupId": "1.2.1",
-    "groupTitle": "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ",
+    "groupTitle": "Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính",
     "exerciseCode": "Bài tập 1.1",
-    "source": "Đề Cuối kỳ 2020.2 & Ôn tập Cuối kỳ P2 - Câu 19",
+    "source": "Đề CK 2020.2, 2021.1, 2024.2 & Ôn tập 2025.1, 2025.2",
     "examTags": [
+      "GK",
       "CK"
     ],
     "pdfPage": 10,
     "printedPage": 9,
     "relatedTheoryId": "1.1.1",
     "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Hãy chỉ ra tên của thành phần máy tính thực hiện chức năng: “Chứa các lệnh và dữ liệu của chương trình đang được thực hiện”?",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên thành phần (viết tắt hoặc đầy đủ):",
+    "acceptedAnswers": [
+      "Bộ nhớ chính",
+      "Main Memory",
+      "RAM",
+      "bộ nhớ chính (RAM)"
+    ],
+    "question": "Hãy chỉ ra tên của thành phần phần cứng trong cấu trúc máy tính thực hiện chức năng chính: <em>“Chứa toàn bộ các lệnh và dữ liệu của chương trình hiện đang được thực hiện”</em>?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Bộ nhớ chính",
-      "Bộ nhớ đệm nhanh cache",
-      "Tập thanh ghi",
-      "Bộ nhớ ngoài"
+      "Bộ nhớ chính (RAM)",
+      "Tập thanh ghi (Register File)",
+      "Bộ nhớ đệm nhanh (Cache memory)",
+      "Bộ nhớ ngoài (Ổ đĩa SSD/HDD)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Theo nguyên lý hoạt động cơ bản của máy tính (mô hình von Neumann), mọi chương trình khi đang chạy (đang thực hiện) đều phải được nạp vào <strong>Bộ nhớ chính (Main Memory / RAM)</strong>.</li><li>Bộ nhớ ngoài (ổ cứng) chỉ lưu trữ phần mềm và dữ liệu khi chưa chạy. Cache và Tập thanh ghi chỉ lưu tạm một phần rất nhỏ dữ liệu/lệnh mà CPU đang dùng tức thời.</li><li><strong>Đáp án đúng: A (Bộ nhớ chính).</strong></li></ul>"
+    "explanation": "<p>Theo mô hình máy tính von Neumann, mọi chương trình khi đang được thực hiện đều phải nạp vào <strong>Bộ nhớ chính (Main Memory / RAM)</strong>. Bộ nhớ ngoài (SSD/HDD) chỉ lưu trữ lâu dài khi chưa chạy.</p>"
   },
   {
     "id": "c1-1.2",
     "chapter": 1,
-    "groupId": "1.2.1",
-    "groupTitle": "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ",
-    "exerciseCode": "Bài tập 1.2",
-    "source": "Đề Cuối kỳ 2020.2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 10,
-    "printedPage": 9,
-    "relatedTheoryId": "1.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Sắp xếp các thành phần của bộ nhớ máy tính theo thứ tự dung lượng tăng dần:",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Cache L1, Cache L2, Cache L3, Bộ nhớ chính, Bộ nhớ ngoài",
-      "Cache L3, Cache L2, Cache L1, Bộ nhớ chính, Bộ nhớ ngoài",
-      "Bộ nhớ chính, Cache L3, Cache L2, Cache L1, Bộ nhớ ngoài",
-      "Cache L1, Cache L2, Bộ nhớ chính, Cache L3, Bộ nhớ ngoài"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Trong phân cấp bộ nhớ, Cache L1 nằm sát nhân CPU nhất nên có tốc độ nhanh nhất nhưng dung lượng nhỏ nhất (vài chục KB), tiếp theo là Cache L2 (vài trăm KB), rồi đến Cache L3 (vài MB đến vài chục MB).</li><li>Lớn hơn Cache là Bộ nhớ chính (RAM - vài GB đến vài chục GB), và lớn nhất là Bộ nhớ ngoài (SSD/HDD - hàng trăm GB đến hàng TB).</li><li><strong>Đáp án đúng: A (Cache L1 &lt; Cache L2 &lt; Cache L3 &lt; Bộ nhớ chính &lt; Bộ nhớ ngoài).</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.3",
-    "chapter": 1,
-    "groupId": "1.2.1",
-    "groupTitle": "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ",
-    "exerciseCode": "Bài tập 1.3",
-    "source": "Đề Cuối kỳ 2022.2 - #ef5037 & Đề Cuối kỳ 2024.1 - #018513",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 11,
-    "printedPage": 10,
-    "relatedTheoryId": "1.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Hãy chỉ ra đâu là cấu hình bộ nhớ phù hợp cho máy tính PC?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, RAM: 8GB, SSD: 512GB",
-      "Cache L1: 64KB, Cache L2: 256KB, Cache L3: 16GB, RAM: 2TB, SSD: 1TB",
-      "Cache L1: 64KB, Cache L2: 256GB, Cache L3: 8MB, RAM: 8GB, SSD: 512GB",
-      "Cache L1: 16MB, Cache L2: 256KB, Cache L3: 16MB, RAM: 8GB, SSD: 1TB"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Ta kiểm tra từng phương án dựa trên nguyên tắc dung lượng $L1 < L2 < L3 < \\text{RAM} < \\text{SSD}$:</p><ul><li>Phương án B sai vì Cache L3 lên tới 16GB (quá lớn, ngang RAM) và RAM 2TB lớn hơn cả SSD 1TB.</li><li>Phương án C sai vì Cache L2 là 256GB (lớn hơn Cache L3 8MB và RAM 8GB).</li><li>Phương án D sai vì Cache L1 là 16MB (lớn hơn Cache L2 256KB).</li><li>Phương án A hoàn toàn hợp lý: 64KB &lt; 256KB &lt; 8MB &lt; 8GB &lt; 512GB.</li><li><strong>Đáp án đúng: A.</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.4",
-    "chapter": 1,
-    "groupId": "1.2.1",
-    "groupTitle": "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ",
-    "exerciseCode": "Bài tập 1.4",
-    "source": "Ôn tập Giữa kỳ - Câu 6",
-    "examTags": [
-      "GK"
-    ],
-    "pdfPage": 11,
-    "printedPage": 10,
-    "relatedTheoryId": "1.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Hãy chỉ ra đâu là cấu hình phù hợp cho máy tính PC?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB",
-      "RAM: 2TB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 16GB, SSD: 1TB",
-      "RAM: 8GB, Cache L1: 16MB, Cache L2: 256KB, Cache L3: 16MB, SSD: 1TB",
-      "RAM: 8GB, Cache L1: 64KB, Cache L2: 256GB, Cache L3: 8MB, SSD: 512GB"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Cẩn thận bẫy thứ tự liệt kê: ở câu này đề bài đưa thông số RAM lên đầu dòng để đánh lạc hướng.</li><li>Loại B vì Cache L3 = 16GB và RAM = 2TB. Loại C vì Cache L1 = 16MB &gt; Cache L2 = 256KB. Loại D vì Cache L2 = 256GB.</li><li><strong>Đáp án đúng: RAM: 4GB, Cache L1: 64KB, Cache L2: 256KB, Cache L3: 8MB, SSD: 512GB.</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.5",
-    "chapter": 1,
-    "groupId": "1.2.1",
-    "groupTitle": "Nhóm 1: Các thành phần máy tính và Phân cấp bộ nhớ",
-    "exerciseCode": "Bài tập 1.5",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0008, Câu 11 & Ôn tập Giữa kỳ - Câu 69",
-    "examTags": [
-      "GK"
-    ],
-    "pdfPage": 12,
-    "printedPage": 11,
-    "relatedTheoryId": "1.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Tác dụng của bộ nhớ đệm (Cache) là gì? (Hoặc: Loại bộ nhớ giúp CPU tăng tốc truy cập bộ nhớ chính có tên là gì?)",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Tăng tốc độ truy cập đến bộ nhớ chính",
-      "Tăng tốc độ truy cập đến ổ đĩa cứng",
-      "Tăng dung lượng bộ nhớ chính",
-      "Giảm chi phí cho hệ thống máy tính"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Bộ nhớ Cache được đặt đệm giữa CPU và Bộ nhớ chính (RAM) nhằm mục đích <strong>tăng tốc độ CPU truy cập bộ nhớ chính</strong>.</li><li>Nếu điền khuyết tự luận, từ cần điền là: <strong>Bộ nhớ đệm</strong> hoặc <strong>Cache</strong>.</li><li><strong>Đáp án đúng: Tăng tốc độ truy cập đến bộ nhớ chính.</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.6",
-    "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.6",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.2",
     "source": "Slide Chương 1 - Trang 24",
     "examTags": [
-      "SLIDE"
+      "LT",
+      "GK"
     ],
-    "pdfPage": 13,
-    "printedPage": 12,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 11,
+    "printedPage": 10,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập chu kỳ T0 tính theo ns (ví dụ: 0.25):",
+    "fillPrompt": "Nhập giá trị (theo ns):",
     "acceptedAnswers": [
       "0.25",
-      "0,25",
       "0.25 ns",
       "0.25ns"
     ],
-    "question": "Một bộ xử lý có tần số xung nhịp $f_0 = 4\\text{ GHz}$. Hãy tính chu kỳ xung nhịp $T_0$ của bộ xử lý đó theo đơn vị nano-giây (ns).",
+    "question": "Một bộ xử lý có tần số xung nhịp $f_0 = 4\\text{ GHz}$. Hãy tính chu kỳ xung nhịp $T_0$ của bộ xử lý đó theo đơn vị nano-giây ($\\text{ns}$)?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "0.25 ns",
-      "4.0 ns",
       "2.5 ns",
+      "4.0 ns",
       "0.025 ns"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đổi đơn vị: $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$.</li><li>Áp dụng công thức chu kỳ xung nhịp: $$T_0 = \\frac{1}{f_0} = \\frac{1}{4 \\times 10^9} = 0.25 \\times 10^{-9}\\text{ s} = 0.25\\text{ ns}$$</li><li>Hoặc dùng mẹo nhanh: $T_0\\text{ (ns)} = \\dfrac{1}{f_0\\text{ (GHz)}} = \\dfrac{1}{4} = 0.25\\text{ ns}$.</li><li><strong>Đáp số: 0.25 ns.</strong></li></ul>"
+    "explanation": "<p>Đổi $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$. Chu kỳ xung nhịp: $$T_0 = \\frac{1}{f_0} = \\frac{1}{4 \\times 10^9}\\text{ s} = 0.25 \\times 10^{-9}\\text{ s} = \\mathbf{0.25\\text{ ns}}.$$</p>"
   },
   {
-    "id": "c1-1.7",
+    "id": "c1-1.3a",
     "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.7",
-    "source": "Đề Cuối kỳ 2020.2 & Ôn tập Cuối kỳ P2 - Câu 59",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.3 (Biến thể 1)",
+    "source": "Đề Cuối kỳ 2020.2",
     "examTags": [
+      "GK",
       "CK"
     ],
-    "pdfPage": 13,
-    "printedPage": 12,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 11,
+    "printedPage": 10,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập chu kỳ T0 (ví dụ: 0.13 ns):",
+    "fillPrompt": "Nhập kết quả gần đúng (ns):",
     "acceptedAnswers": [
-      "0.13 ns",
-      "0.13ns",
+      "0.345",
+      "0.345 ns",
+      "0.345ns"
+    ],
+    "question": "Bộ xử lý trung tâm có tốc độ xung nhịp cố định là $2.9\\text{ GHz}$. Hãy cho biết chu kỳ xung nhịp tương ứng của bộ xử lý đó là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0.345 ns",
+      "7.9 ns",
+      "0.13 ps",
+      "0.13 ms"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Với $f_0 = 2.9\\text{ GHz} = 2.9 \\times 10^9\\text{ Hz}$: $$T_0 = \\frac{1}{2.9 \\times 10^9} \\approx 0.3448 \\times 10^{-9}\\text{ s} \\approx \\mathbf{0.345\\text{ ns}}.$$</p>"
+  },
+  {
+    "id": "c1-1.3b",
+    "chapter": 1,
+    "groupId": "1.2.2",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.3 (Biến thể 2)",
+    "source": "Ôn tập Cuối kỳ 2025.1 & 2025.2 - Câu 1",
+    "examTags": [
+      "GK",
+      "CK"
+    ],
+    "pdfPage": 11,
+    "printedPage": 10,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập kết quả gần đúng (ns):",
+    "acceptedAnswers": [
       "0.13",
-      "0,13"
+      "0.13 ns",
+      "0.13ns"
     ],
     "question": "Bộ xử lý có tốc độ xung nhịp là $7.9\\text{ GHz}$. Cho biết chu kỳ xung nhịp tương ứng là bao nhiêu?",
     "codeBlock": null,
@@ -432,78 +344,112 @@
     "svgDiagram": null,
     "options": [
       "0.13 ns",
-      "0.13 ms",
       "7.9 ns",
-      "0.13 ps"
+      "0.13 ps",
+      "0.13 ms"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Ta có tần số $f_0 = 7.9\\text{ GHz} = 7.9 \\times 10^9\\text{ Hz}$.</li><li>Chu kỳ xung nhịp: $$T_0 = \\frac{1}{f_0} = \\frac{1}{7.9 \\times 10^9}\\text{ s} \\approx 0.12658 \\times 10^{-9}\\text{ s} \\approx 0.13 \\times 10^{-9}\\text{ s} = 0.13\\text{ ns}$$</li><li><strong>Đáp án đúng: 0.13 ns.</strong></li></ul>"
+    "explanation": "<p>Với $f_0 = 7.9\\text{ GHz} = 7.9 \\times 10^9\\text{ Hz}$: $$T_0 = \\frac{1}{7.9 \\times 10^9} \\approx 0.1266 \\times 10^{-9}\\text{ s} \\approx \\mathbf{0.13\\text{ ns}}.$$</p>"
   },
   {
-    "id": "c1-1.8",
+    "id": "c1-1.4",
     "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.8",
-    "source": "Đề Giữa kỳ 2023.2 - Câu 1",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.4",
+    "source": "Đề Giữa kỳ 2018.2 - Mã 198 C2 & Mã 199 C17",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 14,
-    "printedPage": 13,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 11,
+    "printedPage": 10,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập thời gian t_CPU theo ms (ví dụ: 2.5):",
+    "fillPrompt": "Nhập thời gian (ns):",
+    "acceptedAnswers": [
+      "20",
+      "20 ns",
+      "20ns"
+    ],
+    "question": "Một phần mềm viết bằng ngôn ngữ hợp ngữ với 30 lệnh, được biên dịch thành 40 lệnh mã máy. Biết rằng $CPI$ trung bình là 2, và CPU có tốc độ xung nhịp $4\\text{ GHz}$. Hỏi thời gian thực hiện phần mềm là bao lâu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "20 ns",
+      "60 ns",
+      "80 ns",
+      "15 ns"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>CPU trực tiếp thực thi <strong>40 lệnh mã máy</strong> ($IC = 40$; số 30 lệnh hợp ngữ là bẫy nhiễu). Thời gian thực thi: $$t_{\\text{CPU}} = \\frac{IC \\times CPI}{f_0} = \\frac{40 \\times 2}{4 \\times 10^9} = 20 \\times 10^{-9}\\text{ s} = \\mathbf{20\\text{ ns}}.$$</p>"
+  },
+  {
+    "id": "c1-1.5",
+    "chapter": 1,
+    "groupId": "1.2.2",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.5",
+    "source": "Đề Giữa kỳ 2023.2 - Đề 1, Câu 1",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 12,
+    "printedPage": 11,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập đáp số (ms):",
     "acceptedAnswers": [
       "2.5",
-      "2,5",
       "2.5 ms",
       "2.5ms"
     ],
-    "question": "Máy tính có bộ xử lý với tốc độ xung nhịp là $f = 4\\text{ GHz}$. Giả sử có chương trình được thực hiện trên máy tính đó với số lệnh $n = 5\\text{ triệu lệnh}$ và $CPI$ trung bình bằng $2$. Hãy cho biết thời gian của CPU ($t_{\\text{CPU}}$) để hoàn thành chương trình đó (tính theo ms)?",
+    "question": "Máy tính có bộ xử lý với tốc độ xung nhịp $f = 4\\text{ GHz}$. Giả sử chương trình có số lệnh $n = 5$ triệu lệnh và $CPI$ trung bình bằng $2$. Hãy cho biết thời gian $t_{\\text{CPU}}$ để hoàn thành chương trình (tính theo $\\text{ms}$)?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "2.5 ms",
-      "10 ms",
       "25 ms",
-      "1.25 ms"
+      "1.25 ms",
+      "0.25 ms"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1 – Đổi dữ kiện về chuẩn:</strong><br>$IC = 5\\text{ triệu} = 5 \\times 10^6\\text{ lệnh}$; $CPI = 2$; $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$.</li><li><strong>Bước 2 – Áp dụng công thức:</strong><br>$$t_{\\text{CPU}} = \\frac{IC \\times CPI}{f_0} = \\frac{5 \\times 10^6 \\times 2}{4 \\times 10^9} = \\frac{10 \\times 10^6}{4 \\times 10^9} = 2.5 \\times 10^{-3}\\text{ s}$$</li><li><strong>Bước 3 – Đổi sang ms:</strong> $2.5 \\times 10^{-3}\\text{ s} = 2.5\\text{ ms}$.</li></ol><p><strong>Đáp số: 2.5 ms.</strong></p>"
+    "explanation": "<p>Đổi $IC = 5 \\times 10^6$ lệnh, $f_0 = 4 \\times 10^9\\text{ Hz}$: $$t_{\\text{CPU}} = \\frac{5 \\times 10^6 \\times 2}{4 \\times 10^9} = 2.5 \\times 10^{-3}\\text{ s} = \\mathbf{2.5\\text{ ms}}.$$</p>"
   },
   {
-    "id": "c1-1.9",
+    "id": "c1-1.6",
     "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.9",
-    "source": "Đề Cuối kỳ 2024.1 - #54583d & Ôn tập Giữa kỳ - Câu 51",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.6",
+    "source": "Đề CK 2024.1 - #54583d & Ôn tập 2025.2 - P1, Câu 4",
     "examTags": [
-      "CK",
-      "GK"
+      "CK"
     ],
-    "pdfPage": 14,
-    "printedPage": 13,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 12,
+    "printedPage": 11,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập thời gian t_CPU (ví dụ: 2.4 ms):",
+    "fillPrompt": "Nhập kết quả (ms):",
     "acceptedAnswers": [
-      "2.4 ms",
-      "2.4ms",
       "2.4",
-      "2,4"
+      "2.4 ms",
+      "2.4ms"
     ],
-    "question": "Máy tính có bộ xử lý với tần số xung nhịp $5\\text{ GHz}$ và $CPI$ trung bình bằng $2$. Giả sử có chương trình được thực hiện trên máy tính đó với $6\\text{ triệu lệnh}$. Hãy cho biết thời gian của bộ xử lý để hoàn thành chương trình đó?",
+    "question": "Máy tính có bộ xử lý với tần số xung nhịp $5\\text{ GHz}$ và $CPI$ trung bình bằng $2$. Giả sử chương trình được thực hiện với $6$ triệu lệnh. Thời gian của bộ xử lý để hoàn thành chương trình đó là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -517,31 +463,30 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đổi đơn vị: $IC = 6 \\times 10^6\\text{ lệnh}$; $CPI = 2$; $f_0 = 5\\text{ GHz} = 5 \\times 10^9\\text{ Hz}$.</li><li>Thời gian thực thi: $$t_{\\text{CPU}} = \\frac{IC \\times CPI}{f_0} = \\frac{6 \\times 10^6 \\times 2}{5 \\times 10^9} = \\frac{12}{5} \\times 10^{-3}\\text{ s} = 2.4 \\times 10^{-3}\\text{ s} = 2.4\\text{ ms}$$</li><li><strong>Đáp án đúng: 2.4 ms.</strong></li></ul>"
+    "explanation": "<p>Với $IC = 6 \\times 10^6$, $CPI = 2$, $f_0 = 5 \\times 10^9\\text{ Hz}$: $$t_{\\text{CPU}} = \\frac{6 \\times 10^6 \\times 2}{5 \\times 10^9} = \\frac{12}{5} \\times 10^{-3}\\text{ s} = \\mathbf{2.4\\text{ ms}}.$$</p>"
   },
   {
-    "id": "c1-1.10",
+    "id": "c1-1.7",
     "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.10",
-    "source": "Đề Cuối kỳ 2020.2",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.7",
+    "source": "Đề Cuối kỳ 2020.2 & 2021.1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 15,
-    "printedPage": 14,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 13,
+    "printedPage": 12,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập thời gian t_CPU (ví dụ: 3.5 ms):",
+    "fillPrompt": "Nhập kết quả (ms):",
     "acceptedAnswers": [
-      "3.5 ms",
-      "3.5ms",
       "3.5",
-      "3,5"
+      "3.5 ms",
+      "3.5ms"
     ],
-    "question": "Máy tính có bộ xử lý với tốc độ xung nhịp là $1.8\\text{ GHz}$ và số chu kỳ lệnh trung bình ($CPI$) là $2.1$. Giả sử có chương trình với $3\\text{ triệu lệnh}$ được thực hiện trên máy tính này. Cho biết thời gian của bộ xử lý để hoàn thành chương trình đó?",
+    "question": "Một bộ xử lý hoạt động ở tần số xung nhịp $1.8\\text{ GHz}$ với $CPI = 2.1$. Chương trình ứng dụng gồm tổng cộng $3$ triệu lệnh. Tổng thời gian xử lý cần thiết để CPU hoàn thành chương trình là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -555,31 +500,30 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đổi đơn vị: $IC = 3 \\times 10^6\\text{ lệnh}$; $CPI = 2.1$; $f_0 = 1.8\\text{ GHz} = 1.8 \\times 10^9\\text{ Hz}$.</li><li>Thời gian thực thi: $$t_{\\text{CPU}} = \\frac{3 \\times 10^6 \\times 2.1}{1.8 \\times 10^9} = \\frac{6.3}{1.8} \\times 10^{-3}\\text{ s} = 3.5 \\times 10^{-3}\\text{ s} = 3.5\\text{ ms}$$</li><li><strong>Đáp án đúng: 3.5 ms.</strong></li></ul>"
+    "explanation": "<p>Ta có $t_{\\text{CPU}} = \\frac{3 \\times 10^6 \\times 2.1}{1.8 \\times 10^9} = \\frac{6.3}{1.8} \\times 10^{-3}\\text{ s} = \\mathbf{3.5\\text{ ms}}$.</p>"
   },
   {
-    "id": "c1-1.11",
+    "id": "c1-1.8",
     "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.11",
-    "source": "Đề Cuối kỳ 2022.2 - Trang 12",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.8",
+    "source": "Đề Cuối kỳ 2022.2 & 2024.2 - Trang 12",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 15,
-    "printedPage": 14,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 13,
+    "printedPage": 12,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập thời gian t_CPU (ví dụ: 4.5 ms):",
+    "fillPrompt": "Nhập kết quả (ms):",
     "acceptedAnswers": [
-      "4.5 ms",
-      "4.5ms",
       "4.5",
-      "4,5"
+      "4.5 ms",
+      "4.5ms"
     ],
-    "question": "Một chương trình được thực hiện trên máy tính với $6\\text{ triệu lệnh}$. Biết bộ xử lý có tần số xung nhịp $f_0 = 2\\text{ GHz}$ và $CPI = 1.5$ (hoặc $f_0 = 4\\text{ GHz}, CPI = 3$). Hãy cho biết thời gian của bộ xử lý để hoàn thành chương trình đó?",
+    "question": "Cho một chương trình có $6$ triệu lệnh thực hiện trên máy tính có bộ xử lý tốc độ xung nhịp $2\\text{ GHz}$ và $CPI$ trung bình là $1.5$. Thời gian CPU hoàn thành chương trình là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -593,215 +537,207 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Với $IC = 6 \\times 10^6\\text{ lệnh}$, $f_0 = 2\\text{ GHz} = 2 \\times 10^9\\text{ Hz}$ và $CPI = 1.5$: $$t_{\\text{CPU}} = \\frac{6 \\times 10^6 \\times 1.5}{2 \\times 10^9} = \\frac{9}{2} \\times 10^{-3}\\text{ s} = 4.5\\text{ ms}$$</li><li>Nếu đề có dạng $f_0 = 4\\text{ GHz}, CPI = 3$: $\\dfrac{6 \\times 10^6 \\times 3}{4 \\times 10^9} = \\dfrac{18}{4} \\times 10^{-3}\\text{ s} = 4.5\\text{ ms}$ (kết quả vẫn là $4.5\\text{ ms}$).</li><li><strong>Đáp án đúng: 4.5 ms.</strong></li></ul>"
+    "explanation": "<p>Ta có $t_{\\text{CPU}} = \\frac{6 \\times 10^6 \\times 1.5}{2 \\times 10^9} = \\frac{9}{2} \\times 10^{-3}\\text{ s} = \\mathbf{4.5\\text{ ms}}$.</p>"
   },
   {
-    "id": "c1-1.12",
+    "id": "c1-1.9a",
     "chapter": 1,
     "groupId": "1.2.2",
-    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và thời gian thực thi (tCPU)",
-    "exerciseCode": "Bài tập 1.12",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.9a",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 11",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 14,
+    "printedPage": 13,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập chỉ số CPI:",
+    "acceptedAnswers": [
+      "1.5"
+    ],
+    "question": "Bộ xử lý có tần số xung nhịp $2\\text{ GHz}$ thực hiện phần mềm gồm $400\\,000$ lệnh máy trong $0.0003$ giây. Chỉ số $CPI$ trung bình của phần mềm là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "1.5",
+      "1.2",
+      "2.5",
+      "0.75"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Áp dụng công thức suy ngược: $$CPI = \\frac{t_{\\text{CPU}} \\times f_0}{IC} = \\frac{3 \\times 10^{-4} \\times 2 \\times 10^9}{4 \\times 10^5} = \\frac{6 \\times 10^5}{4 \\times 10^5} = \\mathbf{1.5}.$$</p>"
+  },
+  {
+    "id": "c1-1.9b",
+    "chapter": 1,
+    "groupId": "1.2.2",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.9b",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 244, Câu 8",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 14,
+    "printedPage": 13,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập chỉ số CPI:",
+    "acceptedAnswers": [
+      "1.2"
+    ],
+    "question": "Bộ xử lý có tần số xung nhịp $300\\text{ MHz}$ thực hiện phần mềm gồm $1\\,000\\,000$ lệnh máy trong $0.004$ giây. Chỉ số $CPI$ trung bình của phần mềm là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "1.2",
+      "1.5",
+      "2.4",
+      "0.8"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đổi $f_0 = 300 \\times 10^6\\text{ Hz}$, $IC = 10^6$: $$CPI = \\frac{0.004 \\times 300 \\times 10^6}{10^6} = 0.004 \\times 300 = \\mathbf{1.2}.$$</p>"
+  },
+  {
+    "id": "c1-1.9c",
+    "chapter": 1,
+    "groupId": "1.2.2",
+    "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
+    "exerciseCode": "Bài tập 1.9c",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0008, Câu 1",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 16,
-    "printedPage": 15,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 14,
+    "printedPage": 13,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị CPI (ví dụ: 2.5):",
+    "fillPrompt": "Nhập chỉ số CPI:",
     "acceptedAnswers": [
-      "2.5",
-      "2,5"
+      "2.5"
     ],
-    "question": "Bộ xử lý có tần số xung nhịp $50\\text{ MHz}$ thực hiện phần mềm gồm $800\\,000\\text{ lệnh máy}$ trong $0.04\\text{ giây}$. Hỏi phần mềm đó có $CPI$ trung bình bằng bao nhiêu?",
+    "question": "Bộ xử lý có tần số xung nhịp $50\\text{ MHz}$ thực hiện phần mềm gồm $800\\,000$ lệnh máy trong $0.04$ giây. Chỉ số $CPI$ trung bình là bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "2.5",
+      "2.0",
       "1.6",
+      "4.0"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đổi $f_0 = 50 \\times 10^6\\text{ Hz}$, $IC = 0.8 \\times 10^6$: $$CPI = \\frac{0.04 \\times 50 \\times 10^6}{0.8 \\times 10^6} = \\frac{2}{0.8} = \\mathbf{2.5}.$$</p>"
+  },
+  {
+    "id": "c1-1.10a",
+    "chapter": 1,
+    "groupId": "1.2.3",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.10a",
+    "source": "Slide Chương 1 - Trang 35",
+    "examTags": [
+      "LT",
+      "GK"
+    ],
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số MIPS:",
+    "acceptedAnswers": [
+      "500",
+      "500 MIPS"
+    ],
+    "question": "Tính chỉ số $\\text{MIPS}$ của bộ xử lý có tần số xung nhịp $f_0 = 2\\text{ GHz}$ và $CPI = 4$?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "500 MIPS",
+      "800 MIPS",
+      "200 MIPS",
+      "1000 MIPS"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$$\\text{MIPS} = \\frac{f_0}{CPI \\times 10^6} = \\frac{2 \\times 10^9}{4 \\times 10^6} = \\frac{2000}{4} = \\mathbf{500\\text{ MIPS}}.$$</p>"
+  },
+  {
+    "id": "c1-1.10b",
+    "chapter": 1,
+    "groupId": "1.2.3",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.10b",
+    "source": "Slide Chương 1 - Trang 36",
+    "examTags": [
+      "LT",
+      "GK"
+    ],
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập CPI:",
+    "acceptedAnswers": [
+      "2.5"
+    ],
+    "question": "Tính chỉ số $CPI$ của bộ xử lý có tần số xung nhịp $f_0 = 1\\text{ GHz}$ và tốc độ thực thi đạt $400\\text{ MIPS}$?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "2.5",
       "4.0",
+      "1.6",
       "0.4"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Đổi đơn vị về chuẩn:</strong><br>$f_0 = 50\\text{ MHz} = 50 \\times 10^6\\text{ Hz}$; $IC = 800\\,000 = 8 \\times 10^5\\text{ lệnh}$; $t_{\\text{CPU}} = 0.04\\text{ s}$.</li><li><strong>Từ công thức tính $t_{\\text{CPU}}$:</strong><br>$$CPI = \\frac{t_{\\text{CPU}} \\times f_0}{IC} = \\frac{0.04 \\times 50 \\times 10^6}{800\\,000} = \\frac{2\\,000\\,000}{800\\,000} = 2.5$$</li></ol><p><strong>Đáp số: CPI = 2.5.</strong></p>"
+    "explanation": "<p>$$CPI = \\frac{f_0}{\\text{MIPS} \\times 10^6} = \\frac{10^9}{400 \\times 10^6} = \\frac{1000}{400} = \\mathbf{2.5}.$$</p>"
   },
   {
-    "id": "c1-1.13",
+    "id": "c1-1.11a",
     "chapter": 1,
     "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.13",
-    "source": "Slide Chương 1 - Trang 35",
-    "examTags": [
-      "SLIDE"
-    ],
-    "pdfPage": 16,
-    "printedPage": 15,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập chỉ số MIPS (ví dụ: 500):",
-    "acceptedAnswers": [
-      "500",
-      "500 MIPS",
-      "500MIPS"
-    ],
-    "question": "Tính chỉ số MIPS của bộ xử lý với tần số xung nhịp $f_0 = 2\\text{ GHz}$ và $CPI = 4$.",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "500 MIPS",
-      "8000 MIPS",
-      "250 MIPS",
-      "2000 MIPS"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Áp dụng công thức tính nhanh khi $f_0$ tính bằng GHz:</p>$$\\text{MIPS} = \\frac{f_0\\text{ (GHz)} \\times 1000}{CPI} = \\frac{2 \\times 1000}{4} = 500\\text{ MIPS}$$<p><strong>Đáp số: 500 MIPS.</strong></p>"
-  },
-  {
-    "id": "c1-1.14",
-    "chapter": 1,
-    "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.14",
-    "source": "Slide Chương 1 - Trang 36",
-    "examTags": [
-      "SLIDE"
-    ],
-    "pdfPage": 17,
-    "printedPage": 16,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập CPI (ví dụ: 2.5):",
-    "acceptedAnswers": [
-      "2.5",
-      "2,5"
-    ],
-    "question": "Tính $CPI$ của bộ xử lý biết tần số xung nhịp $f_0 = 1\\text{ GHz}$ và tốc độ thực hiện đạt $400\\text{ MIPS}$.",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "2.5",
-      "0.4",
-      "4.0",
-      "1.25"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Áp dụng công thức suy ra $CPI$ từ MIPS:</p>$$CPI = \\frac{f_0\\text{ (GHz)} \\times 1000}{\\text{MIPS}} = \\frac{1 \\times 1000}{400} = 2.5$$<p><strong>Đáp số: CPI = 2.5.</strong></p>"
-  },
-  {
-    "id": "c1-1.15",
-    "chapter": 1,
-    "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.15",
-    "source": "Đề Cuối kỳ 2022.2 - #1fd28d & Ôn tập Giữa kỳ - Câu 17",
-    "examTags": [
-      "CK",
-      "GK"
-    ],
-    "pdfPage": 17,
-    "printedPage": 16,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số triệu lệnh/s (ví dụ: 1250):",
-    "acceptedAnswers": [
-      "1250",
-      "1250 MIPS",
-      "1250MIPS"
-    ],
-    "question": "Bộ xử lý có tốc độ xung nhịp $2.5\\text{ GHz}$ và $CPI$ trung bình là $2$. Hãy cho biết số triệu lệnh được thực hiện trên một giây?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "1250 MIPS",
-      "1.25 MIPS",
-      "5 MIPS",
-      "500 MIPS"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>“Số triệu lệnh được thực hiện trên một giây” chính là định nghĩa của chỉ số <strong>MIPS</strong>.</li><li>Thay số vào công thức: $$\\text{MIPS} = \\frac{f_0}{CPI \\times 10^6} = \\frac{2.5 \\times 10^9}{2 \\times 10^6} = \\frac{2500}{2} = 1250\\text{ MIPS}$$</li><li><strong>Đáp án đúng: 1250 MIPS.</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.16",
-    "chapter": 1,
-    "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.16",
-    "source": "Đề Cuối kỳ 2024.1 - #3e5442 & Ôn tập Giữa kỳ - Câu 36",
-    "examTags": [
-      "CK",
-      "GK"
-    ],
-    "pdfPage": 17,
-    "printedPage": 16,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số triệu lệnh/s (ví dụ: 2000):",
-    "acceptedAnswers": [
-      "2000",
-      "2000 MIPS",
-      "2000MIPS"
-    ],
-    "question": "Bộ xử lý có tần số xung nhịp $3\\text{ GHz}$ và $CPI$ trung bình là $1.5$. Hãy cho biết số triệu lệnh được thực hiện trên một giây?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "2000 MIPS",
-      "4.5 MIPS",
-      "500 MIPS",
-      "2 MIPS"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Áp dụng công thức: $$\\text{MIPS} = \\frac{3 \\times 10^9}{1.5 \\times 10^6} = \\frac{3000}{1.5} = 2000\\text{ MIPS}$$</li><li><strong>Đáp án đúng: 2000 MIPS.</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.17",
-    "chapter": 1,
-    "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.17",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.11a",
     "source": "Đề Cuối kỳ 2020.2",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 18,
-    "printedPage": 17,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số triệu lệnh/s (ví dụ: 800):",
+    "fillPrompt": "Nhập MIPS:",
     "acceptedAnswers": [
       "800",
-      "800 MIPS",
-      "800MIPS"
+      "800 MIPS"
     ],
-    "question": "Máy tính có CPU với tốc độ xung nhịp $1.2\\text{ GHz}$ và $CPI$ bằng $1.5$. Xác định số lệnh thực hiện trên 1 giây (đơn vị MIPS)?",
+    "question": "Tính số triệu lệnh thực hiện được trong một giây (đơn vị $\\text{MIPS}$) biết $f_0 = 1.2\\text{ GHz}$ và $CPI = 1.5$?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -815,292 +751,426 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Áp dụng công thức: $$\\text{MIPS} = \\frac{1.2 \\times 10^9}{1.5 \\times 10^6} = \\frac{1200}{1.5} = 800\\text{ MIPS}$$</li><li><strong>Đáp án đúng: 800 MIPS.</strong></li></ul>"
+    "explanation": "<p>$$\\text{MIPS} = \\frac{f_0\\text{ (GHz)} \\times 1000}{CPI} = \\frac{1.2 \\times 1000}{1.5} = \\frac{1200}{1.5} = \\mathbf{800\\text{ MIPS}}.$$</p>"
   },
   {
-    "id": "c1-1.18",
+    "id": "c1-1.11b",
     "chapter": 1,
     "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.18",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.11b",
+    "source": "Đề CK 2022.2 & 2024.2 - #1fd28d",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập MIPS:",
+    "acceptedAnswers": [
+      "1250",
+      "1250 MIPS"
+    ],
+    "question": "Tính tốc độ $\\text{MIPS}$ của bộ xử lý có tần số xung nhịp $f_0 = 2.5\\text{ GHz}$ và $CPI = 2$?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "1250 MIPS",
+      "1.25 MIPS",
+      "5 MIPS",
+      "500 MIPS"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$$\\text{MIPS} = \\frac{2.5 \\times 1000}{2} = \\frac{2500}{2} = \\mathbf{1250\\text{ MIPS}}.$$</p>"
+  },
+  {
+    "id": "c1-1.11c",
+    "chapter": 1,
+    "groupId": "1.2.3",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.11c",
+    "source": "Đề CK 2024.1 - #3e5442 & Ôn tập 2025.2 Câu 21",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập MIPS:",
+    "acceptedAnswers": [
+      "2000",
+      "2000 MIPS"
+    ],
+    "question": "Tính tốc độ $\\text{MIPS}$ của bộ xử lý có tần số xung nhịp $f_0 = 3\\text{ GHz}$ và $CPI = 1.5$?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "2000 MIPS",
+      "2 MIPS",
+      "4.5 MIPS",
+      "500 MIPS"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$$\\text{MIPS} = \\frac{3 \\times 1000}{1.5} = \\frac{3000}{1.5} = \\mathbf{2000\\text{ MIPS}}.$$</p>"
+  },
+  {
+    "id": "c1-1.12a",
+    "chapter": 1,
+    "groupId": "1.2.3",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.12a",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 1.1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 18,
-    "printedPage": 17,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập CPI (ví dụ: 2.5):",
+    "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
-      "2.5",
-      "2,5"
+      "2.5"
     ],
-    "question": "Máy tính A có bộ xử lý với tần số xung nhịp $1.5\\text{ GHz}$, có khả năng thực hiện $600\\text{ triệu lệnh trên một giây}$. Tính $CPI$ của nó?",
+    "question": "Máy tính A có bộ xử lý với tần số xung nhịp $1.5\\text{ GHz}$, có khả năng thực hiện $600$ triệu lệnh trên một giây. Tính chỉ số $CPI$ của nó?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "2.5",
-      "0.4",
-      "4.0",
-      "0.9"
+      "1.5",
+      "3.0",
+      "0.4"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đề bài cho “600 triệu lệnh trên một giây” nghĩa là $\\text{MIPS} = 600$.</li><li>Tần số $f_0 = 1.5\\text{ GHz} = 1500\\text{ MHz}$.</li><li>Áp dụng công thức: $$CPI = \\frac{f_0}{\\text{MIPS} \\times 10^6} = \\frac{1.5 \\times 10^9}{600 \\times 10^6} = \\frac{1500}{600} = 2.5$$</li><li><strong>Đáp số: CPI = 2.5.</strong></li></ul>"
+    "explanation": "<p>Thực hiện $600$ triệu lệnh/giây tức là $\\text{MIPS} = 600$: $$CPI = \\frac{1.5 \\times 10^9}{600 \\times 10^6} = \\frac{1500}{600} = \\mathbf{2.5}.$$</p>"
   },
   {
-    "id": "c1-1.19",
+    "id": "c1-1.12b",
     "chapter": 1,
     "groupId": "1.2.3",
-    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ MIPS",
-    "exerciseCode": "Bài tập 1.19",
+    "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
+    "exerciseCode": "Bài tập 1.12b",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B5, Câu 1.2",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 19,
-    "printedPage": 18,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 15,
+    "printedPage": 14,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập CPI (ví dụ: 3.7 hoặc 100/27):",
+    "fillPrompt": "Nhập giá trị gần đúng (ví dụ 3.704 hoặc 100/27):",
     "acceptedAnswers": [
+      "3.704",
       "3.7",
-      "3,7",
-      "100/27",
-      "3.704"
+      "100/27"
     ],
-    "question": "Cho máy tính A với bộ xử lý có $\\text{MIPS} = 900$. Hãy tính $CPI$ của máy tính đó nếu biết chu kỳ xung nhịp của bộ xử lý là $T_A = 300\\text{ ps}$.",
+    "question": "Cho máy tính A có $\\text{MIPS} = 900$ và chu kỳ xung nhịp của bộ xử lý là $T_A = 300\\text{ ps}$. Hãy tính $CPI$ của máy tính A?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "3.7 (100/27)",
-      "2.7",
-      "4.5",
-      "0.27"
+      "3.704 (tức 100/27)",
+      "2.700",
+      "0.27",
+      "3.333"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1 – Đổi chu kỳ $T_A$ ra giây và tìm tần số $f_A$:</strong><br>$$T_A = 300\\text{ ps} = 300 \\times 10^{-12}\\text{ s} \\implies f_A = \\frac{1}{T_A} = \\frac{10^{12}}{300}\\text{ Hz}$$</li><li><strong>Bước 2 – Thay vào công thức tính $CPI$:</strong><br>$$CPI = \\frac{f_A}{\\text{MIPS} \\times 10^6} = \\frac{10^{12}}{300 \\times 900 \\times 10^6} = \\frac{10^6}{270\\,000} = \\frac{100}{27} \\approx 3.704$$</li></ol><p><strong>Đáp số: CPI = 100/27 ≈ 3.7.</strong></p>"
+    "explanation": "<p>Đổi $T_A = 300 \\times 10^{-12}\\text{ s} \\Rightarrow f_A = \\frac{10^{12}}{300}\\text{ Hz}$. Vậy: $$CPI = \\frac{f_A}{\\text{MIPS} \\times 10^6} = \\frac{10^{12}}{300 \\times 900 \\times 10^6} = \\frac{100}{27} \\approx \\mathbf{3.704}.$$</p>"
   },
   {
-    "id": "c1-1.20a",
+    "id": "c1-1.13a",
     "chapter": 1,
     "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.20a",
-    "source": "Slide Chương 1 - Trang 32",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.13a",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 19",
     "examTags": [
-      "SLIDE"
+      "GK"
     ],
-    "pdfPage": 19,
-    "printedPage": 18,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 16,
+    "printedPage": 15,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập CPI trung bình (ví dụ: 2.0):",
+    "fillPrompt": "Nhập CPI trung bình:",
     "acceptedAnswers": [
-      "2.0",
-      "2",
-      "2,0"
+      "1.5"
     ],
-    "question": "Cho bảng chỉ ra các dãy lệnh sử dụng các lệnh thuộc các loại A, B, C:<table class='data-table'><tr><th>Loại lệnh</th><th>A</th><th>B</th><th>C</th></tr><tr><td>CPI theo loại lệnh</td><td>1</td><td>2</td><td>3</td></tr><tr><td>Số lệnh (IC) trong dãy lệnh 1</td><td>20</td><td>10</td><td>20</td></tr><tr><td>Số lệnh (IC) trong dãy lệnh 2</td><td>40</td><td>10</td><td>10</td></tr></table>Hãy tính <strong>CPI trung bình của Dãy lệnh 1</strong>:",
+    "question": "Phần mềm X có 3 nhóm lệnh A, B, C với $CPI$ tương ứng là $1, 2, 3$ và số lượng lệnh tương ứng là $4, 1, 1$. Tính chỉ số $CPI$ trung bình của phần mềm X?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "1.5",
+      "2.0",
+      "1.8",
+      "1.33"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$$CPI_{\\text{TB}} = \\frac{(1 \\times 4) + (2 \\times 1) + (3 \\times 1)}{4 + 1 + 1} = \\frac{9}{6} = \\mathbf{1.5}.$$</p>"
+  },
+  {
+    "id": "c1-1.13b1",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.13b (Dãy 1)",
+    "source": "Slide Chương 1 - Trang 32",
+    "examTags": [
+      "LT",
+      "GK"
+    ],
+    "pdfPage": 17,
+    "printedPage": 16,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập CPI:",
+    "acceptedAnswers": [
+      "2",
+      "2.0"
+    ],
+    "question": "Ba loại lệnh A, B, C có $CPI$ lần lượt là $1, 2, 3$. Dãy lệnh 1 có số lệnh $(A, B, C) = (20, 10, 20)$. Tính $CPI$ trung bình của Dãy lệnh 1?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "2.0",
       "1.5",
-      "2.2",
+      "2.5",
       "1.8"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Tổng số lệnh: $IC_1 = 20 + 10 + 20 = 50\\text{ lệnh}$.</li><li>Tổng số chu kỳ: $n_1 = (1 \\times 20) + (2 \\times 10) + (3 \\times 20) = 20 + 20 + 60 = 100\\text{ chu kỳ}$.</li><li>$$CPI_{\\text{TB1}} = \\frac{n_1}{IC_1} = \\frac{100}{50} = 2.0$$</li><li><strong>Đáp số: 2.0.</strong></li></ul>"
+    "explanation": "<p>$$CPI_{\\text{TB1}} = \\frac{(1 \\times 20) + (2 \\times 10) + (3 \\times 20)}{20 + 10 + 20} = \\frac{100}{50} = \\mathbf{2.0}.$$</p>"
   },
   {
-    "id": "c1-1.20b",
+    "id": "c1-1.13b2",
     "chapter": 1,
     "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.20b",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.13b (Dãy 2)",
     "source": "Slide Chương 1 - Trang 32",
     "examTags": [
-      "SLIDE"
+      "LT",
+      "GK"
     ],
-    "pdfPage": 19,
-    "printedPage": 18,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 17,
+    "printedPage": 16,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập CPI trung bình (ví dụ: 1.5):",
+    "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
-      "1.5",
-      "1,5"
+      "1.5"
     ],
-    "question": "Dựa vào bảng dữ liệu ở Bài 1.20 (Loại A: CPI=1, Loại B: CPI=2, Loại C: CPI=3; Dãy lệnh 2 có số lệnh tương ứng là 40, 10, 10), hãy tính <strong>CPI trung bình của Dãy lệnh 2</strong>:",
+    "question": "Ba loại lệnh A, B, C có $CPI$ lần lượt là $1, 2, 3$. Dãy lệnh 2 có số lệnh $(A, B, C) = (40, 10, 10)$. Tính $CPI$ trung bình của Dãy lệnh 2?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "1.5",
       "2.0",
-      "1.75",
+      "1.67",
       "1.25"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Tổng số lệnh: $IC_2 = 40 + 10 + 10 = 60\\text{ lệnh}$.</li><li>Tổng số chu kỳ: $n_2 = (1 \\times 40) + (2 \\times 10) + (3 \\times 10) = 40 + 20 + 30 = 90\\text{ chu kỳ}$.</li><li>$$CPI_{\\text{TB2}} = \\frac{n_2}{IC_2} = \\frac{90}{60} = 1.5$$</li><li><strong>Đáp số: 1.5.</strong></li></ul>"
+    "explanation": "<p>$$CPI_{\\text{TB2}} = \\frac{(1 \\times 40) + (2 \\times 10) + (3 \\times 10)}{40 + 10 + 10} = \\frac{90}{60} = \\mathbf{1.5}.$$</p>"
   },
   {
-    "id": "c1-1.21a",
+    "id": "c1-1.13c",
     "chapter": 1,
     "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.21a",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.13c",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B4, Câu 1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 20,
-    "printedPage": 19,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 17,
+    "printedPage": 16,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập CPI trung bình (ví dụ: 2.6):",
-    "acceptedAnswers": [
-      "2.6",
-      "2,6",
-      "13/5"
-    ],
-    "question": "Trong tập lệnh máy tính có 3 lớp lệnh A, B, C với CPI lần lượt là 1, 2, 4. Dãy lệnh 1 có số lệnh tương ứng là A=1, B=2, C=2. Tính <strong>CPI trung bình ứng với Dãy lệnh 1</strong>?",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Ba loại lệnh A, B, C có $CPI$ lần lượt là $1, 2, 4$. Ba dãy lệnh có số lệnh $(A,B,C)$ lần lượt là: Dãy 1 $(1,2,2)$; Dãy 2 $(5,2,1)$; Dãy 3 $(4,1,1)$. Bộ giá trị $(CPI_{\\text{TB1}}, CPI_{\\text{TB2}}, CPI_{\\text{TB3}})$ lần lượt là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "2.6",
-      "2.33",
-      "1.625",
-      "3.0"
+      "(2.6, 1.625, 1.67)",
+      "(2.33, 1.75, 1.5)",
+      "(2.6, 1.5, 2.0)",
+      "(2.4, 1.625, 1.8)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Áp dụng công thức $CPI_{\\text{TB}} = \\dfrac{\\sum (CPI_i \\times IC_i)}{\\sum IC_i}$:</p>$$CPI_{\\text{TB1}} = \\frac{(1 \\times 1) + (2 \\times 2) + (4 \\times 2)}{1 + 2 + 2} = \\frac{1 + 4 + 8}{5} = \\frac{13}{5} = 2.6$$<p><strong>Đáp số: 2.6.</strong></p>"
+    "explanation": "<ul><li>Dãy 1: $\\frac{1\\cdot 1 + 2\\cdot 2 + 4\\cdot 2}{5} = \\frac{13}{5} = 2.6$.</li><li>Dãy 2: $\\frac{1\\cdot 5 + 2\\cdot 2 + 4\\cdot 1}{8} = \\frac{13}{8} = 1.625$.</li><li>Dãy 3: $\\frac{1\\cdot 4 + 2\\cdot 1 + 4\\cdot 1}{6} = \\frac{10}{6} \\approx 1.67$.</li></ul>"
   },
   {
-    "id": "c1-1.21b",
+    "id": "c1-1.14a",
     "chapter": 1,
     "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.21b",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B4, Câu 1",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 20,
-    "printedPage": 19,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập CPI trung bình (ví dụ: 1.625):",
-    "acceptedAnswers": [
-      "1.625",
-      "1,625",
-      "13/8"
-    ],
-    "question": "Trong tập lệnh máy tính có 3 lớp lệnh A, B, C với CPI lần lượt là 1, 2, 4. Dãy lệnh 2 có số lệnh tương ứng là A=5, B=2, C=1. Tính <strong>CPI trung bình ứng với Dãy lệnh 2</strong>?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "1.625",
-      "1.875",
-      "2.125",
-      "2.6"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Áp dụng công thức:</p>$$CPI_{\\text{TB2}} = \\frac{(1 \\times 5) + (2 \\times 2) + (4 \\times 1)}{5 + 2 + 1} = \\frac{5 + 4 + 4}{8} = \\frac{13}{8} = 1.625$$<p><strong>Đáp số: 1.625.</strong></p>"
-  },
-  {
-    "id": "c1-1.21c",
-    "chapter": 1,
-    "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.21c",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B4, Câu 1",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 21,
-    "printedPage": 20,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập CPI trung bình (ví dụ: 1.67 hoặc 5/3):",
-    "acceptedAnswers": [
-      "1.67",
-      "1,67",
-      "10/6",
-      "5/3",
-      "1.667"
-    ],
-    "question": "Trong tập lệnh máy tính có 3 lớp lệnh A, B, C với CPI lần lượt là 1, 2, 4. Dãy lệnh 3 có số lệnh tương ứng là A=4, B=1, C=1. Tính <strong>CPI trung bình ứng với Dãy lệnh 3</strong>?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "1.67 (10/6)",
-      "2.0",
-      "1.5",
-      "2.33"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Áp dụng công thức:</p>$$CPI_{\\text{TB3}} = \\frac{(1 \\times 4) + (2 \\times 1) + (4 \\times 1)}{4 + 1 + 1} = \\frac{4 + 2 + 4}{6} = \\frac{10}{6} \\approx 1.67$$<p><strong>Đáp số: 10/6 ≈ 1.67.</strong></p>"
-  },
-  {
-    "id": "c1-1.22",
-    "chapter": 1,
-    "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.22",
-    "source": "Đề Giữa kỳ 2024.1 - #a6b720 & Ôn tập Giữa kỳ - Câu 4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.14a",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 75",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 21,
-    "printedPage": 20,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 17,
+    "printedPage": 16,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập thời gian thực thi (ví dụ: 1.35):",
+    "fillPrompt": "Nhập CPI trung bình:",
+    "acceptedAnswers": [
+      "4",
+      "4.0"
+    ],
+    "question": "Một phần mềm gồm: $15\\%$ lệnh tốn $3$ chu kỳ, <strong>còn lại</strong> là lệnh $4$ chu kỳ, $35\\%$ lệnh $5$ chu kỳ và $10\\%$ lệnh $2$ chu kỳ. $CPI$ trung bình của phần mềm là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "4.0",
+      "3.85",
+      "4.2",
+      "3.5"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Tỷ lệ nhóm 4 chu kỳ còn lại: $100\\% - (15\\% + 35\\% + 10\\%) = 40\\%$. $$CPI_{\\text{TB}} = 0.15\\times 3 + 0.40\\times 4 + 0.35\\times 5 + 0.10\\times 2 = 0.45 + 1.60 + 1.75 + 0.20 = \\mathbf{4.0}.$$</p>"
+  },
+  {
+    "id": "c1-1.14b",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.14b",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 944",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 17,
+    "printedPage": 16,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập CPI trung bình:",
+    "acceptedAnswers": [
+      "7.2"
+    ],
+    "question": "Một phần mềm gồm: $10\\%$ lệnh tốn $4$ chu kỳ, $40\\%$ lệnh $6$ chu kỳ, $30\\%$ lệnh $8$ chu kỳ, <strong>còn lại</strong> là lệnh $10$ chu kỳ. $CPI$ trung bình của phần mềm là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "7.2",
+      "6.8",
+      "7.0",
+      "7.4"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Tỷ lệ nhóm 10 chu kỳ còn lại: $100\\% - (10\\% + 40\\% + 30\\%) = 20\\%$. $$CPI_{\\text{TB}} = 0.10\\times 4 + 0.40\\times 6 + 0.30\\times 8 + 0.20\\times 10 = 0.4 + 2.4 + 2.4 + 2.0 = \\mathbf{7.2}.$$</p>"
+  },
+  {
+    "id": "c1-1.14c",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.14c",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0012, Câu 110",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 18,
+    "printedPage": 17,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập thời gian (vd: 2 ms hoặc 0.002 s):",
+    "acceptedAnswers": [
+      "2 ms",
+      "2ms",
+      "0.002 s",
+      "0.002s",
+      "0.002"
+    ],
+    "question": "Bộ xử lý RISC-V có tần số xung nhịp $1\\text{ GHz}$ thực hiện phần mềm gồm $200\\,000$ lệnh máy với $CPI = 3$, $200\\,000$ lệnh máy với $CPI = 4$ và $300\\,000$ lệnh máy với $CPI = 2$. Phần mềm đó chạy trong bao lâu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "2 ms (0.002 s)",
+      "20 ms",
+      "0.2 ms",
+      "7 ms"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Tổng số chu kỳ: $n = 200\\,000\\times 3 + 200\\,000\\times 4 + 300\\,000\\times 2 = 2\\,000\\,000 = 2\\times 10^6$ chu kỳ. Thời gian chạy: $$t_{\\text{CPU}} = \\frac{2\\times 10^6}{10^9} = 2\\times 10^{-3}\\text{ s} = \\mathbf{2\\text{ ms}}.$$</p>"
+  },
+  {
+    "id": "c1-1.15",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.15",
+    "source": "Đề GK 2024.1 - #a6b720 & Ôn tập 2025.2 - P1, Câu 10",
+    "examTags": [
+      "GK",
+      "CK"
+    ],
+    "pdfPage": 18,
+    "printedPage": 17,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số giây:",
     "acceptedAnswers": [
       "1.35",
-      "1,35",
-      "1.35s",
-      "1.35 s",
-      "1.35 giây"
+      "1.35 giây",
+      "1.35s"
     ],
-    "question": "Một bộ xử lý chạy một chương trình với tần số xung nhịp $4\\text{ GHz}$. Chương trình gồm ba loại lệnh:<br>• Loại A: chiếm 40% tổng số lệnh với $CPI$ là 1<br>• Loại B: chiếm 35% tổng số lệnh với $CPI$ là 3<br>• Loại C: chiếm 25% tổng số lệnh với $CPI$ là 5<br>Tổng số lệnh cho chương trình là 2 tỷ lệnh. Tổng thời gian thực thi là bao nhiêu?",
+    "question": "Bộ xử lý chạy chương trình $2$ tỷ lệnh ở tần số $4\\text{ GHz}$ gồm 3 loại lệnh: Loại A ($40\\%$, $CPI=1$), Loại B ($35\\%$, $CPI=3$), Loại C ($25\\%$, $CPI=5$). Tổng thời gian thực thi là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -1114,365 +1184,553 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Bước 1 – Tính $CPI$ trung bình:</strong><br>$$CPI_{\\text{TB}} = (0.40 \\times 1) + (0.35 \\times 3) + (0.25 \\times 5) = 0.4 + 1.05 + 1.25 = 2.7$$</li><li><strong>Bước 2 – Tính tổng thời gian thực thi $t_{\\text{CPU}}$:</strong><br>Biết $IC = 2\\text{ tỷ lệnh} = 2 \\times 10^9\\text{ lệnh}$ và $f_0 = 4\\text{ GHz} = 4 \\times 10^9\\text{ Hz}$:<br>$$t_{\\text{CPU}} = \\frac{IC \\times CPI_{\\text{TB}}}{f_0} = \\frac{2 \\times 10^9 \\times 2.7}{4 \\times 10^9} = \\frac{5.4}{4} = 1.35\\text{ giây}$$</li></ol><p><strong>Đáp án đúng: C (1.35 giây).</strong></p>"
+    "explanation": "<p>$CPI_{\\text{TB}} = 0.40\\times 1 + 0.35\\times 3 + 0.25\\times 5 = 2.7$. Thời gian: $$t_{\\text{CPU}} = \\frac{2\\times 10^9 \\times 2.7}{4\\times 10^9} = \\frac{5.4}{4} = \\mathbf{1.35\\text{ giây}}.$$</p>"
   },
   {
-    "id": "c1-1.23a",
+    "id": "c1-1.16a",
     "chapter": 1,
     "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.23a",
-    "source": "Ôn tập Giữa kỳ - Câu 68",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.16a",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 70",
     "examTags": [
-      "GK"
+      "CK"
     ],
-    "pdfPage": 22,
-    "printedPage": 21,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 19,
+    "printedPage": 18,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập CPI trung bình (ví dụ: 4):",
+    "fillPrompt": "Nhập CPI trung bình:",
     "acceptedAnswers": [
       "4",
-      "4.0",
-      "4,0"
+      "4.0"
     ],
-    "question": "Cho một bộ xử lý $2\\text{ GHz}$ thực thi tập lệnh gồm năm lớp lệnh A, B, C, D, E với CPI lần lượt là 2, 3, 4, 6 và 10. Máy tính đang thực hiện một chương trình trong đó các lớp lệnh A, B, C, D, E chiếm lần lượt 30%, 30%, 15%, 15% và 10% tổng số lệnh. <strong>Tìm CPI trung bình của bộ xử lý này.</strong>",
+    "question": "Bộ xử lý $2\\text{ GHz}$ thực thi 5 lớp lệnh A, B, C, D, E có $CPI$ lần lượt là $2, 3, 4, 6, 10$ với tỷ lệ $30\\%, 30\\%, 15\\%, 15\\%, 10\\%$. Tìm $CPI$ trung bình của bộ xử lý?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "4.0",
-      "5.0",
-      "3.5",
-      "4.5"
+      "4.5",
+      "3.8",
+      "5.0"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Tính $CPI$ trung bình:</p>$$CPI_{\\text{TB}} = (0.30 \\times 2) + (0.30 \\times 3) + (0.15 \\times 4) + (0.15 \\times 6) + (0.10 \\times 10)$$$$CPI_{\\text{TB}} = 0.6 + 0.9 + 0.6 + 0.9 + 1.0 = 4.0$$<p><strong>Đáp số: 4 (hoặc 4.0).</strong></p>"
+    "explanation": "<p>$$CPI_{\\text{TB}} = (0.30\\times 2) + (0.30\\times 3) + (0.15\\times 4) + (0.15\\times 6) + (0.10\\times 10) = 0.6 + 0.9 + 0.6 + 0.9 + 1.0 = \\mathbf{4.0}.$$</p>"
   },
   {
-    "id": "c1-1.23b",
+    "id": "c1-1.16b",
     "chapter": 1,
     "groupId": "1.2.4",
-    "groupTitle": "Nhóm 4: Tính CPI trung bình và thời gian với nhiều lớp lệnh",
-    "exerciseCode": "Bài tập 1.23b",
-    "source": "Ôn tập Giữa kỳ - Câu 37",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.16b",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 55",
     "examTags": [
-      "GK"
+      "CK"
     ],
-    "pdfPage": 22,
-    "printedPage": 21,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 19,
+    "printedPage": 18,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tổng số lệnh không chứa dấu phân tách (ví dụ: 10000000000):",
+    "fillPrompt": "Nhập số nguyên không dấu phân tách:",
     "acceptedAnswers": [
       "10000000000",
       "10^10",
-      "10 tỷ"
+      "10 000 000 000"
     ],
-    "question": "Với dữ kiện Bài 1.23 ($f_0 = 2\\text{ GHz}$, $CPI_{\\text{TB}} = 4.0$), nếu thời gian thực thi của chương trình này là $20\\text{ giây}$, hãy tìm <strong>tổng số lệnh ($IC$)</strong>. Đáp án viết không chứa dấu phân tách chữ số.",
+    "question": "Với dữ kiện Bài tập 1.16 ($f_0 = 2\\text{ GHz}$, $CPI_{\\text{TB}} = 4.0$), nếu thời gian thực thi chương trình là $20$ giây, hãy tìm tổng số lệnh ($IC$)?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "10000000000 (10 tỷ lệnh)",
-      "5000000000 (5 tỷ lệnh)",
-      "20000000000 (20 tỷ lệnh)",
-      "1000000000 (1 tỷ lệnh)"
+      "10 000 000 000 lệnh",
+      "4 000 000 000 lệnh",
+      "16 000 000 000 lệnh",
+      "2 500 000 000 lệnh"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Ta có $f_0 = 2\\text{ GHz} = 2 \\times 10^9\\text{ Hz}$.</p><p>Từ công thức $t_{\\text{CPU}} = \\dfrac{IC \\times CPI_{\\text{TB}}}{f_0}$, rút ra:</p>$$IC = \\frac{t_{\\text{CPU}} \\times f_0}{CPI_{\\text{TB}}} = \\frac{20 \\times 2 \\times 10^9}{4} = 10 \\times 10^9 = 10\\,000\\,000\\,000$$<p><strong>Đáp số điền: 10000000000 (số 1 và 10 chữ số 0).</strong></p>"
+    "explanation": "<p>$$IC = \\frac{t_{\\text{CPU}} \\times f_0}{CPI_{\\text{TB}}} = \\frac{20 \\times 2\\times 10^9}{4} = 10 \\times 10^9 = \\mathbf{10\\,000\\,000\\,000\\text{ lệnh}}.$$</p>"
   },
   {
-    "id": "c1-1.24a",
+    "id": "c1-1.17a",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.17a",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3a",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 20,
+    "printedPage": 19,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập thời gian (theo µs):",
+    "acceptedAnswers": [
+      "2.75 us",
+      "2.75",
+      "2.75 µs"
+    ],
+    "question": "Chương trình gồm $2000$ lệnh: $750$ số học ($CPI=1$), $250$ store ($CPI=5$), $500$ load ($CPI=5$) và $500$ branch ($CPI=2$). Tính thời gian thực thi trên bộ xử lý $2\\text{ GHz}$?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "2.75 µs",
+      "5.5 µs",
+      "1.375 µs",
+      "2.75 ms"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Tổng chu kỳ: $n_{\\text{cũ}} = 750\\cdot 1 + 250\\cdot 5 + 500\\cdot 5 + 500\\cdot 2 = 5500$ chu kỳ. Thời gian: $t_{\\text{cũ}} = \\frac{5500}{2\\times 10^9} = \\mathbf{2.75\\text{ }\\mu\\text{s}}$.</p>"
+  },
+  {
+    "id": "c1-1.17b",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.17b",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3b",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 20,
+    "printedPage": 19,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập CPI:",
+    "acceptedAnswers": [
+      "2.75"
+    ],
+    "question": "Với chương trình ở Bài 1.17 ($n_{\\text{cũ}} = 5500$ chu kỳ, tổng $IC_{\\text{cũ}} = 2000$ lệnh), tìm $CPI$ trung bình ban đầu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "2.75",
+      "2.50",
+      "3.25",
+      "2.25"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$$CPI_{\\text{cũ}} = \\frac{n_{\\text{cũ}}}{IC_{\\text{cũ}}} = \\frac{5500}{2000} = \\mathbf{2.75}.$$</p>"
+  },
+  {
+    "id": "c1-1.17c",
+    "chapter": 1,
+    "groupId": "1.2.4",
+    "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
+    "exerciseCode": "Bài tập 1.17c",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3c",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 20,
+    "printedPage": 19,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Với dữ kiện Bài 1.17, nếu số lệnh load ($500$ lệnh, $CPI=5$) giảm đi $50\\%$, độ tăng tốc (Speedup) và $CPI_{\\text{mới}}$ lần lượt xấp xỉ bằng bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Speedup = 1.294 lần; CPI mới ≈ 2.43",
+      "Speedup = 1.50 lần; CPI mới = 2.25",
+      "Speedup = 1.25 lần; CPI mới = 2.50",
+      "Speedup = 1.15 lần; CPI mới = 2.60"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Giảm $250$ lệnh load $\\Rightarrow IC_{\\text{mới}} = 1750$; $n_{\\text{mới}} = 5500 - 250\\times 5 = 4250$. Suy ra $CPI_{\\text{mới}} = \\frac{4250}{1750} \\approx 2.43$ và $\\text{Speedup} = \\frac{5500}{4250} \\approx \\mathbf{1.294\\text{ lần}}$.</p>"
+  },
+  {
+    "id": "c1-1.18a",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.24a",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.18a",
+    "source": "Slide Chương 1 - Trang 29",
+    "examTags": [
+      "LT",
+      "GK"
+    ],
+    "pdfPage": 21,
+    "printedPage": 20,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hai máy tính A và B cùng ISA: Máy A có $T_A = 250\\text{ ps}$, $CPI_A = 2.0$; Máy B có $T_B = 500\\text{ ps}$, $CPI_B = 1.2$. Máy nào nhanh hơn và nhanh hơn bao nhiêu lần?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Máy A nhanh hơn máy B 1.2 lần",
+      "Máy B nhanh hơn máy A 1.2 lần",
+      "Máy A nhanh hơn máy B 2.0 lần",
+      "Hai máy chạy nhanh bằng nhau"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$t_A = 500\\,IC\\text{ (ps)}$, $t_B = 600\\,IC\\text{ (ps)}$. Vì $t_A &lt; t_B$ nên <strong>máy A nhanh hơn máy B</strong> $\\frac{600}{500} = \\mathbf{1.2\\text{ lần}}$.</p>"
+  },
+  {
+    "id": "c1-1.18b",
+    "chapter": 1,
+    "groupId": "1.2.5",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.18b",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 1.2",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 22,
-    "printedPage": 21,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 21,
+    "printedPage": 20,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số lần nhanh hơn (ví dụ: 1.8):",
-    "acceptedAnswers": [
-      "1.8",
-      "1,8",
-      "1.8 lần"
-    ],
-    "question": "Hai máy tính A và B có cùng kiến trúc tập lệnh (ISA) và cùng chạy 1 chương trình. Máy A có chu kỳ $T_A = 250\\text{ ps}, CPI_A = 2.0$. Máy B có chu kỳ $T_B = 750\\text{ ps}, CPI_B = 1.2$. Hỏi máy tính nào nhanh hơn và nhanh hơn bao nhiêu lần?",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hai máy tính A và B cùng ISA: Máy A có $T_A = 250\\text{ ps}$, $CPI_A = 2.0$; Máy B có $T_B = 750\\text{ ps}$, $CPI_B = 1.2$. Máy nào nhanh hơn và nhanh hơn bao nhiêu lần?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "Máy A nhanh hơn máy B 1.8 lần",
       "Máy B nhanh hơn máy A 1.8 lần",
-      "Máy A nhanh hơn máy B 1.5 lần",
-      "Máy A nhanh hơn máy B 1.2 lần"
+      "Máy A nhanh hơn máy B 3.0 lần",
+      "Máy A nhanh hơn máy B 1.5 lần"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Thời gian chạy trên máy A: $t_A = IC \\times CPI_A \\times T_A = IC \\times 2.0 \\times 250\\text{ ps} = 500 \\times IC\\text{ (ps)}$.</li><li>Thời gian chạy trên máy B: $t_B = IC \\times CPI_B \\times T_B = IC \\times 1.2 \\times 750\\text{ ps} = 900 \\times IC\\text{ (ps)}$.</li><li>Vì $t_A < t_B$ ($500 < 900$) nên <strong>máy A nhanh hơn máy B</strong>.</li><li>Số lần nhanh hơn: $$\\frac{P_A}{P_B} = \\frac{t_B}{t_A} = \\frac{900 \\times IC}{500 \\times IC} = 1.8\\text{ lần}$$</li><li><strong>Đáp số: Máy A nhanh hơn máy B 1.8 lần.</strong></li></ul>"
+    "explanation": "<p>$t_A = 500\\,IC\\text{ (ps)}$, $t_B = 900\\,IC\\text{ (ps)}$. Vậy <strong>máy A nhanh hơn máy B</strong> $\\frac{900}{500} = \\mathbf{1.8\\text{ lần}}$.</p>"
   },
   {
-    "id": "c1-1.24b",
+    "id": "c1-1.18c",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.24b",
-    "source": "Slide Chương 1 - Trang 29",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.18c",
+    "source": "Đề GK 2018.2 - Mã 198 C12 & Mã 199 C4",
     "examTags": [
-      "SLIDE"
+      "GK"
     ],
-    "pdfPage": 23,
-    "printedPage": 22,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 21,
+    "printedPage": 20,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số lần nhanh hơn (ví dụ: 1.2):",
-    "acceptedAnswers": [
-      "1.2",
-      "1,2",
-      "1.2 lần"
-    ],
-    "question": "Hai máy tính A và B có cùng ISA và cùng chạy 1 chương trình. Máy A có $T_A = 250\\text{ ps}, CPI_A = 2.0$. Máy B có $T_B = 500\\text{ ps}, CPI_B = 1.2$. Hỏi máy tính nào nhanh hơn và nhanh hơn bao nhiêu lần?",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hai máy tính A và B cùng ISA: Máy A có $T_A = 300\\text{ ps}$, $CPI_A = 2.0$; Máy B có $T_B = 500\\text{ ps}$, $CPI_B = 1.1$. Kết luận nào đúng?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Máy A nhanh hơn máy B 1.2 lần",
-      "Máy A nhanh hơn máy B 1.8 lần",
-      "Máy B nhanh hơn máy A 1.2 lần",
+      "Máy B nhanh hơn máy A",
+      "Máy A nhanh hơn máy B",
+      "Máy A nhanh hơn máy B 1.5 lần",
       "Hai máy có hiệu năng bằng nhau"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>$t_A = 500 \\times IC\\text{ (ps)}$; $t_B = IC \\times 1.2 \\times 500\\text{ ps} = 600 \\times IC\\text{ (ps)}$.</li><li>Máy A nhanh hơn máy B số lần là: $$\\frac{t_B}{t_A} = \\frac{600}{500} = 1.2\\text{ lần}$$</li><li><strong>Đáp số: Máy A nhanh hơn máy B 1.2 lần.</strong></li></ul>"
+    "explanation": "<p>$t_A = 600\\,IC\\text{ (ps)}$, $t_B = 550\\,IC\\text{ (ps)}$. Vì $t_B &lt; t_A$ nên <strong>Máy B nhanh hơn Máy A</strong> (khoảng $1.09$ lần).</p>"
   },
   {
-    "id": "c1-1.25",
+    "id": "c1-1.19a",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.25",
-    "source": "Đề Cuối kỳ 2023.1 - #2262f & Ôn tập Giữa kỳ - Câu 3",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.19a",
+    "source": "Đề CK 2023.1 - #2262f & Ôn tập 2025.2 Câu 12",
     "examTags": [
-      "CK",
-      "GK"
+      "CK"
     ],
-    "pdfPage": 23,
-    "printedPage": 22,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 22,
+    "printedPage": 21,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số lần nhanh hơn (ví dụ: 4.5):",
+    "fillPrompt": "Nhập số lần:",
     "acceptedAnswers": [
-      "4.5",
-      "4,5",
-      "4.5 lần"
+      "4.5"
     ],
-    "question": "Xét hai bộ xử lý sau đây làm cùng một công việc:<br>• P1 có tần số xung nhịp $4\\text{ GHz}, CPI = 0.9$ và yêu cầu thực hiện $5.0\\text{E}9\\text{ lệnh}$.<br>• P2 có tần số xung nhịp $3\\text{ GHz}, CPI = 0.75$ và yêu cầu thực hiện $1.0\\text{E}9\\text{ lệnh}$.<br>Hỏi P2 nhanh hơn P1 bao nhiêu lần khi làm công việc này? (Lưu ý: $x\\text{E}y = x \\times 10^y$).",
+    "question": "Hai bộ xử lý cùng thực hiện 1 công việc: $P_1$ ($4\\text{ GHz}, CPI=0.9, IC=5.0\\text{E}9$) và $P_2$ ($3\\text{ GHz}, CPI=0.75, IC=1.0\\text{E}9$). Hỏi $P_2$ nhanh hơn $P_1$ bao nhiêu lần?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "4.5 lần",
-      "3.0 lần",
       "1.5 lần",
-      "2.25 lần"
+      "3.0 lần",
+      "5.0 lần"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Thời gian thực thi của P1 ($t_1$):</strong><br>$$t_1 = \\frac{5.0 \\times 10^9 \\times 0.9}{4 \\times 10^9} = \\frac{4.5}{4} = 1.125\\text{ giây}$$</li><li><strong>Thời gian thực thi của P2 ($t_2$):</strong><br>$$t_2 = \\frac{1.0 \\times 10^9 \\times 0.75}{3 \\times 10^9} = \\frac{0.75}{3} = 0.25\\text{ giây}$$</li><li><strong>Tính độ tăng tốc của P2 so với P1:</strong><br>Đề hỏi “P2 nhanh hơn P1 bao nhiêu lần”, ta lấy thời gian $t_1$ chia cho $t_2$:<br>$$\\frac{P_2}{P_1} = \\frac{t_1}{t_2} = \\frac{1.125}{0.25} = 4.5\\text{ lần}$$</li></ol><p><strong>Đáp số: 4.5.</strong></p>"
+    "explanation": "<p>$t_1 = \\frac{5\\times 0.9}{4} = 1.125\\text{ s}$; $t_2 = \\frac{1\\times 0.75}{3} = 0.25\\text{ s}$. Tỷ số tốc độ: $\\frac{P_2}{P_1} = \\frac{t_1}{t_2} = \\frac{1.125}{0.25} = \\mathbf{4.5\\text{ lần}}$.</p>"
   },
   {
-    "id": "c1-1.26",
+    "id": "c1-1.19b",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.26",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.19b",
     "source": "Đề Giữa kỳ 2024.1 - #8cf496",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 24,
-    "printedPage": 23,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 22,
+    "printedPage": 21,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số lần nhanh hơn (ví dụ: 1.5):",
+    "fillPrompt": "Nhập số lần:",
     "acceptedAnswers": [
-      "1.5",
-      "1,5",
-      "1.5 lần"
+      "1.5"
     ],
-    "question": "Xét hai bộ xử lý sau đây làm cùng một công việc:<br>• P1 có tần số xung nhịp $1.5\\text{ GHz}, CPI = 1.8$, và cần thực hiện $3.0\\text{E}9\\text{ lệnh}$.<br>• P2 có tần số xung nhịp $2\\text{ GHz}, CPI = 1.2$, và cần thực hiện $4.0\\text{E}9\\text{ lệnh}$.<br>Hỏi P2 nhanh hơn P1 bao nhiêu lần khi thực hiện công việc này?",
+    "question": "Hai bộ xử lý cùng thực hiện 1 công việc: $P_1$ ($1.5\\text{ GHz}, CPI=1.8, IC=3.0\\text{E}9$) và $P_2$ ($2\\text{ GHz}, CPI=1.2, IC=4.0\\text{E}9$). Hỏi $P_2$ nhanh hơn $P_1$ bao nhiêu lần?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "1.5 lần",
       "2.0 lần",
-      "1.2 lần",
-      "0.67 lần"
+      "1.25 lần",
+      "1.8 lần"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Tính $t_1$:</strong> $$t_1 = \\frac{3.0 \\times 10^9 \\times 1.8}{1.5 \\times 10^9} = \\frac{5.4}{1.5} = 3.6\\text{ giây}$$</li><li><strong>Tính $t_2$:</strong> $$t_2 = \\frac{4.0 \\times 10^9 \\times 1.2}{2 \\times 10^9} = \\frac{4.8}{2} = 2.4\\text{ giây}$$</li><li><strong>So sánh P2 với P1:</strong> $$\\frac{P_2}{P_1} = \\frac{t_1}{t_2} = \\frac{3.6}{2.4} = 1.5\\text{ lần}$$</li></ol><p><strong>Đáp số: 1.5.</strong></p>"
+    "explanation": "<p>$t_1 = \\frac{3\\times 1.8}{1.5} = 3.6\\text{ s}$; $t_2 = \\frac{4\\times 1.2}{2} = 2.4\\text{ s}$. Vậy $\\frac{P_2}{P_1} = \\frac{3.6}{2.4} = \\mathbf{1.5\\text{ lần}}$.</p>"
   },
   {
-    "id": "c1-1.27",
+    "id": "c1-1.20a",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.27",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.20a",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 2a",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 23,
+    "printedPage": 22,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hai bộ xử lý cùng ISA: $P_1$ ($2.5\\text{ GHz}$, CPI 4 lớp A,B,C,D = $2, 1.5, 2, 1$) và $P_2$ ($3\\text{ GHz}$, CPI = $1, 2, 1, 1$). Chương trình có $10\\%$ A, $20\\%$ B, $50\\%$ C, $20\\%$ D. $CPI$ trung bình của $P_1$ và $P_2$ lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "CPI1 = 1.7; CPI2 = 1.2",
+      "CPI1 = 1.625; CPI2 = 1.25",
+      "CPI1 = 1.5; CPI2 = 1.3",
+      "CPI1 = 1.8; CPI2 = 1.1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$CPI_1 = 0.1\\cdot 2 + 0.2\\cdot 1.5 + 0.5\\cdot 2 + 0.2\\cdot 1 = \\mathbf{1.7}$. $CPI_2 = 0.1\\cdot 1 + 0.2\\cdot 2 + 0.5\\cdot 1 + 0.2\\cdot 1 = \\mathbf{1.2}$.</p>"
+  },
+  {
+    "id": "c1-1.20b",
+    "chapter": 1,
+    "groupId": "1.2.5",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.20 (b & c)",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 2b, 2c",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 23,
+    "printedPage": 22,
+    "relatedTheoryId": "1.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Với dữ kiện Bài 1.20 ($IC = 10^6$, $P_1: 2.5\\text{ GHz}, CPI_1=1.7$; $P_2: 3\\text{ GHz}, CPI_2=1.2$), thời gian thực thi và kết luận bộ xử lý nào nhanh hơn là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "t1 = 0.68 ms, t2 = 0.40 ms -> P2 nhanh hơn P1 (1.7 lần)",
+      "t1 = 0.40 ms, t2 = 0.68 ms -> P1 nhanh hơn P2 (1.7 lần)",
+      "t1 = 0.85 ms, t2 = 0.40 ms -> P2 nhanh hơn P1 (2.125 lần)",
+      "t1 = 0.68 ms, t2 = 0.50 ms -> P2 nhanh hơn P1 (1.36 lần)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$n_1 = 1.7\\times 10^6 \\Rightarrow t_1 = \\frac{1.7\\times 10^6}{2.5\\times 10^9} = 0.68\\text{ ms}$; $n_2 = 1.2\\times 10^6 \\Rightarrow t_2 = \\frac{1.2\\times 10^6}{3\\times 10^9} = 0.40\\text{ ms}$. Suy ra $P_2$ nhanh hơn $P_1$ $\\frac{0.68}{0.40} = \\mathbf{1.7\\text{ lần}}$.</p>"
+  },
+  {
+    "id": "c1-1.21",
+    "chapter": 1,
+    "groupId": "1.2.5",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.21",
     "source": "Slide Chương 1 - Trang 26",
     "examTags": [
-      "SLIDE"
+      "LT",
+      "GK"
     ],
     "pdfPage": 24,
     "printedPage": 23,
-    "relatedTheoryId": "1.1.4",
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tần số fB theo GHz (ví dụ: 4):",
+    "fillPrompt": "Nhập tần số fB (GHz):",
     "acceptedAnswers": [
       "4",
       "4 GHz",
-      "4GHz",
-      "4.0"
+      "4GHz"
     ],
-    "question": "Hai máy tính A và B cùng chạy một chương trình:<br>• Máy tính A có tần số $f_A = 2\\text{ GHz}$, thời gian thực hiện $t_A = 10\\text{ s}$.<br>• Máy tính B cần đạt thời gian $t_B = 6\\text{ s}$. Biết số chu kỳ khi chạy trên máy B ($n_B$) bằng $1.2\\text{ lần}$ số chu kỳ khi chạy trên máy A ($n_A$).<br>Hãy xác định tần số xung nhịp cần thiết cho máy B ($f_B$)?",
+    "question": "Hai máy A và B cùng chạy 1 chương trình: Máy A có $f_A = 2\\text{ GHz}, t_A = 10\\text{ s}$. Máy B cần đạt $t_B = 6\\text{ s}$, biết số chu kỳ $n_B = 1.2\\times n_A$. Tần số xung nhịp cần thiết của máy B ($f_B$) là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "4 GHz",
+      "3.33 GHz",
       "2.4 GHz",
-      "3.6 GHz",
-      "5 GHz"
+      "4.8 GHz"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ol><li><strong>Tổng số chu kỳ của máy A:</strong><br>$n_A = t_A \\times f_A = 10\\text{ s} \\times 2 \\times 10^9\\text{ Hz} = 20 \\times 10^9\\text{ chu kỳ}$.</li><li><strong>Tổng số chu kỳ của máy B:</strong><br>$n_B = 1.2 \\times n_A = 1.2 \\times 20 \\times 10^9 = 24 \\times 10^9\\text{ chu kỳ}$.</li><li><strong>Tần số cần thiết cho máy B:</strong><br>$$f_B = \\frac{n_B}{t_B} = \\frac{24 \\times 10^9}{6} = 4 \\times 10^9\\text{ Hz} = 4\\text{ GHz}$$</li></ol><p><strong>Đáp số: fB = 4 GHz.</strong></p>"
+    "explanation": "<p>$n_A = 10\\times 2\\times 10^9 = 20\\times 10^9$ chu kỳ; $n_B = 1.2\\times 20\\times 10^9 = 24\\times 10^9$. Vậy $f_B = \\frac{24\\times 10^9}{6} = \\mathbf{4\\text{ GHz}}$.</p>"
   },
   {
-    "id": "c1-1.28",
+    "id": "c1-1.22a",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.28",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.22a (Đề B2)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B2, Câu 1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 25,
-    "printedPage": 24,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 24,
+    "printedPage": 23,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số lệnh IC_B (ví dụ: 65000):",
+    "fillPrompt": "Nhập số lệnh ICB:",
     "acceptedAnswers": [
       "65000",
-      "65 000",
-      "65000 lệnh"
+      "65 000"
     ],
-    "question": "Máy tính A có $CPI = 1.3$ và $f_A = 600\\text{ MHz}$. Máy tính B có $CPI = 2.5$ và $f_B = 750\\text{ MHz}$. Giả sử có một chương trình chạy được trên cả hai máy tính đó. Khi dịch trên máy A chương trình được $100\\,000\\text{ lệnh}$. Hãy xác định khi dịch trên máy B chương trình được dịch thành bao nhiêu lệnh để cả hai máy có cùng thời gian thực hiện ($t_A = t_B$)?",
+    "question": "Máy A có $CPI_A = 1.3, f_A = 600\\text{ MHz}, IC_A = 100\\,000$ lệnh. Máy B có $CPI_B = 2.5, f_B = 750\\text{ MHz}$. Để $t_A = t_B$ thì số lệnh $IC_B$ trên máy B là bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "65 000 lệnh",
-      "75 000 lệnh",
-      "50 000 lệnh",
-      "80 000 lệnh"
+      "54 000 lệnh",
+      "80 000 lệnh",
+      "75 000 lệnh"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Lập phương trình cân bằng thời gian $t_A = t_B$:</p>$$\\frac{IC_A \\times CPI_A}{f_A} = \\frac{IC_B \\times CPI_B}{f_B} \\iff \\frac{100\\,000 \\times 1.3}{600} = \\frac{IC_B \\times 2.5}{750}$$$$IC_B = \\frac{100\\,000 \\times 1.3 \\times 750}{600 \\times 2.5} = \\frac{97\\,500\\,000}{1500} = 65\\,000\\text{ lệnh}$$<p><strong>Đáp số: 65 000 lệnh.</strong></p>"
+    "explanation": "<p>$$IC_B = \\frac{IC_A \\times CPI_A \\times f_B}{f_A \\times CPI_B} = \\frac{100\\,000 \\times 1.3 \\times 750}{600 \\times 2.5} = \\mathbf{65\\,000\\text{ lệnh}}.$$</p>"
   },
   {
-    "id": "c1-1.29",
+    "id": "c1-1.22b",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.29",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.22b (Đề B3)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 26,
-    "printedPage": 25,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 24,
+    "printedPage": 23,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số lệnh IC_B (ví dụ: 54000):",
+    "fillPrompt": "Nhập số lệnh ICB:",
     "acceptedAnswers": [
       "54000",
-      "54 000",
-      "54000 lệnh"
+      "54 000"
     ],
-    "question": "Máy tính A có $CPI = 1.2$ và $f_A = 500\\text{ MHz}$. Máy tính B có $CPI = 2.4$ và $f_B = 600\\text{ MHz}$. Khi dịch trên máy A chương trình được $90\\,000\\text{ lệnh}$. Hãy xác định khi dịch trên máy B chương trình được dịch thành bao nhiêu lệnh để cả hai máy có cùng thời gian thực hiện?",
+    "question": "Máy A có $CPI_A = 1.2, f_A = 500\\text{ MHz}, IC_A = 90\\,000$ lệnh. Máy B có $CPI_B = 2.4, f_B = 600\\text{ MHz}$. Để $t_A = t_B$ thì số lệnh $IC_B$ là bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "54 000 lệnh",
+      "65 000 lệnh",
       "45 000 lệnh",
-      "60 000 lệnh",
-      "48 000 lệnh"
+      "72 000 lệnh"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Lập phương trình cân bằng thời gian $t_A = t_B$:</p>$$\\frac{90\\,000 \\times 1.2}{500} = \\frac{IC_B \\times 2.4}{600} \\implies IC_B = \\frac{90\\,000 \\times 1.2 \\times 600}{500 \\times 2.4} = \\frac{64\\,800\\,000}{1200} = 54\\,000\\text{ lệnh}$$<p><strong>Đáp số: 54 000 lệnh.</strong></p>"
+    "explanation": "<p>$$IC_B = \\frac{90\\,000 \\times 1.2 \\times 600}{500 \\times 2.4} = \\mathbf{54\\,000\\text{ lệnh}}.$$</p>"
   },
   {
-    "id": "c1-1.30",
+    "id": "c1-1.22c",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.30",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.22c (Đề B6)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B6, Câu 1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 26,
-    "printedPage": 25,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 25,
+    "printedPage": 24,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số lệnh IC_B (ví dụ: 80000):",
+    "fillPrompt": "Nhập số lệnh ICB:",
     "acceptedAnswers": [
       "80000",
-      "80 000",
-      "80000 lệnh"
+      "80 000"
     ],
-    "question": "Máy tính A có $CPI = 1.4$ và $f_A = 750\\text{ MHz}$. Máy tính B có $CPI = 2.8$ và $f_B = 1.5\\text{ GHz}$. Khi dịch trên máy A chương trình được $80\\,000\\text{ lệnh}$. Hãy xác định khi dịch trên máy B chương trình được dịch thành bao nhiêu lệnh để cả hai máy có cùng thời gian thực hiện?",
+    "question": "Máy A có $CPI_A = 1.4, f_A = 750\\text{ MHz}, IC_A = 80\\,000$ lệnh. Máy B có $CPI_B = 2.8, f_B = 1.5\\text{ GHz}$. Để $t_A = t_B$ thì số lệnh $IC_B$ là bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -1486,281 +1744,143 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Chú ý bẫy đơn vị: $f_A = 750\\text{ MHz}$, $f_B = 1.5\\text{ GHz} = 1500\\text{ MHz}$.</li><li>Phương trình: $$\\frac{80\\,000 \\times 1.4}{750} = \\frac{IC_B \\times 2.8}{1500} \\implies IC_B = \\frac{80\\,000 \\times 1.4 \\times 1500}{750 \\times 2.8} = 80\\,000\\text{ lệnh}$$</li><li><strong>Đáp số: 80 000 lệnh.</strong></li></ul>"
+    "explanation": "<p>Đổi $f_B = 1500\\text{ MHz}$: $$IC_B = \\frac{80\\,000 \\times 1.4 \\times 1500}{750 \\times 2.8} = \\mathbf{80\\,000\\text{ lệnh}}.$$</p>"
   },
   {
-    "id": "c1-1.31",
+    "id": "c1-1.22d",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.31",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.22d (Đề B7)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B7, Câu 1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 27,
-    "printedPage": 26,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 25,
+    "printedPage": 24,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số lệnh IC_B (ví dụ: 58333 hoặc 175000/3):",
+    "fillPrompt": "Nhập giá trị gần đúng:",
     "acceptedAnswers": [
       "58333",
       "58 333",
       "175000/3"
     ],
-    "question": "Máy tính A có $CPI = 2.4$ và $f_A = 800\\text{ MHz}$. Máy tính B có $CPI = 3.6$ và $f_B = 1\\text{ GHz}$. Khi dịch trên máy A chương trình được $70\\,000\\text{ lệnh}$. Hãy xác định khi dịch trên máy B thì chương trình được dịch thành bao nhiêu lệnh để cả hai máy có cùng thời gian thực hiện?",
+    "question": "Máy A có $CPI_A = 2.4, f_A = 800\\text{ MHz}, IC_A = 70\\,000$ lệnh. Máy B có $CPI_B = 3.6, f_B = 1\\text{ GHz}$. Để $t_A = t_B$ thì số lệnh $IC_B$ xấp xỉ bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "≈ 58 333 lệnh (175 000 / 3)",
-      "≈ 70 000 lệnh",
-      "≈ 46 667 lệnh",
-      "≈ 52 500 lệnh"
+      "58 333 lệnh (175000/3)",
+      "50 000 lệnh",
+      "64 000 lệnh",
+      "46 667 lệnh"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đổi về cùng đơn vị MHz: $f_A = 800\\text{ MHz}$; $f_B = 1\\text{ GHz} = 1000\\text{ MHz}$.</li><li>Lập phương trình: $$\\frac{70\\,000 \\times 2.4}{800} = \\frac{IC_B \\times 3.6}{1000} \\implies IC_B = \\frac{70\\,000 \\times 2.4 \\times 1000}{800 \\times 3.6} = \\frac{175\\,000}{3} \\approx 58\\,333\\text{ lệnh}$$</li><li><strong>Đáp số: 175 000 / 3 ≈ 58 333 lệnh.</strong></li></ul>"
+    "explanation": "<p>Đổi $f_B = 1000\\text{ MHz}$: $$IC_B = \\frac{70\\,000 \\times 2.4 \\times 1000}{800 \\times 3.6} = \\frac{175\\,000}{3} \\approx \\mathbf{58\\,333\\text{ lệnh}}.$$</p>"
   },
   {
-    "id": "c1-1.32a",
+    "id": "c1-1.23a",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.32 (Ý 1.1)",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.23 (Ý 1.1)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.1",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 27,
-    "printedPage": 26,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 25,
+    "printedPage": 24,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Giả sử có 3 bộ xử lý P1, P2, P3 có cùng kiến trúc tập lệnh (ISA):<br>• P1: $f_0 = 2\\text{ GHz}, CPI = 1.5$<br>• P2: $f_0 = 1.5\\text{ GHz}, CPI = 1.0$<br>• P3: $f_0 = 3\\text{ GHz}, CPI = 2.5$<br><strong>Bộ xử lý nào có hiệu suất cao nhất?</strong>",
+    "question": "Ba bộ xử lý cùng ISA: $P_1$ ($2\\text{ GHz}, CPI=1.5$); $P_2$ ($1.5\\text{ GHz}, CPI=1.0$); $P_3$ ($3\\text{ GHz}, CPI=2.5$). Bộ xử lý nào có hiệu suất cao nhất?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "P2 (1500 MIPS)",
-      "P1 (1333 MIPS)",
-      "P3 (1200 MIPS)",
-      "Cả ba bộ xử lý có hiệu suất như nhau"
+      "P2 (đạt 1.50 × 10^9 lệnh/giây)",
+      "P1 (đạt 1.33 × 10^9 lệnh/giây)",
+      "P3 (vì có xung nhịp cao nhất 3 GHz)",
+      "Cả 3 bộ xử lý có hiệu suất ngang nhau"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Do cùng kiến trúc tập lệnh (ISA), ta tính tốc độ thực hiện lệnh $\\dfrac{f_0}{CPI}$ của từng bộ xử lý:</p><ul><li>Với P1: $\\dfrac{2\\text{ GHz}}{1.5} \\approx 1.33 \\times 10^9\\text{ lệnh/s}$ ($1333\\text{ MIPS}$).</li><li>Với P2: $\\dfrac{1.5\\text{ GHz}}{1.0} = 1.50 \\times 10^9\\text{ lệnh/s}$ ($1500\\text{ MIPS}$).</li><li>Với P3: $\\dfrac{3\\text{ GHz}}{2.5} = 1.20 \\times 10^9\\text{ lệnh/s}$ ($1200\\text{ MIPS}$).</li></ul><p><strong>Vậy bộ xử lý P2 có hiệu suất cao nhất (1500 MIPS).</strong></p>"
+    "explanation": "<p>So sánh $f_0/CPI$: $P_1 = \\frac{2}{1.5} \\approx 1.33\\times 10^9$; $P_2 = \\frac{1.5}{1.0} = 1.50\\times 10^9$; $P_3 = \\frac{3}{2.5} = 1.20\\times 10^9$ lệnh/s $\\Rightarrow$ <strong>$P_2$ cao nhất</strong>.</p>"
   },
   {
-    "id": "c1-1.32b",
+    "id": "c1-1.23b",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.32 (Ý 1.2)",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.23 (Ý 1.2)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.2",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 28,
-    "printedPage": 27,
-    "relatedTheoryId": "1.1.4",
+    "pdfPage": 26,
+    "printedPage": 25,
+    "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Với dữ kiện Bài 1.32 (P1: 2GHz, CPI 1.5; P2: 1.5GHz, CPI 1.0; P3: 3GHz, CPI 2.5), mỗi bộ xử lý thực thi một chương trình trong $10\\text{ s}$. <strong>Tính số chu kỳ ($n$) và số lệnh ($IC$) của mỗi bộ xử lý:</strong>",
+    "question": "Với bảng số liệu Bài 1.23 ($P_1: 2\\text{ GHz}/1.5$; $P_2: 1.5\\text{ GHz}/1.0$; $P_3: 3\\text{ GHz}/2.5$), nếu mỗi bộ xử lý thực thi 1 chương trình trong $10\\text{ s}$, số lệnh $(IC_1, IC_2, IC_3)$ lần lượt là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "P1: n = 20×10^9, IC ≈ 13.33×10^9; P2: n = 15×10^9, IC = 15×10^9; P3: n = 30×10^9, IC = 12×10^9",
-      "P1: n = 20×10^9, IC = 30×10^9; P2: n = 15×10^9, IC = 15×10^9; P3: n = 30×10^9, IC = 75×10^9",
-      "P1: n = 10×10^9, IC = 6.67×10^9; P2: n = 15×10^9, IC = 15×10^9; P3: n = 20×10^9, IC = 8×10^9",
-      "P1: n = 2×10^9, IC = 1.33×10^9; P2: n = 1.5×10^9, IC = 1.5×10^9; P3: n = 3×10^9, IC = 1.2×10^9"
+      "(1.33×10^10, 1.50×10^10, 1.20×10^10)",
+      "(2.0×10^10, 1.50×10^10, 3.0×10^10)",
+      "(1.50×10^10, 1.33×10^10, 1.20×10^10)",
+      "(3.0×10^10, 1.50×10^10, 7.5×10^10)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Công thức: $n = t \\times f_0$; $IC = \\dfrac{n}{CPI}$.</p><ul><li><strong>P1:</strong> $n_1 = 10 \\times 2 \\times 10^9 = 20 \\times 10^9\\text{ chu kỳ}$; $IC_1 = \\dfrac{20 \\times 10^9}{1.5} \\approx 13.33 \\times 10^9\\text{ lệnh}$.</li><li><strong>P2:</strong> $n_2 = 10 \\times 1.5 \\times 10^9 = 15 \\times 10^9\\text{ chu kỳ}$; $IC_2 = \\dfrac{15 \\times 10^9}{1.0} = 15 \\times 10^9\\text{ lệnh}$.</li><li><strong>P3:</strong> $n_3 = 10 \\times 3 \\times 10^9 = 30 \\times 10^9\\text{ chu kỳ}$; $IC_3 = \\dfrac{30 \\times 10^9}{2.5} = 12 \\times 10^9\\text{ lệnh}$.</li></ul><p><strong>Đáp án đúng: A.</strong></p>"
+    "explanation": "<p>Với $n = t\\cdot f_0$ và $IC = n/CPI$: $IC_1 = \\frac{20\\times 10^9}{1.5} \\approx 1.33\\times 10^{10}$; $IC_2 = \\frac{15\\times 10^9}{1.0} = 1.50\\times 10^{10}$; $IC_3 = \\frac{30\\times 10^9}{2.5} = 1.20\\times 10^{10}$.</p>"
   },
   {
-    "id": "c1-1.32c",
+    "id": "c1-1.23c",
     "chapter": 1,
     "groupId": "1.2.5",
-    "groupTitle": "Nhóm 5: So sánh hiệu năng và thời gian giữa các bộ xử lý",
-    "exerciseCode": "Bài tập 1.32 (Ý 1.3)",
+    "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
+    "exerciseCode": "Bài tập 1.23 (Ý 1.3)",
     "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.3",
     "examTags": [
       "CK"
     ],
-    "pdfPage": 28,
-    "printedPage": 27,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Với dữ kiện Bài 1.32 (P1: 2GHz, P2: 1.5GHz, P3: 3GHz), người ta muốn giảm thời gian thực thi đi 30%, nhưng điều này lại làm tăng CPI lên 20%. <strong>Tính tần số xung nhịp mới của mỗi bộ xử lý lúc này:</strong>",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "P1: 3.43 GHz (24/7), P2: 2.57 GHz (18/7), P3: 5.14 GHz (36/7)",
-      "P1: 2.80 GHz, P2: 2.10 GHz, P3: 4.20 GHz",
-      "P1: 2.40 GHz, P2: 1.80 GHz, P3: 3.60 GHz",
-      "P1: 4.00 GHz, P2: 3.00 GHz, P3: 6.00 GHz"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li>Giảm thời gian $30\\% \\implies t_{\\text{mới}} = 0.7 \\times t_{\\text{cũ}}$.</li><li>Tăng CPI $20\\% \\implies CPI_{\\text{mới}} = 1.2 \\times CPI_{\\text{cũ}}$.</li><li>Vì số lệnh $IC$ không đổi:<br>$$f_{\\text{mới}} = \\frac{IC \\times CPI_{\\text{mới}}}{t_{\\text{mới}}} = \\frac{1.2}{0.7} \\times f_{\\text{cũ}} = \\frac{12}{7} \\times f_{\\text{cũ}}$$</li><li>Thay số:<br>• $f_{1\\text{ mới}} = \\dfrac{12}{7} \\times 2 = \\dfrac{24}{7} \\approx 3.43\\text{ GHz}$<br>• $f_{2\\text{ mới}} = \\dfrac{12}{7} \\times 1.5 = \\dfrac{18}{7} \\approx 2.57\\text{ GHz}$<br>• $f_{3\\text{ mới}} = \\dfrac{12}{7} \\times 3 = \\dfrac{36}{7} \\approx 5.14\\text{ GHz}$</li></ol><p><strong>Đáp án đúng: A.</strong></p>"
-  },
-  {
-    "id": "c1-1.33",
-    "chapter": 1,
-    "groupId": "1.2.6",
-    "groupTitle": "Nhóm 6: CPI hiệu dụng và Phân loại kiến trúc máy tính",
-    "exerciseCode": "Bài tập 1.33",
-    "source": "Đề Cuối kỳ 2023.1 - #c7a320 & Ôn tập Cuối kỳ P2 - Câu 6",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 29,
-    "printedPage": 28,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập CPI hiệu dụng (ví dụ: 2.5):",
-    "acceptedAnswers": [
-      "2.5",
-      "2,5"
-    ],
-    "question": "Cho một CPU RISC-V có $CPI$ cơ bản (base CPI) bằng $1$. Bộ nhớ đệm (Cache) của nó có thời gian phạt khi bỏ lỡ (miss penalty) là $100\\text{ chu kỳ}$. Khi thực thi một chương trình, tỷ lệ bỏ lỡ lệnh (instruction miss rate) và tỷ lệ bỏ lỡ dữ liệu (data miss rate) lần lượt là $1\\%$ và $10\\%$. Các lệnh truy cập bộ nhớ (load/store) chiếm $5\\%$ tổng số lệnh trong chương trình này. $CPI$ hiệu dụng (effective CPI) khi thực thi chương trình này là bao nhiêu?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "2.5",
-      "1.1",
-      "2.0",
-      "3.0"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li><strong>Hiểu bản chất:</strong> Mọi lệnh ($100\\%$) đều phải đọc từ I-cache, nhưng chỉ các lệnh Load/Store ($5\\%$) mới truy cập D-cache.</li><li><strong>Công thức tính CPI hiệu dụng:</strong><br>$$CPI_{\\text{hiệu dụng}} = CPI_{\\text{cơ bản}} + \\text{Phạt trượt lệnh} + \\text{Phạt trượt dữ liệu}$$</li><li>Trong đó:<br>• Phạt trượt lệnh: $100\\% \\times 1\\% \\times 100 = 0.01 \\times 100 = 1.0\\text{ chu kỳ}$.<br>• Phạt trượt dữ liệu: $5\\% \\times 10\\% \\times 100 = 0.05 \\times 0.10 \\times 100 = 0.5\\text{ chu kỳ}$.</li><li>$$CPI_{\\text{hiệu dụng}} = 1 + 1.0 + 0.5 = 2.5$$</li></ol><p><strong>Đáp số: 2.5.</strong></p>"
-  },
-  {
-    "id": "c1-1.34",
-    "chapter": 1,
-    "groupId": "1.2.6",
-    "groupTitle": "Nhóm 6: CPI hiệu dụng và Phân loại kiến trúc máy tính",
-    "exerciseCode": "Bài tập 1.34",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 58",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 30,
-    "printedPage": 29,
-    "relatedTheoryId": "1.1.4",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập tỷ số Actual CPI / Base CPI (ví dụ: 2.72):",
-    "acceptedAnswers": [
-      "2.72",
-      "2,72"
-    ],
-    "question": "Cho biết:<br>• Tỷ lệ trượt Cache lệnh (I-cache miss rate) = 2%<br>• Tỷ lệ trượt Cache dữ liệu (D-cache miss rate) = 4%<br>• Thời gian phạt khi trượt (Miss penalty) = 100 chu kỳ<br>• $CPI$ cơ bản khi Cache lý tưởng (Base CPI) = 2<br>• Các lệnh Load và Store chiếm 36% tổng số lệnh.<br>Hãy tính tỷ số: $\\text{Actual CPI} / \\text{Base CPI} = \\text{?}$",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "2.72",
-      "1.72",
-      "5.44",
-      "3.44"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li><strong>Tính số chu kỳ phạt trên mỗi lệnh:</strong><br>• Phạt trượt lệnh: $1 \\times 2\\% \\times 100 = 0.02 \\times 100 = 2.0\\text{ chu kỳ}$.<br>• Phạt trượt dữ liệu: $36\\% \\times 4\\% \\times 100 = 0.36 \\times 0.04 \\times 100 = 1.44\\text{ chu kỳ}$.</li><li><strong>Tính CPI thực tế (Actual CPI):</strong><br>$$\\text{Actual CPI} = \\text{Base CPI} + 2.0 + 1.44 = 2 + 3.44 = 5.44$$</li><li><strong>Tính tỷ số:</strong><br>$$\\frac{\\text{Actual CPI}}{\\text{Base CPI}} = \\frac{5.44}{2} = 2.72$$</li></ol><p><strong>Đáp số: 2.72.</strong></p>"
-  },
-  {
-    "id": "c1-1.35a",
-    "chapter": 1,
-    "groupId": "1.2.6",
-    "groupTitle": "Nhóm 6: CPI hiệu dụng và Phân loại kiến trúc máy tính",
-    "exerciseCode": "Bài tập 1.35a",
-    "source": "Đề Cuối kỳ 2020.2, 2022.2 - #c0ca61 & Ôn tập Cuối kỳ P2 - Câu 2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 31,
-    "printedPage": 30,
+    "pdfPage": 26,
+    "printedPage": 25,
     "relatedTheoryId": "1.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Máy tính với 1 bộ xử lý đa lõi (multicore processor) thuộc kiến trúc nào theo phân loại của Flynn?",
+    "question": "Với bảng số liệu Bài 1.23, người ta muốn giảm thời gian thực thi đi $30\\%$ ($t_{\\text{mới}} = 0.7 t_{\\text{cũ}}$) nhưng làm $CPI$ tăng lên $20\\%$ ($CPI_{\\text{mới}} = 1.2 CPI_{\\text{cũ}}$). Tần số xung nhịp mới của $(P_1, P_2, P_3)$ lần lượt xấp xỉ là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "MIMD với bộ nhớ dùng chung",
-      "SISD",
-      "SIMD",
-      "MIMD với bộ nhớ phân tán"
+      "(3.43 GHz, 2.57 GHz, 5.14 GHz)",
+      "(2.80 GHz, 2.10 GHz, 4.20 GHz)",
+      "(3.00 GHz, 2.25 GHz, 4.50 GHz)",
+      "(2.40 GHz, 1.80 GHz, 3.60 GHz)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Một bộ xử lý đa lõi (multicore) có nhiều nhân CPU cùng nằm trên 1 chip và cùng truy cập chung một bộ nhớ chính (RAM), nên thuộc loại <strong>MIMD với bộ nhớ dùng chung (Shared Memory MIMD)</strong>.</li><li><strong>Đáp án đúng: MIMD với bộ nhớ dùng chung.</strong></li></ul>"
-  },
-  {
-    "id": "c1-1.35b",
-    "chapter": 1,
-    "groupId": "1.2.6",
-    "groupTitle": "Nhóm 6: CPI hiệu dụng và Phân loại kiến trúc máy tính",
-    "exerciseCode": "Bài tập 1.35b",
-    "source": "Đề Cuối kỳ 2020.2 & Ôn tập Cuối kỳ P2 - Câu 35",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 31,
-    "printedPage": 30,
-    "relatedTheoryId": "1.1.3",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Kiến trúc nào dưới đây chưa tồn tại máy tính thương mại trong thực tế theo phân loại của Flynn?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "MISD (Multiple Instruction, Single Data)",
-      "SIMD",
-      "SISD",
-      "MIMD"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li><strong>MISD (Multiple Instruction, Single Data):</strong> Nhiều dòng lệnh tác động lên 1 dòng dữ liệu &rarr; Cho đến nay chưa tồn tại hệ thống thương mại nào được xây dựng theo mô hình này.</li><li><strong>Đáp án đúng: MISD.</strong></li></ul>"
+    "explanation": "<p>Vì $f_{\\text{mới}} = \\frac{1.2}{0.7} f_{\\text{cũ}} = \\frac{12}{7} f_{\\text{cũ}}$: $f_1' = \\frac{24}{7} \\approx 3.43\\text{ GHz}$; $f_2' = \\frac{18}{7} \\approx 2.57\\text{ GHz}$; $f_3' = \\frac{36}{7} \\approx 5.14\\text{ GHz}$.</p>"
   },
   {
     "id": "lt-2.1",
@@ -1768,12 +1888,12 @@
     "groupId": "2.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 2",
     "exerciseCode": "Lý thuyết 2.1",
-    "source": "Lý thuyết mục 2.1.1 - Cấu tạo CPU",
+    "source": "Mục 2.1.1 - Cấu trúc CPU",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 32,
-    "printedPage": 31,
+    "pdfPage": 28,
+    "printedPage": 27,
     "relatedTheoryId": "2.1.1",
     "questionType": "single",
     "canFillBlank": false,
@@ -1784,16 +1904,16 @@
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Đơn vị điều khiển (CU), Đơn vị số học logic (ALU), Tập thanh ghi (Register File)",
-      "Bộ nhớ chính (RAM), Bộ nhớ Cache, Ổ đĩa cứng (SSD/HDD)",
-      "Bộ đếm chương trình (PC), Bộ giải mã (Decoder), Bộ cộng (Adder)",
-      "Bus địa chỉ, Bus dữ liệu, Bus điều khiển"
+      "Đơn vị điều khiển (CU), Đơn vị số học và logic (ALU), Tập thanh ghi (RF)",
+      "Bộ nhớ chính (RAM), Bộ nhớ đệm (Cache), Ổ đĩa cứng (SSD)",
+      "Bus địa chỉ, Bus dữ liệu, Bus điều khiển",
+      "Cổng vào-ra, Bộ điều khiển DMA (DMAC), Thiết bị ngoại vi"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 2.1.1 trong PDF, bên trong CPU gồm 3 bộ phận cốt lõi:</p><ol><li><strong>CU (Control Unit):</strong> Giải mã lệnh và phát tín hiệu điều khiển.</li><li><strong>ALU (Arithmetic & Logic Unit):</strong> Thực hiện phép toán số học và logic.</li><li><strong>Register File (RF):</strong> Tập các thanh ghi tốc độ nhanh nhất lưu tạm dữ liệu phục vụ CPU.</li></ol>"
+    "explanation": "<p>Theo mục 2.1.1 (Trang 27, KTMT_GK.pdf), CPU gồm 3 bộ phận: <strong>CU</strong>, <strong>ALU</strong> và <strong>Tập thanh ghi (RF)</strong>.</p>"
   },
   {
     "id": "lt-2.2",
@@ -1801,32 +1921,32 @@
     "groupId": "2.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 2",
     "exerciseCode": "Lý thuyết 2.2",
-    "source": "Lý thuyết mục 2.1.2 - Chu trình lệnh",
+    "source": "Mục 2.1.2 - Chu trình lệnh",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 33,
-    "printedPage": 32,
+    "pdfPage": 30,
+    "printedPage": 29,
     "relatedTheoryId": "2.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Thứ tự 3 giai đoạn cơ bản của một Chu trình lệnh (Instruction Cycle) trong CPU là gì?",
+    "question": "Thứ tự 3 bước cơ bản trong một Chu trình thực hiện lệnh (Instruction Cycle) là gì?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Tìm nạp lệnh (Fetch) &rarr; Giải mã lệnh (Decode) &rarr; Thực hiện lệnh (Execute)",
-      "Giải mã lệnh (Decode) &rarr; Tìm nạp lệnh (Fetch) &rarr; Thực hiện lệnh (Execute)",
-      "Tìm nạp lệnh (Fetch) &rarr; Thực hiện lệnh (Execute) &rarr; Ghi kết quả (Writeback)",
-      "Đọc bộ nhớ &rarr; Tính toán trên ALU &rarr; Ghi vào thanh ghi"
+      "Tìm nạp lệnh (Fetch) -> Giải mã lệnh (Decode) -> Thực hiện lệnh (Execute)",
+      "Thực hiện lệnh (Execute) -> Giải mã lệnh (Decode) -> Tìm nạp lệnh (Fetch)",
+      "Ngắt (Interrupt) -> Đọc RAM -> Ghi ra ổ cứng",
+      "Giải mã lệnh (Decode) -> Tìm nạp lệnh (Fetch) -> Lưu ngăn xếp"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 2.1.2 trong PDF, Chu trình lệnh gồm 3 giai đoạn theo đúng thứ tự:</p><ol><li><strong>Fetch (Tìm nạp):</strong> Lấy lệnh từ RAM vào thanh ghi IR (thanh ghi PC trỏ lệnh kế tiếp).</li><li><strong>Decode (Giải mã):</strong> CU phân tích mã lệnh trong IR để xác định thao tác.</li><li><strong>Execute (Thực hiện):</strong> Phát tín hiệu trao đổi dữ liệu, tính toán ALU hoặc rẽ nhánh PC.</li></ol>"
+    "explanation": "<p>CPU lặp đi lặp lại: Tìm nạp lệnh (từ <code>PC</code> vào <code>IR</code>, tăng <code>PC</code>) $\\rightarrow$ Giải mã lệnh trong <code>IR</code> $\\rightarrow$ Thực hiện lệnh.</p>"
   },
   {
     "id": "lt-2.3",
@@ -1834,32 +1954,32 @@
     "groupId": "2.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 2",
     "exerciseCode": "Lý thuyết 2.3",
-    "source": "Lý thuyết mục 2.1.2 - Hoạt động Ngắt",
+    "source": "Mục 2.1.2 - Quy trình xử lý Ngắt",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 34,
-    "printedPage": 33,
+    "pdfPage": 31,
+    "printedPage": 30,
     "relatedTheoryId": "2.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Khi CPU nhận được tín hiệu yêu cầu ngắt từ thiết bị vào-ra, thao tác đầu tiên CPU cần thực hiện trước khi nạp địa chỉ chương trình xử lý ngắt vào PC là gì?",
+    "question": "Khi CPU kiểm tra thấy có yêu cầu ngắt hợp lệ sau khi hoàn thành một lệnh máy, bước hành động ngay sau khi tạm dừng chương trình là gì?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Tạm dừng chương trình hiện tại và cất ngữ cảnh (lưu PC và thanh ghi ra ngăn xếp)",
-      "Xóa sạch nội dung bộ nhớ RAM để giải phóng tài nguyên",
-      "Khởi động lại toàn bộ hệ thống máy tính",
-      "Gửi tín hiệu từ chối ngắt về cho thiết bị ngoại vi"
+      "Cất ngữ cảnh (lưu địa chỉ trở về trên PC và thông tin liên quan vào ngăn xếp) rồi trỏ PC đến chương trình con xử lý ngắt",
+      "Xóa toàn bộ bộ nhớ chính để nhường chỗ cho chương trình xử lý ngắt",
+      "Tắt nguồn hệ thống và khởi động lại ngay bằng tín hiệu Reset",
+      "Chuyển giao hoàn toàn CPU cho thiết bị ngoại vi điều khiển vĩnh viễn"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo Quy trình 5 bước xử lý ngắt (mục 2.1.2 trong PDF):</p><ol><li>Kiểm tra tín hiệu ngắt ở cuối chu trình lệnh.</li><li><strong>Tạm dừng chương trình hiện tại và cất ngữ cảnh (lưu giá trị PC và các thanh ghi cần thiết ra ngăn xếp Stack)</strong> để sau này quay lại làm tiếp.</li><li>Nạp địa chỉ bắt đầu của Interrupt Handler vào PC.</li><li>Thực thi chương trình con xử lý ngắt.</li><li>Khôi phục ngữ cảnh từ Stack và quay về tiếp tục chương trình cũ.</li></ol>"
+    "explanation": "<p>Quy trình 5 bước (Trang 30): Kiểm tra ngắt $\\rightarrow$ Tạm dừng $\\rightarrow$ <strong>Cất ngữ cảnh vào ngăn xếp</strong> $\\rightarrow$ Trỏ <code>PC</code> tới Interrupt Handler $\\rightarrow$ Chạy xử lý ngắt và khôi phục ngữ cảnh.</p>"
   },
   {
     "id": "lt-2.4",
@@ -1867,32 +1987,32 @@
     "groupId": "2.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 2",
     "exerciseCode": "Lý thuyết 2.4",
-    "source": "Lý thuyết mục 2.1.3 - Hệ thống Bus",
+    "source": "Mục 2.1.3 - Tín hiệu điều khiển Bus",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 35,
-    "printedPage": 34,
+    "pdfPage": 33,
+    "printedPage": 32,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Tín hiệu điều khiển nào trên Bus điều khiển (Control Bus) do bộ điều khiển DMA phát ra để xin CPU trao quyền sử dụng Bus?",
+    "question": "Trong nhóm tín hiệu điều khiển xin nhượng bus phục vụ DMA, hai tín hiệu <code>BRQ</code> và <code>BGT</code> có ý nghĩa lần lượt là gì?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "BRQ (Bus Request)",
-      "BGT (Bus Grant)",
-      "INTR (Interrupt Request)",
-      "MEMW (Memory Write)"
+      "BRQ: Mô-đun vào-ra (DMAC) yêu cầu xin quyền bus; BGT: CPU chấp nhận chuyển nhượng quyền sử dụng bus",
+      "BRQ: CPU yêu cầu đọc bộ nhớ; BGT: Bộ nhớ trả dữ liệu về CPU",
+      "BRQ: Ngắt không thể che; BGT: Khởi động lại hệ thống (Reset)",
+      "BRQ: Đọc cổng I/O; BGT: Ghi cổng I/O"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 2.1.3 trong PDF về Bus điều khiển:</p><ul><li><strong>BRQ (Bus Request):</strong> DMAC phát tín hiệu <em>xin nhượng bus</em> gửi tới CPU.</li><li><strong>BGT (Bus Grant):</strong> CPU phát tín hiệu <em>chấp nhận nhượng bus</em> cho DMAC.</li><li><strong>INTR:</strong> Yêu cầu ngắt; <strong>MEMW:</strong> Ghi bộ nhớ.</li></ul>"
+    "explanation": "<p><strong>BRQ (Bus Request)</strong> do DMAC gửi để xin bus; <strong>BGT (Bus Grant)</strong> do CPU phát ra để chấp nhận nhượng quyền sử dụng bus.</p>"
   },
   {
     "id": "lt-2.5",
@@ -1900,32 +2020,32 @@
     "groupId": "2.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 2",
     "exerciseCode": "Lý thuyết 2.5",
-    "source": "Lý thuyết mục 2.1.3 - Liên kết điểm-điểm",
+    "source": "Mục 2.1.3 - Liên kết điểm-điểm",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 36,
-    "printedPage": 35,
+    "pdfPage": 33,
+    "printedPage": 32,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Chuẩn kết nối điểm-điểm tốc độ cao nào hiện nay được dùng để kết nối trực tiếp Card đồ họa rời (GPU), ổ cứng SSD NVMe và Card mạng với bo mạch chủ?",
+    "question": "Chuẩn liên kết điểm-điểm nào dùng kết nối trực tiếp từng cặp giữa các lõi xử lý (Cores) và Chipset mà không cần bộ phân xử bus?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "PCI Express (PCIe)",
       "QPI (Quick Path Interconnect)",
-      "ISA Bus",
-      "SATA I"
+      "SATA (Serial ATA)",
+      "USB (Universal Serial Bus)",
+      "Shared PCI Bus truyền thống"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo mục 2.1.3 trong PDF:</p><ul><li><strong>PCI Express (PCIe):</strong> Liên kết điểm-điểm tốc độ cao thay thế PCI bus cũ để nối card đồ họa rời, SSD NVMe, card mạng Gigabit.</li><li><strong>QPI (Quick Path Interconnect):</strong> Kết nối trực tiếp giữa các nhân CPU, chip vi xử lý và Chipset.</li></ul>"
+    "explanation": "<p><strong>QPI (Quick Path Interconnect)</strong> kết nối trực tiếp từng cặp giữa các lõi xử lý và Chipset, truyền dữ liệu dạng gói theo kiến trúc phân lớp.</p>"
   },
   {
     "id": "lt-2.6",
@@ -1933,188 +2053,352 @@
     "groupId": "2.1",
     "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 2",
     "exerciseCode": "Lý thuyết 2.6",
-    "source": "Lý thuyết mục 2.1.3 - Không gian địa chỉ",
+    "source": "Mục 2.1.3 - Bus địa chỉ",
     "examTags": [
       "LT"
     ],
-    "pdfPage": 35,
-    "printedPage": 34,
+    "pdfPage": 32,
+    "printedPage": 31,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Nếu Bus địa chỉ của máy tính có độ rộng 32 bit và máy tính quản lý bộ nhớ theo từng byte, thì dung lượng bộ nhớ tối đa mà hệ thống có thể đánh địa chỉ trực tiếp là bao nhiêu?",
+    "question": "Nếu Bus địa chỉ có độ rộng $N = 32$ bit và bộ nhớ đánh địa chỉ theo byte, không gian địa chỉ tối đa mà CPU quản lý được là bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
       "4 GiB (2^32 byte)",
       "2 GiB (2^31 byte)",
-      "8 GiB (2^33 byte)",
-      "16 GiB (2^34 byte)"
+      "32 GiB",
+      "4 MiB (2^22 byte)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>Theo công thức Không gian địa chỉ (mục 2.1.3):</p><p>$$2^N\\text{ byte} = 2^{32}\\text{ byte} = 2^2 \\times 2^{30}\\text{ byte} = 4\\text{ GiB}$$</p><p><strong>Đáp án đúng: 4 GiB (2^32 byte).</strong></p>"
+    "explanation": "<p>Không gian địa chỉ tối đa $= 2^{32}\\text{ byte} = 2^2 \\times 2^{30}\\text{ byte} = \\mathbf{4\\text{ GiB}}$.</p>"
   },
   {
-    "id": "c2-2.1",
+    "id": "c2-2.1a",
     "chapter": 2,
     "groupId": "2.2.1",
-    "groupTitle": "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ",
-    "exerciseCode": "Bài tập 2.1",
+    "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
+    "exerciseCode": "Bài tập 2.1a",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 5",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 35,
+    "printedPage": 34,
+    "relatedTheoryId": "2.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đơn vị nào bên trong CPU chịu trách nhiệm lưu giữ các thông tin tạm thời phục vụ cho hoạt động của CPU?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Tập thanh ghi (RF)",
+      "Cache",
+      "Bộ nhớ chính",
+      "Biến nhớ"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bên trong CPU gồm CU, ALU và Tập thanh ghi (RF); trong đó <strong>Tập thanh ghi (RF)</strong> lưu thông tin tạm thời phục vụ tức thời cho CPU.</p>"
+  },
+  {
+    "id": "c2-2.1b",
+    "chapter": 2,
+    "groupId": "2.2.1",
+    "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
+    "exerciseCode": "Bài tập 2.1b",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 6",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 35,
+    "printedPage": 34,
+    "relatedTheoryId": "2.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Loại bộ nhớ nào sau đây <strong>không</strong> thuộc về bộ nhớ trong?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Bộ nhớ ổ cứng HDD",
+      "Bộ nhớ ROM",
+      "Bộ nhớ chính (RAM)",
+      "Bộ nhớ Cache"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bộ nhớ trong gồm Bộ nhớ chính (RAM, ROM) và Bộ nhớ đệm (Cache). Ổ đĩa cứng <strong>HDD</strong> là bộ nhớ ngoài (thiết bị lưu trữ).</p>"
+  },
+  {
+    "id": "c2-2.1c",
+    "chapter": 2,
+    "groupId": "2.2.1",
+    "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
+    "exerciseCode": "Bài tập 2.1c",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 13",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 35,
+    "printedPage": 34,
+    "relatedTheoryId": "2.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Ngăn nhớ nằm ở chỗ nào trong hệ thống máy tính?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Bộ nhớ chính",
+      "CPU",
+      "Thiết bị ngoại vi",
+      "Module vào-ra"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bộ nhớ chính được tổ chức thành các <strong>ngăn nhớ</strong> được đánh địa chỉ (thường theo từng byte).</p>"
+  },
+  {
+    "id": "c2-2.2a",
+    "chapter": 2,
+    "groupId": "2.2.1",
+    "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
+    "exerciseCode": "Bài tập 2.2a",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0009, Câu 11",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 37,
-    "printedPage": 36,
+    "pdfPage": 35,
+    "printedPage": 34,
     "relatedTheoryId": "2.1.1",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập 2 từ còn thiếu cách nhau dấu phẩy (ví dụ: nội dung, địa chỉ):",
+    "fillPrompt": "Nhập 2 từ cách nhau bởi dấu phẩy:",
     "acceptedAnswers": [
       "nội dung, địa chỉ",
-      "giá trị, địa chỉ",
-      "nội dung, địa chỉ vật lý",
-      "giá trị, địa chỉ vật lý"
+      "nội dung; địa chỉ",
+      "giá trị, địa chỉ"
     ],
-    "question": "Điền từ còn thiếu vào 2 ô trống trong phát biểu sau: “Mỗi ngăn nhớ trong máy tính có .................... thay đổi được, nhưng .................... của nó luôn cố định.”",
+    "question": "Điền cặp từ thích hợp vào phát biểu: <em>“Mỗi ngăn nhớ trong máy tính có ……… thay đổi được, nhưng ……… của nó luôn cố định.”</em>",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "nội dung (giá trị) ; địa chỉ (địa chỉ vật lý)",
-      "địa chỉ ; nội dung",
-      "kích thước ; vị trí",
-      "tên gọi ; dung lượng"
+      "Nội dung ; Địa chỉ",
+      "Địa chỉ ; Nội dung",
+      "Dung lượng ; Tốc độ",
+      "Thanh ghi ; Con trỏ"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đối chiếu trực tiếp với định nghĩa Bộ nhớ chính (Slide trang 9, Chương 2): Mỗi ngăn nhớ có <strong>nội dung (dữ liệu lưu bên trong)</strong> có thể đọc/ghi thay đổi liên tục, nhưng <strong>địa chỉ vật lý</strong> của ngăn nhớ đó là cố định.</li><li><strong>Đáp số: Ô trống 1: nội dung (hoặc giá trị); Ô trống 2: địa chỉ (hoặc địa chỉ vật lý).</strong></li></ul>"
+    "explanation": "<p>Mỗi ngăn nhớ có <strong>nội dung (giá trị)</strong> thay đổi được khi ghi dữ liệu mới, nhưng <strong>địa chỉ (địa chỉ vật lý)</strong> của nó luôn cố định.</p>"
   },
   {
-    "id": "c2-2.2",
+    "id": "c2-2.2b",
     "chapter": 2,
     "groupId": "2.2.1",
-    "groupTitle": "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ",
-    "exerciseCode": "Bài tập 2.2",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0008 & 0009, Câu 10",
+    "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
+    "exerciseCode": "Bài tập 2.2b",
+    "source": "Đề GK 2022.2 Đề 0008 C11 & Ôn tập 2025.2 C41",
     "examTags": [
-      "GK"
+      "GK",
+      "CK"
     ],
-    "pdfPage": 37,
-    "printedPage": 36,
-    "relatedTheoryId": "2.1.2",
+    "pdfPage": 35,
+    "printedPage": 34,
+    "relatedTheoryId": "2.1.1",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập tên 2 thanh ghi (ví dụ: PC và IR):",
-    "acceptedAnswers": [
-      "PC và IR",
-      "PC, IR",
-      "IR và PC",
-      "Program Counter và Instruction Register"
-    ],
-    "question": "Tên của 2 thanh ghi phục vụ cho quá trình nhận lệnh (tìm nạp lệnh) từ bộ nhớ chính là gì? Viết tên đầy đủ hoặc viết tắt.",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Tác dụng chính của bộ nhớ đệm nhanh (Cache) là gì?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "PC (Bộ đếm chương trình) và IR (Thanh ghi lệnh)",
-      "MAR (Thanh ghi địa chỉ) và MBR (Thanh ghi đệm dữ liệu)",
-      "SP (Con trỏ ngăn xếp) và PC (Bộ đếm chương trình)",
-      "ALU và CU"
+      "Tăng tốc độ truy cập đến bộ nhớ chính",
+      "Giảm chi phí cho hệ thống máy tính",
+      "Tăng dung lượng bộ nhớ chính",
+      "Tăng tốc độ truy cập đến ổ đĩa cứng"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Trong giai đoạn Tìm nạp lệnh (Fetch), CPU dùng thanh ghi <strong>PC (Program Counter)</strong> để phát địa chỉ lệnh ra bộ nhớ, và nhận mã lệnh nạp vào thanh ghi <strong>IR (Instruction Register)</strong>.</li><li><strong>Đáp số: PC và IR.</strong></li></ul>"
+    "explanation": "<p>Cache là bộ nhớ bán dẫn nhanh đặt đệm giữa CPU và bộ nhớ chính để <strong>tăng tốc độ truy cập đến bộ nhớ chính</strong>.</p>"
   },
   {
     "id": "c2-2.3",
     "chapter": 2,
     "groupId": "2.2.1",
-    "groupTitle": "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ",
+    "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.3",
-    "source": "Ôn tập Giữa kỳ - Câu 60",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 20",
     "examTags": [
       "GK"
+    ],
+    "pdfPage": 36,
+    "printedPage": 35,
+    "relatedTheoryId": "2.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bàn phím được kết nối trực tiếp với bộ phận chức năng nào trong hệ thống máy tính?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Với mô-đun vào-ra",
+      "Với bộ nhớ chính",
+      "Với CPU",
+      "Với bus hệ thống"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Các thiết bị ngoại vi (như bàn phím, chuột, màn hình) không nối trực tiếp với CPU hay Bus hệ thống mà bắt buộc kết nối thông qua cổng của <strong>mô-đun vào-ra</strong>.</p>"
+  },
+  {
+    "id": "c2-2.4a",
+    "chapter": 2,
+    "groupId": "2.2.2",
+    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
+    "exerciseCode": "Bài tập 2.4a",
+    "source": "Đề GK 2022.2 - Đề 0008 & Mã đề 204 Câu 4",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 36,
+    "printedPage": 35,
+    "relatedTheoryId": "2.1.2",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên 2 thanh ghi:",
+    "acceptedAnswers": [
+      "PC và IR",
+      "PC, IR",
+      "PC IR"
+    ],
+    "question": "Trong chu trình hoạt động cơ bản của máy tính, ở giai đoạn tìm nạp lệnh (nhận lệnh từ bộ nhớ chính), CPU tác động tới 2 thanh ghi hệ thống nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "PC và IR",
+      "ALU và CU",
+      "SP và RA",
+      "MAR và Stack"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Hai thanh ghi phục vụ trực tiếp quá trình tìm nạp lệnh là <strong>PC</strong> (Program Counter – phát địa chỉ lệnh cần lấy) và <strong>IR</strong> (Instruction Register – chứa lệnh vừa đọc về).</p>"
+  },
+  {
+    "id": "c2-2.4b",
+    "chapter": 2,
+    "groupId": "2.2.2",
+    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
+    "exerciseCode": "Bài tập 2.4b",
+    "source": "Ôn tập 2025.2 C76 & Mã đề 198 C17",
+    "examTags": [
+      "GK",
+      "CK"
+    ],
+    "pdfPage": 36,
+    "printedPage": 35,
+    "relatedTheoryId": "2.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Thanh ghi nào trong CPU luôn giữ địa chỉ của lệnh tiếp theo sẽ được lấy từ bộ nhớ và được tự động tăng mỗi khi CPU nhận xong một lệnh?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Thanh ghi Program Counter (PC)",
+      "Thanh ghi Stack Pointer (SP)",
+      "Thanh ghi Instruction Register (IR)",
+      "Thanh ghi Memory Address Register (MAR)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bộ đếm chương trình <strong>Program Counter (PC)</strong> luôn trỏ tới địa chỉ của lệnh tiếp theo sẽ được nạp.</p>"
+  },
+  {
+    "id": "c2-2.4c",
+    "chapter": 2,
+    "groupId": "2.2.2",
+    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
+    "exerciseCode": "Bài tập 2.4c",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 18",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 36,
+    "printedPage": 35,
+    "relatedTheoryId": "2.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong quá trình giải mã lệnh, CPU sẽ tiến hành giải mã lệnh đang nằm trên thanh ghi nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Thanh ghi lệnh IR",
+      "Thanh ghi con trỏ lệnh PC/IP",
+      "Thanh ghi dữ liệu",
+      "Thanh ghi trạng thái"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh đọc từ bộ nhớ chính được nạp vào <strong>Thanh ghi lệnh IR</strong> để đơn vị điều khiển (CU) giải mã.</p>"
+  },
+  {
+    "id": "c2-2.4d",
+    "chapter": 2,
+    "groupId": "2.2.2",
+    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
+    "exerciseCode": "Bài tập 2.4d",
+    "source": "Ôn tập 2025.2 - Câu 56",
+    "examTags": [
+      "CK"
     ],
     "pdfPage": 37,
     "printedPage": 36,
-    "relatedTheoryId": "2.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Thanh ghi nào trong CPU luôn giữ địa chỉ của lệnh tiếp theo sẽ được lấy từ bộ nhớ?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Thanh ghi Bộ đếm Chương trình (Program Counter - PC)",
-      "Thanh ghi Địa chỉ Bộ nhớ (Memory Address Register - MAR)",
-      "Thanh ghi Lệnh (Instruction Register - IR)",
-      "Thanh ghi Dữ liệu Bộ nhớ (Memory Buffer Register - MBR)"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Thanh ghi giữ địa chỉ của lệnh tiếp theo sẽ được nạp vào CPU là <strong>Bộ đếm chương trình PC (Program Counter)</strong>.</li><li><strong>Đáp án đúng: Thanh ghi Bộ đếm Chương trình (Program Counter - PC).</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.4",
-    "chapter": 2,
-    "groupId": "2.2.1",
-    "groupTitle": "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ",
-    "exerciseCode": "Bài tập 2.4",
-    "source": "Đề Cuối kỳ 2022.2 - #6f0a57, Giữa kỳ 2022.2 - Đề 0006 Câu 4 & Ôn tập Cuối kỳ P2 - Câu 14",
-    "examTags": [
-      "CK",
-      "GK"
-    ],
-    "pdfPage": 38,
-    "printedPage": 37,
-    "relatedTheoryId": "2.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Hãy chỉ ra tên của thành phần trong máy tính thực hiện chức năng chứa địa chỉ của ngăn nhớ đỉnh ngăn xếp?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Stack Pointer (SP)",
-      "Base Register",
-      "Program Counter (PC)",
-      "Instruction Register (IR)"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Con trỏ ngăn xếp <strong>Stack Pointer (SP)</strong> (trong RISC-V là thanh ghi <code>sp</code> hay <code>x2</code>) luôn chứa địa chỉ của ngăn nhớ đỉnh ngăn xếp.</li><li><strong>Đáp án đúng: Stack Pointer (SP).</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.5",
-    "chapter": 2,
-    "groupId": "2.2.1",
-    "groupTitle": "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ",
-    "exerciseCode": "Bài tập 2.5",
-    "source": "Ôn tập Giữa kỳ - Câu 40",
-    "examTags": [
-      "GK"
-    ],
-    "pdfPage": 38,
-    "printedPage": 37,
     "relatedTheoryId": "2.1.2",
     "questionType": "single",
     "canFillBlank": false,
@@ -2126,58 +2410,190 @@
     "svgDiagram": null,
     "options": [
       "Giai đoạn Giải mã (Decode), nơi CPU xác định loại lệnh và các toán hạng",
-      "Giai đoạn Thực thi (Execute), nơi lệnh được xử lý bởi ALU",
-      "Giai đoạn Ghi lại kết quả (Write Back), nơi kết quả được lưu vào thanh ghi hoặc bộ nhớ",
-      "Giai đoạn Điều khiển ngắt (Interrupt Check), để xử lý các yêu cầu I/O"
+      "Giai đoạn Ghi lại kết quả (Write Back)",
+      "Giai đoạn Thực thi (Execute)",
+      "Giai đoạn Điều khiển ngắt"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Ngay sau khi lấy mã lệnh từ bộ nhớ vào thanh ghi IR (Fetch), CPU phải tiến hành <strong>Giải mã lệnh (Decode)</strong> để biết lệnh đó yêu cầu thao tác gì và lấy toán hạng ở đâu, rồi mới sang bước Thực thi (Execute).</li><li><strong>Đáp án đúng: Giai đoạn Giải mã (Decode).</strong></li></ul>"
+    "explanation": "<p>Ngay sau Tìm nạp (Fetch) là <strong>Giải mã (Decode)</strong> để biết lệnh yêu cầu thao tác gì rồi mới Thực thi (Execute).</p>"
   },
   {
-    "id": "c2-2.6",
+    "id": "c2-2.5a",
     "chapter": 2,
-    "groupId": "2.2.1",
-    "groupTitle": "Nhóm 1: Chu trình lệnh, các thanh ghi PC/IR/SP và Ngăn nhớ",
-    "exerciseCode": "Bài tập 2.6",
-    "source": "Ôn tập Giữa kỳ - Câu 43",
+    "groupId": "2.2.2",
+    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
+    "exerciseCode": "Bài tập 2.5a",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 14",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 39,
-    "printedPage": 38,
+    "pdfPage": 37,
+    "printedPage": 36,
     "relatedTheoryId": "2.1.2",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Lệnh <code>beq rs1, rs2, offset</code> là ví dụ điển hình cho loại hoạt động cơ bản nào của máy tính?",
+    "question": "Đáp án nào mô tả đúng về cơ chế ngắt (Interrupt)?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Hoạt động điều khiển luồng (Control Flow Operation)",
-      "Hoạt động truyền dữ liệu (Data Transfer Operation)",
-      "Hoạt động số học (Arithmetic Operation)",
-      "Hoạt động I/O (I/O Operation)"
+      "Tạm dừng chương trình đang thực hiện để chuyển đến thực hiện chương trình con khác (chương trình con xử lý ngắt)",
+      "Kết thúc phần mềm đang chạy",
+      "Tạm dừng phần mềm đang hoạt động vĩnh viễn",
+      "Hủy bỏ lệnh máy đang thực hiện dở mà không quay lại"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Lệnh <code>beq</code> (branch if equal) kiểm tra điều kiện để thay đổi trình tự thực hiện lệnh (rẽ nhánh sang nhãn khác thay vì chạy tuần tự), nên thuộc nhóm <strong>Hoạt động điều khiển luồng (Control Flow Operation)</strong>.</li><li><strong>Đáp án đúng: Hoạt động điều khiển luồng (Control Flow Operation).</strong></li></ul>"
+    "explanation": "<p>Ngắt cho phép CPU tạm dừng chương trình hiện tại, cất ngữ cảnh, chạy chương trình con xử lý ngắt rồi khôi phục quay về chạy tiếp.</p>"
   },
   {
-    "id": "c2-2.7",
+    "id": "c2-2.5b",
     "chapter": 2,
     "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
-    "exerciseCode": "Bài tập 2.7",
-    "source": "Ôn tập Giữa kỳ - Câu 14",
+    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
+    "exerciseCode": "Bài tập 2.5b",
+    "source": "Ôn tập 2025.2 - Câu 15",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": 37,
+    "printedPage": 36,
+    "relatedTheoryId": "2.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Với phương pháp vào-ra bằng chương trình, thành phần nào của máy tính trực tiếp điều khiển vào-ra?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "CPU",
+      "DMAC",
+      "Thiết bị vào-ra",
+      "RAM"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong phương pháp vào-ra bằng chương trình (hoặc bằng ngắt), <strong>CPU</strong> trực tiếp điều khiển trao đổi dữ liệu với mô-đun vào-ra (không qua DMAC).</p>"
+  },
+  {
+    "id": "c2-2.6a",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.6a",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 1",
     "examTags": [
       "GK"
+    ],
+    "pdfPage": 38,
+    "printedPage": 37,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Một CPU có bus dữ liệu và bus địa chỉ có độ rộng đều bằng 32 bit. Hỏi độ rộng của bus điều khiển bằng bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Không xác định",
+      "64 bit",
+      "2^32 bit",
+      "32 bit"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Độ rộng bus chỉ quy ước cố định cho bus địa chỉ và bus dữ liệu; số đường tín hiệu trên bus điều khiển phụ thuộc thiết kế từng hệ thống cụ thể nên <strong>không xác định</strong> từ hai thông số trên.</p>"
+  },
+  {
+    "id": "c2-2.6b",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.6b",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 10",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 38,
+    "printedPage": 37,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Loại bus nào vận chuyển nội dung lệnh từ bộ nhớ tới CPU?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Bus dữ liệu",
+      "Bus điều khiển",
+      "Bus vào-ra",
+      "Bus địa chỉ"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>Bus dữ liệu (Data Bus)</strong> truyền tải cả lệnh từ bộ nhớ đến CPU và dữ liệu giữa các thành phần.</p>"
+  },
+  {
+    "id": "c2-2.6c",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.6c",
+    "source": "Ôn tập 2025.2 - Câu 13",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": 38,
+    "printedPage": 37,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bus dữ liệu (Data Bus) trong kiến trúc máy tính chịu trách nhiệm truyền tải loại thông tin nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Các lệnh và dữ liệu giữa các thành phần trong hệ thống máy tính",
+      "Chỉ các dữ liệu giữa các thành phần trong hệ thống máy tính",
+      "Địa chỉ bộ nhớ của dữ liệu cần truy cập",
+      "Tín hiệu điều khiển để đồng bộ hóa hoạt động"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bộ nhớ lưu chung lệnh và dữ liệu; Bus dữ liệu truyền tải hai chiều cả <strong>lệnh và dữ liệu</strong>.</p>"
+  },
+  {
+    "id": "c2-2.6d",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.6d",
+    "source": "Ôn tập 2025.2 - Câu 26",
+    "examTags": [
+      "CK"
     ],
     "pdfPage": 39,
     "printedPage": 38,
@@ -2192,55 +2608,121 @@
     "svgDiagram": null,
     "options": [
       "Là bus một chiều (unidirectional), truyền địa chỉ từ CPU/DMA đến bộ nhớ/I/O",
-      "Là bus hai chiều, truyền tín hiệu điều khiển và dữ liệu",
       "Là bus hai chiều (bidirectional), truyền cả địa chỉ và dữ liệu",
+      "Là bus hai chiều, truyền tín hiệu điều khiển và dữ liệu",
       "Là bus một chiều, truyền tín hiệu điều khiển từ bộ nhớ đến CPU"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Chỉ có CPU (hoặc bộ điều khiển DMA khi được nhượng bus) mới phát địa chỉ ra để tìm ngăn nhớ hoặc cổng vào-ra. Bộ nhớ và I/O chỉ nhận địa chỉ chứ không phát ngược lại. Do đó Address Bus là <strong>bus một chiều (unidirectional)</strong>.</li><li><strong>Đáp án đúng: Là bus một chiều (unidirectional), truyền địa chỉ từ CPU/DMA đến bộ nhớ/I/O.</strong></li></ul>"
+    "explanation": "<p>Chỉ CPU (hoặc DMAC khi làm chủ bus) phát địa chỉ tới bộ nhớ hoặc I/O $\\Rightarrow$ Bus địa chỉ là bus <strong>một chiều</strong>.</p>"
   },
   {
-    "id": "c2-2.8",
+    "id": "c2-2.7a",
     "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
-    "exerciseCode": "Bài tập 2.8",
-    "source": "Ôn tập Giữa kỳ - Câu 56",
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.7a",
+    "source": "Đề GK 2019.2 - Mã 243 C6 & Mã 244 C9",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 40,
-    "printedPage": 39,
+    "pdfPage": 39,
+    "printedPage": 38,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Bus dữ liệu (Data Bus) trong kiến trúc máy tính chịu trách nhiệm truyền tải loại thông tin nào?",
+    "question": "Với lệnh hợp ngữ ghi bộ nhớ <code>sw t2, 4(t4)</code> (hoặc <code>sw s2, 8(s4)</code>), giá trị tổng $4 + t_4$ (hoặc $8 + s_4$) sẽ được truyền từ CPU tới bộ nhớ chính trên đường bus nào?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Các lệnh và dữ liệu giữa các thành phần trong hệ thống máy tính",
-      "Địa chỉ bộ nhớ của dữ liệu cần truy cập",
-      "Tín hiệu điều khiển để đồng bộ hóa hoạt động",
-      "Chỉ riêng các số liệu tính toán giữa các thanh ghi"
+      "Bus địa chỉ",
+      "Bus dữ liệu",
+      "Bus điều khiển",
+      "Bus ngoại vi"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Theo Slide trang 34 (Chương 2), chức năng của Bus dữ liệu gồm 2 ý: (1) Vận chuyển lệnh từ bộ nhớ đến CPU, và (2) Vận chuyển dữ liệu giữa các thành phần của máy tính với nhau.</li><li><strong>Đáp án chuẩn theo giáo trình: Các lệnh và dữ liệu giữa các thành phần trong hệ thống máy tính.</strong></li></ul>"
+    "explanation": "<p>Tổng $4 + t_4$ là <strong>địa chỉ hiệu dụng</strong> của ngăn nhớ đích nên được phát ra trên <strong>Bus địa chỉ</strong> (còn nội dung thanh ghi <code>t2</code> truyền trên Bus dữ liệu).</p>"
   },
   {
-    "id": "c2-2.9",
+    "id": "c2-2.7b",
     "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
-    "exerciseCode": "Bài tập 2.9",
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.7b",
+    "source": "Đề GK 2019.2 - Mã 243 C5 & Mã 244 C7",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 39,
+    "printedPage": 38,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Loại bus ngoại vi nào dưới đây chỉ dùng để kết nối với ổ lưu trữ vật lý (HDD, SSD)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "SATA",
+      "HDMI",
+      "PCIe",
+      "USB"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>SATA (Serial ATA)</strong> là chuẩn giao tiếp chuyên dụng chỉ dùng cho thiết bị lưu trữ (HDD, SSD SATA, ổ quang).</p>"
+  },
+  {
+    "id": "c2-2.7c",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.7c",
+    "source": "Đề GK 2019.2 - Mã 243 C13 & Mã 244 C13",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 39,
+    "printedPage": 38,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong kiến trúc máy tính, khái niệm <strong>USB</strong> nói về điều gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Bus ngoại vi giữa mô-đun I/O và thiết bị",
+      "Ổ lưu trữ dữ liệu tốc độ cao",
+      "Khe cắm mở rộng RAM",
+      "Nhà sản xuất linh kiện phần cứng"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>USB (Universal Serial Bus)</strong> là chuẩn bus ngoại vi nối tiếp kết nối giữa mô-đun vào-ra với các thiết bị ngoại vi.</p>"
+  },
+  {
+    "id": "c2-2.8a",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.8a",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0008, Câu 3",
     "examTags": [
       "GK"
@@ -2250,53 +2732,51 @@
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập kích thước không gian địa chỉ (ví dụ: 8 MiB hoặc 8 MB):",
+    "fillPrompt": "Nhập kích thước (vd: 8 MiB):",
     "acceptedAnswers": [
       "8 MiB",
-      "8 MB",
       "8MiB",
+      "8 MB",
       "8MB",
-      "2^23 byte",
-      "8388608 byte"
+      "8388608"
     ],
-    "question": "Một máy tính có bus hệ thống gồm bus dữ liệu 32 bit và bus địa chỉ 23 bit, quản lý bộ nhớ theo byte. Hỏi không gian địa chỉ bộ nhớ có kích thước bao nhiêu byte?",
+    "question": "Máy tính có bus dữ liệu 32 bit và bus địa chỉ 23 bit (đánh địa chỉ theo byte). Không gian địa chỉ bộ nhớ có kích thước bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "8 MiB (hoặc 8 MB = 2^23 byte)",
-      "32 MiB (2^25 byte)",
-      "4 MiB (2^22 byte)",
-      "16 MiB (2^24 byte)"
+      "8 MiB (2^23 byte)",
+      "4 MiB",
+      "16 MiB",
+      "32 MiB"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Không gian địa chỉ chỉ phụ thuộc vào độ rộng của Bus địa chỉ ($N = 23\\text{ bit}$), không phụ thuộc vào Bus dữ liệu.</li><li>Vì máy tính quản lý bộ nhớ theo từng byte nên kích thước không gian địa chỉ là: $$2^{23}\\text{ byte} = 2^3 \\times 2^{20}\\text{ byte} = 8\\text{ MiB (hoặc 8 MB = 8 388 608 byte)}$$</li><li><strong>Đáp số: 2^23 byte = 8 MiB (hoặc 8 MB).</strong></li></ul>"
+    "explanation": "<p>Kích thước không gian địa chỉ chỉ phụ thuộc bus địa chỉ ($N = 23$): $2^{23}\\text{ byte} = 2^3 \\times 2^{20}\\text{ byte} = \\mathbf{8\\text{ MiB}}$.</p>"
   },
   {
-    "id": "c2-2.10",
+    "id": "c2-2.8b",
     "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
-    "exerciseCode": "Bài tập 2.10",
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.8b",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0006, Câu 3",
     "examTags": [
       "GK"
     ],
-    "pdfPage": 41,
-    "printedPage": 40,
+    "pdfPage": 40,
+    "printedPage": 39,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập độ rộng bus địa chỉ theo bit (ví dụ: 10):",
+    "fillPrompt": "Nhập số bit:",
     "acceptedAnswers": [
       "10",
-      "10 bit",
-      "10bit"
+      "10 bit"
     ],
-    "question": "Nếu như <code>0x3FF</code> là địa chỉ bộ nhớ lớn nhất mà CPU có thể quản lý được, thì bus địa chỉ có độ rộng bằng bao nhiêu bit?",
+    "question": "Nếu <code>0x3FF</code> là địa chỉ bộ nhớ lớn nhất mà CPU có thể quản lý được (đánh địa chỉ từ 0 theo byte), thì bus địa chỉ có độ rộng bằng bao nhiêu bit?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -2310,52 +2790,230 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Đổi địa chỉ lớn nhất <code>0x3FF</code> sang nhị phân: $\\text{0x3FF} = 0011\\;1111\\;1111_{(2)} = 11\\;1111\\;1111_{(2)}$.</li><li>Đếm số lượng bit 1: có tất cả $2 + 4 + 4 = 10\\text{ bit 1}$ (tương ứng giá trị $2^{10} - 1 = 1023$).</li><li>Như vậy địa chỉ chạy từ <code>0x000</code> đến <code>0x3FF</code> gồm $2^{10} = 1024\\text{ địa chỉ}$, suy ra độ rộng Bus địa chỉ là <strong>10 bit</strong>.</li><li><strong>Đáp số: 10 bit.</strong></li></ul>"
+    "explanation": "<p>Đổi $\\text{0x3FF} = 0011\\;1111\\;1111_2 = 2^{10} - 1$ (10 bit 1). Từ $0$ đến $2^{10}-1$ có $2^{10} = 1024$ địa chỉ $\\Rightarrow$ độ rộng bus địa chỉ là <strong>10 bit</strong>.</p>"
   },
   {
-    "id": "c2-2.11",
+    "id": "c2-2.8c",
     "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
-    "exerciseCode": "Bài tập 2.11",
-    "source": "Đề Cuối kỳ 2020.2 & Ôn tập Cuối kỳ P2 - Câu 28",
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.8c",
+    "source": "Đề CK 2020.2 & Ôn tập 2025.2 Câu 11",
     "examTags": [
       "CK"
+    ],
+    "pdfPage": 40,
+    "printedPage": 39,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số bit:",
+    "acceptedAnswers": [
+      "31",
+      "31 bit"
+    ],
+    "question": "Không gian địa chỉ bộ nhớ là $2\\text{ GiB}$ (đánh địa chỉ theo từng byte), độ rộng bus địa chỉ là bao nhiêu bit?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "31 bit",
+      "32 bit",
+      "30 bit",
+      "33 bit"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$2\\text{ GiB} = 2^1 \\times 2^{30}\\text{ byte} = 2^{31}\\text{ byte} \\Rightarrow$ độ rộng bus địa chỉ là <strong>31 bit</strong>.</p>"
+  },
+  {
+    "id": "c2-2.8d",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.8d",
+    "source": "Đề GK 2019.2 - Mã 243 C16 & Mã 244 C4",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 40,
+    "printedPage": 39,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Nếu không gian địa chỉ bộ nhớ (đánh địa chỉ theo byte) là $64\\text{ GiB}$ (Mã đề 243) và $128\\text{ GiB}$ (Mã đề 244), độ rộng bus địa chỉ tương ứng lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "36 bit và 37 bit",
+      "35 bit và 36 bit",
+      "34 bit và 35 bit",
+      "32 bit và 36 bit"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$64\\text{ GiB} = 2^6 \\times 2^{30} = 2^{36}\\text{ B} \\Rightarrow \\mathbf{36\\text{ bit}}$; $128\\text{ GiB} = 2^7 \\times 2^{30} = 2^{37}\\text{ B} \\Rightarrow \\mathbf{37\\text{ bit}}$.</p>"
+  },
+  {
+    "id": "c2-2.8e",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.8e",
+    "source": "Đề CK 2022.2 - #bb55ef & CK 2024.2",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": 40,
+    "printedPage": 39,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số bit:",
+    "acceptedAnswers": [
+      "33",
+      "33 bit"
+    ],
+    "question": "Một hệ thống máy tính gồm có $4\\text{ MiB}$ bộ nhớ Cache, $8\\text{ GiB}$ bộ nhớ chính và $1\\text{ TiB}$ bộ nhớ thể rắn SSD. Bus địa chỉ hệ thống cần có độ rộng tối thiểu bao nhiêu bit?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "33 bit",
+      "40 bit",
+      "34 bit",
+      "22 bit"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Cache tự ánh xạ từ RAM, SSD là bộ nhớ ngoài không đánh địa chỉ trực tiếp theo byte trên bus CPU. Bus địa chỉ chỉ cần quản lý $8\\text{ GiB} = 2^3 \\times 2^{30} = 2^{33}\\text{ B} \\Rightarrow$ tối thiểu <strong>33 bit</strong>.</p>"
+  },
+  {
+    "id": "c2-2.9a",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.9a",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 16",
+    "examTags": [
+      "GK"
     ],
     "pdfPage": 41,
     "printedPage": 40,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số bit địa chỉ (ví dụ: 31):",
+    "fillPrompt": "Nhập số bit:",
     "acceptedAnswers": [
-      "31",
-      "31 bit",
-      "31bit"
+      "18",
+      "18 bit"
     ],
-    "question": "Cho biết không gian địa chỉ bộ nhớ là $2\\text{ GiB}$, hãy cho biết độ rộng bus địa chỉ tương ứng của máy tính là bao nhiêu bit?",
+    "question": "Một hệ thống máy tính cần sử dụng bộ nhớ chính $128\\text{ KiB}$, cổng vào-ra $64\\text{ KiB}$ (dùng chung không gian địa chỉ) và ổ cứng SSD $256\\text{ KiB}$. Hỏi bus địa chỉ phải có độ rộng tối thiểu bằng bao nhiêu bit?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "31 bit",
-      "30 bit",
-      "32 bit",
-      "21 bit"
+      "18 bit",
+      "17 bit",
+      "19 bit",
+      "20 bit"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Ta có $1\\text{ GiB} = 2^{30}\\text{ byte}$.</li><li>Suy ra $2\\text{ GiB} = 2^1 \\times 2^{30}\\text{ byte} = 2^{31}\\text{ byte}$.</li><li>Để đánh địa chỉ cho $2^{31}$ byte nhớ, bus địa chỉ cần có độ rộng là <strong>31 bit</strong>.</li><li><strong>Đáp án đúng: 31 bit.</strong></li></ul>"
+    "explanation": "<p>SSD là bộ nhớ ngoài nên không tính. Tổng không gian địa chỉ chung RAM + I/O là $128\\text{ KiB} + 64\\text{ KiB} = 192\\text{ KiB}$. Vì $2^{17} = 128\\text{ KiB} &lt; 192\\text{ KiB} \\le 256\\text{ KiB} = 2^{18}$ nên cần tối thiểu <strong>18 bit</strong>.</p>"
   },
   {
-    "id": "c2-2.12",
+    "id": "c2-2.9b",
     "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Hệ thống Bus và Tính toán độ rộng Bus địa chỉ",
-    "exerciseCode": "Bài tập 2.12",
-    "source": "Đề Cuối kỳ 2022.2 - #bb55ef & Ôn tập Cuối kỳ P2 - Câu 36",
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.9b",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 14",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 41,
+    "printedPage": 40,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập dung lượng (MiB):",
+    "acceptedAnswers": [
+      "8 MiB",
+      "8MiB",
+      "8"
+    ],
+    "question": "Bus hệ thống có bus địa chỉ $24\\text{ bit}$ (không có cổng vào-ra). Máy tính đã cắm $1$ thanh RAM $8\\text{ MiB}$. Có thể lắp thêm $1$ thanh RAM kích thước lớn nhất bao nhiêu và không thừa?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "8 MiB",
+      "2 MiB",
+      "4 MiB",
+      "16 MiB"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Không gian tối đa: $2^{24}\\text{ B} = 16\\text{ MiB}$. Đã cắm $8\\text{ MiB} \\Rightarrow$ còn trống $16 - 8 = \\mathbf{8\\text{ MiB}}$ (là lũy thừa của 2 $\\Rightarrow$ vừa khít).</p>"
+  },
+  {
+    "id": "c2-2.9c",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.9c",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 244, Câu 6",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": 41,
+    "printedPage": 40,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập dung lượng (MiB):",
+    "acceptedAnswers": [
+      "32 MiB",
+      "32MiB",
+      "32"
+    ],
+    "question": "Máy tính có bus địa chỉ $26\\text{ bit}$ và đã cắm $1$ thanh RAM $8\\text{ MiB}$. Có thể lắp thêm $1$ thanh RAM đơn lẻ kích thước lớn nhất là bao nhiêu mà không bị thừa dung lượng?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "32 MiB",
+      "8 MiB",
+      "64 MiB",
+      "16 MiB"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Tổng không gian: $2^{26}\\text{ B} = 64\\text{ MiB}$. Còn trống: $64 - 8 = 56\\text{ MiB}$. Thanh RAM phải có dung lượng lũy thừa của 2 ($8, 16, 32, 64$) $\\le 56\\text{ MiB}$ $\\Rightarrow$ chọn <strong>32 MiB</strong>.</p>"
+  },
+  {
+    "id": "c2-2.10a",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.10 (Ý 4.1)",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.1",
     "examTags": [
       "CK"
     ],
@@ -2363,705 +3021,57 @@
     "printedPage": 41,
     "relatedTheoryId": "2.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập độ rộng tối thiểu theo bit (ví dụ: 33):",
-    "acceptedAnswers": [
-      "33",
-      "33 bit",
-      "33bit"
-    ],
-    "question": "Một hệ thống máy tính gồm có $4\\text{ MiB}$ bộ nhớ cache, $8\\text{ GiB}$ bộ nhớ chính, $1\\text{ TiB}$ bộ nhớ thể rắn SSD. Hỏi bus địa chỉ của hệ thống máy tính cần có độ rộng tối thiểu bao nhiêu bit?",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Máy tính dùng $36$ bit địa chỉ để đánh địa chỉ cho bộ nhớ theo byte. Số byte nhớ tối đa cùng địa chỉ đầu – cuối viết ở dạng Hexa lần lượt là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "33 bit",
-      "41 bit",
-      "32 bit",
-      "30 bit"
+      "64 GiB (2^36 byte) ; 0x000000000 đến 0xFFFFFFFFF",
+      "32 GiB (2^35 byte) ; 0x00000000 đến 0xFFFFFFFF",
+      "64 GiB (2^36 byte) ; 0x00000000 đến 0xFFFFFFFF",
+      "128 GiB (2^37 byte) ; 0x000000000 đến 0xFFFFFFFFF"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li><strong>Phân tích bản chất vật lý (chuẩn SoICT Bách Khoa):</strong><br>• Cache là bộ nhớ đệm trong suốt, tự động ánh xạ từ RAM nên không đánh địa chỉ riêng trên Bus.<br>• Ổ SSD là bộ nhớ ngoài (I/O device), giao tiếp qua cổng I/O theo khối (block), không được CPU đánh địa chỉ trực tiếp từng byte trên Bus hệ thống.<br>• Bus địa chỉ hệ thống chỉ dùng để đánh địa chỉ trực tiếp cho từng byte của <strong>Bộ nhớ chính (RAM) 8 GiB</strong>:<br>$$8\\text{ GiB} = 2^3 \\times 2^{30}\\text{ byte} = 2^{33}\\text{ byte} \\implies N = 33\\text{ bit}$$</li><li><em>Lưu ý:</em> Trên hệ thống thi daotao.ai của trường, đáp án chuẩn là <strong>33</strong> (trong file Forms P2 sinh viên tự làm có người hiểu nhầm cộng SSD 1TiB = 2^40 ra 41). Đi thi thật nhớ điền 33!</li><li><strong>Đáp số: 33 bit.</strong></li></ul>"
+    "explanation": "<p>$2^{36}\\text{ B} = 64\\text{ GiB}$. Vì $36 / 4 = 9$ chữ số Hexa nên địa chỉ đầu là <code>0x000000000</code> (9 chữ số 0) và địa chỉ cuối là <code>0xFFFFFFFFF</code> (9 chữ số F).</p>"
   },
   {
-    "id": "c2-2.13",
-    "chapter": 7,
-    "groupId": "7.2.1",
-    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
-    "exerciseCode": "Bài tập 2.13",
-    "source": "Chương 7 (Slide 15-18) & Ôn tập Cuối kỳ P2 - Câu 16",
+    "id": "c2-2.10b",
+    "chapter": 2,
+    "groupId": "2.2.3",
+    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
+    "exerciseCode": "Bài tập 2.10 (Ý 4.2)",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.2",
     "examTags": [
       "CK"
     ],
     "pdfPage": 42,
     "printedPage": 41,
-    "relatedTheoryId": "7.1.1",
+    "relatedTheoryId": "2.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Không gian địa chỉ bộ nhớ dùng chung (Memory-mapped I/O) dùng để đánh địa chỉ cho các đối tượng nào?",
+    "question": "Máy tính dùng $16$ bit để đánh địa chỉ cho cổng vào-ra riêng biệt. Số cổng vào-ra tối đa và dải địa chỉ Hexa của chúng là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "Các ngăn nhớ và các cổng vào-ra",
-      "Các ngăn nhớ và các thiết bị ngoại vi",
-      "Các ngăn nhớ và mô-đun vào-ra",
-      "Chỉ riêng các ngăn nhớ của bộ nhớ chính"
+      "65 536 cổng (2^16) ; từ 0x0000 đến 0xFFFF",
+      "32 768 cổng (2^15) ; từ 0x0000 đến 0x7FFF",
+      "16 384 cổng (2^14) ; từ 0x0000 đến 0x3FFF",
+      "65 536 cổng (2^16) ; từ 0x00000 đến 0xFFFFF"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<ul><li>Theo Slide trang 31 (Chương 3) và trang 33 (Chương 2): Không gian địa chỉ bộ nhớ dùng chung đánh địa chỉ trực tiếp cho <strong>các ngăn nhớ (trong bộ nhớ chính) và các cổng vào-ra (trên mô-đun vào-ra)</strong>. Thiết bị ngoại vi nối vào cổng vào-ra chứ không trực tiếp mang địa chỉ bộ nhớ.</li><li><strong>Đáp án đúng: Các ngăn nhớ và các cổng vào-ra.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.14",
-    "chapter": 7,
-    "groupId": "7.2.1",
-    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
-    "exerciseCode": "Bài tập 2.14",
-    "source": "Chương 7 (Slide 15-18) & Ôn tập CK / GK",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 43,
-    "printedPage": 42,
-    "relatedTheoryId": "7.1.1",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Cổng truy cập (Port) của thiết bị Vào/Ra (I/O) được ánh xạ vào không gian địa chỉ bộ nhớ (Memory-Mapped I/O) có ý nghĩa gì?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Thiết bị I/O chỉ có thể được truy cập thông qua các lệnh LOAD/STORE, giống như truy cập bộ nhớ",
-      "Thiết bị I/O có bus dữ liệu riêng biệt với bộ nhớ chính",
-      "Thiết bị I/O có thể tự truy cập bộ nhớ mà không cần sự can thiệp của CPU",
-      "CPU cần một tập lệnh I/O đặc biệt (ví dụ: IN/OUT) để giao tiếp với thiết bị"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Trong cơ chế vào-ra ánh xạ bộ nhớ (Memory-Mapped I/O) mà RISC-V sử dụng, các cổng vào-ra được coi như các ngăn nhớ đặc biệt. CPU không có lệnh IN/OUT riêng mà dùng chính các lệnh đọc/ghi bộ nhớ (<code>lw, sw, lb, sb</code>) để giao tiếp với thiết bị I/O.</li><li><strong>Đáp án đúng: Thiết bị I/O chỉ có thể được truy cập thông qua các lệnh LOAD/STORE.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.15a",
-    "chapter": 7,
-    "groupId": "7.2.1",
-    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
-    "exerciseCode": "Bài tập 2.15a",
-    "source": "Chương 7 (Slide 18: Isolated I/O) & Đề Cuối kỳ 2021.2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 44,
-    "printedPage": 43,
-    "relatedTheoryId": "7.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập dung lượng bộ nhớ (ví dụ: 64 GiB):",
-    "acceptedAnswers": [
-      "64 GiB",
-      "64GiB",
-      "64 GB",
-      "2^36 byte",
-      "64GB"
-    ],
-    "question": "Máy tính dùng 36 bit địa chỉ để đánh địa chỉ cho bộ nhớ theo byte, 16 bit để đánh địa chỉ cho cổng vào-ra riêng biệt; bus dữ liệu là 64 bit.<br><strong>Hãy cho biết số byte nhớ tối đa được đánh địa chỉ và địa chỉ đầu/cuối dưới dạng Hexa?</strong>",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "64 GiB; Địa chỉ: 0x000000000 đến 0xFFFFFFFFF (9 chữ số Hexa)",
-      "36 GiB; Địa chỉ: 0x000000000 đến 0x8FFFFFFFF",
-      "16 GiB; Địa chỉ: 0x00000000 đến 0xFFFFFFFF (8 chữ số Hexa)",
-      "64 GiB; Địa chỉ: 0x00000000 đến 0xFFFFFFFF"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Số byte nhớ tối đa: $2^{36}\\text{ byte} = 2^6 \\times 2^{30}\\text{ byte} = 64\\text{ GiB}$.</li><li>Vì 36 bit chia cho 4 được đúng 9 chữ số Hexa, nên:<br>• Địa chỉ đầu (36 bit 0): <code>0x000000000</code> (9 chữ số 0).<br>• Địa chỉ cuối (36 bit 1): <code>0xFFFFFFFFF</code> (9 chữ số F).</li><li><strong>Đáp án đúng: 64 GiB; 0x000000000 đến 0xFFFFFFFFF.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.15b",
-    "chapter": 7,
-    "groupId": "7.2.1",
-    "groupTitle": "Nhóm 1: Không gian địa chỉ Vào-Ra (MMIO & Isolated I/O)",
-    "exerciseCode": "Bài tập 2.15b",
-    "source": "Chương 7 (Slide 18: Isolated I/O) & Đề Cuối kỳ 2021.2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 44,
-    "printedPage": 43,
-    "relatedTheoryId": "7.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số cổng vào-ra tối đa (ví dụ: 65536):",
-    "acceptedAnswers": [
-      "65536",
-      "65 536",
-      "64K cổng",
-      "2^16",
-      "65536 cổng"
-    ],
-    "question": "Với dữ kiện Bài 2.15 (16 bit để đánh địa chỉ cho cổng vào-ra riêng biệt), <strong>hãy cho biết số cổng vào-ra tối đa được đánh địa chỉ và địa chỉ cổng đầu/cuối dưới dạng Hexa?</strong>",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "65 536 cổng (64K cổng); Địa chỉ: 0x0000 đến 0xFFFF",
-      "16 384 cổng; Địa chỉ: 0x0000 đến 0x3FFF",
-      "32 768 cổng; Địa chỉ: 0x0000 đến 0x7FFF",
-      "65 536 cổng; Địa chỉ: 0x00000 đến 0xFFFFF"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Số cổng vào-ra tối đa: $2^{16} = 65\\,536\\text{ cổng}$ (tức $64\\text{K cổng}$).</li><li>Vì 16 bit ứng với 4 chữ số Hexa, nên:<br>• Địa chỉ cổng đầu: <code>0x0000</code>.<br>• Địa chỉ cổng cuối: <code>0xFFFF</code>.</li><li><strong>Đáp án đúng: 65 536 cổng; 0x0000 đến 0xFFFF.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.16",
-    "chapter": 6,
-    "groupId": "6.2.1",
-    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
-    "exerciseCode": "Bài tập 2.16",
-    "source": "Chương 6 (Slide 24-28: Băng nhớ đan xen) & Đề Cuối kỳ 2022.2, 2024.1",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 45,
-    "printedPage": 44,
-    "relatedTheoryId": "6.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập tên băng nhớ (ví dụ: Băng 3 hoặc 3):",
-    "acceptedAnswers": [
-      "Băng 3",
-      "3",
-      "Bang 3",
-      "băng 3"
-    ],
-    "question": "Cho một máy tính có bus địa chỉ 32 bit và bus dữ liệu 32 bit. Bộ nhớ chính được đánh địa chỉ theo byte và được thiết kế theo kiểu băng nhớ đan xen. Hãy cho biết byte nhớ có địa chỉ <code>0x10011647</code> nằm trên băng nhớ nào?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Băng 3",
-      "Băng 1",
-      "Băng 2",
-      "Băng 0"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li><strong>Bước 1:</strong> Bus dữ liệu là $32\\text{ bit} = 4\\text{ byte}$, nên bộ nhớ chia thành $K = 4$ băng nhớ (đánh số Băng 0, 1, 2, 3).</li><li><strong>Bước 2:</strong> Lấy chữ số Hexa cuối cùng của địa chỉ <code>0x10011647</code> là chữ số <strong>7</strong>.</li><li><strong>Bước 3:</strong> Thực hiện phép chia lấy dư cho 4: $$7 \\bmod 4 = 3$$</li><li>Vậy byte nhớ này nằm trên <strong>Băng 3</strong>.</li></ol><p><strong>Đáp án đúng: B (Băng 3).</strong></p>"
-  },
-  {
-    "id": "c2-2.17a",
-    "chapter": 6,
-    "groupId": "6.2.1",
-    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
-    "exerciseCode": "Bài tập 2.17a",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.3",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 45,
-    "printedPage": 44,
-    "relatedTheoryId": "6.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số thứ tự băng nhớ (ví dụ: 1 hoặc Băng 1):",
-    "acceptedAnswers": [
-      "1",
-      "Băng 1",
-      "Bang 1",
-      "băng 1"
-    ],
-    "question": "Máy tính có bus dữ liệu kết nối bộ nhớ chính là 64 bit (bộ nhớ đánh địa chỉ theo byte đan xen). Hãy cho biết byte nhớ có địa chỉ <code>0x0FE12C39</code> được bố trí ở băng nhớ nào?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Băng 1",
-      "Băng 3",
-      "Băng 5",
-      "Băng 7"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Bus dữ liệu $64\\text{ bit} = 8\\text{ byte} \\implies K = 8$ băng nhớ (Băng 0 đến 7).</li><li>Chữ số Hexa cuối cùng của <code>0x0FE12C39</code> là <strong>9</strong>.</li><li>Phép chia lấy dư cho 8: $$9 \\bmod 8 = 1 \\implies \\text{Nằm ở Băng 1}$$</li><li><strong>Đáp số: Băng 1.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.17b",
-    "chapter": 6,
-    "groupId": "6.2.1",
-    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
-    "exerciseCode": "Bài tập 2.17b",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.3",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 46,
-    "printedPage": 45,
-    "relatedTheoryId": "6.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số thứ tự băng nhớ (ví dụ: 5 hoặc Băng 5):",
-    "acceptedAnswers": [
-      "5",
-      "Băng 5",
-      "Bang 5",
-      "băng 5"
-    ],
-    "question": "Máy tính có bus dữ liệu 64 bit (8 băng nhớ đan xen theo byte). Hãy cho biết byte nhớ có địa chỉ <code>0x10ABCD05</code> được bố trí ở băng nhớ nào?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Băng 5",
-      "Băng 1",
-      "Băng 0",
-      "Băng 4"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Chữ số Hexa cuối cùng của <code>0x10ABCD05</code> là <strong>5</strong>.</li><li>Phép chia lấy dư cho 8: $$5 \\bmod 8 = 5 \\implies \\text{Nằm ở Băng 5}$$</li><li><strong>Đáp số: Băng 5.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.18a",
-    "chapter": 6,
-    "groupId": "6.2.1",
-    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
-    "exerciseCode": "Bài tập 2.18a",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 4 & Ôn tập Cuối kỳ P2 - Câu 26",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 46,
-    "printedPage": 45,
-    "relatedTheoryId": "6.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập địa chỉ Hexa (ví dụ: 0x000A504C):",
-    "acceptedAnswers": [
-      "0x000A504C",
-      "0x000a504c",
-      "000A504C",
-      "000a504c"
-    ],
-    "question": "Trên máy tính có bus địa chỉ 32 bit, bus dữ liệu 64 bit. Mảng 2 chiều B có kích thước $5 \\times 7$ (5 hàng, 7 cột) gồm các phần tử 32 bit (4 byte), lưu trữ theo hàng từ địa chỉ cơ sở <code>0x000A5020</code>. Nếu chỉ số hàng và cột tính từ 0 ($i = 0..4, j = 0..6$), <strong>cho biết địa chỉ bắt đầu của phần tử B[1, 4]?</strong>",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "0x000A504C",
-      "0x000A5048",
-      "0x000A5034",
-      "0x000A5050"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li>Mảng có 7 cột (mỗi hàng có 7 phần tử), mỗi phần tử 32 bit = 4 byte.</li><li>Xét phần tử $B[1, 4]$ ($i = 1, j = 4$):<br>• Số phần tử đứng trước: $1 \\times 7 + 4 = 11\\text{ phần tử}$.<br>• Độ lệch địa chỉ (Offset): $11 \\times 4\\text{ byte} = 44\\text{ byte} = \\text{0x2C byte}$.<br>• Địa chỉ của $B[1, 4]$: $\\text{0x000A5020} + \\text{0x2C} = \\mathbf{\\text{0x000A504C}}$.</li></ol><p><strong>Đáp số: 0x000A504C.</strong></p>"
-  },
-  {
-    "id": "c2-2.18b",
-    "chapter": 6,
-    "groupId": "6.2.1",
-    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
-    "exerciseCode": "Bài tập 2.18b",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 4 & Ôn tập Cuối kỳ P2 - Câu 44",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 47,
-    "printedPage": 46,
-    "relatedTheoryId": "6.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập danh sách băng nhớ cách nhau dấu phẩy (ví dụ: 4, 5, 6, 7):",
-    "acceptedAnswers": [
-      "4, 5, 6, 7",
-      "4,5,6,7",
-      "Băng 4, 5, 6, 7"
-    ],
-    "question": "Với dữ kiện Bài 2.18 (bus dữ liệu 64 bit &rarr; 8 băng nhớ), phần tử $B[1, 4]$ (kích thước 4 byte, bắt đầu từ địa chỉ <code>0x000A504C</code>) <strong>nằm trên các băng nhớ nào của bộ nhớ vật lý?</strong>",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Băng 4, 5, 6, 7",
-      "Băng 0, 1, 2, 3",
-      "Băng 2, 3, 4, 5",
-      "Băng 1, 2, 3, 4"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li>Phần tử $B[1, 4]$ bắt đầu tại <code>0x000A504C</code>, chiếm 4 byte liên tiếp tại các địa chỉ kết thúc bằng: <strong>C (12), D (13), E (14), F (15)</strong>.</li><li>Chia lấy dư lần lượt cho 8 (vì có 8 băng):<br>• $12 \\bmod 8 = 4$<br>• $13 \\bmod 8 = 5$<br>• $14 \\bmod 8 = 6$<br>• $15 \\bmod 8 = 7$</li><li>Vậy phần tử này nằm trên các băng nhớ: <strong>4, 5, 6, 7</strong>.</li></ol><p><strong>Đáp số: Băng 4, 5, 6, 7.</strong></p>"
-  },
-  {
-    "id": "c2-2.18c",
-    "chapter": 6,
-    "groupId": "6.2.1",
-    "groupTitle": "Nhóm 1: Băng nhớ vật lý đan xen (Memory Banks)",
-    "exerciseCode": "Bài tập 2.18c",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 44",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 47,
-    "printedPage": 46,
-    "relatedTheoryId": "6.1.1",
-    "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập danh sách băng nhớ cách nhau dấu phẩy (ví dụ: 0, 1, 2, 3):",
-    "acceptedAnswers": [
-      "0, 1, 2, 3",
-      "0,1,2,3",
-      "Băng 0, 1, 2, 3"
-    ],
-    "question": "Với dữ kiện Bài 2.18 (bus dữ liệu 64 bit &rarr; 8 băng nhớ), phần tử $B[1, 5]$ (đứng ngay sau $B[1, 4]$, có địa chỉ bắt đầu là <code>0x000A5050</code>) <strong>nằm trên các băng nhớ nào của bộ nhớ vật lý?</strong>",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Băng 0, 1, 2, 3",
-      "Băng 4, 5, 6, 7",
-      "Băng 1, 2, 3, 4",
-      "Băng 5, 6, 7, 0"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ol><li>Phần tử $B[1, 5]$ có địa chỉ bắt đầu <code>0x000A5050</code>, chiếm 4 byte liên tiếp tại các địa chỉ kết thúc bằng: <strong>0, 1, 2, 3</strong>.</li><li>Chia lấy dư cho 8:<br>• $0 \\bmod 8 = 0$<br>• $1 \\bmod 8 = 1$<br>• $2 \\bmod 8 = 2$<br>• $3 \\bmod 8 = 3$</li><li>Vậy phần tử $B[1, 5]$ nằm trên các băng nhớ: <strong>0, 1, 2, 3</strong>.</li></ol><p><strong>Đáp số: Băng 0, 1, 2, 3.</strong></p>"
-  },
-  {
-    "id": "c2-2.19",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.19",
-    "source": "Đề Cuối kỳ 2022.2 - #169b6e & Ôn tập Giữa kỳ - Câu 21",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 47,
-    "printedPage": 46,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Với phương pháp Vào-ra bằng chương trình (Programmed I/O), thành phần nào của máy tính trực tiếp điều khiển vào-ra?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "CPU",
-      "Thiết bị vào-ra",
-      "DMAC",
-      "RAM"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Trong phương pháp Vào-ra bằng chương trình, <strong>CPU</strong> phải trực tiếp thực hiện các lệnh kiểm tra trạng thái và đọc/ghi dữ liệu với cổng vào-ra.</li><li><strong>Đáp án đúng: B (CPU).</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.20",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.20",
-    "source": "Chương 7 (Slide 19-24: Programmed I/O) & Ôn tập Cuối kỳ P2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 48,
-    "printedPage": 47,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Trong phương pháp vào/ra bằng chương trình (Programmed I/O), CPU dành phần lớn thời gian để làm gì khi đợi thiết bị ngoại vi sẵn sàng?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Kiểm tra trạng thái thiết bị trong một vòng lặp (Polling)",
-      "Giải phóng Bus hệ thống cho các thiết bị khác",
-      "Thực hiện các tiến trình khác của người dùng",
-      "Tự động chuyển sang chế độ nghỉ (Sleep mode)"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Vì thiết bị ngoại vi rất chậm so với CPU, trong Programmed I/O, CPU phải liên tục đọc thanh ghi trạng thái của thiết bị trong một vòng lặp (gọi là <strong>Polling - hỏi vòng/thăm dò</strong>) cho đến khi thiết bị báo sẵn sàng.</li><li><strong>Đáp án đúng: Kiểm tra trạng thái thiết bị trong một vòng lặp (Polling).</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.21",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.21",
-    "source": "Chương 7 (Slide 20, 45: Hiệu suất I/O) & Ôn tập Cuối kỳ P2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 48,
-    "printedPage": 47,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Thứ tự nào sau đây phản ánh đúng sự phát triển về hiệu suất (từ thấp đến cao) đối với việc sử dụng CPU trong I/O?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Programmed I/O &rarr; Interrupt-driven &rarr; DMA",
-      "Interrupt-driven &rarr; Programmed I/O &rarr; DMA",
-      "DMA &rarr; Interrupt-driven &rarr; Programmed I/O",
-      "Programmed I/O &rarr; DMA &rarr; Interrupt-driven"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>Programmed I/O làm CPU bị bận 100% thời gian chờ đợi (hiệu suất thấp nhất) &rarr; Interrupt-driven giải phóng CPU trong lúc chờ đợi &rarr; DMA giải phóng CPU cả trong lúc truyền khối dữ liệu (hiệu suất cao nhất).</li><li><strong>Đáp án đúng: Programmed I/O &rarr; Interrupt-driven &rarr; DMA.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.22",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.22",
-    "source": "Chương 7 (Slide 36, 44: DMA) & Ôn tập Cuối kỳ P2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 49,
-    "printedPage": 48,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Tại sao phương pháp DMA (Direct Memory Access) lại hiệu quả hơn khi truyền các khối dữ liệu lớn?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Vì dữ liệu được truyền trực tiếp giữa thiết bị và bộ nhớ mà không đi qua CPU",
-      "Vì nó không cần sử dụng bộ nhớ chính (RAM)",
-      "Vì DMA sử dụng phần mềm thay vì phần cứng",
-      "Vì nó cho phép CPU thực hiện lệnh truyền dữ liệu nhanh hơn"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li>DMA sử dụng bộ điều khiển phần cứng DMAC để truyền dữ liệu trực tiếp giữa mô-đun vào-ra và bộ nhớ chính (RAM) mà không cần CPU phải can thiệp vào từng từ dữ liệu.</li><li><strong>Đáp án đúng: Vì dữ liệu được truyền trực tiếp giữa thiết bị và bộ nhớ mà không đi qua CPU.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.23a",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.23a",
-    "source": "Chương 7 (Slide 37-38: Cấu trúc DMAC) & Ôn tập Cuối kỳ P2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 49,
-    "printedPage": 48,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "multiple",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Bộ điều khiển DMA (DMAC) gồm những thành phần nào dưới đây? (Chọn nhiều đáp án)",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Thanh ghi con trỏ lệnh (PC)",
-      "Logic điều khiển",
-      "Bộ đếm dữ liệu (Data counter)",
-      "Thanh ghi địa chỉ",
-      "Thanh ghi dữ liệu"
-    ],
-    "correctIndex": 1,
-    "correctIndices": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "explanation": "<ul><li>DMAC không thực thi chương trình nên <strong>không có Thanh ghi con trỏ lệnh (PC)</strong>.</li><li>DMAC gồm 4 thành phần: <strong>Logic điều khiển, Bộ đếm dữ liệu (Data counter), Thanh ghi địa chỉ, và Thanh ghi dữ liệu</strong>.</li><li><strong>Đáp án đúng: Chọn các ý 2, 3, 4, 5 (loại bỏ ý 1).</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.23b",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.23b",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 57",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 49,
-    "printedPage": 48,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Cách thực hiện DMA nào dưới đây là tối ưu và khó thực hiện hơn cả?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "DMA trong suốt (Transparent DMA)",
-      "DMA lấy chu kỳ (Cycle stealing)",
-      "DMA truyền theo khối (Burst transfer)",
-      "Cả ba phương pháp tương tự nhau"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<ul><li><strong>DMA trong suốt (Transparent DMA):</strong> Chỉ tranh thủ sử dụng Bus hệ thống vào những chu kỳ mà CPU không dùng đến Bus (CPU đang xử lý nội bộ), nên không làm chậm CPU chút nào (tối ưu nhất), nhưng mạch đồng bộ phần cứng khó thiết kế nhất.</li><li><strong>Đáp án đúng: DMA trong suốt.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.24",
-    "chapter": 7,
-    "groupId": "7.2.2",
-    "groupTitle": "Nhóm 2: Phương pháp điều khiển Vào-Ra (Polling, Ngắt PIC, DMA)",
-    "exerciseCode": "Bài tập 2.24",
-    "source": "Chương 7 (Slide 34: Bộ điều khiển ngắt PIC) & Ôn tập Cuối kỳ P2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 50,
-    "printedPage": 49,
-    "relatedTheoryId": "7.1.2",
-    "questionType": "multiple",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Những khẳng định nào dưới đây đúng về PIC? (Chọn nhiều đáp án)",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Trong PIC, yêu cầu ngắt có mức ưu tiên cao nhất sẽ không thể bị cấm và do đó được gửi tới CPU đầu tiên",
-      "Các đường vào yêu cầu ngắt của PIC có quy định mức ưu tiên",
-      "Đây là 1 phương pháp nối ghép ngắt (cụ thể là hỏi vòng bằng phần cứng)",
-      "PIC là viết tắt của Programmable Interrupt Controller"
-    ],
-    "correctIndex": 1,
-    "correctIndices": [
-      1,
-      3
-    ],
-    "explanation": "<ul><li><strong>PIC là viết tắt của Programmable Interrupt Controller</strong> (Bộ điều khiển ngắt khả trình).</li><li><strong>Các đường vào yêu cầu ngắt (IR0...IR7) của PIC có quy định mức ưu tiên.</strong></li><li>Ý A sai vì mọi ngắt qua PIC đều nối vào chân INTR của CPU nên đều là ngắt có thể bị che (cấm). Ý C sai vì PIC là phương pháp ngắt ưu tiên phần cứng độc lập, không phải hỏi vòng (daisy chain/polling).</li><li><strong>Đáp án đúng: Chọn B và D.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.25a",
-    "chapter": 6,
-    "groupId": "6.2.2",
-    "groupTitle": "Nhóm 2: Thiết bị lưu trữ ngoài HDD & SSD",
-    "exerciseCode": "Bài tập 2.25a",
-    "source": "Ôn tập Cuối kỳ P2 - Câu 51",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 50,
-    "printedPage": 49,
-    "relatedTheoryId": "6.1.2",
-    "questionType": "multiple",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Những đặc điểm nào sau đây là ưu điểm của ổ cứng bán dẫn SSD so với ổ đĩa từ HDD? (Chọn nhiều đáp án)",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "Giá thành trên mỗi đơn vị lưu trữ (GB) rẻ hơn",
-      "Không gây tiếng ồn khi hoạt động",
-      "Tốc độ truy xuất dữ liệu nhanh hơn và độ trễ thấp hơn",
-      "Khả năng chống sốc vật lý tốt hơn"
-    ],
-    "correctIndex": 1,
-    "correctIndices": [
-      1,
-      2,
-      3
-    ],
-    "explanation": "<ul><li>SSD dùng chip nhớ bán dẫn Flash (không có đĩa quay cơ học như HDD) nên có 3 ưu điểm vượt trội: <strong>Không gây tiếng ồn (2), Tốc độ truy xuất nhanh và độ trễ thấp (3), Chống sốc vật lý tốt hơn (4)</strong>.</li><li>Nhược điểm của SSD là giá thành trên mỗi GB đắt hơn HDD (nên ý 1 sai).</li><li><strong>Đáp án đúng: Chọn 2, 3 và 4.</strong></li></ul>"
-  },
-  {
-    "id": "c2-2.25b",
-    "chapter": 6,
-    "groupId": "6.2.2",
-    "groupTitle": "Nhóm 2: Thiết bị lưu trữ ngoài HDD & SSD",
-    "exerciseCode": "Bài tập 2.25b",
-    "source": "Chương 6 (Slide 54-56: Ổ đĩa SSD vs HDD) & Ôn tập Cuối kỳ P2",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 51,
-    "printedPage": 50,
-    "relatedTheoryId": "6.1.2",
-    "questionType": "multiple",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Trong thực tế hiện nay, những nhận định nào sau đây là đúng về việc sử dụng HDD và SSD trên các thiết bị? (Chọn nhiều đáp án)",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "HDD vẫn được sử dụng phổ biến trong các hệ thống Server lưu trữ (NAS) hoặc trung tâm dữ liệu nhờ ưu thế về dung lượng lớn và giá thành rẻ",
-      "Camera giám sát (CCTV) ghi hình 24/7 thường ưu tiên dùng SSD vì SSD có tuổi thọ ghi xóa dữ liệu cao hơn HDD khi hoạt động liên tục",
-      "Các máy chơi game thế hệ mới (như PS5, Xbox Series X) sử dụng SSD để giảm thời gian chờ tải màn chơi (loading screen)",
-      "SSD thường được ưu tiên dùng làm ổ cài đặt hệ điều hành trên Laptop và PC để tăng tốc độ khởi động máy",
-      "Các thiết bị di động nhỏ gọn như Smartphone và Tablet sử dụng chip nhớ có nguyên lý tương tự HDD"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0,
-      2,
-      3
-    ],
-    "explanation": "<ul><li><strong>Nhận định đúng: 1, 3 và 4.</strong></li><li>Nhận định 2 sai vì chip Flash của SSD có giới hạn số lần ghi xóa nên camera ghi đè 24/7 thường dùng ổ cứng cơ học HDD chuyên dụng (như WD Purple).</li><li>Nhận định 5 sai vì smartphone/tablet dùng bộ nhớ bán dẫn Flash (nguyên lý giống SSD, không phải HDD).</li><li><strong>Đáp án đúng: Chọn 1, 3 và 4.</strong></li></ul>"
+    "explanation": "<p>$2^{16} = 65\\,536$ cổng (64K cổng). Vì $16 / 4 = 4$ chữ số Hexa nên địa chỉ chạy từ <code>0x0000</code> đến <code>0xFFFF</code>.</p>"
   }
 ];
 })(typeof window !== 'undefined' ? window : globalThis);

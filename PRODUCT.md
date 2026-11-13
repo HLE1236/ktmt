@@ -12,14 +12,14 @@ Sinh viên ngành Công nghệ Thông tin, Kỹ thuật Máy tính (Đại học
 
 ## Product Purpose
 
-Cung cấp nền tảng ôn luyện, làm bài tập và thi thử trắc nghiệm chuyên sâu, bám sát 100% đề cương và giáo trình `KTMT.pdf`. Giúp sinh viên nắm vững bản chất lý thuyết, ghi nhớ công thức tính toán hiệu năng, hiểu sâu kiến trúc tập lệnh RISC-V, hệ thống nhớ Cache/RAM, và số học máy tính (IEEE 754).
+Cung cấp nền tảng ôn luyện, làm bài tập và thi thử trắc nghiệm chuyên sâu, bám sát 100% đề cương và giáo trình `KTMT_GK.pdf`. Giúp sinh viên nắm vững bản chất lý thuyết, ghi nhớ công thức tính toán hiệu năng, cấu trúc hệ thống máy tính, kiến trúc tập lệnh RISC-V và số học máy tính (mã bù 2, ALU, IEEE 754).
 
 ## Positioning
 
 Hệ thống duy nhất tích hợp liền mạch giữa:
-1. **Lý thuyết trọng tâm & Công thức KaTeX chuẩn mực** gắn liền bài test kiểm tra tức thì.
-2. **199 câu hỏi trắc nghiệm thực chiến** phân nhóm chính xác 100% theo các nhóm bài tập trong giáo trình `KTMT.pdf`, trích dẫn chính xác số trang sách giáo trình làm nguồn đối chiếu.
-3. **Bộ công cụ trực quan hóa (Interactive Simulators)** chuyên sâu về KTMT: Bộ mô phỏng Cache Mapping, Bộ mô phỏng Bus/Bộ nhớ, Bộ giải mã lệnh RISC-V 32-bit, và Bộ chuyển đổi số thực IEEE 754.
+1. **Lý thuyết trọng tâm, Sơ đồ SVG & Tờ công thức bỏ túi (Cheat Sheet)** kèm đọc song song PDF (`KTMT_GK.pdf`) và kiểm tra nhanh tại chỗ.
+2. **313 câu hỏi trắc nghiệm & Sách bài tập & Lời giải chi tiết** phân nhóm chính xác 100% theo `KTMT_GK.pdf` và các đề mẫu 0012 / 0013, trích dẫn chính xác số trang giáo trình làm nguồn đối chiếu.
+3. **Bộ công cụ trực quan hóa (Interactive Calculators)** chuẩn Ch.1–4 KTMT: Tính hiệu năng CPU (Ch.1 + MFLOPS/CPI_TB/So sánh A vs B), Mô phỏng Băng nhớ & Little-Endian, Bộ chuyển đổi số thực IEEE 754 Binary32, và Bộ giải mã lệnh RISC-V 32-bit.
 
 ## Constraints & Principles
 

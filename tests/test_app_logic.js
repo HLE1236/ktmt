@@ -246,20 +246,20 @@ console.log('Testing Exam Workflow & Scoring Logic...');
 
 // Test 3.1 Exam Presets (GK, CK, Custom)
 {
-  // GK preset: Chapters 1 & 2 only (chuẩn 67 câu: 49 Ch1 + 18 Ch2 thuần), 25 questions
+  // GK preset: Chapters 1 & 2 only (88 câu: 53 Ch1 + 35 Ch2), 25 questions
   const gkPool = allQuestions.filter(q => q.chapter === 1 || q.chapter === 2);
   const gkCount = Math.min(25, gkPool.length);
-  const passGK = gkPool.length === 67 && gkCount === 25;
+  const passGK = gkPool.length === 88 && gkCount === 25;
 
-  // CK preset: All chapters, 40 questions
+  // CK preset: All chapters (315 câu), 40 questions
   const ckPool = allQuestions.slice();
   const ckCount = Math.min(40, ckPool.length);
-  const passCK = ckPool.length === 199 && ckCount === 40;
+  const passCK = ckPool.length === 315 && ckCount === 40;
 
-  // Custom preset: Chapter 3 only, 15 questions
+  // Custom preset: Chapter 3 only (155 câu), 15 questions
   const ch3Pool = allQuestions.filter(q => q.chapter === 3);
   const customCount = Math.min(15, ch3Pool.length);
-  const passCustom = ch3Pool.length === 78 && customCount === 15;
+  const passCustom = ch3Pool.length === 155 && customCount === 15;
 
   record(results.examWorkflow, 'Exam Presets filtering (GK=25q from Ch1-2, CK=40q, Custom)', passGK && passCK && passCustom, { gkPool: gkPool.length, ckPool: ckPool.length });
 }
@@ -357,7 +357,7 @@ console.log('Testing Exam Workflow & Scoring Logic...');
 console.log('Testing Mistakes Notebook Logic...');
 
 {
-  let mistakes = ['lt-1.1', 'c2-2.1', 'c3-4.10'];
+  let mistakes = ['lt-1.1', 'c2-2.1', 'c3-3.10a'];
 
   // 4.1 Remove single mastered mistake
   const removeTarget = 'c2-2.1';
@@ -380,7 +380,7 @@ console.log('Testing Backup & Restore Logic...');
 {
   const appState = {
     theme: 'dark',
-    bookmarks: ['lt-1.1', 'c3-4.1'],
+    bookmarks: ['lt-1.1', 'c3-3.1'],
     mistakes: ['c1-1.5'],
     history: { 'lt-1.1': { answered: true, isCorrect: true, lastAnswer: 'A', timestamp: 123456789 } },
     notes: { 'lt-1.1': 'Ghi chú quan trọng' },

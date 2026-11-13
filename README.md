@@ -1,6 +1,6 @@
 # Ôn tập Kiến trúc máy tính (KTMT - HUST)
 
-Trang web ôn tập trắc nghiệm và bài tập môn Kiến trúc máy tính (mã học phần IT3030, IT3034, IT3283 - Bách Khoa). Toàn bộ lý thuyết, câu hỏi và bài tập đều được chia đúng theo từng mục và từng nhóm trong giáo trình `KTMT.pdf` để học đến đâu làm bài test đến đó cho tiện.
+Trang web ôn tập trắc nghiệm và bài tập môn Kiến trúc máy tính (mã học phần IT3030, IT3034, IT3283 - Bách Khoa). Toàn bộ lý thuyết, câu hỏi và bài tập đều được chia đúng theo từng mục và từng nhóm trong giáo trình `KTMT_GK.pdf` để học đến đâu làm bài test đến đó cho tiện.
 
 ---
 
@@ -33,15 +33,15 @@ Sau đó mở trình duyệt vào địa chỉ: `http://localhost:8000`.
 ## 2. Các phần chính trên web
 
 ### 📖 Lý thuyết
-- Chia thành 2 phần y hệt trong file `KTMT.pdf`:
-  - **Phần 1: Lý thuyết trọng tâm** (1.1.1 Khái niệm cơ bản, 1.1.2 Phân loại, 1.1.3 Kiến trúc Flynn, 1.1.4 Đánh giá hiệu năng).
-  - **Phần 2: Toàn bộ bài tập theo nhóm** (Nhóm 1 đến Nhóm 6...).
+- Chia thành 2 phần y hệt trong file `KTMT_GK.pdf`:
+  - **Phần 1: Lý thuyết trọng tâm** (bám sát cấu trúc 4 chương từ `KTMT_GK.pdf`).
+  - **Phần 2: Toàn bộ bài tập theo nhóm** (từ Bài 1.1 đến Bài 4.30).
 - Dưới mỗi công thức tính toán đều có sẵn nút **"Luyện tập dạng này"** để làm thử ngay vài câu tương ứng.
-- Ở cuối mỗi mục (đặc biệt là mục 1.1.4 Hiệu năng) có nút **"Làm bài test toàn bộ phần này (39 câu)"** để kiểm tra lại toàn bộ kiến thức vừa học.
+- Ở cuối mỗi mục có nút **"Làm bài test toàn bộ phần này"** để kiểm tra lại toàn bộ kiến thức vừa học.
 
 ### 🎯 Luyện tập
 - Làm từng câu trắc nghiệm theo từng chương hoặc theo từng nhóm bài tập.
-- Mỗi câu sau khi chọn đáp án sẽ hiện ngay lời giải chi tiết, chỉ rõ lỗi hay lừa trong đề và trích dẫn số trang trong file `KTMT.pdf` để tiện mở lại sách xem.
+- Mỗi câu sau khi chọn đáp án sẽ hiện ngay lời giải chi tiết, chỉ rõ lỗi hay lừa trong đề và trích dẫn số trang trong file `KTMT_GK.pdf` để tiện mở lại sách xem.
 - Có nút chuyển đổi giữa **Trắc nghiệm (chọn A/B/C/D)** và **Tự điền đáp án** (gõ số/chữ giống kiểu daotao.ai).
 - Trên đầu mỗi câu có nút **"Xem lý thuyết"** để nhảy nhanh về phần lý thuyết liên quan nếu quên kiến thức.
 
@@ -81,11 +81,11 @@ Khi đang ở mục **Flashcards**:
 ## 4. Cấu trúc file trong thư mục
 
 - `index.html`: File giao diện chính, mở file này để học.
-- `KTMT.pdf`: File tài liệu giáo trình gốc để đối chiếu khi cần.
+- `KTMT_GK.pdf`: File tài liệu giáo trình gốc chủ đạo để đối chiếu khi cần.
 - `css/style.css`: File định dạng giao diện (đã tối ưu màu tương phản dễ nhìn, có sẵn giao diện Sáng / Tối).
 - `js/`: Thư mục chứa dữ liệu câu hỏi và mã xử lý:
   - `data-theory.js`: Tóm tắt lý thuyết 4 chương và liên kết bài tập.
-  - `data-questions-ch1-ch2.js`, `data-questions-ch3.js`, `data-questions-ch4.js`: Ngân hàng 199 câu hỏi trắc nghiệm chia theo từng chương.
+  - `data-questions-ch1-ch2.js`, `data-questions-ch3.js`, `data-questions-ch4.js`: Ngân hàng 313 câu hỏi trắc nghiệm chia theo từng chương.
   - `tools.js`: Mã xử lý cho 4 bộ công cụ tính toán.
   - `app.js`: Xử lý chuyển tab, đếm giờ, làm bài thi và lưu tiến độ học.
 - `tests/run_all.js`: File script test kiểm tra lỗi dữ liệu câu hỏi.

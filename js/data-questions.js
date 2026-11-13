@@ -1,4 +1,4 @@
-// js/data-questions.js - Tổng hợp, Xáo trộn xác định & Chuẩn hóa 199 câu hỏi KTMT từ 4 chương
+// js/data-questions.js - Tổng hợp, Xáo trộn xác định & Chuẩn hóa 315 câu hỏi KTMT từ 4 chương (KTMT_GK.pdf + Bổ sung)
 
 (function (root) {
   var ch1_ch2 = root.KTMT_QUESTIONS_CH1_CH2 || [];

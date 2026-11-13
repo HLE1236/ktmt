@@ -1,5 +1,5 @@
 // tests/test_questions.js
-// Kiểm thử toàn diện 199 câu hỏi KTMT Hub
+// Kiểm thử toàn diện 315 câu hỏi KTMT Hub (KTMT_GK.pdf + Bổ sung)
 
 const fs = require('fs');
 const vm = require('vm');

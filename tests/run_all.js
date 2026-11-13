@@ -8,7 +8,7 @@ console.log('       KTMT HUB (RISC-V) - AUTOMATED QA & TEST SUITE           ');
 console.log('===============================================================\n');
 
 const suites = [
-  { name: '1. Question Data Integrity (199 questions)', file: 'tests/test_questions.js' },
+  { name: '1. Question Data Integrity (315 questions)', file: 'tests/test_questions.js' },
   { name: '2. Computational Tools (tools.js)', file: 'tests/test_tools.js' },
   { name: '3. Application Engine Logic (app.js)', file: 'tests/test_app_logic.js' },
   { name: '4. UI DOM & Asset Links (index.html, style.css)', file: 'tests/test_ui_dom.js' }

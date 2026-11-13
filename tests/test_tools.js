@@ -113,6 +113,42 @@ try {
   record(toolResults.tool1_cpu, 'calcEffectiveCPI baseCPI = 0', false, e.message);
 }
 
+// 1.7 MFLOPS & n_cycles (Ch.1 PDF upgrade)
+try {
+  const perfFp = Tools.calcPerformance({
+    fVal: 2.0, fUnit: 'GHz',
+    icVal: 1e6, icUnit: 'raw',
+    cpiVal: 2.0,
+    fpOps: 5e5,
+    mode: 'from_cpi'
+  });
+  // n_cycles = 2e6, t_CPU = 2e6 / 2e9 = 0.001 s -> MFLOPS = 5e5 / (0.001 * 1e6) = 500
+  const pass = perfFp.n_cycles === 2e6 && Math.abs(perfFp.MFLOPS - 500) < 0.001;
+  record(toolResults.tool1_cpu, 'calcPerformance MFLOPS and n_cycles', pass, perfFp);
+} catch (e) {
+  record(toolResults.tool1_cpu, 'calcPerformance MFLOPS', false, e.message);
+}
+
+// 1.8 calcWeightedCPI (percent mode & raw count mode)
+try {
+  const wPct = Tools.calcWeightedCPI([{ weight: 50, cpi: 1 }, { weight: 30, cpi: 2 }, { weight: 20, cpi: 5 }], true);
+  const wCnt = Tools.calcWeightedCPI([{ weight: 500, cpi: 1 }, { weight: 500, cpi: 3 }], false);
+  const pass = Math.abs(wPct.cpiTB - 2.1) < 0.001 && Math.abs(wCnt.cpiTB - 2.0) < 0.001;
+  record(toolResults.tool1_cpu, 'calcWeightedCPI (pct & raw count modes)', pass, { wPct, wCnt });
+} catch (e) {
+  record(toolResults.tool1_cpu, 'calcWeightedCPI', false, e.message);
+}
+
+// 1.9 comparePerformance (A vs B)
+try {
+  const cmp = Tools.comparePerformance({ tCPU: 5 }, { tCPU: 10 });
+  const cmpClock = Tools.comparePerformance({ fVal: 3.0, fUnit: 'GHz', cpi: 1.5 }, { fVal: 2.0, fUnit: 'GHz', cpi: 2.0 });
+  const pass = cmp.winner === 'A' && Math.abs(cmp.ratioAB - 2.0) < 0.001 && cmpClock.winner === 'A';
+  record(toolResults.tool1_cpu, 'comparePerformance (t_CPU & clock/CPI)', pass, { cmp, cmpClock });
+} catch (e) {
+  record(toolResults.tool1_cpu, 'comparePerformance', false, e.message);
+}
+
 // =========================================================================
 // 2. TOOL 2: MEMORY BANKS & LITTLE-ENDIAN SIMULATION
 // =========================================================================

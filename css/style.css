@@ -19,6 +19,7 @@
   --border-focus: #1d4ed8;
 
   --text-main: #0f172a;        /* 15.9:1 on #ffffff - AAA */
+  --text-primary: #0f172a;     /* Alias */
   --text-secondary: #334155;   /* 9.6:1 on #ffffff - AAA */
   --text-muted: #475569;       /* 5.8:1 on #ffffff - AA */
   --text-inverse: #ffffff;
@@ -74,6 +75,7 @@
   --border-focus: #3b82f6;
 
   --text-main: #f8fafc;
+  --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --text-inverse: #0f172a;
@@ -313,18 +315,26 @@ code, kbd, samp, pre {
 }
 
 .sidebar-footer {
-  padding: 14px 16px;
+  padding: 12px 14px;
   border-top: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.82rem;
+  gap: 8px;
+  font-size: 0.8rem;
   color: var(--text-muted);
+}
+
+.sidebar-footer button {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Main Container */
 #main-container {
   flex: 1;
+  min-width: 0;
+  max-width: 100%;
   margin-left: var(--sidebar-width);
   display: flex;
   flex-direction: column;
@@ -333,12 +343,13 @@ code, kbd, samp, pre {
 
 /* Top Header */
 #top-header {
-  height: var(--header-height);
+  min-height: var(--header-height);
   background-color: var(--bg-surface);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 0 24px;
   position: sticky;
   top: 0;
@@ -348,7 +359,9 @@ code, kbd, samp, pre {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
 }
 
 .header-toggle-sidebar {
@@ -359,11 +372,14 @@ code, kbd, samp, pre {
   padding: 6px 9px;
   color: var(--text-secondary);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .search-box {
   position: relative;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
+  min-width: 0;
 }
 
 .search-box input {
@@ -398,6 +414,7 @@ code, kbd, samp, pre {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .header-btn {
@@ -413,6 +430,8 @@ code, kbd, samp, pre {
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .header-btn:hover {
@@ -440,23 +459,22 @@ code, kbd, samp, pre {
 
 .tab-view.active {
   display: block;
-  animation: fadeIn 0.25s ease;
+  animation: fadeIn 0.14s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0.75; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 /* Dashboard View */
 .dashboard-hero {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
-  border: 1px solid var(--border-subtle);
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
   border-radius: var(--radius-lg);
-  padding: 32px 36px;
-  margin-bottom: 28px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
   position: relative;
-  overflow: hidden;
 }
 
 .hero-title {
@@ -577,8 +595,7 @@ code, kbd, samp, pre {
 .chapter-card-desc {
   font-size: 0.85rem;
   color: var(--text-secondary);
-  margin-bottom: 16px;
-  flex: 1;
+  margin-bottom: 12px;
 }
 
 .chapter-progress-bar {
@@ -606,7 +623,7 @@ code, kbd, samp, pre {
 /* Theory Handbook View */
 .theory-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 280px minmax(0, 1fr);
   gap: 24px;
 }
 
@@ -647,6 +664,17 @@ code, kbd, samp, pre {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 32px 36px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-wrap: break-word;
+}
+
+.katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 2px;
 }
 
 .theory-header-box {
@@ -816,6 +844,8 @@ code, kbd, samp, pre {
   padding: 4px 9px;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .badge-chapter { background-color: var(--primary-light); color: var(--primary); }
@@ -1869,18 +1899,23 @@ code, kbd, samp, pre {
 }
 
 .toc-count-pill {
+  display: inline-block;
   font-size: 0.72rem;
   background-color: var(--bg-muted);
   color: var(--text-muted);
-  padding: 1px 6px;
+  padding: 1px 7px;
   border-radius: 10px;
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
 .theory-toc-item.group-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   font-size: 0.82rem;
 }
 
@@ -1899,13 +1934,990 @@ code, kbd, samp, pre {
     display: block;
   }
   .theory-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .theory-sidebar {
     position: static;
     height: auto;
   }
   .tool-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
+
+@media (max-width: 720px) {
+  #top-header {
+    padding: 8px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+    height: auto;
+  }
+  .header-left {
+    min-width: 170px;
+    gap: 8px;
+  }
+  .header-right {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .header-btn {
+    padding: 6px 9px;
+    font-size: 0.78rem;
+  }
+  .tab-view {
+    padding: 16px 12px;
+  }
+  .theory-content-body {
+    padding: 18px 16px;
+  }
+  .cheatsheet-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cheatsheet-card {
+    padding: 16px;
+  }
+}
+
+/* Embedded Code Blocks, Memory Maps & Logic Circuit SVG Diagrams */
+.quiz-code-block {
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin: 12px 0 16px 0;
+  overflow-x: auto;
+  text-align: left;
+}
+
+.quiz-code-block-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.quiz-code-block pre {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-main);
+  white-space: pre;
+}
+
+.quiz-svg-diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin: 12px 0 16px 0;
+  color: var(--text-primary);
+  overflow-x: auto;
+}
+
+.quiz-svg-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.flashcard-front .quiz-code-block,
+.flashcard-front .quiz-svg-diagram {
+  width: 100%;
+  max-height: 190px;
+  overflow-y: auto;
+  margin: 8px 0;
+}
+
+/* ====================================================================
+   ACADEMIC ENGINEERING HANDBOOK - UPGRADED COMPONENTS (KTMT_GK.pdf)
+   ==================================================================== */
+
+.btn-outline-secondary {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  border: 1px solid var(--border-medium);
+}
+.btn-outline-secondary:hover {
+  background-color: var(--bg-muted);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.badge-tag-ot {
+  background-color: var(--success-light);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+}
+
+[data-theme="dark"] .badge-tag-ck {
+  background-color: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+[data-theme="dark"] .badge-tag-lt {
+  background-color: rgba(245, 158, 11, 0.16);
+  color: #fde68a;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+/* Sidebar Brand & SVG Icons */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.brand-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-muted);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.nav-svg {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+/* Global Search Wrapper & Live Dropdown */
+.search-wrapper {
+  position: relative;
+}
+.global-search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: min(520px, 88vw);
+  max-height: 440px;
+  overflow-y: auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 60;
+  display: none;
+  padding: 6px;
+}
+.global-search-dropdown.open {
+  display: block;
+}
+.search-res-group {
+  padding: 6px 10px 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4px;
+}
+.search-res-group:first-child {
+  border-top: none;
+  margin-top: 0;
+}
+.search-res-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+.search-res-item:hover,
+.search-res-item:focus-visible {
+  background-color: var(--primary-light);
+  border-color: var(--primary-border);
+}
+.search-res-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.search-res-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.search-res-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+/* Dashboard Handbook Roadmap & TOC Pills */
+.hero-content-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.hero-text-col {
+  flex: 1;
+}
+.section-heading {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 22px 0 12px 0;
+  letter-spacing: -0.01em;
+}
+.dash-pdf-jump {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.chapter-toc-links {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.dash-toc-part-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.dash-toc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.dash-toc-pill {
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.77rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+}
+.dash-toc-pill:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-border);
+  color: var(--primary);
+}
+
+/* Theory Workspace, Topbar, Split PDF & Navigation */
+.theory-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+.theory-chapter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.theory-tab-btn {
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-muted);
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.theory-tab-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.theory-tab-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+.theory-topbar-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.theory-toc-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.theory-chapter-h1 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.theory-chapter-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+.theory-page-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  color: var(--primary);
+  white-space: nowrap;
+}
+.theory-summary-box {
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  color: var(--text-main);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+.theory-section-block {
+  padding-top: 8px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 24px;
+}
+.section-heading-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.section-pdf-chip {
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.section-pdf-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+/* Split-View PDF Mode */
+.theory-workspace.split-pdf-active {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.8fr);
+  gap: 18px;
+  align-items: start;
+}
+.theory-workspace.split-pdf-active .theory-layout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+.theory-workspace.split-pdf-active .theory-sidebar {
+  position: static;
+  height: auto;
+  max-height: 190px;
+  padding: 12px 14px;
+}
+.theory-workspace.split-pdf-active .theory-content-body {
+  padding: 24px 26px;
+}
+.theory-split-panel {
+  display: none;
+  position: sticky;
+  top: calc(var(--header-height) + 16px);
+  height: calc(100vh - var(--header-height) - 32px);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+}
+.theory-workspace.split-pdf-active .theory-split-panel {
+  display: flex;
+}
+.split-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  background-color: var(--bg-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.split-panel-header > div {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+#theory-split-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background-color: #334155;
+}
+
+.theory-chapter-footer {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Theory Callouts & Responsive Lookup Tables */
+.callout {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.callout-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.callout-formula {
+  background-color: var(--primary-light);
+  border-color: var(--primary-border);
+  color: var(--text-main);
+}
+.callout-formula .callout-title {
+  color: var(--primary);
+}
+.callout-trap {
+  background-color: var(--warning-light);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
+}
+.callout-trap .callout-title {
+  color: var(--warning-text);
+}
+.callout-tip {
+  background-color: var(--success-light);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+.callout-tip .callout-title {
+  color: var(--success-text);
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  margin: 14px 0 18px 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+.table-scroll table.theory-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+  font-variant-numeric: tabular-nums;
+}
+.theory-table th,
+.theory-table td {
+  padding: 9px 12px;
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+  vertical-align: top;
+}
+.theory-table th {
+  background-color: var(--bg-muted);
+  color: var(--text-main);
+  font-weight: 700;
+}
+.theory-table tbody tr:nth-child(even) td {
+  background-color: var(--bg-page);
+}
+
+.inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Theme-Aware Technical SVG Diagrams (KTMT_GK.pdf Ch1–Ch4) */
+.theory-svg-diagram {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin: 16px 0 20px 0;
+  overflow-x: auto;
+}
+.theory-svg-diagram svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+.theory-svg-diagram figcaption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.theory-svg-diagram .svg-box {
+  fill: var(--bg-surface);
+  stroke: var(--border-medium);
+  stroke-width: 1.5;
+}
+.theory-svg-diagram .svg-box-primary {
+  fill: var(--primary-light);
+  stroke: var(--primary);
+  stroke-width: 1.5;
+}
+.theory-svg-diagram .svg-box-accent {
+  fill: var(--purple-light);
+  stroke: var(--purple);
+  stroke-width: 1.5;
+}
+.theory-svg-diagram .svg-box-warn {
+  fill: var(--warning-light);
+  stroke: var(--warning);
+  stroke-width: 1.5;
+}
+.theory-svg-diagram .svg-bus-rail {
+  fill: var(--bg-muted);
+  stroke: var(--primary);
+  stroke-width: 1.5;
+}
+.theory-svg-diagram .svg-gate {
+  fill: var(--bg-surface);
+  stroke: var(--text-main);
+  stroke-width: 1.8;
+}
+.theory-svg-diagram .svg-title {
+  fill: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+}
+.theory-svg-diagram .svg-title-primary,
+.theory-svg-diagram .svg-title-blue {
+  fill: var(--primary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+}
+.theory-svg-diagram .svg-sub {
+  fill: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+}
+.theory-svg-diagram .svg-sub-primary {
+  fill: var(--primary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+}
+.theory-svg-diagram .svg-mono {
+  fill: var(--text-main);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.theory-svg-diagram .svg-mono-muted {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+.theory-svg-diagram .svg-line,
+.theory-svg-diagram .svg-wire {
+  stroke: var(--text-secondary);
+  stroke-width: 1.6;
+  fill: none;
+}
+.theory-svg-diagram .svg-line-bidir {
+  stroke: var(--primary);
+  stroke-width: 2;
+  fill: none;
+}
+.theory-svg-diagram .svg-line-dashed {
+  stroke: var(--text-muted);
+  stroke-width: 1.4;
+  stroke-dasharray: 4 3;
+  fill: none;
+}
+
+/* Inline Section Mini-Check Widget */
+.theory-minicheck-box {
+  margin-top: 18px;
+  padding: 16px 18px;
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+}
+.minicheck-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.minicheck-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.minicheck-q-text {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.minicheck-opts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+.minicheck-opt {
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 0.87rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.minicheck-opt:hover:not(:disabled) {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+.minicheck-opt.correct {
+  background-color: var(--success-light);
+  border-color: var(--success);
+  color: var(--success-text);
+  font-weight: 600;
+}
+.minicheck-opt.wrong {
+  background-color: var(--error-light);
+  border-color: var(--error);
+  color: var(--error-text);
+}
+.minicheck-feedback {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Practice Dual-Mode Bar & Workbook Solutions */
+.practice-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.mode-pill-group {
+  display: inline-flex;
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  gap: 4px;
+}
+.mode-pill-btn {
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.mode-pill-btn.active {
+  background-color: var(--bg-surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+.workbook-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.workbook-item {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  box-shadow: var(--shadow-sm);
+}
+.workbook-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.workbook-stem {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.workbook-options-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.workbook-opt-pill {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+}
+.workbook-opt-pill.is-answer {
+  border-color: var(--success-border);
+  background-color: var(--success-light);
+  color: var(--success-text);
+  font-weight: 600;
+}
+.workbook-solution-box {
+  display: none;
+  margin-top: 12px;
+  padding: 14px 16px;
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-main);
+}
+.workbook-solution-box.open {
+  display: block;
+}
+
+/* Cheat Sheet Tab & Exam Weakness Grid */
+.cheatsheet-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+.cheatsheet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.cheatsheet-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  break-inside: avoid;
+  min-width: 0;
+  overflow-x: auto;
+}
+.cheatsheet-card h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.cheatsheet-card ul {
+  margin: 0 0 0 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+.cheatsheet-card li {
+  margin-bottom: 6px;
+}
+.exam-notice-box {
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 16px 0;
+}
+.exam-weakness-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+  text-align: left;
+}
+.exam-weakness-card {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.exam-weakness-card.weak {
+  border-color: var(--warning-border);
+  background-color: var(--warning-light);
+}
+
+/* Tool 1 Weighted CPI & Optional CK Disclosure */
+.tool-optional-details {
+  margin-top: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  background-color: var(--bg-page);
+}
+.tool-optional-details summary {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.cpi-classes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 0.82rem;
+}
+.cpi-grid-head {
+  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+@media (max-width: 1180px) {
+  .theory-workspace.split-pdf-active {
+    grid-template-columns: 1fr;
+  }
+  .theory-workspace.split-pdf-active .theory-split-panel {
+    position: static;
+    height: 520px;
+  }
+}
+
+@media print {
+  #sidebar,
+  #top-header,
+  .cheatsheet-toolbar button,
+  .theory-topbar,
+  .theory-sidebar,
+  .theory-split-panel,
+  .theory-chapter-footer,
+  .theory-minicheck-box,
+  .theory-assessment-card,
+  .formula-practice-inline,
+  .section-pdf-chip {
+    display: none !important;
+  }
+  #main-container {
+    margin-left: 0 !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .tab-view {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .cheatsheet-card,
+  .theory-content-body {
+    box-shadow: none !important;
+    border-color: #cbd5e1 !important;
+  }
+}
+
+

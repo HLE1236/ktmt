@@ -72,7 +72,11 @@
   let practiceQueue = [];
   let currentPracticeIndex = 0;
   let practiceMode = 'mcq'; // 'mcq' or 'fill'
+  let practiceViewMode = 'quiz'; // 'quiz' or 'workbook'
+  let workbookExpandAll = false;
   let practiceAnswerSubmitted = false;
+  let isTheorySplitPdf = false;
+  const miniCheckIndexMap = {};
 
   // Exam runtime state
   let examQuestions = [];
@@ -129,6 +133,35 @@
     }
   }
 
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderQuestionMedia(q) {
+    if (!q) return '';
+    let mediaHtml = '';
+    if (q.svgDiagram) {
+      mediaHtml += `<div class="quiz-svg-diagram">${q.svgDiagram}</div>`;
+    }
+    if (q.codeBlock) {
+      const langLabel = q.codeLang === 'text' ? 'Bản đồ bộ nhớ / Bảng tra'
+        : (q.codeLang ? q.codeLang.toUpperCase() : 'CODE');
+      mediaHtml += `
+        <div class="quiz-code-block">
+          <div class="quiz-code-block-header">${escapeHtml(langLabel)}</div>
+          <pre><code>${escapeHtml(q.codeBlock)}</code></pre>
+        </div>
+      `;
+    }
+    return mediaHtml;
+  }
+
   // Wraps register occurrences with interactive tooltips safely outside KaTeX & tags
   function enhanceRegisterTooltips(html) {
     if (!html || typeof html !== 'string') return html;
@@ -138,18 +171,34 @@
     const parts = html.split(/(<[^>]+>|\$\$[\s\S]*?\$\$|\$[^\$]+?\$)/g);
     const regex = /\b(?:x[0-9]|x[12][0-9]|x3[01]|zero|ra|sp|gp|tp|t[0-6]|s[0-9]|s1[01]|a[0-7]|fp)\b/g;
 
-    let inCode = false;
+    let codeDepth = 0;
+    let svgDepth = 0;
+    let skipTagDepth = 0;
 
     return parts.map((part, idx) => {
       // Nếu là thẻ HTML hoặc khối công thức KaTeX
       if (idx % 2 === 1) {
-        if (/^<\s*(code|pre|kbd)\b/i.test(part)) {
-          inCode = true;
-        } else if (/^<\/\s*(code|pre|kbd)\s*>/i.test(part)) {
-          inCode = false;
+        if (part.startsWith('<') && !/\/\s*>$/.test(part)) {
+          if (/^<\s*(code|pre|kbd)\b/i.test(part)) {
+            codeDepth++;
+          } else if (/^<\/\s*(code|pre|kbd)\s*>/i.test(part)) {
+            codeDepth = Math.max(0, codeDepth - 1);
+          } else if (/^<\s*svg\b/i.test(part)) {
+            svgDepth++;
+          } else if (/^<\/\s*svg\s*>/i.test(part)) {
+            svgDepth = Math.max(0, svgDepth - 1);
+          } else if (/^<\s*(style|script)\b/i.test(part)) {
+            skipTagDepth++;
+          } else if (/^<\/\s*(style|script)\s*>/i.test(part)) {
+            skipTagDepth = Math.max(0, skipTagDepth - 1);
+          }
         }
         return part;
       }
+
+      if (svgDepth > 0 || skipTagDepth > 0) return part;
+
+      const inCode = codeDepth > 0;
 
       // Đoạn văn bản thuần
       return part.replace(regex, (match, offset) => {
@@ -271,11 +320,13 @@
       renderDashboard();
     } else if (tabId === 'theory') {
       renderTheory();
+    } else if (tabId === 'cheatsheet') {
+      renderCheatSheet();
     } else if (tabId === 'practice') {
       if (practiceQueue.length === 0) {
         initPracticeQueue();
       }
-      renderPracticeQuestion();
+      renderPracticeModeView();
     } else if (tabId === 'flashcard') {
       initFlashcards();
     } else if (tabId === 'mistakes') {
@@ -294,6 +345,57 @@
   // ==========================================
   // DASHBOARD VIEW
   // ==========================================
+  function renderDashboardChaptersToc() {
+    [1, 2, 3, 4].forEach(chNum => {
+      const container = document.getElementById(`dash-ch${chNum}-links`);
+      if (!container) return;
+      const chObj = chaptersList.find(c => c.id === chNum);
+      const secs = theorySections.filter(s => s.chapter === chNum);
+      const exGroups = (chObj && chObj.groups ? chObj.groups : []).filter(g => g.type === 'exercise' || g.id !== `${chNum}.1`);
+
+      let html = '';
+      if (secs.length > 0) {
+        html += `<div class="dash-toc-part"><div class="dash-toc-part-title">Phần 1 — Lý thuyết (${secs.length} mục)</div><div class="dash-toc-links">`;
+        secs.forEach(s => {
+          const shortTitle = s.title.split('(')[0].trim();
+          html += `<button type="button" class="dash-toc-pill" data-dash-sec="${s.id}" title="${escapeHtml(s.code + ': ' + s.title)}">${escapeHtml(s.code)} ${escapeHtml(shortTitle)}</button>`;
+        });
+        html += `</div></div>`;
+      }
+
+      if (exGroups.length > 0) {
+        html += `<div class="dash-toc-part"><div class="dash-toc-part-title">Phần 2 — Bài tập & Lời giải</div><div class="dash-toc-links">`;
+        exGroups.forEach(g => {
+          const cnt = getGroupQuestions(g.id).length;
+          html += `<button type="button" class="dash-toc-pill" data-dash-grp="${g.id}" title="${escapeHtml(g.title)} (${cnt} câu)">${escapeHtml(g.id)} (${cnt})</button>`;
+        });
+        html += `<button type="button" class="dash-toc-pill" data-dash-wb="${chNum}">Sách lời giải Ch.${chNum}</button>`;
+        html += `</div></div>`;
+      }
+
+      container.innerHTML = html;
+
+      container.querySelectorAll('[data-dash-sec]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          jumpToTheory(btn.getAttribute('data-dash-sec'));
+        });
+      });
+      container.querySelectorAll('[data-dash-grp]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          startGroupTest(btn.getAttribute('data-dash-grp'), 'practice');
+        });
+      });
+      container.querySelectorAll('[data-dash-wb]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openWorkbookForChapter(parseInt(btn.getAttribute('data-dash-wb'), 10) || 1);
+        });
+      });
+    });
+  }
+
   function renderDashboard() {
     const totalQ = allQuestions.length;
     const answeredCount = Object.keys(appState.history).length;
@@ -312,7 +414,7 @@
     if (elMistakes) elMistakes.textContent = mistakeCount;
 
     // Update chapter cards progress
-    [1, 2, 3, 4, 6, 7].forEach(chNum => {
+    [1, 2, 3, 4].forEach(chNum => {
       const chQuestions = allQuestions.filter(q => q.chapter === chNum);
       const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
       const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;
@@ -324,6 +426,11 @@
       if (fillEl) fillEl.style.width = `${pct}%`;
       if (metaEl) metaEl.textContent = `${chCorrect.length}/${chQuestions.length} câu (${pct}%)`;
     });
+
+    renderDashboardChaptersToc();
+
+    const navTotalBadge = document.getElementById('nav-total-q-badge');
+    if (navTotalBadge) navTotalBadge.textContent = totalQ;
 
     // Update nav badge count for mistakes
     const mistakeBadge = document.getElementById('nav-mistake-badge');
@@ -338,46 +445,34 @@
   // ==========================================
   let currentTheoryChapter = 1;
 
-  // Phân loại chính xác 1-1 từng câu hỏi về đúng mục lý thuyết tương ứng (loại bỏ hoàn toàn trùng lặp)
+  // Phân loại chính xác 1-1 từng câu hỏi về đúng mục lý thuyết trong KTMT_GK.pdf (4 chương)
   function getQuestionSectionId(q) {
-    // CHƯƠNG 1 (49 câu)
+    if (q.relatedTheoryId && theorySections.some(s => s.id === q.relatedTheoryId)) {
+      return q.relatedTheoryId;
+    }
+    const g = q.groupId || q.group || '';
     if (q.chapter === 1) {
-      if (['lt-1.1', 'lt-1.4', 'c1-1.1', 'c1-1.2', 'c1-1.5'].includes(q.id)) return '1.1.1';
-      if (['lt-1.2', 'c1-1.3', 'c1-1.4'].includes(q.id)) return '1.1.2';
-      if (['lt-1.3', 'lt-1.6', 'c1-1.35a', 'c1-1.35b'].includes(q.id)) return '1.1.3';
-      return '1.1.4'; // lt-1.5, nhóm 1.2.2 (7c), 1.2.3 (7c), 1.2.4 (8c), 1.2.5 (12c), c1-1.33, c1-1.34
+      if (g === '1.2.1') return '1.1.1';
+      if (g === '1.1') return '1.1.2';
+      return '1.1.3';
     }
-    // CHƯƠNG 2 (18 câu chuẩn)
     if (q.chapter === 2) {
-      if (['lt-2.1', 'c2-2.1', 'c2-2.2', 'c2-2.3', 'c2-2.4'].includes(q.id)) return '2.1.1';
-      if (['lt-2.2', 'lt-2.3', 'c2-2.5', 'c2-2.6'].includes(q.id)) return '2.1.2';
-      return '2.1.3'; // lt-2.4, lt-2.5, lt-2.6, c2-2.7 -> c2-2.12
+      if (g === '2.2.1') return '2.1.1';
+      if (g === '2.2.2') return '2.1.2';
+      return '2.1.3';
     }
-    // CHƯƠNG 6 (8 câu - Băng nhớ & SSD/HDD)
-    if (q.chapter === 6) {
-      if (['c2-2.25a', 'c2-2.25b'].includes(q.id) || q.group === '6.2.2' || q.groupId === '6.2.2') return '6.1.2';
-      return '6.1.1'; // c2-2.16 -> c2-2.18c (Băng nhớ đan xen)
-    }
-    // CHƯƠNG 7 (11 câu - MMIO, Polling, DMA)
-    if (q.chapter === 7) {
-      if (['c2-2.13', 'c2-2.14', 'c2-2.15a', 'c2-2.15b'].includes(q.id) || q.group === '7.2.1' || q.groupId === '7.2.1') return '7.1.1';
-      return '7.1.2'; // c2-2.19 -> c2-2.24 (Polling, PIC, DMA)
-    }
-    // CHƯƠNG 3 (78 câu)
     if (q.chapter === 3) {
-      if (q.group === '3.2.7' || ['lt-3.1', 'c3-3.1', 'c3-3.2', 'c3-3.3', 'c3-3.4', 'c3-3.5', 'c3-3.6'].includes(q.id)) return '3.1.1';
-      if (q.group === '3.2.4' || ['lt-3.2', 'lt-3.3'].includes(q.id)) return '3.1.2';
-      if (q.group === '3.2.8' || ['lt-3.6', 'lt-3.7', 'lt-3.8', 'c3-4.3', 'c3-4.4a', 'c3-4.4b'].includes(q.id)) return '3.1.4';
-      return '3.1.3'; // nhóm 3.2.2 (20c), 3.2.3 (6c), 3.2.5 (6c), 3.2.6 (3c), lt-3.4, lt-3.5, các câu còn lại của 3.2.1
+      if (g === '3.2.7' || g === '3.1') return '3.1.1';
+      if (g === '3.2.4') return '3.1.2';
+      if (g === '3.2.8' || g === '3.2.1') return '3.1.4';
+      return '3.1.3';
     }
-    // CHƯƠNG 4 (35 câu)
     if (q.chapter === 4) {
-      if (['c4-5.4a', 'c4-5.4b'].includes(q.id)) return '4.1.1';
-      if (q.group === '4.2.1' || ['lt-4.1', 'lt-4.2'].includes(q.id)) return '4.1.2';
-      if (q.group === '4.2.3' || ['lt-4.4'].includes(q.id)) return '4.1.4';
-      if (q.group === '4.2.4' || ['lt-4.5', 'lt-4.8'].includes(q.id)) return '4.1.5';
-      if (q.group === '4.2.5' || ['lt-4.6', 'lt-4.7'].includes(q.id)) return '4.1.6';
-      return '4.1.3'; // lt-4.3, các câu còn lại của nhóm 4.2.2
+      if (g === '4.2.1') return '4.1.1';
+      if (g === '4.2.2') return '4.1.2';
+      if (g === '4.2.3') return '4.1.3';
+      if (g === '4.2.4' || g === '4.2.5') return '4.1.4';
+      return '4.1.5';
     }
     return q.relatedTheoryId || '1.1.1';
   }
@@ -392,12 +487,149 @@
     return allQuestions.filter(q => (q.groupId || q.group) === groupId);
   }
 
+  function syncSplitPdf(page) {
+    const p = page || 1;
+    const iframe = document.getElementById('theory-split-iframe');
+    const label = document.getElementById('theory-split-page-label');
+    const newTab = document.getElementById('theory-split-newtab');
+    if (iframe) iframe.src = `KTMT_GK.pdf#page=${p}&view=FitH`;
+    if (label) label.textContent = `KTMT_GK.pdf — Trang ${p}`;
+    if (newTab) newTab.href = `KTMT_GK.pdf#page=${p}`;
+  }
+
+  function toggleTheorySplitPdf(forceState) {
+    isTheorySplitPdf = typeof forceState === 'boolean' ? forceState : !isTheorySplitPdf;
+    const ws = document.getElementById('theory-workspace');
+    const btn = document.getElementById('btn-toggle-pdf-split');
+    if (ws) ws.classList.toggle('split-pdf-active', isTheorySplitPdf);
+    if (btn) btn.textContent = isTheorySplitPdf ? 'Đóng PDF song song' : 'Đọc song song PDF';
+    if (isTheorySplitPdf) {
+      const chObj = chaptersList.find(c => c.id === currentTheoryChapter) || {};
+      syncSplitPdf(chObj.pdfPageStart || 1);
+    }
+  }
+
+  function openTheoryPdfPage(page) {
+    if (currentTab === 'theory' && isTheorySplitPdf) {
+      syncSplitPdf(page);
+      showToast(`Đã đồng bộ PDF sang trang ${page}`, 'info');
+    } else {
+      openPdfModal(page);
+    }
+  }
+
+  function buildMiniCheckHtml(sec, secQuestions) {
+    if (!secQuestions || secQuestions.length === 0) return '';
+    if (miniCheckIndexMap[sec.id] === undefined) miniCheckIndexMap[sec.id] = 0;
+    const idx = miniCheckIndexMap[sec.id] % secQuestions.length;
+    const q = secQuestions[idx];
+    const optsHtml = (q.options || []).map((opt, i) => {
+      const key = opt.key || ['A', 'B', 'C', 'D'][i];
+      return `<button type="button" class="minicheck-opt" data-opt-key="${key}"><strong>${key}.</strong> ${enhanceRegisterTooltips(opt.text)}</button>`;
+    }).join('');
+
+    return `
+      <div class="theory-minicheck-box" data-minicheck-box="${sec.id}">
+        <div class="minicheck-header">
+          <span class="minicheck-title">Kiểm tra nhanh tại chỗ — Câu ${idx + 1}/${secQuestions.length}</span>
+          <div class="inline-actions">
+            ${secQuestions.length > 1 ? `<button type="button" class="btn btn-secondary btn-xs btn-minicheck-next" data-minicheck-sec="${sec.id}">Đổi câu khác ↻</button>` : ''}
+            <button type="button" class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startSectionTest('${sec.id}', 'practice')">Luyện cả ${secQuestions.length} câu</button>
+          </div>
+        </div>
+        <div class="minicheck-q-text">${enhanceRegisterTooltips(q.question)}</div>
+        ${renderQuestionMedia(q)}
+        <div class="minicheck-opts">${optsHtml}</div>
+        <div class="minicheck-feedback" style="display:none;"></div>
+      </div>
+    `;
+  }
+
+  function bindMiniCheckBox(box, sec) {
+    const secQuestions = getSectionQuestions(sec.id);
+    if (!box || secQuestions.length === 0) return;
+    const idx = (miniCheckIndexMap[sec.id] || 0) % secQuestions.length;
+    const q = secQuestions[idx];
+
+    box.querySelector('.btn-minicheck-next')?.addEventListener('click', () => {
+      miniCheckIndexMap[sec.id] = (idx + 1) % secQuestions.length;
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = buildMiniCheckHtml(sec, secQuestions);
+      const newBox = wrapper.firstElementChild;
+      if (newBox) {
+        box.replaceWith(newBox);
+        renderMath(newBox);
+        bindMiniCheckBox(newBox, sec);
+      }
+    });
+
+    box.querySelectorAll('.minicheck-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        const picked = btn.getAttribute('data-opt-key');
+        const isOk = picked === q.correctAnswer;
+        box.querySelectorAll('.minicheck-opt').forEach(b => {
+          b.disabled = true;
+          const k = b.getAttribute('data-opt-key');
+          if (k === q.correctAnswer) b.classList.add('correct');
+          else if (k === picked && !isOk) b.classList.add('wrong');
+        });
+        const fb = box.querySelector('.minicheck-feedback');
+        if (fb) {
+          fb.style.display = 'block';
+          fb.innerHTML = `<strong>${isOk ? '✓ Chính xác!' : `✗ Chưa đúng (Đáp án: ${q.correctAnswer}).`}</strong> ${enhanceRegisterTooltips(q.explanation || '')}`;
+          renderMath(fb);
+        }
+        appState.history[q.id] = { answered: true, isCorrect: isOk, lastAnswer: picked, timestamp: Date.now() };
+        if (!isOk && !appState.mistakes.includes(q.id)) appState.mistakes.push(q.id);
+        saveState();
+      });
+    });
+  }
+
+  function updateTheoryFooterNav(chapterNum) {
+    const prevBtn = document.getElementById('btn-theory-prev-ch');
+    const nextBtn = document.getElementById('btn-theory-next-ch');
+    if (prevBtn) {
+      prevBtn.disabled = chapterNum <= 1;
+      prevBtn.textContent = chapterNum > 1 ? `← Chương ${chapterNum - 1}` : '← Chương trước';
+    }
+    if (nextBtn) {
+      nextBtn.disabled = chapterNum >= 4;
+      nextBtn.textContent = chapterNum < 4 ? `Chương ${chapterNum + 1} →` : 'Chương tiếp →';
+    }
+  }
+
+  let theoryScrollspyBound = false;
+  function updateTheoryScrollspy() {
+    if (currentTab !== 'theory') return;
+    const tocItems = Array.from(document.querySelectorAll('#theory-toc .theory-toc-item'));
+    if (tocItems.length === 0) return;
+    let activeHref = null;
+    for (const link of tocItems) {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) continue;
+      const target = document.getElementById(href.slice(1));
+      if (target && target.getBoundingClientRect().top <= 165) {
+        activeHref = href;
+      }
+    }
+    if (activeHref) {
+      tocItems.forEach(el => el.classList.toggle('active', el.getAttribute('href') === activeHref));
+    }
+  }
+
   function renderTheory(chapterNum = currentTheoryChapter) {
     currentTheoryChapter = chapterNum;
     const chapterObj = chaptersList.find(c => c.id === chapterNum) || chaptersList[0] || {};
     const sections = theorySections.filter(s => s.chapter === chapterNum);
 
-    // Render Table of Contents (Phân chia đúng 2 Phần theo giáo trình KTMT.pdf)
+    if (isTheorySplitPdf) {
+      syncSplitPdf(chapterObj.pdfPageStart || 1);
+    }
+    updateTheoryFooterNav(chapterNum);
+
+    // Render Table of Contents (Phân chia đúng 2 Phần theo giáo trình KTMT_GK.pdf)
     const tocContainer = document.getElementById('theory-toc');
     if (tocContainer) {
       tocContainer.innerHTML = '';
@@ -419,9 +651,8 @@
           document.querySelectorAll('.theory-toc-item').forEach(el => el.classList.remove('active'));
           item.classList.add('active');
           const target = document.getElementById(`sec-${sec.id}`);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (isTheorySplitPdf && sec.pdfPage) syncSplitPdf(sec.pdfPage);
         });
         tocContainer.appendChild(item);
       });
@@ -445,9 +676,8 @@
           document.querySelectorAll('.theory-toc-item').forEach(el => el.classList.remove('active'));
           item.classList.add('active');
           const target = document.getElementById(`group-sec-${grp.id}`) || document.getElementById(`sec-part2-${chapterNum}`);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (isTheorySplitPdf && grp.pdfPage) syncSplitPdf(grp.pdfPage);
         });
         tocContainer.appendChild(item);
       });
@@ -458,10 +688,10 @@
     const descEl = document.getElementById('theory-chapter-desc');
     const pageBadge = document.getElementById('theory-pdf-page-badge');
     if (titleEl) titleEl.textContent = chapterObj.title ? `${chapterObj.code}: ${chapterObj.title}` : `Chương ${chapterNum}`;
-    if (descEl) descEl.textContent = chapterObj.subtitle || 'Tài liệu ôn tập bám sát giáo trình KTMT.pdf';
+    if (descEl) descEl.textContent = chapterObj.subtitle || 'Tài liệu ôn tập bám sát giáo trình KTMT_GK.pdf';
     if (pageBadge) {
       pageBadge.textContent = `PDF Trang ${chapterObj.pdfPageStart || 1}`;
-      pageBadge.onclick = () => openPdfModal(chapterObj.pdfPageStart || 1);
+      pageBadge.onclick = () => openTheoryPdfPage(chapterObj.pdfPageStart || 1);
     }
 
     // Render Content Sections
@@ -472,8 +702,8 @@
       // Banner Phần 1
       html += `
         <div style="margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--primary);">
-          <span class="badge" style="background-color: var(--primary); color: white; margin-bottom: 6px; display: inline-block;">PHẦN 1 GIÁO TRÌNH KTMT.PDF</span>
-          <h2 style="font-size: 1.45rem; color: var(--primary); margin: 4px 0 0 0;">
+          <span class="badge badge-chapter" style="margin-bottom: 6px; display: inline-block;">PHẦN 1 GIÁO TRÌNH KTMT_GK.PDF</span>
+          <h2 style="font-size: 1.45rem; color: var(--primary); margin: 4px 0 0 0; border: none; padding: 0;">
             ${chapterNum}.1 Phần 1: Lý thuyết trọng tâm
           </h2>
         </div>
@@ -481,39 +711,38 @@
 
       sections.forEach(sec => {
         const secQuestions = getSectionQuestions(sec.id);
-        html += `<section id="sec-${sec.id}" class="theory-section-box" style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">`;
+        html += `<section id="sec-${sec.id}" class="theory-section-block">`;
         html += `
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <h2 style="font-size: 1.3rem; color: var(--primary); margin: 0;">${sec.code}. ${sec.title}</h2>
-            <button class="btn btn-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(${sec.pdfPage})" style="padding: 4px 10px; font-size: 0.8rem;">
-              📄 Mở xem Trang ${sec.pdfPage} (KTMT.pdf)
+          <div class="section-heading-row" style="margin-bottom: 12px;">
+            <h2 style="font-size: 1.3rem; color: var(--primary); margin: 0; border: none; padding: 0;">${sec.code}. ${sec.title}</h2>
+            <button type="button" class="section-pdf-chip" data-pdf-jump-page="${sec.pdfPage}" title="Mở trang ${sec.pdfPage} trong KTMT_GK.pdf">
+              Trang ${sec.pdfPage} (KTMT_GK.pdf)
             </button>
           </div>
         `;
-        
+
         if (sec.summary) {
-          html += `<div style="background-color: var(--bg-muted); border-left: 3px solid var(--primary); padding: 10px 14px; border-radius: 4px; font-size: 0.9rem; margin-bottom: 16px;">
-            <strong>Tóm tắt trọng tâm:</strong> ${sec.summary}
-          </div>`;
+          html += `<div class="theory-summary-box"><strong>Tóm tắt trọng tâm:</strong> ${sec.summary}</div>`;
         }
 
         html += enhanceRegisterTooltips(sec.content);
+        html += buildMiniCheckHtml(sec, secQuestions);
 
         // THẺ ĐÁNH GIÁ & BÀI TEST TOÀN DIỆN CHO MỤC NÀY (Không trùng lặp)
         html += `
           <div class="theory-assessment-card" id="assessment-${sec.id}">
             <div class="assessment-header">
-              <div class="assessment-badge">📋 BÀI KIỂM TRA MỤC ${sec.code}</div>
+              <div class="assessment-badge">BÀI KIỂM TRA MỤC ${sec.code}</div>
               <div class="assessment-count-badge">${secQuestions.length} câu trắc nghiệm</div>
             </div>
             <h3 class="assessment-title">Kiểm tra kiến thức: ${sec.title}</h3>
             <p class="assessment-desc">
-              Học xong phần này? Hãy làm ngay bài test gồm <strong>toàn bộ ${secQuestions.length} câu hỏi trọng tâm</strong> bám sát mục này để củng cố kiến thức trước khi tiếp tục.
+              Học xong phần này? Làm bài kiểm tra gồm <strong>toàn bộ ${secQuestions.length} câu hỏi trọng tâm</strong> bám sát mục này hoặc mở Sách bài tập & lời giải.
             </p>
 
             <div class="assessment-main-actions">
               <button class="btn btn-primary" onclick="window.KTMT_APP && window.KTMT_APP.startSectionTest('${sec.id}', 'exam')">
-                ⏱️ Làm Bài Test Mục Này (${secQuestions.length} câu)
+                ⏱️ Làm Bài Test (${secQuestions.length} câu)
               </button>
               <button class="btn btn-secondary" onclick="window.KTMT_APP && window.KTMT_APP.startSectionTest('${sec.id}', 'practice')">
                 🎯 Luyện Tập Có Giải Thích (${secQuestions.length} câu)
@@ -529,19 +758,19 @@
       const exerciseGroups = (chapterObj.groups || []).filter(g => g.type === 'exercise' || g.id !== `${chapterNum}.1`);
       if (exerciseGroups.length > 0) {
         html += `
-          <section id="sec-part2-${chapterNum}" class="theory-section-box" style="margin-top: 50px; padding-top: 32px; border-top: 3px solid var(--primary);">
+          <section id="sec-part2-${chapterNum}" class="theory-section-block" style="margin-top: 40px; padding-top: 28px; border-top: 2px solid var(--primary); border-bottom: none;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 8px;">
               <div>
-                <span class="badge" style="background-color: var(--primary); color: white; margin-bottom: 6px; display: inline-block;">PHẦN 2 GIÁO TRÌNH KTMT.PDF</span>
-                <h2 style="font-size: 1.45rem; color: var(--primary); margin: 4px 0 0 0;">
+                <span class="badge badge-chapter" style="margin-bottom: 6px; display: inline-block;">PHẦN 2 GIÁO TRÌNH KTMT_GK.PDF</span>
+                <h2 style="font-size: 1.45rem; color: var(--primary); margin: 4px 0 0 0; border: none; padding: 0;">
                   ${chapterNum}.2 Phần 2: Toàn bộ bài tập Chương ${chapterNum} và Hướng dẫn giải
                 </h2>
                 <p style="color: var(--text-secondary); margin-top: 6px; font-size: 0.92rem;">
-                  Phân nhóm chính xác 100% theo các nhóm bài tập trong giáo trình KTMT.pdf. Chọn nhóm bất kỳ để làm bài test hoặc luyện tập.
+                  Phân nhóm chuẩn 100% theo giáo trình KTMT_GK.pdf. Chọn nhóm bất kỳ để làm test hoặc mở Sách lời giải.
                 </p>
               </div>
-              <button class="btn btn-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(${exerciseGroups[0].pdfPage || chapterObj.pdfPageStart})" style="padding: 6px 14px; font-size: 0.82rem;">
-                📄 Mở xem Phần 2 trong KTMT.pdf
+              <button type="button" class="section-pdf-chip" data-pdf-jump-page="${exerciseGroups[0].pdfPage || chapterObj.pdfPageStart}">
+                Trang ${exerciseGroups[0].pdfPage || chapterObj.pdfPageStart} (KTMT_GK.pdf)
               </button>
             </div>
 
@@ -553,7 +782,7 @@
                     <div>
                       <div class="part2-group-card-header">
                         <span class="group-id-badge">${grp.id}</span>
-                        <button class="btn btn-outline-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.openPdfModal(${grp.pdfPage})" title="Xem trang ${grp.pdfPage} trong PDF">
+                        <button type="button" class="btn btn-outline-secondary btn-xs" data-pdf-jump-page="${grp.pdfPage}" title="Xem trang ${grp.pdfPage} trong PDF">
                           📄 Trang ${grp.pdfPage}
                         </button>
                       </div>
@@ -565,10 +794,13 @@
                     </div>
                     <div class="part2-group-actions">
                       <button class="btn btn-primary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('${grp.id}', 'exam')" style="flex: 1;">
-                        ⏱️ Làm bài Test (${grpQuestions.length} câu)
+                        ⏱️ Test (${grpQuestions.length})
                       </button>
                       <button class="btn btn-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('${grp.id}', 'practice')">
-                        🎯 Luyện tập
+                        🎯 Luyện
+                      </button>
+                      <button class="btn btn-outline-secondary btn-sm" onclick="window.KTMT_APP && window.KTMT_APP.openWorkbookGroup('${grp.id}')" title="Xem toàn bộ bài & hướng dẫn giải chi tiết">
+                        📖 Lời giải
                       </button>
                     </div>
                   </div>
@@ -581,6 +813,34 @@
 
       contentEl.innerHTML = html;
       renderMath(contentEl);
+
+      // Dynamic group counts & PDF/Mini-check bindings
+      contentEl.querySelectorAll('.group-q-count[data-group-link]').forEach(el => {
+        const gid = el.getAttribute('data-group-link');
+        el.textContent = `(${getGroupQuestions(gid).length} câu)`;
+      });
+      contentEl.querySelectorAll('[data-pdf-jump-page]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openTheoryPdfPage(parseInt(btn.getAttribute('data-pdf-jump-page'), 10) || 1);
+        });
+      });
+      sections.forEach(sec => {
+        const box = contentEl.querySelector(`[data-minicheck-box="${sec.id}"]`);
+        if (box) bindMiniCheckBox(box, sec);
+      });
+    }
+
+    if (!theoryScrollspyBound) {
+      theoryScrollspyBound = true;
+      let spyQueued = false;
+      window.addEventListener('scroll', () => {
+        if (currentTab !== 'theory' || spyQueued) return;
+        spyQueued = true;
+        requestAnimationFrame(() => {
+          spyQueued = false;
+          updateTheoryScrollspy();
+        });
+      }, { passive: true });
     }
 
     // Update active tab buttons in theory header
@@ -591,8 +851,240 @@
   }
 
   // ==========================================
-  // PRACTICE MODE ENGINE
+  // CHEAT SHEET TAB ENGINE
   // ==========================================
+  function renderCheatSheet() {
+    const container = document.getElementById('cheatsheet-content');
+    if (!container) return;
+
+    const csCards = window.KTMT_CHEATSHEET || [];
+    const regs = window.RISCV_REGISTERS || {};
+    const regRows = Object.values(regs).map(r => `
+      <tr>
+        <td><code>${r.num}</code></td>
+        <td><strong>${r.alias}</strong></td>
+        <td><code>${r.bin}</code></td>
+        <td>${escapeHtml(r.saved)}</td>
+        <td>${escapeHtml(r.role)}</td>
+      </tr>
+    `).join('');
+
+    let html = `<div class="cheatsheet-grid">`;
+    csCards.forEach(card => {
+      html += `
+        <article class="cheatsheet-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+            <h3 style="margin:0;border:none;padding:0;">${escapeHtml(card.title)}</h3>
+            <button type="button" class="section-pdf-chip" data-cs-pdf="${card.pdfPage || 1}">Trang ${card.pdfPage || 1}</button>
+          </div>
+          <ul>
+            ${(card.items || []).map(it => `<li><strong>${escapeHtml(it.label)}:</strong> ${it.formula}</li>`).join('')}
+          </ul>
+        </article>
+      `;
+    });
+    html += `</div>`;
+
+    html += `
+      <article class="cheatsheet-card" style="margin-bottom: 18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+          <h3 style="margin:0;border:none;padding:0;">Bảng 6 Định dạng lệnh &amp; Opcode RISC-V 32-bit (KTMT_GK.pdf trang 61–62)</h3>
+          <button type="button" class="section-pdf-chip" data-cs-pdf="61">Trang 61</button>
+        </div>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Format</th><th>Opcode (bit 6:0)</th><th>Lệnh đại diện</th><th>Bố cục bit 31..0</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>R-type</strong></td><td><code>0110011</code> (0x33)</td><td>add, sub, sll, slt, sltu, xor, srl, sra, or, and</td><td>funct7[31:25] | rs2[24:20] | rs1[19:15] | funct3[14:12] | rd[11:7] | opcode</td></tr>
+              <tr><td><strong>I-type (ALU)</strong></td><td><code>0010011</code> (0x13)</td><td>addi, slti, xori, ori, andi, slli, srli, srai</td><td>imm[11:0] | rs1 | funct3 | rd | opcode</td></tr>
+              <tr><td><strong>I-type (Load/JALR)</strong></td><td><code>0000011</code> / <code>1100111</code></td><td>lb, lh, lw, lbu, lhu / jalr</td><td>imm[11:0] (Mở rộng dấu 12 bit) | rs1 | funct3 | rd | opcode</td></tr>
+              <tr><td><strong>S-type</strong></td><td><code>0100011</code> (0x23)</td><td>sb, sh, sw</td><td>imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | opcode</td></tr>
+              <tr><td><strong>B-type</strong></td><td><code>1100011</code> (0x63)</td><td>beq, bne, blt, bge, bltu, bgeu</td><td>imm[12|10:5] | rs2 | rs1 | funct3 | imm[4:1|11] | opcode (dịch 1 bit = ×2 byte)</td></tr>
+              <tr><td><strong>U-type</strong></td><td><code>0110111</code> / <code>0010111</code></td><td>lui / auipc</td><td>imm[31:12] (20 bit cao) | rd[11:7] | opcode</td></tr>
+              <tr><td><strong>J-type</strong></td><td><code>1101111</code> (0x6F)</td><td>jal</td><td>imm[20|10:1|11|19:12] | rd[11:7] | opcode (bước nhảy chẵn ×2)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="cheatsheet-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+          <h3 style="margin:0;border:none;padding:0;">Bảng tra cứu 32 thanh ghi RISC-V RV32I (KTMT_GK.pdf trang 51)</h3>
+          <button type="button" class="section-pdf-chip" data-cs-pdf="51">Trang 51</button>
+        </div>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Số hiệu</th><th>ABI</th><th>Mã 5-bit</th><th>Quy ước lưu trữ</th><th>Chức năng chính</th></tr>
+            </thead>
+            <tbody>${regRows}</tbody>
+          </table>
+        </div>
+      </article>
+    `;
+
+    container.innerHTML = html;
+    renderMath(container);
+    container.querySelectorAll('[data-cs-pdf]').forEach(btn => {
+      btn.addEventListener('click', () => openPdfModal(parseInt(btn.getAttribute('data-cs-pdf'), 10) || 1));
+    });
+  }
+
+  // ==========================================
+  // PRACTICE & WORKBOOK SOLUTIONS ENGINE
+  // ==========================================
+  function getTagBadgeClass(tag) {
+    if (tag === 'GK') return 'badge-tag-gk';
+    if (tag === 'CK') return 'badge-tag-ck';
+    if (tag === 'Ôn tập' || tag === 'OT') return 'badge-tag-ot';
+    return 'badge-tag-lt';
+  }
+
+  function setPracticeViewMode(mode) {
+    practiceViewMode = mode === 'workbook' ? 'workbook' : 'quiz';
+    document.getElementById('btn-practice-mode-quiz')?.classList.toggle('active', practiceViewMode === 'quiz');
+    document.getElementById('btn-practice-mode-workbook')?.classList.toggle('active', practiceViewMode === 'workbook');
+
+    const quizWrap = document.getElementById('practice-quiz-wrapper');
+    const wbWrap = document.getElementById('practice-workbook-container');
+    const bulkWrap = document.getElementById('workbook-bulk-actions');
+    if (quizWrap) quizWrap.style.display = practiceViewMode === 'quiz' ? 'block' : 'none';
+    if (wbWrap) wbWrap.style.display = practiceViewMode === 'workbook' ? 'block' : 'none';
+    if (bulkWrap) bulkWrap.style.display = practiceViewMode === 'workbook' ? 'flex' : 'none';
+  }
+
+  function renderPracticeModeView() {
+    setPracticeViewMode(practiceViewMode);
+    if (practiceViewMode === 'workbook') {
+      renderPracticeWorkbook();
+    } else {
+      renderPracticeQuestion();
+    }
+  }
+
+  function openWorkbookForChapter(chNum) {
+    const chSelect = document.getElementById('practice-filter-chapter');
+    if (chSelect) chSelect.value = String(chNum);
+    updateGroupDropdownOptions(String(chNum));
+    const grpSelect = document.getElementById('practice-filter-group');
+    if (grpSelect) grpSelect.value = 'all';
+    const shuf = document.getElementById('practice-shuffle-toggle');
+    if (shuf) shuf.checked = false;
+    setPracticeViewMode('workbook');
+    initPracticeQueue();
+    switchTab('practice');
+  }
+
+  function openWorkbookGroup(groupId) {
+    let chNum = 1;
+    chaptersList.forEach(ch => {
+      if ((ch.groups || []).some(g => g.id === groupId)) chNum = ch.id;
+    });
+    const chSelect = document.getElementById('practice-filter-chapter');
+    if (chSelect) chSelect.value = String(chNum);
+    updateGroupDropdownOptions(String(chNum));
+    const grpSelect = document.getElementById('practice-filter-group');
+    if (grpSelect) grpSelect.value = groupId;
+    const shuf = document.getElementById('practice-shuffle-toggle');
+    if (shuf) shuf.checked = false;
+    setPracticeViewMode('workbook');
+    initPracticeQueue();
+    switchTab('practice');
+  }
+
+  function renderPracticeWorkbook() {
+    const container = document.getElementById('practice-workbook-container');
+    if (!container) return;
+
+    const toggleAllBtn = document.getElementById('btn-workbook-toggle-all');
+    if (toggleAllBtn) {
+      toggleAllBtn.textContent = workbookExpandAll ? 'Thu gọn tất cả lời giải' : 'Mở tất cả lời giải chi tiết';
+    }
+
+    if (practiceQueue.length === 0) {
+      container.innerHTML = `
+        <div class="quiz-card" style="text-align:center; padding: 40px 20px;">
+          <h3>Không có bài tập phù hợp với bộ lọc</h3>
+          <p style="color:var(--text-secondary); margin: 8px 0 16px;">Hãy đổi Chương hoặc Nhóm bài tập ở thanh lọc phía trên.</p>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-wb-reset-filters">Hiển thị tất cả ${allQuestions.length} bài</button>
+        </div>`;
+      container.querySelector('#btn-wb-reset-filters')?.addEventListener('click', () => {
+        document.getElementById('practice-filter-chapter').value = 'all';
+        document.getElementById('practice-filter-tag').value = 'all';
+        updateGroupDropdownOptions('all');
+        document.getElementById('practice-filter-group').value = 'all';
+        initPracticeQueue();
+        renderPracticeWorkbook();
+      });
+      return;
+    }
+
+    const itemsHtml = practiceQueue.map((q, idx) => {
+      const grpInfo = getQuestionGroupInfo(q);
+      const tagClass = getTagBadgeClass(q.examTag);
+      const correctOpt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
+      const optsHtml = (q.options || []).map((opt, oIdx) => {
+        const key = opt.key || ['A', 'B', 'C', 'D'][oIdx];
+        const isAns = workbookExpandAll && key === q.correctAnswer;
+        return `<div class="workbook-opt-pill ${isAns ? 'is-answer' : ''}" data-wb-key="${key}"><strong>${key}.</strong> ${enhanceRegisterTooltips(opt.text)}</div>`;
+      }).join('');
+
+      return `
+        <article class="workbook-item">
+          <div class="workbook-item-head">
+            <div class="badge-tags">
+              <span class="badge badge-chapter">Bài #${idx + 1} • Ch.${q.chapter}</span>
+              <span class="badge badge-group">${escapeHtml(grpInfo.groupTitle)}</span>
+              <span class="badge ${tagClass}">${escapeHtml(q.examTag || 'GK')}</span>
+              ${q.source ? `<span class="badge badge-group">${escapeHtml(q.source)}</span>` : ''}
+            </div>
+            <div class="inline-actions">
+              <button type="button" class="section-pdf-chip" data-wb-pdf="${q.pdfPage || 1}">Trang ${q.pdfPage || 1} (KTMT_GK.pdf)</button>
+              ${grpInfo.linkedSec ? `<button type="button" class="btn btn-outline-secondary btn-xs" data-wb-theory="${grpInfo.linkedSec.id}">Lý thuyết ${grpInfo.linkedSec.code}</button>` : ''}
+            </div>
+          </div>
+          <div class="workbook-stem">${enhanceRegisterTooltips(q.question)}</div>
+          ${renderQuestionMedia(q)}
+          <div class="workbook-options-list">${optsHtml}</div>
+          <div class="inline-actions">
+            <button type="button" class="btn btn-primary btn-xs btn-toggle-wb-sol" data-correct-key="${q.correctAnswer}">
+              ${workbookExpandAll ? 'Ẩn hướng dẫn giải chi tiết' : 'Hiện hướng dẫn giải chi tiết'}
+            </button>
+          </div>
+          <div class="workbook-solution-box ${workbookExpandAll ? 'open' : ''}">
+            <div style="margin-bottom: 6px;"><strong>Đáp án đúng: ${q.correctAnswer}${correctOpt ? '. ' + enhanceRegisterTooltips(correctOpt) : ''}</strong></div>
+            <div>${enhanceRegisterTooltips(q.explanation || 'Đang cập nhật lời giải.')}</div>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    container.innerHTML = `<div class="workbook-list">${itemsHtml}</div>`;
+    renderMath(container);
+
+    container.querySelectorAll('[data-wb-pdf]').forEach(btn => {
+      btn.addEventListener('click', () => openPdfModal(parseInt(btn.getAttribute('data-wb-pdf'), 10) || 1));
+    });
+    container.querySelectorAll('[data-wb-theory]').forEach(btn => {
+      btn.addEventListener('click', () => jumpToTheory(btn.getAttribute('data-wb-theory')));
+    });
+    container.querySelectorAll('.btn-toggle-wb-sol').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.workbook-item');
+        const box = card?.querySelector('.workbook-solution-box');
+        if (!box) return;
+        const isOpen = box.classList.toggle('open');
+        const ansKey = btn.getAttribute('data-correct-key');
+        btn.textContent = isOpen ? 'Ẩn hướng dẫn giải chi tiết' : 'Hiện hướng dẫn giải chi tiết';
+        card.querySelectorAll('.workbook-opt-pill').forEach(pill => {
+          pill.classList.toggle('is-answer', isOpen && pill.getAttribute('data-wb-key') === ansKey);
+        });
+      });
+    });
+  }
+
   function initPracticeQueue() {
     const chFilter = document.getElementById('practice-filter-chapter')?.value || 'all';
     const tagFilter = document.getElementById('practice-filter-tag')?.value || 'all';
@@ -606,7 +1098,7 @@
       filtered = filtered.filter(q => q.chapter === chNum);
     }
     if (tagFilter !== 'all') {
-      filtered = filtered.filter(q => q.examTag === tagFilter);
+      filtered = filtered.filter(q => q.examTag === tagFilter || (Array.isArray(q.examTags) && q.examTags.includes(tagFilter)));
     }
     if (groupFilter !== 'all') {
       if (groupFilter.startsWith('sec-')) {
@@ -759,11 +1251,7 @@
 
     const isBookmarked = appState.bookmarks.includes(q.id);
     const hasNote = Boolean(appState.notes[q.id]);
-
-    let tagBadgeClass = 'badge-tag-lt';
-    if (q.examTag === 'GK') tagBadgeClass = 'badge-tag-gk';
-    if (q.examTag === 'CK') tagBadgeClass = 'badge-tag-ck';
-
+    const tagBadgeClass = getTagBadgeClass(q.examTag);
     const grpInfo = getQuestionGroupInfo(q);
 
     let html = `
@@ -775,7 +1263,7 @@
           </span>
           <span class="badge ${tagBadgeClass}">${q.examTag}</span>
           <span class="badge" style="background-color: var(--bg-muted); color: var(--text-secondary); cursor: pointer;" id="btn-view-pdf-page">
-            📄 Trang ${q.pdfPage} (KTMT.pdf)
+            📄 Trang ${q.pdfPage} (KTMT_GK.pdf)
           </span>
           ${grpInfo.linkedSec ? `
             <button class="btn btn-outline-primary btn-xs" style="padding: 2px 8px; font-size: 0.76rem; border-radius: 9999px;" onclick="window.KTMT_APP && window.KTMT_APP.jumpToTheory('${grpInfo.linkedSec.id}')" title="Xem lý thuyết mục ${grpInfo.linkedSec.code}: ${grpInfo.linkedSec.title}">
@@ -796,6 +1284,7 @@
       <div class="quiz-question-text" id="quiz-q-text">
         ${enhanceRegisterTooltips(q.question)}
       </div>
+      ${renderQuestionMedia(q)}
     `;
 
     // Question Body: MCQ vs Fill-in
@@ -836,7 +1325,7 @@
           ${enhanceRegisterTooltips(q.explanation)}
         </div>
         <div class="explanation-meta">
-          <span>📚 Nguồn: <strong>Trang ${q.pdfPage} trong KTMT.pdf</strong></span>
+          <span>📚 Nguồn: <strong>Trang ${q.pdfPage} trong KTMT_GK.pdf</strong></span>
           <button class="btn btn-secondary btn-sm" id="btn-open-pdf-exp" style="padding: 4px 10px; font-size: 0.8rem;">
             Mở xem trang ${q.pdfPage} 📄
           </button>
@@ -1071,8 +1560,35 @@
   // ==========================================
   // EXAM MODE ENGINE
   // ==========================================
+  function sampleBalancedByChapters(basePool, totalCount) {
+    const chosen = [];
+    const chosenIds = new Set();
+    const quotas = [1, 2, 3, 4].map((ch, idx) => {
+      const perCh = Math.floor(totalCount / 4) + (idx < (totalCount % 4) ? 1 : 0);
+      return { ch, target: perCh };
+    });
+
+    quotas.forEach(({ ch, target }) => {
+      const chItems = shuffleArray(basePool.filter(q => q.chapter === ch));
+      chItems.slice(0, target).forEach(q => {
+        chosen.push(q);
+        chosenIds.add(q.id);
+      });
+    });
+
+    if (chosen.length < totalCount) {
+      shuffleArray(basePool).forEach(q => {
+        if (chosen.length < totalCount && !chosenIds.has(q.id)) {
+          chosen.push(q);
+          chosenIds.add(q.id);
+        }
+      });
+    }
+    return chosen.slice(0, totalCount);
+  }
+
   function startExam(presetType, customConfig = {}) {
-    if (presetType === 'gk' || presetType === 'ck' || presetType === 'custom') {
+    if (['gk', 'ck', 'de0012', 'de0013', 'custom'].includes(presetType)) {
       appState.learningContext = null;
     }
 
@@ -1080,27 +1596,42 @@
     let durationMins = 30;
     let questionCount = 25;
     let examTitle = 'Phòng Thi Thử KTMT';
+    let preserveOrder = false;
 
     if (presetType === 'gk') {
-      pool = pool.filter(q => q.chapter === 1 || q.chapter === 2);
-      durationMins = 30;
-      questionCount = 25;
-      examTitle = 'Đề thi Giữa kỳ KTMT (Chương 1 & 2 - 25 câu)';
+      const gkPool = pool.filter(q => q.examTag === 'GK' || (Array.isArray(q.examTags) && q.examTags.includes('GK')));
+      pool = gkPool.length >= 20 ? gkPool : pool;
+      durationMins = 45;
+      questionCount = Math.min(35, pool.length);
+      examTitle = `Đề thi Giữa kỳ KTMT chuẩn KTMT_GK.pdf (4 chương - ${questionCount} câu)`;
+      examQuestions = sampleBalancedByChapters(pool, questionCount);
+      preserveOrder = true; // already balanced-sampled across 4 chapters
     } else if (presetType === 'ck') {
-      pool = pool.slice();
       durationMins = 50;
-      questionCount = 40;
-      examTitle = 'Đề thi Cuối kỳ KTMT (Toàn diện 4 chương - 40 câu)';
-    } else if (presetType === 'section') {
+      questionCount = Math.min(40, pool.length);
+      examTitle = `Đề thi Cuối kỳ KTMT (Toàn diện 4 chương - ${questionCount} câu)`;
+      examQuestions = sampleBalancedByChapters(pool, questionCount);
+      preserveOrder = true;
+    } else if (presetType === 'de0012') {
+      const rx = /0012/i;
+      pool = pool.filter(q => rx.test(q.source || ''));
+      questionCount = pool.length;
+      durationMins = Math.max(15, Math.ceil(questionCount * 1.5));
+      examTitle = `Đề thi mẫu 0012 — KTMT_GK.pdf (${questionCount} câu)`;
+      preserveOrder = true;
+    } else if (presetType === 'de0013') {
+      const rx = /0013/i;
+      pool = pool.filter(q => rx.test(q.source || ''));
+      questionCount = pool.length;
+      durationMins = Math.max(20, Math.ceil(questionCount * 1.5));
+      examTitle = `Đề thi mẫu 0013 (Bản 1 & Bản 2) — KTMT_GK.pdf (${questionCount} câu)`;
+      preserveOrder = true;
+    } else if (presetType === 'section' || presetType === 'group') {
       pool = (customConfig.questions || []).slice();
       questionCount = pool.length;
-      durationMins = customConfig.time || Math.max(15, Math.ceil(questionCount * 1.5));
-      examTitle = customConfig.title || 'Bài kiểm tra theo mục lý thuyết';
-    } else if (presetType === 'group') {
-      pool = (customConfig.questions || []).slice();
-      questionCount = pool.length;
-      durationMins = customConfig.time || Math.max(8, Math.ceil(questionCount * 1.5));
-      examTitle = customConfig.title || 'Bài kiểm tra theo nhóm bài tập';
+      durationMins = customConfig.time || Math.max(12, Math.ceil(questionCount * 1.5));
+      examTitle = customConfig.title || 'Bài kiểm tra theo chuyên đề';
+      preserveOrder = true;
     } else if (presetType === 'custom') {
       if (customConfig.chapters && customConfig.chapters.length > 0) {
         pool = pool.filter(q => customConfig.chapters.includes(q.chapter));
@@ -1110,10 +1641,13 @@
       examTitle = customConfig.title || 'Bài thi tùy chỉnh';
     }
 
-    if (presetType === 'section' || presetType === 'group') {
-      examQuestions = pool.slice(); // Giữ nguyên toàn bộ câu hỏi của mục/nhóm đó
-    } else {
-      examQuestions = shuffleArray(pool).slice(0, questionCount);
+    if (pool.length === 0) {
+      showToast('Không tìm thấy câu hỏi phù hợp cho bộ đề này!', 'error');
+      return;
+    }
+
+    if (presetType !== 'gk' && presetType !== 'ck') {
+      examQuestions = preserveOrder ? pool.slice(0, questionCount) : shuffleArray(pool).slice(0, questionCount);
     }
     examAnswers = {};
     examFlags = {};
@@ -1205,6 +1739,7 @@
       <div class="quiz-question-text">
         <strong>Câu ${currentExamIndex + 1}:</strong> ${enhanceRegisterTooltips(q.question)}
       </div>
+      ${renderQuestionMedia(q)}
 
       <div class="options-grid">
     `;
@@ -1282,6 +1817,56 @@
     if (confirm(confirmMsg)) {
       submitExam();
     }
+  }
+
+  function buildExamWeaknessHtml(questions, answers) {
+    const groupMap = {};
+    questions.forEach((q, idx) => {
+      const gid = q.groupId || q.group || `ch${q.chapter}`;
+      const info = getQuestionGroupInfo(q);
+      if (!groupMap[gid]) {
+        groupMap[gid] = {
+          groupId: gid,
+          title: info.groupTitle || gid,
+          secId: info.linkedSec ? info.linkedSec.id : null,
+          secCode: info.linkedSec ? info.linkedSec.code : null,
+          total: 0,
+          correct: 0
+        };
+      }
+      groupMap[gid].total++;
+      if (answers[idx] === q.correctAnswer) groupMap[gid].correct++;
+    });
+
+    const rows = Object.values(groupMap).map(r => ({
+      ...r,
+      pct: Math.round((r.correct / r.total) * 100)
+    })).sort((a, b) => a.pct - b.pct);
+
+    if (rows.length <= 1) return '';
+
+    return `
+      <div style="margin-bottom: 24px; text-align: left;">
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 10px;">Phân tích điểm yếu theo nhóm bài tập (${rows.length} nhóm)</h3>
+        <div class="exam-weakness-grid">
+          ${rows.map(r => `
+            <div class="exam-weakness-card ${r.pct < 70 ? 'weak' : ''}">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span class="group-id-badge">${escapeHtml(r.groupId)}</span>
+                <strong style="font-size:0.86rem; color:${r.pct < 70 ? 'var(--warning-text)' : 'var(--success-text)'};">
+                  ${r.correct}/${r.total} (${r.pct}%)${r.pct < 70 ? ' — Cần ôn lại' : ''}
+                </strong>
+              </div>
+              <div style="font-size:0.86rem; font-weight:600; color:var(--text-main);">${escapeHtml(r.title)}</div>
+              <div class="inline-actions">
+                ${r.secId ? `<button type="button" class="btn btn-outline-secondary btn-xs" data-weak-sec="${r.secId}">Lý thuyết ${r.secCode || ''}</button>` : ''}
+                <button type="button" class="btn btn-secondary btn-xs" data-weak-grp="${escapeHtml(r.groupId)}">Luyện nhóm này</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
   }
 
   function submitExam() {
@@ -1363,10 +1948,12 @@
         </p>
       </div>
 
-      <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 30px;">
+      <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px;">
         <button class="btn btn-primary" id="btn-exam-retry">Làm đề khác 🔄</button>
         <button class="btn btn-secondary" id="btn-view-mistakes-tab">Vào Sổ tay câu sai 📖</button>
       </div>
+
+      ${buildExamWeaknessHtml(examQuestions, examAnswers)}
 
       <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;">Chi tiết bài làm:</h3>
       <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -1425,6 +2012,13 @@
     document.getElementById('btn-view-mistakes-tab')?.addEventListener('click', () => {
       switchTab('mistakes');
     });
+
+    resultView.querySelectorAll('[data-weak-sec]').forEach(btn => {
+      btn.addEventListener('click', () => jumpToTheory(btn.getAttribute('data-weak-sec')));
+    });
+    resultView.querySelectorAll('[data-weak-grp]').forEach(btn => {
+      btn.addEventListener('click', () => startGroupTest(btn.getAttribute('data-weak-grp'), 'practice'));
+    });
   }
 
   // ==========================================
@@ -1460,8 +2054,9 @@
     cardContainer.innerHTML = `
       <div class="flashcard-inner" id="flashcard-inner-box">
         <div class="flashcard-front">
-          <div class="flashcard-type">Chương ${q.chapter} • Bài ${q.group} • ${q.examTag}</div>
+          <div class="flashcard-type">Chương ${q.chapter} • ${q.exerciseCode || ('Bài ' + q.group)} • ${q.examTag}</div>
           <div class="flashcard-main-text">${enhanceRegisterTooltips(q.question)}</div>
+          ${renderQuestionMedia(q)}
           <div class="flashcard-hint">💡 Nhấn vào thẻ hoặc phím Space để lật xem đáp án & giải thích</div>
         </div>
         <div class="flashcard-back">
@@ -1469,7 +2064,7 @@
           <div style="font-size: 0.95rem; line-height: 1.6; overflow-y: auto; max-height: 250px;">
             ${enhanceRegisterTooltips(q.explanation)}
           </div>
-          <div style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">Trang ${q.pdfPage} (KTMT.pdf)</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">Trang ${q.pdfPage} (KTMT_GK.pdf)</div>
         </div>
       </div>
     `;
@@ -1630,7 +2225,7 @@
       <div style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px; margin-bottom: 32px;">
     `;
 
-    [1, 2, 3, 4, 6, 7].forEach(chNum => {
+    [1, 2, 3, 4].forEach(chNum => {
       const chQuestions = allQuestions.filter(q => q.chapter === chNum);
       const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
       const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;
@@ -1719,12 +2314,16 @@
   function openPdfModal(page = 1) {
     const modal = document.getElementById('modal-pdf');
     const iframe = document.getElementById('pdf-modal-iframe');
+    const titleEl = document.getElementById('pdf-modal-title');
     const openNewTabLink = document.getElementById('pdf-open-new-tab-btn');
     if (!modal || !iframe) return;
 
-    iframe.src = `KTMT.pdf#page=${page}`;
+    iframe.src = `KTMT_GK.pdf#page=${page}&view=FitH`;
+    if (titleEl) {
+      titleEl.textContent = `Giáo trình KTMT_GK.pdf — Trang ${page}`;
+    }
     if (openNewTabLink) {
-      openNewTabLink.href = `KTMT.pdf#page=${page}`;
+      openNewTabLink.href = `KTMT_GK.pdf#page=${page}`;
     }
     modal.classList.add('open');
   }
@@ -1768,19 +2367,20 @@
       });
     });
 
-    // Tool 1: CPU Performance Calculator
-    const calcPerf = () => {
-      const getNumVal = (id, fallback) => {
-        const el = document.getElementById(id);
-        if (!el) return fallback;
-        const v = parseFloat(el.value);
-        return isNaN(v) ? fallback : v;
-      };
+    // Tool 1: CPU Performance Calculator (Full Ch.1 + Optional Cache Miss)
+    const getNumVal = (id, fallback) => {
+      const el = document.getElementById(id);
+      if (!el) return fallback;
+      const v = parseFloat(el.value);
+      return isNaN(v) ? fallback : v;
+    };
 
+    const calcPerf = () => {
       const f0 = getNumVal('calc-f0', 2.0);
       const fUnit = document.getElementById('calc-f-unit')?.value || 'GHz';
       const ic = getNumVal('calc-ic', 1000000);
       const cpi = getNumVal('calc-cpi', 1.5);
+      const fpOps = getNumVal('calc-fp-ops', 0);
 
       const pMissI = getNumVal('calc-miss-i', 0.02);
       const pMem = getNumVal('calc-pmem', 0.3);
@@ -1794,27 +2394,86 @@
           icVal: ic,
           icUnit: 'raw',
           cpiVal: cpi,
-          mode: 'from_cpi'
+          mode: 'from_cpi',
+          fpOps: fpOps
         });
         const eff = window.KTMT_TOOLS.calcEffectiveCPI(cpi, penalty, pMissI * 100, pMissD * 100, pMem * 100);
 
         const elT0 = document.getElementById('perf-res-t0');
+        const elCycles = document.getElementById('perf-res-cycles');
         const elTcpu = document.getElementById('perf-res-tcpu');
         const elMips = document.getElementById('perf-res-mips');
+        const elMflops = document.getElementById('perf-res-mflops');
         const elEff = document.getElementById('perf-res-eff-cpi');
 
-        if (elT0) elT0.textContent = perf.T0_ns ? `${perf.T0_ns.toFixed(3)} ns` : '--';
-        if (elTcpu) elTcpu.textContent = perf.t_CPU_sec ? `${perf.t_CPU_sec.toFixed(6)} s` : '--';
-        if (elMips) elMips.textContent = perf.MIPS ? perf.MIPS.toFixed(2) : '--';
+        if (elT0) elT0.textContent = perf.T0_ns ? `${perf.T0_ns.toFixed(4)} ns` : '--';
+        if (elCycles) elCycles.textContent = perf.n_cycles ? `${Math.round(perf.n_cycles).toLocaleString('en-US')} chu kỳ` : '--';
+        if (elTcpu) elTcpu.textContent = perf.t_CPU_sec ? `${perf.t_CPU_sec.toFixed(6)} s (${perf.t_CPU_ms.toFixed(3)} ms)` : '--';
+        if (elMips) elMips.textContent = perf.MIPS ? `${perf.MIPS.toFixed(2)} MIPS` : '--';
+        if (elMflops) elMflops.textContent = perf.MFLOPS ? `${perf.MFLOPS.toFixed(2)} MFLOPS` : '--';
         if (elEff) elEff.textContent = eff.effectiveCPI ? eff.effectiveCPI.toFixed(3) : '--';
       }
     };
 
-    ['calc-f0', 'calc-f-unit', 'calc-ic', 'calc-cpi', 'calc-miss-i', 'calc-pmem', 'calc-miss-d', 'calc-penalty'].forEach(id => {
+    const calcWeightedCpiUi = () => {
+      if (!window.KTMT_TOOLS || !window.KTMT_TOOLS.calcWeightedCPI) return 0;
+      const mode = document.getElementById('calc-cpi-weight-mode')?.value || 'pct';
+      const classes = [1, 2, 3].map(i => ({
+        weight: getNumVal(`cpi-w${i}`, 0),
+        cpi: getNumVal(`cpi-c${i}`, 0)
+      }));
+      const res = window.KTMT_TOOLS.calcWeightedCPI(classes, mode === 'pct');
+      const outEl = document.getElementById('perf-res-cpitb');
+      if (outEl) {
+        outEl.textContent = res.cpiTB > 0
+          ? `${res.cpiTB.toFixed(3)} (Tổng trọng số: ${res.totalWeight})`
+          : '--';
+      }
+      return res.cpiTB;
+    };
+
+    const calcCompareUi = () => {
+      if (!window.KTMT_TOOLS || !window.KTMT_TOOLS.comparePerformance) return;
+      const res = window.KTMT_TOOLS.comparePerformance(
+        { tCPU: getNumVal('cmp-ta', 0), fVal: getNumVal('cmp-fa', 0), fUnit: 'GHz', cpi: getNumVal('cmp-cpia', 0) },
+        { tCPU: getNumVal('cmp-tb', 0), fVal: getNumVal('cmp-fb', 0), fUnit: 'GHz', cpi: getNumVal('cmp-cpib', 0) }
+      );
+      const outEl = document.getElementById('cmp-perf-result');
+      if (!outEl) return;
+      if (res.tA <= 0 || res.tB <= 0) {
+        outEl.textContent = 'Nhập đủ t_CPU hoặc (f0, CPI) của cả Máy A và Máy B để so sánh.';
+      } else if (res.winner === 'A') {
+        outEl.textContent = `Máy A nhanh hơn Máy B ${res.fasterBy.toFixed(3)} lần (P_A / P_B = ${res.ratioAB.toFixed(3)})`;
+      } else if (res.winner === 'B') {
+        outEl.textContent = `Máy B nhanh hơn Máy A ${res.fasterBy.toFixed(3)} lần (P_B / P_A = ${res.ratioBA.toFixed(3)})`;
+      } else {
+        outEl.textContent = 'Hai máy có hiệu năng tương đương nhau (1.000 lần).';
+      }
+    };
+
+    ['calc-f0', 'calc-f-unit', 'calc-ic', 'calc-cpi', 'calc-fp-ops', 'calc-miss-i', 'calc-pmem', 'calc-miss-d', 'calc-penalty'].forEach(id => {
       document.getElementById(id)?.addEventListener('input', calcPerf);
       document.getElementById(id)?.addEventListener('change', calcPerf);
     });
+    ['calc-cpi-weight-mode', 'cpi-w1', 'cpi-c1', 'cpi-w2', 'cpi-c2', 'cpi-w3', 'cpi-c3'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', calcWeightedCpiUi);
+      document.getElementById(id)?.addEventListener('change', calcWeightedCpiUi);
+    });
+    document.getElementById('btn-apply-cpitb')?.addEventListener('click', () => {
+      const cpiTB = calcWeightedCpiUi();
+      const cpiInput = document.getElementById('calc-cpi');
+      if (cpiTB > 0 && cpiInput) {
+        cpiInput.value = cpiTB.toFixed(4);
+        calcPerf();
+        showToast(`Đã áp dụng CPI_TB = ${cpiTB.toFixed(3)} lên công thức CPU`, 'success');
+      }
+    });
+    ['cmp-ta', 'cmp-fa', 'cmp-cpia', 'cmp-tb', 'cmp-fb', 'cmp-cpib'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', calcCompareUi);
+    });
     calcPerf();
+    calcWeightedCpiUi();
+    calcCompareUi();
 
     // Tool 2: Memory Banks Simulator
     const simMemory = () => {
@@ -2060,13 +2719,9 @@
 
     switchTab('theory');
 
-    document.querySelectorAll('.theory-ch-btn').forEach(btn => {
+    document.querySelectorAll('.theory-tab-btn').forEach(btn => {
       const ch = parseInt(btn.getAttribute('data-chapter'));
-      if (ch === chNum) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
+      btn.classList.toggle('active', ch === chNum);
     });
 
     renderTheory(chNum);
@@ -2074,7 +2729,6 @@
     setTimeout(() => {
       const targetEl = document.getElementById(`sec-${theorySecId}`) ||
                        document.getElementById(`assessment-${theorySecId}`) ||
-                       document.getElementById(`theory-sec-${theorySecId}`) ||
                        document.getElementById(`group-sec-${theorySecId}`) ||
                        document.getElementById(`sec-part2-${chNum}`);
       if (targetEl) {
@@ -2082,14 +2736,13 @@
         targetEl.classList.remove('section-pulse-active');
         void targetEl.offsetWidth;
         targetEl.classList.add('section-pulse-active');
-        targetEl.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
-        targetEl.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.4)';
-        targetEl.style.borderColor = 'var(--primary)';
         setTimeout(() => {
-          targetEl.style.boxShadow = '';
-          targetEl.style.borderColor = '';
           targetEl.classList.remove('section-pulse-active');
-        }, 3000);
+        }, 2500);
+      }
+      const secObj = theorySections.find(s => s.id === theorySecId);
+      if (isTheorySplitPdf && secObj && secObj.pdfPage) {
+        syncSplitPdf(secObj.pdfPage);
       }
     }, 160);
   }
@@ -2102,13 +2755,9 @@
 
     switchTab('theory');
 
-    document.querySelectorAll('.theory-ch-btn').forEach(btn => {
+    document.querySelectorAll('.theory-tab-btn').forEach(btn => {
       const ch = parseInt(btn.getAttribute('data-chapter'));
-      if (ch === chNum) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
+      btn.classList.toggle('active', ch === chNum);
     });
 
     renderTheory(chNum);
@@ -2121,14 +2770,9 @@
         targetEl.classList.remove('section-pulse-active');
         void targetEl.offsetWidth;
         targetEl.classList.add('section-pulse-active');
-        targetEl.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
-        targetEl.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.4)';
-        targetEl.style.borderColor = 'var(--primary)';
         setTimeout(() => {
-          targetEl.style.boxShadow = '';
-          targetEl.style.borderColor = '';
           targetEl.classList.remove('section-pulse-active');
-        }, 3000);
+        }, 2500);
       }
     }, 160);
   }
@@ -2139,6 +2783,20 @@
     if (!select) return;
     const currentVal = select.value;
     select.innerHTML = '';
+
+    // Nhóm 0: Theo từng Chương (Chương 1–4)
+    const ogCh = document.createElement('optgroup');
+    ogCh.label = '📘 ĐỀ THI TỔNG HỢP THEO TỪNG CHƯƠNG (CHƯƠNG 1–4)';
+    chaptersList.forEach(ch => {
+      const qCount = allQuestions.filter(q => q.chapter === ch.id).length;
+      if (qCount > 0) {
+        const opt = document.createElement('option');
+        opt.value = `ch-${ch.id}`;
+        opt.textContent = `${ch.code}: ${ch.title} (${Math.min(30, qCount)}/${qCount} câu)`;
+        ogCh.appendChild(opt);
+      }
+    });
+    select.appendChild(ogCh);
 
     // Nhóm 1: Theo mục lý thuyết trọng tâm
     const ogSec = document.createElement('optgroup');
@@ -2156,7 +2814,7 @@
 
     // Nhóm 2: Theo từng nhóm bài tập chuẩn PDF
     const ogGrp = document.createElement('optgroup');
-    ogGrp.label = '📚 BÀI TEST THEO TỪNG NHÓM BÀI TẬP (PHẦN 2 CHUẨN KTMT.PDF)';
+    ogGrp.label = '📚 BÀI TEST THEO TỪNG NHÓM BÀI TẬP (PHẦN 2 CHUẨN KTMT_GK.PDF)';
     chaptersList.forEach(ch => {
       (ch.groups || []).forEach(g => {
         const qCount = getGroupQuestions(g.id).length;
@@ -2173,6 +2831,112 @@
     if (currentVal && select.options && Array.from(select.options).some(o => o.value === currentVal)) {
       select.value = currentVal;
     }
+  }
+
+  function runTargetExamSelection() {
+    const val = document.getElementById('exam-select-target')?.value;
+    if (!val) return;
+    if (val.startsWith('ch-')) {
+      const chNum = parseInt(val.replace('ch-', ''), 10) || 1;
+      const chObj = chaptersList.find(c => c.id === chNum);
+      const chCount = allQuestions.filter(q => q.chapter === chNum).length;
+      const takeCount = Math.min(30, chCount);
+      startExam('custom', {
+        chapters: [chNum],
+        count: takeCount,
+        time: Math.max(20, Math.ceil(takeCount * 1.25)),
+        title: `Đề tổng hợp ${chObj ? chObj.code + ': ' + chObj.title : 'Chương ' + chNum} (${takeCount} câu)`
+      });
+    } else if (val.startsWith('sec-')) {
+      startSectionTest(val.replace('sec-', ''), 'exam');
+    } else {
+      startGroupTest(val, 'exam');
+    }
+  }
+
+  function stripHtmlText(str) {
+    return String(str || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  function renderGlobalSearchDropdown(rawQuery) {
+    const dropdown = document.getElementById('global-search-results');
+    if (!dropdown) return;
+    const q = (rawQuery || '').toLowerCase().trim();
+    if (q.length < 2) {
+      dropdown.classList.remove('open');
+      dropdown.innerHTML = '';
+      return;
+    }
+
+    const secMatches = theorySections.filter(s => {
+      const hay = `${s.code} ${s.title} ${s.summary || ''} ${stripHtmlText(s.content)}`.toLowerCase();
+      return hay.includes(q);
+    }).slice(0, 5);
+
+    const qMatches = allQuestions.filter(item => {
+      const hay = `${item.id || ''} ${item.question || ''} ${item.group || ''} ${item.source || ''} ${item.explanation || ''}`.toLowerCase();
+      return hay.includes(q);
+    }).slice(0, 8);
+
+    if (secMatches.length === 0 && qMatches.length === 0) {
+      dropdown.innerHTML = `<div class="search-res-empty">Không tìm thấy mục lý thuyết hay câu hỏi nào cho "<strong>${escapeHtml(rawQuery)}</strong>".</div>`;
+      dropdown.classList.add('open');
+      return;
+    }
+
+    let html = '';
+    if (secMatches.length > 0) {
+      html += `<div class="search-res-group">Lý thuyết KTMT_GK.pdf (${secMatches.length})</div>`;
+      secMatches.forEach(s => {
+        html += `
+          <button type="button" class="search-res-item" data-search-sec="${s.id}">
+            <span class="search-res-title">${escapeHtml(s.code)} — ${escapeHtml(s.title)}</span>
+            <span class="search-res-meta">Chương ${s.chapter} • Trang ${s.pdfPage || 1}</span>
+          </button>
+        `;
+      });
+    }
+
+    if (qMatches.length > 0) {
+      html += `<div class="search-res-group">Câu hỏi &amp; Bài tập (${qMatches.length})</div>`;
+      qMatches.forEach((item, idx) => {
+        const plain = stripHtmlText(item.question);
+        const snippet = plain.length > 92 ? plain.slice(0, 92) + '...' : plain;
+        html += `
+          <button type="button" class="search-res-item" data-search-qid="${escapeHtml(item.id)}" data-search-qidx="${idx}">
+            <span class="search-res-title">${escapeHtml(snippet)}</span>
+            <span class="search-res-meta">Chương ${item.chapter} • Nhóm ${escapeHtml(item.group)} • Trang ${item.pdfPage || 1}</span>
+          </button>
+        `;
+      });
+    }
+
+    dropdown.innerHTML = html;
+    dropdown.classList.add('open');
+
+    dropdown.querySelectorAll('[data-search-sec]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const secId = btn.getAttribute('data-search-sec');
+        dropdown.classList.remove('open');
+        jumpToTheory(secId);
+      });
+    });
+
+    dropdown.querySelectorAll('[data-search-qid]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const qid = btn.getAttribute('data-search-qid');
+        const fullMatches = allQuestions.filter(item =>
+          `${item.id || ''} ${item.question || ''} ${item.group || ''} ${item.source || ''} ${item.explanation || ''}`.toLowerCase().includes(q)
+        );
+        const pickedIdx = Math.max(0, fullMatches.findIndex(item => item.id === qid));
+        practiceQueue = fullMatches.length > 0 ? fullMatches : allQuestions.slice();
+        currentPracticeIndex = pickedIdx;
+        practiceAnswerSubmitted = false;
+        setPracticeViewMode('quiz');
+        dropdown.classList.remove('open');
+        switchTab('practice');
+      });
+    });
   }
 
   // ==========================================
@@ -2199,21 +2963,33 @@
       applyTheme(appState.theme === 'dark' ? 'light' : 'dark');
     });
 
-    // Top search bar
+    // Global header/sidebar PDF & CheatSheet shortcuts
+    document.getElementById('btn-sidebar-open-pdf')?.addEventListener('click', () => openPdfModal(1));
+    document.getElementById('btn-header-open-pdf')?.addEventListener('click', () => openPdfModal(1));
+    document.getElementById('btn-open-cheatsheet')?.addEventListener('click', () => switchTab('cheatsheet'));
+
+    // Top search bar (Theory + Questions live dropdown)
     const searchInput = document.getElementById('global-search-input');
-    searchInput?.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      if (q.length >= 2) {
-        const matched = allQuestions.filter(item => 
-          item.question.toLowerCase().includes(q) || 
-          item.group.toLowerCase().includes(q) ||
-          item.explanation.toLowerCase().includes(q)
-        );
-        if (matched.length > 0) {
-          practiceQueue = matched;
-          currentPracticeIndex = 0;
-          switchTab('practice');
+    const searchDropdown = document.getElementById('global-search-results');
+    searchInput?.addEventListener('input', (e) => renderGlobalSearchDropdown(e.target.value));
+    searchInput?.addEventListener('focus', (e) => {
+      if ((e.target.value || '').trim().length >= 2) renderGlobalSearchDropdown(e.target.value);
+    });
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchDropdown?.classList.remove('open');
+        searchInput.blur();
+      } else if (e.key === 'Enter') {
+        const firstBtn = searchDropdown?.querySelector('.search-res-item');
+        if (firstBtn) {
+          e.preventDefault();
+          firstBtn.click();
         }
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-wrapper')) {
+        searchDropdown?.classList.remove('open');
       }
     });
 
@@ -2229,13 +3005,36 @@
       });
     });
 
-    // Theory chapter tab buttons
+    // Theory chapter tab buttons & split/print/nav controls
     document.querySelectorAll('.theory-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const ch = parseInt(btn.getAttribute('data-chapter'));
         renderTheory(ch);
       });
     });
+    document.getElementById('btn-toggle-pdf-split')?.addEventListener('click', () => toggleTheorySplitPdf());
+    document.getElementById('btn-close-pdf-split')?.addEventListener('click', () => toggleTheorySplitPdf(false));
+    document.getElementById('btn-theory-open-workbook')?.addEventListener('click', () => openWorkbookForChapter(currentTheoryChapter));
+    document.getElementById('btn-print-theory')?.addEventListener('click', () => window.print());
+    document.getElementById('btn-theory-prev-ch')?.addEventListener('click', () => {
+      if (currentTheoryChapter > 1) {
+        renderTheory(currentTheoryChapter - 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+    document.getElementById('btn-theory-next-ch')?.addEventListener('click', () => {
+      if (currentTheoryChapter < 4) {
+        renderTheory(currentTheoryChapter + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+    document.getElementById('btn-theory-scroll-top')?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Cheat Sheet actions
+    document.getElementById('btn-print-cheatsheet')?.addEventListener('click', () => window.print());
+    document.getElementById('btn-cheatsheet-back-theory')?.addEventListener('click', () => switchTab('theory'));
 
     // Flashcard buttons
     document.getElementById('btn-flashcard-prev')?.addEventListener('click', () => {
@@ -2261,38 +3060,73 @@
     });
     document.getElementById('flashcard-filter-chapter')?.addEventListener('change', initFlashcards);
 
+    // Practice dual-mode toggle & workbook bulk toggle
+    document.getElementById('btn-practice-mode-quiz')?.addEventListener('click', () => {
+      setPracticeViewMode('quiz');
+      renderPracticeModeView();
+    });
+    document.getElementById('btn-practice-mode-workbook')?.addEventListener('click', () => {
+      setPracticeViewMode('workbook');
+      renderPracticeModeView();
+    });
+    document.getElementById('btn-workbook-toggle-all')?.addEventListener('click', () => {
+      workbookExpandAll = !workbookExpandAll;
+      renderPracticeWorkbook();
+    });
+
     // Practice filter change events
-    ['practice-filter-chapter', 'practice-filter-tag', 'practice-filter-group', 'practice-shuffle-toggle'].forEach(id => {
+    updateGroupDropdownOptions(document.getElementById('practice-filter-chapter')?.value || 'all');
+    document.getElementById('practice-filter-chapter')?.addEventListener('change', (e) => {
+      updateGroupDropdownOptions(e.target.value);
+      initPracticeQueue();
+      renderPracticeModeView();
+    });
+    ['practice-filter-tag', 'practice-filter-group', 'practice-shuffle-toggle'].forEach(id => {
       document.getElementById(id)?.addEventListener('change', () => {
         initPracticeQueue();
-        renderPracticeQuestion();
+        renderPracticeModeView();
       });
     });
 
     // Exam Presets & Target Exam
     document.getElementById('btn-exam-start-gk')?.addEventListener('click', () => startExam('gk'));
     document.getElementById('btn-exam-start-ck')?.addEventListener('click', () => startExam('ck'));
-    document.getElementById('btn-start-target-exam')?.addEventListener('click', () => {
-      const val = document.getElementById('exam-select-target')?.value;
-      if (!val) return;
-      if (val.startsWith('sec-')) {
-        startSectionTest(val.replace('sec-', ''), 'exam');
-      } else {
-        startGroupTest(val, 'exam');
-      }
+    document.getElementById('btn-exam-start-0012')?.addEventListener('click', () => startExam('de0012'));
+    document.getElementById('btn-exam-start-0013')?.addEventListener('click', () => startExam('de0013'));
+    document.getElementById('btn-exam-start-target-card')?.addEventListener('click', () => {
+      document.getElementById('exam-select-target')?.focus();
+      runTargetExamSelection();
     });
+    document.getElementById('btn-start-target-exam')?.addEventListener('click', runTargetExamSelection);
     document.getElementById('btn-exam-submit-confirm')?.addEventListener('click', confirmSubmitExam);
 
     // Dashboard quick action buttons
-    document.getElementById('btn-dash-start-practice')?.addEventListener('click', () => switchTab('practice'));
+    document.getElementById('btn-dash-open-theory')?.addEventListener('click', () => switchTab('theory'));
+    document.getElementById('btn-dash-open-workbook')?.addEventListener('click', () => openWorkbookForChapter('all'));
+    document.getElementById('btn-dash-cheatsheet')?.addEventListener('click', () => switchTab('cheatsheet'));
+    document.getElementById('btn-dash-start-practice')?.addEventListener('click', () => {
+      setPracticeViewMode('quiz');
+      switchTab('practice');
+    });
     document.getElementById('btn-dash-start-exam')?.addEventListener('click', () => switchTab('exam'));
     document.getElementById('btn-dash-open-pdf')?.addEventListener('click', () => openPdfModal(1));
+
+    document.querySelectorAll('.dash-pdf-jump').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openPdfModal(parseInt(btn.getAttribute('data-pdf-page'), 10) || 1);
+      });
+    });
 
     // Dashboard chapter card clicks
     document.querySelectorAll('.chapter-card').forEach(card => {
       card.addEventListener('click', () => {
         const ch = parseInt(card.getAttribute('data-chapter'));
-        document.getElementById('practice-filter-chapter').value = String(ch);
+        const chSel = document.getElementById('practice-filter-chapter');
+        if (chSel) chSel.value = String(ch);
+        updateGroupDropdownOptions(String(ch));
+        const grpSel = document.getElementById('practice-filter-group');
+        if (grpSel) grpSel.value = 'all';
         initPracticeQueue();
         switchTab('practice');
       });
@@ -2304,7 +3138,9 @@
     // Populate exam target dropdown
     populateExamTargetDropdown();
 
-    // Initial render
+    // Initial KaTeX pass on static tabs & initial render
+    renderMath(document.getElementById('tab-dashboard'));
+    renderMath(document.getElementById('tab-tools'));
     switchTab('dashboard');
   });
 
@@ -2313,9 +3149,14 @@
     state: appState,
     switchTab,
     openPdfModal,
+    openTheoryPdfPage,
+    toggleTheorySplitPdf,
     startSectionTest,
     startGroupTest,
     startGroupPractice,
+    openWorkbookGroup,
+    openWorkbookForChapter,
+    renderCheatSheet,
     jumpToTheory,
     jumpToGroup,
     startExam,
