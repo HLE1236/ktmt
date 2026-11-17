@@ -992,11 +992,12 @@
                 <div class="cs-method-item">
                   <div class="cs-method-head">
                     <span class="cs-method-name">${escapeHtml(m.name)}</span>
-                    <button type="button" class="btn btn-outline-secondary btn-xs cs-practice-btn" data-cs-group="${m.id}" title="Luyện tập nhóm ${m.id}">🎯 Luyện</button>
+                    <button type="button" class="btn btn-outline-secondary btn-xs cs-practice-btn" data-cs-group="${m.id}" title="Luyện tập nhóm ${m.id}">🎯 Luyện (${getGroupQuestions(m.id).length} câu)</button>
                   </div>
-                  <div class="cs-method-line"><strong>Nhận diện:</strong> ${m.recognize}</div>
-                  <div class="cs-method-line"><strong>Cách làm:</strong> ${m.steps}</div>
-                  <div class="cs-method-trap"><strong>⚠️ Bẫy:</strong> ${m.trap}</div>
+                  <div class="cs-method-block"><strong>🔍 Nhận diện đề:</strong> ${m.recognize}</div>
+                  ${m.formulas ? `<div class="cs-method-formula"><strong>📐 Công thức / Quy tắc gốc:</strong><br/>${m.formulas}</div>` : ''}
+                  <div class="cs-method-block"><strong>🛠️ Các bước giải &amp; Ví dụ:</strong>${m.steps}</div>
+                  <div class="cs-method-trap"><strong>⚠️ Bẫy hay sai &amp; Mẹo:</strong> ${m.trap}</div>
                 </div>
               `).join('')}
             </div>
