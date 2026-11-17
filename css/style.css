@@ -2466,6 +2466,15 @@ code, kbd, samp, pre {
 .callout-tip .callout-title {
   color: var(--success-text);
 }
+.callout-method {
+  background-color: var(--purple-light);
+  border-color: var(--purple-border);
+  border-left: 4px solid var(--purple);
+  color: var(--text-main);
+}
+.callout-method .callout-title {
+  color: var(--purple);
+}
 
 .table-scroll {
   width: 100%;
@@ -2903,6 +2912,97 @@ code, kbd, samp, pre {
   .theory-code-compare {
     grid-template-columns: 1fr;
   }
+}
+
+/* Exam Year Sets Section */
+.exam-year-section {
+  margin: 28px 0 24px 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--border-subtle);
+}
+.exam-year-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.exam-year-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+.exam-year-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 14px;
+}
+.exam-year-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.exam-year-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.exam-year-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.exam-year-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-full);
+  padding: 2px 9px;
+}
+.exam-year-card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 4px 0;
+}
+.exam-year-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+.exam-year-card-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.exam-year-card-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-subtle);
+}
+.exam-year-card-actions .btn {
+  flex: 1;
+  justify-content: center;
+}
+.badge-tag-lab {
+  background-color: var(--purple-light);
+  color: var(--purple);
+  border: 1px solid var(--purple-border);
 }
 
 @media print {

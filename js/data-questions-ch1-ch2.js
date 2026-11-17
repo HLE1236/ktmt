@@ -1,6 +1,5 @@
-// Dữ liệu câu hỏi bài tập và lý thuyết Chương 1 & Chương 2
-// Tự động tạo dựa trên file KTMT_GK.pdf - IT3030 / IT3034 / IT3283
-
+// Dữ liệu câu hỏi bài tập và lý thuyết Chương 1 & Chương 2 (Chuẩn RISC-V - Phạm vi Giữa kỳ Chương 1-4)
+// Đã lọc tách các câu Chương 5-7 sang js/data-questions-ch5-ch7.js
 (function(root) {
   root.KTMT_QUESTIONS_CH1_CH2 = [
   {
@@ -207,10 +206,11 @@
     "groupId": "1.2.1",
     "groupTitle": "Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính",
     "exerciseCode": "Bài tập 1.1",
-    "source": "Đề CK 2020.2, 2021.1, 2024.2 & Ôn tập 2025.1, 2025.2",
+    "source": "Đề CK 2020.2, 2021.1, 2024.2 & Ôn tập 2025.1, 2025.2 | cuối kì 20202 (Câu 5); cuối kì 20211 (Câu 6) | ôn tập cuối kì 20251 (Câu 31); ôn tập cuối kì 20252 (P2-35)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 10,
     "printedPage": 9,
@@ -284,7 +284,7 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.3 (Biến thể 1)",
-    "source": "Đề Cuối kỳ 2020.2",
+    "source": "Đề Cuối kỳ 2020.2 | cuối kì 20202 (Câu 2)",
     "examTags": [
       "GK",
       "CK"
@@ -322,10 +322,11 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.3 (Biến thể 2)",
-    "source": "Ôn tập Cuối kỳ 2025.1 & 2025.2 - Câu 1",
+    "source": "Ôn tập Cuối kỳ 2025.1 & 2025.2 - Câu 1 | cuối kì 20211 (Câu 3); ôn tập cuối kì 20251 (Câu 49); ôn tập cuối kì 20252 (P2-1)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 11,
     "printedPage": 10,
@@ -360,7 +361,7 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.4",
-    "source": "Đề Giữa kỳ 2018.2 - Mã 198 C2 & Mã 199 C17",
+    "source": "Đề Giữa kỳ 2018.2 - Mã 198 C2 & Mã 199 C17 | giữa kì 20182 (Mã đề 198 - Câu 2); giữa kì 20182 (Mã đề 199 - Câu 17)",
     "examTags": [
       "GK"
     ],
@@ -434,9 +435,11 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.6",
-    "source": "Đề CK 2024.1 - #54583d & Ôn tập 2025.2 - P1, Câu 4",
+    "source": "Đề CK 2024.1 - #54583d & Ôn tập 2025.2 - P1, Câu 4 | cuối kì 20222 (#477770); cuối kì 20241 (#54583d); giữa kì 20232 (Trang 1 - Câu 1); ôn tập cuối kì 20252 (P1-4)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT",
+      "GK"
     ],
     "pdfPage": 12,
     "printedPage": 11,
@@ -471,7 +474,7 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.7",
-    "source": "Đề Cuối kỳ 2020.2 & 2021.1",
+    "source": "Đề Cuối kỳ 2020.2 & 2021.1 | cuối kì 20211 (Câu 12) | cuối kì 20202 (Câu 11)",
     "examTags": [
       "CK"
     ],
@@ -508,7 +511,7 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.8",
-    "source": "Đề Cuối kỳ 2022.2 & 2024.2 - Trang 12",
+    "source": "Đề Cuối kỳ 2022.2 & 2024.2 - Trang 12 | cuối kì 20242 (Câu Page 12 (Không có mã))",
     "examTags": [
       "CK"
     ],
@@ -545,7 +548,7 @@
     "groupId": "1.2.2",
     "groupTitle": "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)",
     "exerciseCode": "Bài tập 1.9a",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 11",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 11 | giữa kì 20192 (Mã đề 243 - Câu 11); giữa kì 20192 (Mã đề 244 - Câu 8); giữa kì 20222 (Đề 0008 (IT3030) - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -723,7 +726,7 @@
     "groupId": "1.2.3",
     "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
     "exerciseCode": "Bài tập 1.11a",
-    "source": "Đề Cuối kỳ 2020.2",
+    "source": "Đề Cuối kỳ 2020.2 | cuối kì 20211 (Câu 15) | cuối kì 20202 (Câu 14)",
     "examTags": [
       "CK"
     ],
@@ -759,9 +762,10 @@
     "groupId": "1.2.3",
     "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
     "exerciseCode": "Bài tập 1.11b",
-    "source": "Đề CK 2022.2 & 2024.2 - #1fd28d",
+    "source": "Đề CK 2022.2 & 2024.2 - #1fd28d | cuối kì 20222 (#1fd28d); cuối kì 20241 (#3e5442); cuối kì 20242 (#1fd28d); ôn tập cuối kì 20252 (P1-71)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 15,
     "printedPage": 14,
@@ -795,9 +799,10 @@
     "groupId": "1.2.3",
     "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
     "exerciseCode": "Bài tập 1.11c",
-    "source": "Đề CK 2024.1 - #3e5442 & Ôn tập 2025.2 Câu 21",
+    "source": "Đề CK 2024.1 - #3e5442 & Ôn tập 2025.2 Câu 21 | ôn tập cuối kì 20252 (P1-21)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 15,
     "printedPage": 14,
@@ -831,7 +836,7 @@
     "groupId": "1.2.3",
     "groupTitle": "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS",
     "exerciseCode": "Bài tập 1.12a",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 1.1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 1.1 | cuối kì 20212 (B1-1)",
     "examTags": [
       "CK"
     ],
@@ -903,7 +908,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.13a",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 19",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 19 | giữa kì 20182 (Mã đề 204 - Câu 19)",
     "examTags": [
       "GK"
     ],
@@ -1011,7 +1016,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.13c",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B4, Câu 1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B4, Câu 1 | cuối kì 20212 (B4-1)",
     "examTags": [
       "CK"
     ],
@@ -1044,7 +1049,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.14a",
-    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 75",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 75 | giữa kì 20252 (Đề 0013 (trang 7) - Câu 75)",
     "examTags": [
       "GK"
     ],
@@ -1080,7 +1085,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.14b",
-    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 944",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 944 | giữa kì 20252 (Đề 0013 (trang 86) - Câu 944)",
     "examTags": [
       "GK"
     ],
@@ -1115,7 +1120,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.14c",
-    "source": "Đề Giữa kỳ 2025.2 - Đề 0012, Câu 110",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0012, Câu 110 | giữa kì 20252 (Đề 0012 (trang 1) - Câu 110)",
     "examTags": [
       "GK"
     ],
@@ -1154,10 +1159,11 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.15",
-    "source": "Đề GK 2024.1 - #a6b720 & Ôn tập 2025.2 - P1, Câu 10",
+    "source": "Đề GK 2024.1 - #a6b720 & Ôn tập 2025.2 - P1, Câu 10 | giữa kì 20241 (#a6b720) | ôn tập cuối kì 20252 (P1-10)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 18,
     "printedPage": 17,
@@ -1192,9 +1198,11 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.16a",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 70",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 70 | giữa kì 20231 (#9d627e); giữa kì 20231 (#7aa358) | ôn tập cuối kì 20252 (P1-55) | ôn tập cuối kì 20252 (P1-70)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT",
+      "GK"
     ],
     "pdfPage": 19,
     "printedPage": 18,
@@ -1230,7 +1238,8 @@
     "exerciseCode": "Bài tập 1.16b",
     "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 55",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 19,
     "printedPage": 18,
@@ -1265,7 +1274,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.17a",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3a",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3a | giữa kì 20211 (Problem 3)",
     "examTags": [
       "GK"
     ],
@@ -1302,7 +1311,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.17b",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3b",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3b | giữa kì 20211 (Problem 3)",
     "examTags": [
       "GK"
     ],
@@ -1337,7 +1346,7 @@
     "groupId": "1.2.4",
     "groupTitle": "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh",
     "exerciseCode": "Bài tập 1.17c",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3c",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 3c | giữa kì 20211 (Problem 3)",
     "examTags": [
       "GK"
     ],
@@ -1404,7 +1413,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.18b",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 1.2",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B1, Câu 1.2 | cuối kì 20212 (B1-1)",
     "examTags": [
       "CK"
     ],
@@ -1437,7 +1446,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.18c",
-    "source": "Đề GK 2018.2 - Mã 198 C12 & Mã 199 C4",
+    "source": "Đề GK 2018.2 - Mã 198 C12 & Mã 199 C4 | giữa kì 20182 (Mã đề 198 - Câu 12); giữa kì 20182 (Mã đề 199 - Câu 4)",
     "examTags": [
       "GK"
     ],
@@ -1470,9 +1479,11 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.19a",
-    "source": "Đề CK 2023.1 - #2262f & Ôn tập 2025.2 Câu 12",
+    "source": "Đề CK 2023.1 - #2262f & Ôn tập 2025.2 Câu 12 | cuối kì 20231 (#2262f) | cuối kì 20232 (#2262f); giữa kì 20241 (#8cf496) | ôn tập cuối kì 20252 (P1-12)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT",
+      "GK"
     ],
     "pdfPage": 22,
     "printedPage": 21,
@@ -1540,7 +1551,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.20a",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 2a",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 2a | giữa kì 20211 (Problem 2)",
     "examTags": [
       "GK"
     ],
@@ -1573,7 +1584,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.20 (b & c)",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 2b, 2c",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 2b, 2c | giữa kì 20211 (Problem 2)",
     "examTags": [
       "GK"
     ],
@@ -1644,7 +1655,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.22a (Đề B2)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B2, Câu 1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B2, Câu 1 | cuối kì 20212 (B2-1)",
     "examTags": [
       "CK"
     ],
@@ -1680,7 +1691,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.22b (Đề B3)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 1 | cuối kì 20212 (B3-1)",
     "examTags": [
       "CK"
     ],
@@ -1716,7 +1727,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.22c (Đề B6)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B6, Câu 1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B6, Câu 1 | cuối kì 20212 (B6-1)",
     "examTags": [
       "CK"
     ],
@@ -1752,7 +1763,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.22d (Đề B7)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B7, Câu 1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B7, Câu 1 | cuối kì 20212 (B7-1)",
     "examTags": [
       "CK"
     ],
@@ -1789,7 +1800,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.23 (Ý 1.1)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.1 | cuối kì 20212 (B8-1)",
     "examTags": [
       "CK"
     ],
@@ -1822,7 +1833,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.23 (Ý 1.2)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.2",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.2 | cuối kì 20212 (B8-1)",
     "examTags": [
       "CK"
     ],
@@ -1855,7 +1866,7 @@
     "groupId": "1.2.5",
     "groupTitle": "Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý",
     "exerciseCode": "Bài tập 1.23 (Ý 1.3)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.3",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B8, Câu 1.3 | cuối kì 20212 (B8-1)",
     "examTags": [
       "CK"
     ],
@@ -2086,7 +2097,7 @@
     "groupId": "2.2.1",
     "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.1a",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 5",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 5 | giữa kì 20182 (Mã đề 204 - Câu 5)",
     "examTags": [
       "GK"
     ],
@@ -2119,7 +2130,7 @@
     "groupId": "2.2.1",
     "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.1b",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 6",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 6 | giữa kì 20182 (Mã đề 204 - Câu 6)",
     "examTags": [
       "GK"
     ],
@@ -2152,7 +2163,7 @@
     "groupId": "2.2.1",
     "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.1c",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 13",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 13 | giữa kì 20182 (Mã đề 198 - Câu 15); giữa kì 20182 (Mã đề 199 - Câu 14) | giữa kì 20182 (Mã đề 204 - Câu 13)",
     "examTags": [
       "GK"
     ],
@@ -2185,7 +2196,7 @@
     "groupId": "2.2.1",
     "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.2a",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0009, Câu 11",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0009, Câu 11 | giữa kì 20222 (Đề 0009 - Câu 11)",
     "examTags": [
       "GK"
     ],
@@ -2222,10 +2233,11 @@
     "groupId": "2.2.1",
     "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.2b",
-    "source": "Đề GK 2022.2 Đề 0008 C11 & Ôn tập 2025.2 C41",
+    "source": "Đề GK 2022.2 Đề 0008 C11 & Ôn tập 2025.2 C41 | cuối kì 20222 (#55e70c); cuối kì 20242 (#55e70c); ôn tập cuối kì 20252 (P1-41) | giữa kì 20222 (Đề 0008 (bản 1) - Câu 11); giữa kì 20222 (Đề 0008 (bản 2) - Câu 11)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 35,
     "printedPage": 34,
@@ -2256,7 +2268,7 @@
     "groupId": "2.2.1",
     "groupTitle": "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra",
     "exerciseCode": "Bài tập 2.3",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 20",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 20 | giữa kì 20182 (Mã đề 199 - Câu 20)",
     "examTags": [
       "GK"
     ],
@@ -2289,7 +2301,7 @@
     "groupId": "2.2.2",
     "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
     "exerciseCode": "Bài tập 2.4a",
-    "source": "Đề GK 2022.2 - Đề 0008 & Mã đề 204 Câu 4",
+    "source": "Đề GK 2022.2 - Đề 0008 & Mã đề 204 Câu 4 | giữa kì 20182 (Mã đề 204 - Câu 4) | giữa kì 20222 (Đề 0009 - Câu 10); giữa kì 20222 (Đề 0008 (bản 1) - Câu 10)",
     "examTags": [
       "GK"
     ],
@@ -2326,10 +2338,11 @@
     "groupId": "2.2.2",
     "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
     "exerciseCode": "Bài tập 2.4b",
-    "source": "Ôn tập 2025.2 C76 & Mã đề 198 C17",
+    "source": "Ôn tập 2025.2 C76 & Mã đề 198 C17 | ôn tập cuối kì 20252 (P1-76) | giữa kì 20182 (Mã đề 198 - Câu 17); giữa kì 20182 (Mã đề 199 - Câu 3)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 36,
     "printedPage": 35,
@@ -2360,7 +2373,7 @@
     "groupId": "2.2.2",
     "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
     "exerciseCode": "Bài tập 2.4c",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 18",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 18 | giữa kì 20182 (Mã đề 204 - Câu 18)",
     "examTags": [
       "GK"
     ],
@@ -2393,9 +2406,10 @@
     "groupId": "2.2.2",
     "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
     "exerciseCode": "Bài tập 2.4d",
-    "source": "Ôn tập 2025.2 - Câu 56",
+    "source": "Ôn tập 2025.2 - Câu 56 | ôn tập cuối kì 20252 (P1-56)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 37,
     "printedPage": 36,
@@ -2426,7 +2440,7 @@
     "groupId": "2.2.2",
     "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
     "exerciseCode": "Bài tập 2.5a",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 14",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 14 | giữa kì 20182 (Mã đề 198 - Câu 14); giữa kì 20182 (Mã đề 199 - Câu 8)",
     "examTags": [
       "GK"
     ],
@@ -2454,45 +2468,12 @@
     "explanation": "<p>Ngắt cho phép CPU tạm dừng chương trình hiện tại, cất ngữ cảnh, chạy chương trình con xử lý ngắt rồi khôi phục quay về chạy tiếp.</p>"
   },
   {
-    "id": "c2-2.5b",
-    "chapter": 2,
-    "groupId": "2.2.2",
-    "groupTitle": "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt",
-    "exerciseCode": "Bài tập 2.5b",
-    "source": "Ôn tập 2025.2 - Câu 15",
-    "examTags": [
-      "CK"
-    ],
-    "pdfPage": 37,
-    "printedPage": 36,
-    "relatedTheoryId": "2.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
-    "question": "Với phương pháp vào-ra bằng chương trình, thành phần nào của máy tính trực tiếp điều khiển vào-ra?",
-    "codeBlock": null,
-    "codeLang": null,
-    "svgDiagram": null,
-    "options": [
-      "CPU",
-      "DMAC",
-      "Thiết bị vào-ra",
-      "RAM"
-    ],
-    "correctIndex": 0,
-    "correctIndices": [
-      0
-    ],
-    "explanation": "<p>Trong phương pháp vào-ra bằng chương trình (hoặc bằng ngắt), <strong>CPU</strong> trực tiếp điều khiển trao đổi dữ liệu với mô-đun vào-ra (không qua DMAC).</p>"
-  },
-  {
     "id": "c2-2.6a",
     "chapter": 2,
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.6a",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 1",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 1 | giữa kì 20182 (Mã đề 198 - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -2525,7 +2506,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.6b",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 10",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 10 | giữa kì 20182 (Mã đề 198 - Câu 10); giữa kì 20182 (Mã đề 199 - Câu 16)",
     "examTags": [
       "GK"
     ],
@@ -2558,9 +2539,10 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.6c",
-    "source": "Ôn tập 2025.2 - Câu 13",
+    "source": "Ôn tập 2025.2 - Câu 13 | ôn tập cuối kì 20252 (P1-13)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 38,
     "printedPage": 37,
@@ -2591,9 +2573,10 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.6d",
-    "source": "Ôn tập 2025.2 - Câu 26",
+    "source": "Ôn tập 2025.2 - Câu 26 | ôn tập cuối kì 20252 (P1-26)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 39,
     "printedPage": 38,
@@ -2624,7 +2607,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.7a",
-    "source": "Đề GK 2019.2 - Mã 243 C6 & Mã 244 C9",
+    "source": "Đề GK 2019.2 - Mã 243 C6 & Mã 244 C9 | giữa kì 20192 (Mã đề 243 - Câu 6); giữa kì 20192 (Mã đề 244 - Câu 9)",
     "examTags": [
       "GK"
     ],
@@ -2657,7 +2640,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.7b",
-    "source": "Đề GK 2019.2 - Mã 243 C5 & Mã 244 C7",
+    "source": "Đề GK 2019.2 - Mã 243 C5 & Mã 244 C7 | giữa kì 20192 (Mã đề 243 - Câu 5); giữa kì 20192 (Mã đề 244 - Câu 7)",
     "examTags": [
       "GK"
     ],
@@ -2690,7 +2673,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.7c",
-    "source": "Đề GK 2019.2 - Mã 243 C13 & Mã 244 C13",
+    "source": "Đề GK 2019.2 - Mã 243 C13 & Mã 244 C13 | giữa kì 20192 (Mã đề 243 - Câu 13); giữa kì 20192 (Mã đề 244 - Câu 13)",
     "examTags": [
       "GK"
     ],
@@ -2723,7 +2706,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.8a",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0008, Câu 3",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0008, Câu 3 | giữa kì 20222 (Đề 0008 (IT3030) - Câu 3)",
     "examTags": [
       "GK"
     ],
@@ -2762,7 +2745,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.8b",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0006, Câu 3",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0006, Câu 3 | giữa kì 20222 (Đề 0006 (IT3283) - Câu 3)",
     "examTags": [
       "GK"
     ],
@@ -2798,9 +2781,10 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.8c",
-    "source": "Đề CK 2020.2 & Ôn tập 2025.2 Câu 11",
+    "source": "Đề CK 2020.2 & Ôn tập 2025.2 Câu 11 | cuối kì 20211 (Câu 14); ôn tập cuối kì 20251 (Câu 23) | cuối kì 20202 (Câu 13) | ôn tập cuối kì 20252 (P2-11)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 40,
     "printedPage": 39,
@@ -2834,7 +2818,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.8d",
-    "source": "Đề GK 2019.2 - Mã 243 C16 & Mã 244 C4",
+    "source": "Đề GK 2019.2 - Mã 243 C16 & Mã 244 C4 | giữa kì 20192 (Mã đề 243 - Câu 16); giữa kì 20192 (Mã đề 244 - Câu 4)",
     "examTags": [
       "GK"
     ],
@@ -2867,9 +2851,10 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.8e",
-    "source": "Đề CK 2022.2 - #bb55ef & CK 2024.2",
+    "source": "Đề CK 2022.2 - #bb55ef & CK 2024.2 | cuối kì 20222 (#bb55ef); cuối kì 20242 (#bb55ef); ôn tập cuối kì 20251 (Câu 71); ôn tập cuối kì 20252 (P2-21)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 40,
     "printedPage": 39,
@@ -2903,7 +2888,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.9a",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 16",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 16 | giữa kì 20182 (Mã đề 204 - Câu 16)",
     "examTags": [
       "GK"
     ],
@@ -2939,7 +2924,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.9b",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 14",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 14 | giữa kì 20192 (Mã đề 243 - Câu 14); giữa kì 20192 (Mã đề 244 - Câu 6)",
     "examTags": [
       "GK"
     ],
@@ -3013,7 +2998,7 @@
     "groupId": "2.2.3",
     "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
     "exerciseCode": "Bài tập 2.10 (Ý 4.1)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.1 | cuối kì 20212 (B3-4)",
     "examTags": [
       "CK"
     ],
@@ -3041,37 +3026,71 @@
     "explanation": "<p>$2^{36}\\text{ B} = 64\\text{ GiB}$. Vì $36 / 4 = 9$ chữ số Hexa nên địa chỉ đầu là <code>0x000000000</code> (9 chữ số 0) và địa chỉ cuối là <code>0xFFFFFFFFF</code> (9 chữ số F).</p>"
   },
   {
-    "id": "c2-2.10b",
-    "chapter": 2,
-    "groupId": "2.2.3",
-    "groupTitle": "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ",
-    "exerciseCode": "Bài tập 2.10 (Ý 4.2)",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.2",
+    "id": "pdf-1_2_1-1",
+    "chapter": 1,
+    "groupId": "1.2.1",
+    "groupTitle": "Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính",
+    "exerciseCode": "Đề thi 1.2.1.1",
+    "source": "cuối kì 20202 (Câu 1); cuối kì 20211 (Câu 2); cuối kì 20222 (#c0ca61); cuối kì 20242 (#c0ca61); ôn tập cuối kì 20251 (Câu 59); ôn tập cuối kì 20252 (P2-51)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
-    "pdfPage": 42,
-    "printedPage": 41,
-    "relatedTheoryId": "2.1.3",
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "1.1.1",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Máy tính dùng $16$ bit để đánh địa chỉ cho cổng vào-ra riêng biệt. Số cổng vào-ra tối đa và dải địa chỉ Hexa của chúng là:",
+    "question": "Máy tính với bộ xử lý lõi kép (dual-core) thuộc kiến trúc phân loại nào dưới đây?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
     "options": [
-      "65 536 cổng (2^16) ; từ 0x0000 đến 0xFFFF",
-      "32 768 cổng (2^15) ; từ 0x0000 đến 0x7FFF",
-      "16 384 cổng (2^14) ; từ 0x0000 đến 0x3FFF",
-      "65 536 cổng (2^16) ; từ 0x00000 đến 0xFFFFF"
+      "MIMD với bộ nhớ dùng chung (Shared Memory)",
+      "MIMD với bộ nhớ phân tán (Distributed Memory)",
+      "SIMD (Single Instruction, Multiple Data)",
+      "SISD (Single Instruction, Single Data)"
     ],
     "correctIndex": 0,
     "correctIndices": [
       0
     ],
-    "explanation": "<p>$2^{16} = 65\\,536$ cổng (64K cổng). Vì $16 / 4 = 4$ chữ số Hexa nên địa chỉ chạy từ <code>0x0000</code> đến <code>0xFFFF</code>.</p>"
+    "explanation": "<p>Theo phân loại Flynn, bộ xử lý đa lõi (<code>dual-core / multi-core</code>) có nhiều nhân xử lý thực thi đồng thời nhiều luồng lệnh trên nhiều luồng dữ liệu (<strong>MIMD</strong>) và cùng chia sẻ một không gian bộ nhớ chính dùng chung (Shared Memory).</p>"
+  },
+  {
+    "id": "pdf-1_2_1-2",
+    "chapter": 1,
+    "groupId": "1.2.1",
+    "groupTitle": "Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính",
+    "exerciseCode": "Đề thi 1.2.1.2",
+    "source": "ôn tập cuối kì 20251 (Câu 44); ôn tập cuối kì 20252 (P2-13)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "1.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Kiến trúc nào dưới đây chưa tồn tại máy tính thực tế?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "MISD",
+      "SISD",
+      "SIMD",
+      "MIMD"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong 4 lớp của phân loại Flynn (SISD, SIMD, MISD, MIMD), kiến trúc <strong>MISD</strong> (Multiple Instruction, Single Data — nhiều luồng lệnh xử lý đồng thời một luồng dữ liệu) hầu như không tồn tại trong các máy tính thương mại thực tế.</p>"
   }
 ];
 })(typeof window !== 'undefined' ? window : globalThis);

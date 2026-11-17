@@ -1,6 +1,5 @@
 // Dữ liệu câu hỏi bài tập và lý thuyết Chương 4 (Số học máy tính)
-// Tự động tạo dựa trên file KTMT_GK.pdf - IT3030 / IT3034 / IT3283
-
+// Tổng hợp từ tài liệu C4 và 22 đề thi đã khử trùng, chuẩn hóa
 (function(root) {
   root.KTMT_QUESTIONS_CH4 = [
   {
@@ -273,7 +272,7 @@
     "groupId": "4.2.1",
     "groupTitle": "Nhóm 1: Hệ đếm và Chuyển đổi cơ số (Nhị phân, Thập phân, Thập lục phân)",
     "exerciseCode": "Bài tập 4.1",
-    "source": "Đề GK 2018.2 - Mã 198 C7 & Mã 199 C2",
+    "source": "Đề GK 2018.2 - Mã 198 C7 & Mã 199 C2 | giữa kì 20182 (Mã đề 198 - Câu 7); giữa kì 20182 (Mã đề 199 - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -341,7 +340,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2b",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 3",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 3 | giữa kì 20182 (Mã đề 198 - Câu 3); giữa kì 20182 (Mã đề 199 - Câu 18); giữa kì 20182 (Mã đề 204 - Câu 3)",
     "examTags": [
       "GK"
     ],
@@ -407,7 +406,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2d",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 12",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 12 | giữa kì 20182 (Mã đề 199 - Câu 12)",
     "examTags": [
       "GK"
     ],
@@ -443,7 +442,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2e",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 20",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 20 | giữa kì 20182 (Mã đề 204 - Câu 20)",
     "examTags": [
       "GK"
     ],
@@ -478,7 +477,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2f (Ý 1)",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 4",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 4 | giữa kì 20192 (Mã đề 243 - Câu 4)",
     "examTags": [
       "GK"
     ],
@@ -514,7 +513,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2f (Ý 2)",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 244, Câu 11",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 244, Câu 11 | giữa kì 20192 (Mã đề 244 - Câu 11)",
     "examTags": [
       "GK"
     ],
@@ -550,9 +549,10 @@
     "groupId": "4.2.2",
     "groupTitle": "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit",
     "exerciseCode": "Bài tập 4.3a (Hình a)",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 16",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 16 | ôn tập cuối kì 20252 (P1-16)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 109,
     "printedPage": 108,
@@ -585,9 +585,10 @@
     "groupId": "4.2.2",
     "groupTitle": "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit",
     "exerciseCode": "Bài tập 4.3b (Hình b)",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 74",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 74 | ôn tập cuối kì 20252 (P1-74)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 109,
     "printedPage": 108,
@@ -620,10 +621,11 @@
     "groupId": "4.2.2",
     "groupTitle": "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit",
     "exerciseCode": "Bài tập 4.4",
-    "source": "Slide Chương 4 - Trang 30 & Ôn tập Cuối kỳ 2025.2 - P1, Câu 51",
+    "source": "Slide Chương 4 - Trang 30 & Ôn tập Cuối kỳ 2025.2 - P1, Câu 51 | ôn tập cuối kì 20252 (P1-51)",
     "examTags": [
       "LT",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 110,
     "printedPage": 109,
@@ -654,10 +656,11 @@
     "groupId": "4.2.2",
     "groupTitle": "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit",
     "exerciseCode": "Bài tập 4.5a",
-    "source": "Slide Chương 4 - Trang 37 & Ôn tập 2025.2 - P1, Câu 17",
+    "source": "Slide Chương 4 - Trang 37 & Ôn tập 2025.2 - P1, Câu 17 | ôn tập cuối kì 20252 (P1-17)",
     "examTags": [
       "LT",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 111,
     "printedPage": 110,
@@ -688,10 +691,11 @@
     "groupId": "4.2.2",
     "groupTitle": "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit",
     "exerciseCode": "Bài tập 4.5b",
-    "source": "Slide Chương 4 - Trang 38 & Ôn tập 2025.2 - P1, Câu 25",
+    "source": "Slide Chương 4 - Trang 38 & Ôn tập 2025.2 - P1, Câu 25 | ôn tập cuối kì 20252 (P1-25)",
     "examTags": [
       "LT",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 111,
     "printedPage": 110,
@@ -722,7 +726,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.6a",
-    "source": "Đề GK 2018.2 - Mã 198 C6 & Mã 199 C10",
+    "source": "Đề GK 2018.2 - Mã 198 C6 & Mã 199 C10 | giữa kì 20182 (Mã đề 198 - Câu 6); giữa kì 20182 (Mã đề 199 - Câu 10)",
     "examTags": [
       "GK"
     ],
@@ -755,7 +759,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.6b",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 8",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 8 | giữa kì 20182 (Mã đề 204 - Câu 8)",
     "examTags": [
       "GK"
     ],
@@ -788,7 +792,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.7a",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 9",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 9 | giữa kì 20192 (Mã đề 243 - Câu 9)",
     "examTags": [
       "GK"
     ],
@@ -854,7 +858,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.8",
-    "source": "Đề Cuối kỳ 2020.2 & 2021.1 - Trang 2",
+    "source": "Đề Cuối kỳ 2020.2 & 2021.1 - Trang 2 | cuối kì 20211 (Câu 5) | cuối kì 20202 (Câu 4)",
     "examTags": [
       "CK"
     ],
@@ -889,9 +893,10 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.9",
-    "source": "Đề CK 2022.2 - #f9c617, 2024.2 & Ôn tập 2025.2 - P1, Câu 69",
+    "source": "Đề CK 2022.2 - #f9c617, 2024.2 & Ôn tập 2025.2 - P1, Câu 69 | cuối kì 20222 (#f9c617); cuối kì 20242 (#f9c617); ôn tập cuối kì 20252 (P1-69)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 113,
     "printedPage": 112,
@@ -927,7 +932,8 @@
     "exerciseCode": "Bài tập 4.10a",
     "source": "Đề CK 2022.2, 2024.2 - #7151 & Ôn tập 2025.2 Câu 73",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 113,
     "printedPage": 112,
@@ -960,9 +966,10 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.10b",
-    "source": "Đề CK 2024.1 - #0182da & Ôn tập 2025.2 Câu 45",
+    "source": "Đề CK 2024.1 - #0182da & Ôn tập 2025.2 Câu 45 | cuối kì 20222 (#7f51); cuối kì 20241 (#0182da); cuối kì 20242 (#7151); ôn tập cuối kì 20252 (P1-45); ôn tập cuối kì 20252 (P1-73)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 113,
     "printedPage": 112,
@@ -995,9 +1002,10 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.11a",
-    "source": "Đề Cuối kỳ 2023.1 - #581f03",
+    "source": "Đề Cuối kỳ 2023.1 - #581f03 | cuối kì 20231 (#581f03) | cuối kì 20232 (#581f03); giữa kì 20241 (#30a33e)",
     "examTags": [
-      "CK"
+      "CK",
+      "GK"
     ],
     "pdfPage": 114,
     "printedPage": 113,
@@ -1030,10 +1038,11 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.11b",
-    "source": "Đề GK 2024.1 - #30a33e & Ôn tập 2025.2 Câu 48",
+    "source": "Đề GK 2024.1 - #30a33e & Ôn tập 2025.2 Câu 48 | ôn tập cuối kì 20252 (P1-48)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 114,
     "printedPage": 113,
@@ -1066,7 +1075,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.12a",
-    "source": "Đề Giữa kỳ 2023.2 - Đề 1, Câu 2",
+    "source": "Đề Giữa kỳ 2023.2 - Đề 1, Câu 2 | giữa kì 20232 (Trang 1 - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -1132,7 +1141,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.13a",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 16",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 16 | giữa kì 20182 (Mã đề 198 - Câu 16); giữa kì 20182 (Mã đề 204 - Câu 17)",
     "examTags": [
       "GK"
     ],
@@ -1204,7 +1213,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.13c",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 11",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 11 | giữa kì 20182 (Mã đề 199 - Câu 11)",
     "examTags": [
       "GK"
     ],
@@ -1240,7 +1249,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14a",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0006, Câu 1",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0006, Câu 1 | giữa kì 20222 (Đề 0006 (IT3283) - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -1273,7 +1282,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14b",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0009, Câu 2",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0009, Câu 2 | giữa kì 20222 (Đề 0009 - Câu 2); giữa kì 20222 (Đề 0008 (bản 1) - Câu 2); giữa kì 20222 (Đề 0008 (bản 2) - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -1372,7 +1381,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14e",
-    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 942",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 942 | giữa kì 20252 (Đề 0013 (trang 86) - Câu 942)",
     "examTags": [
       "GK"
     ],
@@ -1405,7 +1414,7 @@
     "groupId": "4.2.3",
     "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14f",
-    "source": "Đề Giữa kỳ 2025.2 - Đề 0012, Câu 106",
+    "source": "Đề Giữa kỳ 2025.2 - Đề 0012, Câu 106 | giữa kì 20252 (Đề 0012 (trang 1) - Câu 106)",
     "examTags": [
       "GK"
     ],
@@ -1438,7 +1447,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.15",
-    "source": "Đề GK 2018.2 - Mã 198 C8 & Mã 199 C9",
+    "source": "Đề GK 2018.2 - Mã 198 C8 & Mã 199 C9 | giữa kì 20182 (Mã đề 198 - Câu 8); giữa kì 20182 (Mã đề 199 - Câu 9)",
     "examTags": [
       "GK"
     ],
@@ -1474,9 +1483,10 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.16",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 2",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 2 | ôn tập cuối kì 20252 (P1-2)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 117,
     "printedPage": 116,
@@ -1507,7 +1517,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.17a",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 12",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 12 | giữa kì 20192 (Mã đề 243 - Câu 12)",
     "examTags": [
       "GK"
     ],
@@ -1573,9 +1583,10 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.18",
-    "source": "Đề CK 2022.2 - #6d82ac, 2024.2 & Ôn tập 2025.2 - P1, Câu 66",
+    "source": "Đề CK 2022.2 - #6d82ac, 2024.2 & Ôn tập 2025.2 - P1, Câu 66 | cuối kì 20222 (#6d82ac); cuối kì 20242 (#6d82ac); ôn tập cuối kì 20252 (P1-66)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 118,
     "printedPage": 117,
@@ -1608,9 +1619,10 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.19a",
-    "source": "Đề Cuối kỳ 2025.1 - #e3221e",
+    "source": "Đề Cuối kỳ 2025.1 - #e3221e | cuối kì 20251 (#e3221e); thi thử kì 20251 (Câu 26)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 119,
     "printedPage": 118,
@@ -1643,10 +1655,11 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.19b",
-    "source": "Đề GK 2024.1 - #f2d536 & Ôn tập 2025.2 Câu 40",
+    "source": "Đề GK 2024.1 - #f2d536 & Ôn tập 2025.2 Câu 40 | giữa kì 20241 (#f2d536) | ôn tập cuối kì 20252 (P1-40)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 119,
     "printedPage": 118,
@@ -1679,7 +1692,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.19c",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0007, Câu 1a",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0007, Câu 1a | giữa kì 20222 (Đề 0007 (IT3282) - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -1714,7 +1727,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.19d",
-    "source": "Đề Giữa kỳ 2022.2 - Đề 0007, Câu 1b",
+    "source": "Đề Giữa kỳ 2022.2 - Đề 0007, Câu 1b | giữa kì 20222 (Đề 0007 (IT3282) - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -1750,9 +1763,10 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.20a",
-    "source": "Đề CK 2023.1 - #cd9132 & Ôn tập 2025.2 Câu 7",
+    "source": "Đề CK 2023.1 - #cd9132 & Ôn tập 2025.2 Câu 7 | cuối kì 20231 (#cd9132) | cuối kì 20232 (#cd9132) | ôn tập cuối kì 20252 (P1-7)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 119,
     "printedPage": 118,
@@ -1783,7 +1797,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.20b",
-    "source": "Đề Giữa kỳ 2024.1 - #e83dac",
+    "source": "Đề Giữa kỳ 2024.1 - #e83dac | giữa kì 20241 (#e83dac)",
     "examTags": [
       "GK"
     ],
@@ -1816,9 +1830,11 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.21",
-    "source": "Ôn tập CK 2025.1 C15 & Ôn tập 2025.2 - P2 C59",
+    "source": "Ôn tập CK 2025.1 C15 & Ôn tập 2025.2 - P2 C59 | ôn tập cuối kì 20251 (Câu 15); ôn tập cuối kì 20252 (P2-59); Lab - cuối kì 20222 (Câu 17); Lab - cuối kì 20232 (Câu 17)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT",
+      "Lab"
     ],
     "pdfPage": 120,
     "printedPage": 119,
@@ -1849,7 +1865,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.22 (Ý 4.1)",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 4.1",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 4.1 | giữa kì 20211 (Problem 4)",
     "examTags": [
       "GK"
     ],
@@ -1882,7 +1898,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.22 (Ý 4.2)",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 4.2",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 4.2 | giữa kì 20211 (Problem 4)",
     "examTags": [
       "GK"
     ],
@@ -1915,7 +1931,7 @@
     "groupId": "4.2.4",
     "groupTitle": "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)",
     "exerciseCode": "Bài tập 4.22 (Ý 4.3)",
-    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 4.3",
+    "source": "Đề Giữa kỳ 2021.1 - IT3030E, Problem 4.3 | giữa kì 20211 (Problem 4)",
     "examTags": [
       "GK"
     ],
@@ -1948,7 +1964,7 @@
     "groupId": "4.2.5",
     "groupTitle": "Nhóm 5: Lệnh Chia và Lấy phần dư số nguyên (div, rem)",
     "exerciseCode": "Bài tập 4.23",
-    "source": "Đề Giữa kỳ 2024.1 - #054a4a",
+    "source": "Đề Giữa kỳ 2024.1 - #054a4a | giữa kì 20241 (#054a4a)",
     "examTags": [
       "GK"
     ],
@@ -1981,7 +1997,7 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.24a",
-    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 2",
+    "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 2 | giữa kì 20192 (Mã đề 243 - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -2047,7 +2063,7 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.25",
-    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 5",
+    "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 5 | giữa kì 20182 (Mã đề 198 - Câu 5)",
     "examTags": [
       "GK"
     ],
@@ -2082,9 +2098,10 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.26a",
-    "source": "Đề CK 2022.2, 2024.2 - #bd4c95 & Ôn tập 2025.2 C53",
+    "source": "Đề CK 2022.2, 2024.2 - #bd4c95 & Ôn tập 2025.2 C53 | cuối kì 20222 (#bd4c95); cuối kì 20241 (#e73be8); cuối kì 20242 (#bd4c95); ôn tập cuối kì 20252 (P1-39); ôn tập cuối kì 20252 (P1-53)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 124,
     "printedPage": 123,
@@ -2119,7 +2136,8 @@
     "exerciseCode": "Bài tập 4.26b",
     "source": "Đề CK 2024.1 - #e73be8 & Ôn tập 2025.2 C39",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 124,
     "printedPage": 123,
@@ -2152,7 +2170,7 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.27a",
-    "source": "Đề Giữa kỳ 2024.1 - #94ec4c",
+    "source": "Đề Giữa kỳ 2024.1 - #94ec4c | giữa kì 20241 (#94ec4c)",
     "examTags": [
       "GK"
     ],
@@ -2187,9 +2205,10 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.27b",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 30",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 30 | ôn tập cuối kì 20252 (P1-30)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 125,
     "printedPage": 124,
@@ -2222,7 +2241,7 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.28a",
-    "source": "Đề Cuối kỳ 2021.2 - Mã đề B5, Câu 1.1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B5, Câu 1.1 | cuối kì 20212 (B5-1)",
     "examTags": [
       "CK"
     ],
@@ -2258,10 +2277,11 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.28b",
-    "source": "Slide Chương 4 - Trang 98",
+    "source": "Slide Chương 4 - Trang 98 | cuối kì 20212 (B5-1)",
     "examTags": [
       "LT",
-      "GK"
+      "GK",
+      "CK"
     ],
     "pdfPage": 126,
     "printedPage": 125,
@@ -2331,7 +2351,7 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.29a",
-    "source": "Đề Giữa kỳ 2024.1 - #386374 (Ý a)",
+    "source": "Đề Giữa kỳ 2024.1 - #386374 (Ý a) | giữa kì 20241 (#386374)",
     "examTags": [
       "GK"
     ],
@@ -2403,9 +2423,10 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.30a",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 59",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 59 | ôn tập cuối kì 20252 (P1-59)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 127,
     "printedPage": 126,
@@ -2436,9 +2457,10 @@
     "groupId": "4.2.6",
     "groupTitle": "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)",
     "exerciseCode": "Bài tập 4.30b",
-    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 46",
+    "source": "Ôn tập Cuối kỳ 2025.2 - P1, Câu 46 | ôn tập cuối kì 20252 (P1-46)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 127,
     "printedPage": 126,
@@ -2462,6 +2484,39 @@
       0
     ],
     "explanation": "<p>Trường $e = 11111111_2$ có 1 cách; phần lẻ $m$ (23 bit) phải $\\neq 0$ nên có $2^{23} - 1$ cách; bit dấu $S$ có 2 cách ($0$ hoặc $1$). Tổng: $2 \\times (2^{23}-1) = \\mathbf{2^{24}-2}$.</p>"
+  },
+  {
+    "id": "pdf-4_2_3-1",
+    "chapter": 4,
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
+    "exerciseCode": "Đề thi 4.2.3.1",
+    "source": "giữa kì 20222 (Đề 0008 (IT3030) - Câu 4); giữa kì 20222 (Đề 0006 (IT3283) - Câu 2)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "4.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét bảng biểu diễn số nguyên 8-bit có dấu dùng <strong>mã bù 2</strong>. Dòng 1: giá trị thập phân <code>77</code> có biểu diễn Hệ 2 và Hệ 16 là gì? Dòng 2: chuỗi nhị phân 8-bit bù 2 <code>1010 1010</code> tương ứng giá trị Hệ 10 và Hệ 16 là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "77 -> 0100 1101 (0x4D); 1010 1010 -> -86 (0xAA)",
+      "77 -> 0100 1101 (0x4D); 1010 1010 -> 170 (0xAA)",
+      "77 -> 0100 1011 (0x4B); 1010 1010 -> -42 (0xAA)",
+      "77 -> 0101 1101 (0x5D); 1010 1010 -> -86 (0xAA)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; $77 = 64 + 8 + 4 + 1 = 0100\\;1101_2 = \\text{0x4D}$.<br>&bull; $1010\\;1010_2 = \\text{0xAA}$ có bit dấu MSB bằng 1 (số âm). Đảo bit thành $0101\\;0101_2$, cộng 1 thành $0101\\;0110_2 = 86 \\Rightarrow$ giá trị có dấu là <strong>$-86$</strong>.</p>"
   }
 ];
 })(typeof window !== 'undefined' ? window : globalThis);

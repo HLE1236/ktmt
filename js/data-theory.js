@@ -21,7 +21,7 @@
     x14: { num: "x14", alias: "a4",   bin: "01110", role: "Argument 4: tham số truyền vào chương trình con", saved: "Caller-saved", group: "Argument" },
     x15: { num: "x15", alias: "a5",   bin: "01111", role: "Argument 5: tham số truyền vào chương trình con", saved: "Caller-saved", group: "Argument" },
     x16: { num: "x16", alias: "a6",   bin: "10000", role: "Argument 6: tham số truyền vào chương trình con", saved: "Caller-saved", group: "Argument" },
-    x17: { num: "x17", alias: "a7",   bin: "10001", role: "Argument 7: tham số truyền vào chương trình con (hoặc mã syscall)", saved: "Caller-saved", group: "Argument" },
+    x17: { num: "x17", alias: "a7",   bin: "10001", role: "Argument 7: tham số truyền vào chương trình con (hoặc mã ecall)", saved: "Caller-saved", group: "Argument" },
     x18: { num: "x18", alias: "s2",   bin: "10010", role: "Saved register 2: thanh ghi lưu biến chương trình", saved: "Callee-saved", group: "Saved" },
     x19: { num: "x19", alias: "s3",   bin: "10011", role: "Saved register 3: thanh ghi lưu biến chương trình", saved: "Callee-saved", group: "Saved" },
     x20: { num: "x20", alias: "s4",   bin: "10100", role: "Saved register 4: thanh ghi lưu biến chương trình", saved: "Callee-saved", group: "Saved" },
@@ -63,7 +63,7 @@
       theorySections: ["1.1.1", "1.1.2", "1.1.3"],
       groups: [
         { id: "1.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 1", type: "theory", pdfPage: 4, exercises: "Lý thuyết 1.1 - 1.6", count: 6, summary: "Kiến thức nền tảng: 4 thành phần cơ bản, 5 loại máy tính, ISA/Tổ chức/Phần cứng, 7 ý tưởng lớn và các mức biên dịch." },
-        { id: "1.2.1", title: "Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính", type: "exercise", pdfPage: 10, exercises: "Bài tập 1.1", count: 1, summary: "Xác định thành phần chứa chương trình đang thực hiện (Bộ nhớ chính - Main Memory) và phân biệt với bộ nhớ ngoài." },
+        { id: "1.2.1", title: "Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính", type: "exercise", pdfPage: 10, exercises: "Bài tập 1.1 & Đề thi", count: 3, summary: "Thành phần chứa chương trình đang chạy (Bộ nhớ chính) và phân loại kiến trúc Flynn (SISD, SIMD, MISD, MIMD)." },
         { id: "1.2.2", title: "Nhóm 2: Tính chu kỳ xung nhịp (T0), CPI và Thời gian thực thi (tCPU)", type: "exercise", pdfPage: 10, exercises: "Bài tập 1.2 - 1.9", count: 11, summary: "Công thức cơ bản: T0 = 1/f0; tCPU = n * T0 = (IC * CPI)/f0. Mẹo nhanh: f0 (GHz) và T0 (ns) triệt tiêu số mũ 10^9 và 10^-9." },
         { id: "1.2.3", title: "Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS", type: "exercise", pdfPage: 15, exercises: "Bài tập 1.10 - 1.12", count: 7, summary: "MIPS = IC / (tCPU * 10^6) = f0 (MHz) / CPI = [f0 (GHz) * 1000] / CPI và tính MFLOPS, lưu ý nhược điểm của MIPS." },
         { id: "1.2.4", title: "Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh", type: "exercise", pdfPage: 16, exercises: "Bài tập 1.13 - 1.17", count: 13, summary: "CPI_TB = (sum CPI_i * IC_i) / (sum IC_i) hoặc sum (p_i% * CPI_i), sau đó thay vào tCPU = (IC * CPI_TB) / f0." },
@@ -74,35 +74,36 @@
       id: 2,
       code: "Chương 2",
       title: "Hệ thống máy tính",
-      subtitle: "CPU (CU, ALU, RF), Bộ nhớ & Hệ thống I/O, Chu trình lệnh (PC, IR), Ngắt (Interrupt), Bus hệ thống, Tín hiệu điều khiển và Không gian địa chỉ.",
+      subtitle: "Cấu trúc CPU (CU, ALU, RF), Bộ nhớ & Hệ thống I/O tổng quan, Chu trình thực hiện lệnh (PC, IR) & Ngắt, Bus hệ thống (QPI, PCIe) và Không gian địa chỉ.",
       pdfPageStart: 28,
       printedPageStart: 27,
       theorySections: ["2.1.1", "2.1.2", "2.1.3"],
       groups: [
         { id: "2.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 2", type: "theory", pdfPage: 28, exercises: "Lý thuyết 2.1 - 2.6", count: 6, summary: "Cấu trúc CPU, Bộ nhớ/I/O, Chu trình Fetch-Execute, Ngắt, 3 loại Bus và Liên kết điểm-điểm (QPI, PCIe, SATA, USB)." },
-        { id: "2.2.1", title: "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra", type: "exercise", pdfPage: 35, exercises: "Bài tập 2.1 - 2.3", count: 6, summary: "Chức năng CU/ALU/RF, bộ nhớ trong/ngoài, tính chất ngăn nhớ (nội dung đổi, địa chỉ cố định) và mô-đun vào-ra." },
-        { id: "2.2.2", title: "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt", type: "exercise", pdfPage: 36, exercises: "Bài tập 2.4 - 2.5", count: 6, summary: "Quy trình Tìm nạp (PC -> IR, PC += 4), Giải mã, Thực thi và Thứ tự cất ngữ cảnh / xử lý Ngắt đơn và nhiều ngắt." },
-        { id: "2.2.3", title: "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ", type: "exercise", pdfPage: 38, exercises: "Bài tập 2.6 - 2.10", count: 17, summary: "Bus địa chỉ/dữ liệu/điều khiển (MEMR, IOW, INTR, INTA, BRQ, BGT), tính không gian địa chỉ M = 2^N và độ rộng bus N." }
+        { id: "2.2.1", title: "Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra", type: "exercise", pdfPage: 35, exercises: "Bài tập 2.1 - 2.3", count: 6, summary: "Chức năng CU/ALU/RF, vai trò Cache, bộ nhớ trong vs bộ nhớ ngoài, tính chất ngăn nhớ và mô-đun vào-ra." },
+        { id: "2.2.2", title: "Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt", type: "exercise", pdfPage: 36, exercises: "Bài tập 2.4 - 2.5", count: 5, summary: "Quy trình Tìm nạp (PC -> IR, PC += 4), Giải mã, Thực thi và Thứ tự cất ngữ cảnh / xử lý Ngắt đơn và nhiều ngắt." },
+        { id: "2.2.3", title: "Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ", type: "exercise", pdfPage: 38, exercises: "Bài tập 2.6 - 2.10", count: 16, summary: "Bus địa chỉ/dữ liệu/điều khiển (MEMR, IOW, INTR, INTA, BRQ, BGT), QPI/PCIe/SATA/USB và tính không gian địa chỉ M = 2^N." }
       ]
     },
     {
       id: 3,
       code: "Chương 3",
       title: "Kiến trúc tập lệnh RISC-V",
-      subtitle: "Tập 32 thanh ghi, quy tắc Little-Endian, hợp ngữ RISC-V, dịch C ↔ RISC-V, Vòng lặp, Ngăn xếp, Mã máy 32-bit, Lệnh nén 16-bit và Bản đồ bộ nhớ.",
+      subtitle: "Tập 32 thanh ghi, Little-Endian, Hợp ngữ RV32I, Dịch C ↔ RISC-V, Vòng lặp, Ngăn xếp, Mã máy 32-bit, Lệnh nén 16-bit, Bản đồ bộ nhớ và Thực hành RARS / ecall.",
       pdfPageStart: 43,
       printedPageStart: 42,
-      theorySections: ["3.1.1", "3.1.2", "3.1.3", "3.1.4", "3.1.5"],
+      theorySections: ["3.1.1", "3.1.2", "3.1.3", "3.1.4", "3.1.5", "3.1.6"],
       groups: [
         { id: "3.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 3 (RISC-V)", type: "theory", pdfPage: 43, exercises: "Lý thuyết 3.1 - 3.8", count: 8, summary: "Nguyên lý RISC, 32 thanh ghi RV32I, quy tắc Little-Endian, 6 khuôn dạng lệnh 32-bit, lệnh nén 16-bit và 4 định địa chỉ." },
-        { id: "3.2.1", title: "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ", type: "exercise", pdfPage: 52, exercises: "Bài tập 3.1 - 3.7, 3.13", count: 11, summary: "32 thanh ghi RV32I (t0-t6, s0-s11, zero), kích thước mã máy 32-bit vs RVC 16-bit, khuôn dạng lệnh R/I/S/B/U/J và 4 phương thức định địa chỉ." },
-        { id: "3.2.2", title: "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi", type: "exercise", pdfPage: 57, exercises: "Bài tập 3.12, 3.14 - 3.26", count: 26, summary: "add, sub, addi (phạm vi hằng 12-bit [-2048, +2047]), and, or, xor, sll, srl, sra, lui. Quy tắc lui + addi nạp hằng số 32-bit (cộng 1 khi bit 11 bằng 1)." },
-        { id: "3.2.3", title: "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh", type: "exercise", pdfPage: 64, exercises: "Bài tập 3.27 - 3.28, 3.72", count: 7, summary: "So sánh có dấu (slt, slti, blt, bge) vs không dấu (sltu, sltiu, bltu) với hằng số âm/Hexa có bit dấu bằng 1 và cơ chế ALU trừ (beq/bne)." },
-        { id: "3.2.4", title: "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)", type: "exercise", pdfPage: 66, exercises: "Bài tập 3.8 - 3.11, 3.29 - 3.35", count: 19, summary: "Căn chỉnh biên word/halfword (chia hết cho 4/2), quy tắc Little-Endian (LSB ở địa chỉ nhỏ nhất), đếm số lần truy cập Data Memory và lw/lh/lb/lbu/sw." },
-        { id: "3.2.5", title: "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V", type: "exercise", pdfPage: 70, exercises: "Bài tập 3.36 - 3.50", count: 30, summary: "Địa chỉ phần tử mảng &A[i] = Base + 4*i, cấu trúc if-else, vòng lặp while/for và xử lý xâu ký tự/mảng char." },
-        { id: "3.2.6", title: "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi", type: "exercise", pdfPage: 82, exercises: "Bài tập 3.51 - 3.56", count: 10, summary: "Tính kết quả vòng lặp và công thức đếm tổng số lệnh thực thi: Khởi tạo + N*(Thân + Branch) + Thoát." },
-        { id: "3.2.7", title: "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr", type: "exercise", pdfPage: 88, exercises: "Bài tập 3.57 - 3.60", count: 5, summary: "Quy ước Caller-saved vs Callee-saved, thao tác Push/Pop trên đỉnh ngăn xếp sp và gọi đệ quy/hàm lồng nhau." },
-        { id: "3.2.8", title: "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ", type: "exercise", pdfPage: 91, exercises: "Bài tập 3.61 - 3.71", count: 39, summary: "Dịch hợp ngữ <-> mã máy 32-bit (R, I, S, B, U, J), tính đích nhảy BTA/JTA và giải mã Bản đồ bộ nhớ Đề 0012, 0013." }
+        { id: "3.2.1", title: "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ", type: "exercise", pdfPage: 52, exercises: "Bài tập 3.1 - 3.7, 3.13 & Đề thi", count: 24, summary: "32 thanh ghi RV32I (t0-t6, s0-s11, zero), kích thước mã máy 32-bit vs RVC 16-bit, khuôn dạng lệnh R/I/S/B/U/J, giả lệnh và 4 phương thức định địa chỉ." },
+        { id: "3.2.2", title: "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi", type: "exercise", pdfPage: 57, exercises: "Bài tập 3.12, 3.14 - 3.26 & Đề thi", count: 42, summary: "add, sub, addi (phạm vi hằng 12-bit [-2048, +2047]), and, or, xor, slli, srli, srai, lui. Quy tắc lui + addi nạp hằng số 32-bit." },
+        { id: "3.2.3", title: "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh", type: "exercise", pdfPage: 64, exercises: "Bài tập 3.27 - 3.28, 3.72 & Đề thi", count: 15, summary: "So sánh có dấu (slt, slti, blt, bge) vs không dấu (sltu, sltiu, bltu) với hằng số âm/Hexa có bit dấu bằng 1 và điều khiển luồng." },
+        { id: "3.2.4", title: "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)", type: "exercise", pdfPage: 66, exercises: "Bài tập 3.8 - 3.11, 3.29 - 3.35 & Đề thi", count: 34, summary: "Căn chỉnh biên word/halfword (chia hết cho 4/2), quy tắc Little-Endian (LSB ở địa chỉ nhỏ nhất), đếm truy cập Data Memory và lw/lh/lb/lbu/sw/sb." },
+        { id: "3.2.5", title: "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V", type: "exercise", pdfPage: 70, exercises: "Bài tập 3.36 - 3.50 & Đề thi", count: 35, summary: "Địa chỉ phần tử mảng &A[i] = Base + 4*i, cấu trúc if-else, biểu thức số học tối ưu, vòng lặp while/for và xâu ký tự." },
+        { id: "3.2.6", title: "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi", type: "exercise", pdfPage: 82, exercises: "Bài tập 3.51 - 3.56 & Đề thi", count: 13, summary: "Tính kết quả vòng lặp và công thức đếm tổng số lệnh thực thi: Khởi tạo + N*(Thân + Branch) + Thoát." },
+        { id: "3.2.7", title: "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr", type: "exercise", pdfPage: 88, exercises: "Bài tập 3.57 - 3.60 & Đề thi", count: 14, summary: "Quy ước Caller-saved vs Callee-saved, thao tác Push/Pop trên đỉnh ngăn xếp sp (LIFO) và gọi đệ quy/hàm lồng nhau." },
+        { id: "3.2.8", title: "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ", type: "exercise", pdfPage: 91, exercises: "Bài tập 3.61 - 3.71 & Đề thi", count: 60, summary: "Dịch hợp ngữ <-> mã máy 32-bit (R, I, S, B, U, J), trường shamt/funct3/funct7, đích nhảy BTA/JTA và giải mã Bản đồ bộ nhớ." },
+        { id: "3.2.9", title: "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz) và Lời gọi hệ thống (ecall)", type: "exercise", pdfPage: 98, exercises: "Đề thi Lab & Ôn tập RARS", count: 14, summary: "Phân vùng .text (0x00400000) / .data (0x10010000), chỉ thị .word/.ascii/.asciz, dịch vụ ecall (a7=1,4,10,11,32,34), cấp phát mảng 2D Bitmap và căn chỉnh 4-byte trong RARS." }
       ]
     },
     {
@@ -117,7 +118,7 @@
         { id: "4.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)", type: "theory", pdfPage: 100, exercises: "Lý thuyết 4.1 - 4.8", count: 8, summary: "Hệ đếm, cổng logic, mã bù 2, quy tắc tràn số học, phép nhân/chia RV32M và chuẩn dấu phẩy động IEEE 754." },
         { id: "4.2.1", title: "Nhóm 1: Hệ đếm và Chuyển đổi cơ số (Nhị phân, Thập phân, Thập lục phân)", type: "exercise", pdfPage: 108, exercises: "Bài tập 4.1", count: 1, summary: "Chuyển đổi số có phần nguyên và phần lẻ giữa các hệ cơ số (nhị phân, thập phân, thập lục phân)." },
         { id: "4.2.2", title: "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit", type: "exercise", pdfPage: 109, exercises: "Bài tập 4.3 - 4.5", count: 5, summary: "Nhận dạng 6 cổng logic (AND, OR, NOT, NAND, NOR, XOR), phân tích mạch tổ hợp SOP và công thức S, C_out bộ Full Adder." },
-        { id: "4.2.3", title: "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh", type: "exercise", pdfPage: 111, exercises: "Bài tập 4.2, 4.6 - 4.14", count: 28, summary: "Xác định số bit tối thiểu (2^n >= M), dải giá trị không dấu/có dấu n-bit bù 2 [-2^{n-1}, 2^{n-1}-1], tính bù 2 và sắp xếp dãy số nguyên." },
+        { id: "4.2.3", title: "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh", type: "exercise", pdfPage: 111, exercises: "Bài tập 4.2, 4.6 - 4.14 & Đề thi", count: 29, summary: "Xác định số bit tối thiểu (2^n >= M), dải giá trị không dấu/có dấu n-bit bù 2 [-2^{n-1}, 2^{n-1}-1], tính bù 2 và sắp xếp dãy số nguyên." },
         { id: "4.2.4", title: "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)", type: "exercise", pdfPage: 116, exercises: "Bài tập 4.15 - 4.22", count: 15, summary: "Cộng cùng dấu ra trái dấu -> tràn số; char (8-bit) tràn +-256; dải giá trị thanh ghi gây tràn 32-bit [0x80000000 - K, 0x7FFFFFFF]." },
         { id: "4.2.5", title: "Nhóm 5: Lệnh Chia và Lấy phần dư số nguyên (div, rem)", type: "exercise", pdfPage: 122, exercises: "Bài tập 4.23", count: 1, summary: "Mở rộng RV32M: div rd, rs1, rs2 và rem rd, rs1, rs2. Số dư luôn cùng dấu với số bị chia rs1." },
         { id: "4.2.6", title: "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)", type: "exercise", pdfPage: 123, exercises: "Bài tập 4.24 - 4.30", count: 14, summary: "Cấu trúc 1-8-23 (Bias = 127), đổi thập phân <-> Hexa 32-bit, nhận diện +-Infinity, số cách biểu diễn NaN (2^24 - 2)." }
@@ -140,8 +141,9 @@
       content: `
         <h4>1. Khái niệm cơ bản</h4>
         <ul>
-          <li><strong>Máy tính (Computer):</strong> Là thiết bị điện tử hoạt động theo chương trình, có khả năng nhập dữ liệu (<em>input data</em>), lưu trữ dữ liệu, xử lý dữ liệu và xuất ra thông tin (<em>output information</em>).</li>
+          <li><strong>Máy tính (Computer):</strong> Là thiết bị điện tử hoạt động theo chương trình lưu trữ sẵn (<em>stored-program</em>), có khả năng nhập dữ liệu (<em>input data</em>), lưu trữ dữ liệu, xử lý dữ liệu và xuất ra thông tin (<em>output information</em>).</li>
           <li><strong>Chương trình (Program):</strong> Là dãy các lệnh được lập trình sẵn và được lưu trong bộ nhớ để điều khiển máy tính thực hiện theo.</li>
+          <li><strong>Sơ đồ đơn giản của hệ thống máy tính:</strong> Gồm các khối chức năng phối hợp: Các thiết bị vào, CPU (xử lý dữ liệu), Bộ nhớ chính (chứa chương trình đang thực hiện), Các thiết bị lưu trữ (lưu trữ phần mềm &amp; dữ liệu), Các thiết bị ra và Các thiết bị truyền thông (kết nối mạng/Internet).</li>
         </ul>
 
         <h4>2. Bốn thành phần cơ bản của mọi máy tính</h4>
@@ -193,6 +195,36 @@
           <li><strong>Máy chủ (Servers):</strong> Dùng trong mạng máy tính để quản lý tài nguyên và cung cấp dịch vụ cho nhiều người dùng; có hiệu năng và độ tin cậy cao, giá thành từ hàng nghìn đến hàng triệu USD.</li>
           <li><strong>Máy tính quy mô kho / Siêu máy tính (WSC – Warehouse-Scale Computers / Supercomputers):</strong> Kết nối hàng nghìn máy chủ với nhau (<em>Clusters</em>). Siêu máy tính là một dạng WSC dùng cho các bài toán tính toán lớn trong khoa học và kỹ thuật, giá thành từ hàng triệu đến hàng trăm triệu USD.</li>
         </ul>
+
+        <h4>4. Phân loại kiến trúc song song theo Flynn (Flynn's Taxonomy)</h4>
+        <ul>
+          <li><strong>SISD (Single Instruction, Single Data):</strong> Máy tính đơn nhân tuần tự cổ điển (1 luồng lệnh xử lý 1 luồng dữ liệu).</li>
+          <li><strong>SIMD (Single Instruction, Multiple Data):</strong> Một luồng lệnh điều khiển nhiều bộ xử lý cùng lúc trên nhiều dữ liệu khác nhau (ví dụ tập lệnh vector AVX, GPU).</li>
+          <li><strong>MISD (Multiple Instruction, Single Data):</strong> Nhiều luồng lệnh xử lý trên cùng một luồng dữ liệu — mô hình này hầu như <strong>không tồn tại</strong> trong thực tế thương mại.</li>
+          <li><strong>MIMD (Multiple Instruction, Multiple Data):</strong> Nhiều bộ xử lý chạy đồng thời nhiều luồng lệnh độc lập trên nhiều luồng dữ liệu (điển hình là <strong>CPU đa lõi / multi-core dùng chung bộ nhớ - Shared Memory</strong> hoặc hệ phân tán Clusters).</li>
+        </ul>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 1.2.1: Khái niệm cơ bản, Thành phần máy tính &amp; Phân loại Flynn</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Câu hỏi lý thuyết yêu cầu chỉ ra bộ phận lưu trữ chương trình đang thực thi, phân biệt các loại bộ nhớ, hoặc phân loại kiến trúc hệ thống (đơn nhân, đa lõi, vector/GPU, mô hình lý thuyết) theo bảng phân loại Flynn.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Xác định đúng vai trò 4 thành phần cốt lõi):</strong> Chứa lệnh và dữ liệu của chương trình <em>hiện đang được thực hiện</em> &rarr; chọn <strong>Bộ nhớ chính (Main Memory)</strong>; giải mã lệnh và xử lý dữ liệu &rarr; <strong>CPU</strong>; lưu trữ phần mềm lâu dài khi chưa chạy &rarr; <strong>Thiết bị lưu trữ ngoài (HDD/SSD)</strong>; kết nối vận chuyển tín hiệu giữa các khối &rarr; <strong>Liên kết hệ thống</strong>.</li>
+                <li><strong>Bước 2 (Đối chiếu phân loại Flynn theo số luồng Lệnh – Dữ liệu):</strong> 1 luồng lệnh + 1 luồng dữ liệu (máy tuần tự cổ điển) &rarr; <strong>SISD</strong>; 1 luồng lệnh điều khiển nhiều dữ liệu song song (tập lệnh vector, GPU) &rarr; <strong>SIMD</strong>; nhiều bộ xử lý / đa lõi (<code>dual-core</code>, <code>multi-core</code>) chạy các luồng lệnh và dữ liệu độc lập &rarr; <strong>MIMD dùng chung bộ nhớ (Shared Memory)</strong>; nhiều luồng lệnh trên cùng 1 dữ liệu (hầu như không tồn tại thực tế) &rarr; <strong>MISD</strong>.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Không nhầm <em>Bộ nhớ chính (RAM)</em> với <em>Bộ nhớ ngoài (SSD/HDD)</em> hay <em>Thanh ghi</em> (chỉ lưu toán hạng tức thời bên trong CPU). Với CPU đa lõi (<code>multi-core</code>), đáp án đúng là <strong>MIMD</strong> chứ không phải SIMD.</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="1.2.1">
+          <span>📝 <strong>Nhóm 1.2.1: Khái niệm cơ bản, Thành phần máy tính &amp; Phân loại Flynn (<span class="group-q-count">3 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.1', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('1.2.1', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -203,7 +235,7 @@
       pdfPage: 5,
       printedPage: 4,
       linkedGroups: ["1.1"],
-      summary: "3 khía cạnh kiến trúc máy tính, 7 ý tưởng lớn, 4 yếu tố quyết định hiệu năng, 3 lớp hệ thống, 3 mức dịch ngôn ngữ và lịch sử tiến hóa.",
+      summary: "3 khía cạnh kiến trúc (x86/ARM/RISC-V International), 7 ý tưởng lớn, 4 yếu tố hiệu năng, 3 lớp & mức dịch ngôn ngữ, các loại IC điển hình và quy trình sản xuất chip (defect, die, yield).",
       content: `
         <h4>1. Ba khía cạnh của Kiến trúc máy tính</h4>
         <ul>
@@ -211,7 +243,7 @@
             <ul>
               <li><strong>Intel x86:</strong> Ra đời từ năm 1978, dùng phổ biến trong Laptop, Desktop, Servers.</li>
               <li><strong>ARM:</strong> Ra đời từ năm 1985, dùng phổ biến trong Smartphones, Tablets.</li>
-              <li><strong>RISC-V:</strong> Kiến trúc tập lệnh mở (miễn phí bản quyền), phát triển từ năm 2010 tại Đại học UC Berkeley.</li>
+              <li><strong>RISC-V:</strong> Kiến trúc tập lệnh mở (miễn phí bản quyền), phát triển từ năm 2010 tại Đại học UC Berkeley; thành lập RISC-V Foundation (2015) và chuyển thành <strong>RISC-V International Association</strong> năm 2020 tại Thụy Sỹ (quy tụ khoảng 4.500 thành viên từ 70 quốc gia).</li>
             </ul>
           </li>
           <li><strong>Tổ chức máy tính (Computer Organization) hay Vi kiến trúc (Microarchitecture):</strong> Nghiên cứu việc thiết kế máy tính ở mức cao để thực thi kiến trúc tập lệnh (thiết kế CPU, hệ thống nhớ, cấu trúc bus).</li>
@@ -239,12 +271,12 @@
 
         <h4>4. Phân lớp máy tính và các mức chuyển đổi mã chương trình</h4>
         <ul>
-          <li><strong>Ba lớp của hệ thống máy tính:</strong> Từ trong ra ngoài gồm <strong>Phần cứng</strong> (Bộ xử lý, bộ nhớ, mô-đun vào-ra) $\\rightarrow$ <strong>Phần mềm hệ thống</strong> (Hệ điều hành quản lý tài nguyên và Chương trình dịch) $\\rightarrow$ <strong>Phần mềm ứng dụng</strong>.</li>
-          <li><strong>Quá trình dịch chương trình qua 3 mức ngôn ngữ:</strong>
+          <li><strong>Ba lớp đồng tâm của hệ thống máy tính:</strong> Từ trong ra ngoài gồm <strong>Phần cứng</strong> (CPU, bộ nhớ, mô-đun vào-ra) $\\rightarrow$ <strong>Phần mềm hệ thống</strong> (gồm <em>Hệ điều hành – OS</em> thực hiện lập lịch chạy chương trình, quản lý bộ nhớ/lưu trữ, điều khiển vào-ra; và <em>Chương trình dịch – Compilers</em>) $\\rightarrow$ <strong>Phần mềm ứng dụng</strong>.</li>
+          <li><strong>Quá trình dịch chương trình qua 3 mức ngôn ngữ (ví dụ hàm <code>swap</code> trên RISC-V):</strong>
             <ol>
               <li><strong>Ngôn ngữ bậc cao (High-Level Language – HLL):</strong> Như ngôn ngữ C, gần với bài toán cần giải quyết, độc lập với phần cứng.</li>
-              <li><strong>Trình biên dịch (Compiler):</strong> Dịch chương trình từ Ngôn ngữ bậc cao sang <strong>Hợp ngữ (Assembly Language)</strong> — mô tả lệnh dưới dạng văn bản gợi nhớ, phụ thuộc vào từng kiến trúc tập lệnh cụ thể.</li>
-              <li><strong>Trình hợp dịch (Assembler):</strong> Dịch từ Hợp ngữ sang <strong>Ngôn ngữ máy (Machine Language / Mã máy)</strong> — được mã hóa hoàn toàn bằng các bit nhị phân <code>0</code> và <code>1</code> để phần cứng trực tiếp thực thi.</li>
+              <li><strong>Trình biên dịch (Compiler):</strong> Dịch chương trình từ Ngôn ngữ bậc cao sang <strong>Hợp ngữ (Assembly Language)</strong> — mô tả lệnh dưới dạng văn bản gợi nhớ (như <code>slli, add, lw, sw, jalr zero, 0(ra)</code> trên RISC-V), phụ thuộc vào từng kiến trúc tập lệnh cụ thể.</li>
+              <li><strong>Trình hợp dịch (Assembler):</strong> Dịch từ Hợp ngữ sang <strong>Ngôn ngữ máy (Machine Language / Mã máy)</strong> — được mã hóa hoàn toàn bằng các bit nhị phân <code>0</code> và <code>1</code> (chuỗi 32-bit trên RV32I) để phần cứng trực tiếp thực thi.</li>
             </ol>
           </li>
         </ul>
@@ -277,11 +309,32 @@
           <figcaption>Hình 1.2 – Chuỗi biên dịch và hợp dịch qua 3 mức ngôn ngữ chương trình</figcaption>
         </figure>
 
-        <h4>5. Sự tiến hóa của công nghệ máy tính</h4>
+        <h4>5. Sự tiến hóa của công nghệ máy tính và Các loại vi mạch điển hình</h4>
         <ul>
-          <li><strong>Thế hệ đèn điện tử chân không (1950s):</strong> Máy tính <strong>ENIAC (1946)</strong> — xử lý theo số thập phân; và máy tính <strong>IAS (1952)</strong> — do John von Neumann thiết kế theo nguyên lý chương trình lưu trữ trong bộ nhớ (<em>“stored program”</em>), xử lý theo số nhị phân.</li>
+          <li><strong>Thế hệ đèn điện tử chân không (1950s):</strong> Máy tính <strong>ENIAC (1946)</strong> — do John Mauchly thiết kế, nặng ~30 tấn, xử lý theo số thập phân; và máy tính <strong>IAS (1952)</strong> — do John von Neumann thiết kế theo nguyên lý chương trình lưu trữ trong bộ nhớ (<em>“stored program”</em>), xử lý theo số nhị phân.</li>
           <li><strong>Thế hệ linh kiện:</strong> Transistors (1960s) $\\rightarrow$ Vi mạch SSI, MSI, LSI (1970s) $\\rightarrow$ Vi mạch VLSI (1980s) $\\rightarrow$ Vi mạch ULSI (1990s – nay).</li>
+          <li><strong>Các loại vi mạch (IC) điển hình trong máy tính hiện đại:</strong>
+            <ul>
+              <li><strong>Bộ vi xử lý (Microprocessor):</strong> Tích hợp CPU (ngày nay thường gồm nhiều nhân xử lý) trên một vi mạch.</li>
+              <li><strong>Chipset:</strong> Tập hợp vi mạch hỗ trợ kết nối và điều phối dữ liệu giữa CPU với bộ nhớ chính và hệ thống vào-ra.</li>
+              <li><strong>Bộ nhớ bán dẫn (Semiconductor Memory):</strong> Các chip nhớ ROM, RAM (DRAM/SRAM), Flash.</li>
+              <li><strong>Hệ thống trên chip / Vi điều khiển (SoC / Microcontrollers):</strong> Tích hợp CPU, bộ nhớ và các khối giao tiếp ngoại vi trên cùng một chip (dùng phổ biến trong thiết bị di động và hệ thống nhúng).</li>
+              <li><strong>Bộ xử lý đồ họa (GPU – Graphics Processing Unit):</strong> Vi mạch chuyên dụng cho xử lý đồ họa và tính toán song song khối lượng lớn.</li>
+            </ul>
+          </li>
           <li><strong>Sự phát triển độ rộng bit của vi xử lý:</strong> 4-bit (Intel 4004 năm 1971) $\\rightarrow$ 8-bit (1972) $\\rightarrow$ 16-bit (1978, máy tính IBM-PC ra đời năm 1981) $\\rightarrow$ 32-bit (1985) $\\rightarrow$ 64-bit (2001) $\\rightarrow$ Đa lõi (Multicores – từ năm 2006, tích hợp nhiều nhân CPU trên cùng một chip).</li>
+        </ul>
+
+        <h4>6. Quy trình sản xuất chip (“Từ cát thành chip”)</h4>
+        <ul>
+          <li><strong>Chuỗi công đoạn chế tạo vi mạch:</strong> Thỏi tinh thể silic tinh khiết (<em>Silicon ingot</em>) $\\rightarrow$ Máy cắt lát (<em>Slicer</em>) $\\rightarrow$ Đĩa silic trơn (<em>Blank wafers</em>) $\\rightarrow$ 20–40 bước quang khắc và khắc mạch $\\rightarrow$ Wafer đã tạo mạch (<em>Patterned wafers</em>) $\\rightarrow$ Kiểm tra trên wafer (<em>Wafer tester</em>) $\\rightarrow$ Cắt wafer thành từng chip (<em>Dicer</em>) $\\rightarrow$ Các mảnh chip đã kiểm tra (<em>Tested dies</em>) $\\rightarrow$ Gắn die vào vỏ đóng gói (<em>Bond die to package</em>) $\\rightarrow$ Chip đã đóng gói (<em>Packaged dies</em>) $\\rightarrow$ Kiểm tra thành phẩm (<em>Part tester</em>) $\\rightarrow$ Xuất xưởng (<em>Ship</em>).</li>
+          <li><strong>Ba khái niệm cốt lõi về chất lượng chế tạo:</strong>
+            <ul>
+              <li><strong>Die (Mảnh chip):</strong> Một vi mạch riêng lẻ được cắt ra từ tấm đĩa wafer.</li>
+              <li><strong>Defect (Khuyết tật):</strong> Lỗi vật lý/vi mô phát sinh trên bề mặt wafer làm hỏng mạch tại vị trí đó.</li>
+              <li><strong>Yield (Hiệu suất / Tỉ lệ đạt chuẩn):</strong> Tỉ lệ phần trăm số <em>die</em> hoạt động tốt trên tổng số <em>die</em> của một wafer (công nghệ càng tiên tiến và diện tích die càng nhỏ thì số die trên mỗi wafer càng nhiều). <em>Ví dụ (Intel 10th Gen):</em> Wafer đường kính 300 mm, tiến trình 10 nm, kích thước mỗi die $11.4 \\times 10.7\\text{ mm}$ cho <strong>506 dies</strong> trên một wafer.</li>
+            </ul>
+          </li>
         </ul>
       `
     },
@@ -293,7 +346,7 @@
       pdfPage: 7,
       printedPage: 6,
       linkedGroups: ["1.2.2", "1.2.3", "1.2.4", "1.2.5"],
-      summary: "Bảng quy đổi đơn vị chuẩn, 5 công thức cốt lõi (T0, n, t_CPU, CPI_TB nhiều lớp lệnh, P_A/P_B, MIPS/MFLOPS) và hạn chế của MIPS.",
+      summary: "Bảng quy đổi đơn vị chuẩn, 5 công thức cốt lõi (T0, n, t_CPU, CPI_TB nhiều lớp lệnh, P_A/P_B & Amdahl, MIPS/MFLOPS–PFLOPS) và 5 hạn chế của MIPS.",
       content: `
         <h4>1. Bảng quy đổi đơn vị chuẩn khi giải bài tập Hiệu năng</h4>
         <p>Khi thay số vào công thức, luôn đổi tất cả đại lượng về đơn vị chuẩn: <strong>giây (s)</strong> đối với thời gian, <strong>Hertz (Hz)</strong> đối với tần số, và <strong>số lệnh</strong> đối với khối lượng lệnh.</p>
@@ -393,6 +446,21 @@
           <p>$$n = t_{\\text{CPU}} \\times f_0 \\quad ; \\quad CPI = \\frac{t_{\\text{CPU}} \\times f_0}{IC} \\quad ; \\quad IC = \\frac{t_{\\text{CPU}} \\times f_0}{CPI}$$</p>
         </div>
 
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 1.2.2: Tính chu kỳ xung nhịp ($T_0$), $CPI$ và Thời gian thực thi ($t_{\\text{CPU}}$)</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Cho tần số $f_0$ (hoặc $T_0$), số lượng lệnh $IC$ và $CPI$, yêu cầu tính $T_0$, tổng số chu kỳ $n$, thời gian chạy $t_{\\text{CPU}}$, hoặc tìm ngược $CPI$ / $IC$ khi biết thời gian thực thi.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Đổi đơn vị chuẩn ngay lập tức):</strong> Đưa $f_0$ về $\\text{Hz}$ ($1\\text{ MHz} = 10^6\\text{ Hz}$, $1\\text{ GHz} = 10^9\\text{ Hz}$). Nếu đề hỏi $T_0$ theo $\\text{ns}$, áp dụng ngay mẹo: $T_0\\text{ (ns)} = \\frac{1}{f_0\\text{ (GHz)}}$ (muốn sang $\\text{ps}$ thì nhân thêm $1000$).</li>
+                <li><strong>Bước 2 (Tính tổng chu kỳ hoặc thời gian CPU):</strong> Tính $n = IC \\times CPI$, sau đó $t_{\\text{CPU}} = n \\times T_0 = \\frac{IC \\times CPI}{f_0}$. Nếu tìm ngược: $CPI = \\frac{t_{\\text{CPU}} \\times f_0}{IC}$ hoặc $IC = \\frac{t_{\\text{CPU}} \\times f_0}{CPI}$.</li>
+                <li><strong>Bước 3 (Kiểm tra đơn vị kết quả):</strong> Đổi giây ($\\text{s}$) về $\\text{ms}$ ($\\times 10^3$), $\\mu\\text{s}$ ($\\times 10^6$), hoặc $\\text{ns}$ ($\\times 10^9$) khớp với phương án trắc nghiệm.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Nếu đề cho cả số dòng hợp ngữ và số lệnh mã máy sau biên dịch (vd 30 lệnh hợp ngữ $\\rightarrow$ 40 lệnh mã máy), bắt buộc phải lấy <strong>số lệnh mã máy ($IC = 40$)</strong>. Kiểm tra bậc lũy thừa khi đọc kí hiệu <code>xEy</code> ($= x \\times 10^y$).</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="1.2.2">
           <span>📝 <strong>Nhóm 1.2.2: Tính T0, CPI và Thời gian thực thi tCPU (<span class="group-q-count">11 câu</span>)</strong></span>
           <div class="inline-actions">
@@ -414,6 +482,21 @@
           </ul>
         </div>
 
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 1.2.4: Tính $CPI_{\\text{TB}}$ và Thời gian thực thi nhiều lớp lệnh</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Cho bảng gồm nhiều nhóm lệnh ($A, B, C\\dots$ hoặc ALU, Load, Store, Branch) với $CPI_i$ và số lượng $IC_i$ (hoặc tỷ lệ $p_i\\%$), yêu cầu tính $CPI_{\\text{TB}}$, $t_{\\text{CPU}}$, hoặc xét tác động khi tăng/giảm số lượng một nhóm lệnh.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Kiểm tra đủ $100\\%$ hoặc tổng $IC$):</strong> Nếu đề viết "còn lại là lệnh...", lấy $100\\% - \\sum p_{\\text{đã cho}}\\%$ để ra tỷ lệ nhóm lệnh còn lại trước khi nhân.</li>
+                <li><strong>Bước 2 (Tính $CPI_{\\text{TB}}$):</strong> Với số lượng cụ thể, tính tổng chu kỳ $n = \\sum (CPI_i \\times IC_i)$ và tổng lệnh $IC = \\sum IC_i$, rồi lấy $CPI_{\\text{TB}} = \\frac{n}{IC}$. Với tỷ lệ phần trăm, lấy $CPI_{\\text{TB}} = \\sum (p_i\\% \\times CPI_i)$.</li>
+                <li><strong>Bước 3 (Tính $t_{\\text{CPU}}$ hoặc bài toán biến thiên):</strong> Thay vào $t_{\\text{CPU}} = \\frac{n}{f_0} = \\frac{IC \\times CPI_{\\text{TB}}}{f_0}$. Nếu một lớp lệnh bị nhân đôi hoặc giảm một nửa, tính lại <strong>cả $n_{\\text{mới}}$ lẫn $IC_{\\text{mới}}$</strong> rồi chia $CPI_{\\text{TB, mới}} = n_{\\text{mới}} / IC_{\\text{mới}}$.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Tuyệt đối không lấy trung bình cộng giản đơn $\\frac{\\sum CPI_i}{K}$ khi tỷ lệ hoặc số lệnh các nhóm khác nhau! Khi thay đổi số lệnh của một nhóm, nhớ cập nhật lại cả tổng $IC_{\\text{mới}}$ ở mẫu số.</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="1.2.4">
           <span>📝 <strong>Nhóm 1.2.4: Tính CPI trung bình nhiều lớp lệnh (<span class="group-q-count">13 câu</span>)</strong></span>
           <div class="inline-actions">
@@ -423,11 +506,27 @@
         </div>
 
         <div class="callout callout-formula">
-          <div class="callout-title">📐 4) Định nghĩa Hiệu năng ($P$) và So sánh tốc độ giữa hai máy tính</div>
+          <div class="callout-title">📐 4) Định nghĩa Hiệu năng ($P$), So sánh tốc độ hai máy &amp; Định luật Amdahl</div>
           <p>Hiệu năng ($P$ – Performance) là nghịch đảo của thời gian thực hiện chương trình (máy có $t_{\\text{CPU}}$ nhỏ hơn thì nhanh hơn):</p>
           <p>$$P = \\frac{1}{t_{\\text{CPU}}} \\qquad \\Longrightarrow \\qquad k = \\frac{P_A}{P_B} = \\frac{t_B}{t_A}$$</p>
-          <p>Nếu hai máy A và B có <strong>cùng kiến trúc tập lệnh (ISA)</strong> và chạy cùng một chương trình thì $IC_A = IC_B = IC$ tự triệt tiêu:</p>
+          <p>Nếu hai máy A và B có <strong>cùng kiến trúc tập lệnh (ISA)</strong> và chạy cùng một chương trình (cùng trình biên dịch) thì $IC_A = IC_B = IC$ tự triệt tiêu:</p>
           <p>$$\\frac{P_A}{P_B} = \\frac{t_B}{t_A} = \\frac{CPI_B \\times T_B}{CPI_A \\times T_A} = \\frac{CPI_B / f_B}{CPI_A / f_A}$$</p>
+          <p><strong>Định luật Amdahl:</strong> Nếu cải tiến làm nhanh một phần chiếm tỷ lệ $p$ thời gian ban đầu lên $S$ lần, độ tăng tốc toàn hệ thống là: $$S_{\\text{tổng}} = \\frac{1}{(1 - p) + \\frac{p}{S}}$$</p>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 1.2.5: So sánh hiệu năng &amp; Cân bằng thời gian</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> So sánh máy A nhanh hơn máy B bao nhiêu lần; tìm tần số mới $f_{\\text{mới}}$ để giảm $t_{\\text{CPU}}$ đi $x\\%$ khi $CPI$ tăng; so sánh hai trình biên dịch khác $IC$; hoặc tính độ tăng tốc theo Định luật Amdahl.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Kiểm tra xem $IC$ có giống nhau không):</strong> Nếu đề nói rõ <em>cùng ISA và cùng chương trình</em> (chỉ đổi phần cứng $f_0, T_0, CPI$) thì $IC_A = IC_B$; ngược lại nếu <em>khác trình biên dịch</em> hoặc đề cho hai giá trị $IC_1 \\neq IC_2$ thì bắt buộc tính $t_1 = \\frac{IC_1 \\cdot CPI_1}{f_1}$ và $t_2 = \\frac{IC_2 \\cdot CPI_2}{f_2}$ riêng.</li>
+                <li><strong>Bước 2 (Lập tỷ số thời gian nghịch đảo):</strong> $\\frac{P_{\\text{nhanh}}}{P_{\\text{chậm}}} = \\frac{t_{\\text{chậm}}}{t_{\\text{nhanh}}}$ (luôn ra số $&gt; 1$ khi nói máy A nhanh hơn máy B bao nhiêu lần).</li>
+                <li><strong>Bước 3 (Bài toán thiết kế lại tần số):</strong> Muốn giảm $t_{\\text{CPU}}$ đi $x\\%$ tức $t_{\\text{mới}} = (1 - \\frac{x}{100}) t_{\\text{cũ}}$. Từ $\\frac{CPI_{\\text{mới}}}{f_{\\text{mới}}} = (1 - \\frac{x}{100}) \\frac{CPI_{\\text{cũ}}}{f_{\\text{cũ}}}$ suy ra $f_{\\text{mới}} = \\frac{f_{\\text{cũ}}}{(1 - x/100)} \\times \\frac{CPI_{\\text{mới}}}{CPI_{\\text{cũ}}}$.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng rút gọn $IC$ khi đề so sánh hai trình biên dịch hoặc cho $IC_1 \\neq IC_2$! Luôn quy đổi thống nhất $T_A, T_B$ (vd $\\text{ps}$ vs $\\text{ns}$) và đối chiếu đúng chiều "A nhanh hơn B" hay "B nhanh hơn A".</li>
+          </ul>
         </div>
 
         <div class="formula-practice-inline" data-group-link="1.2.5">
@@ -439,16 +538,38 @@
         </div>
 
         <div class="callout callout-formula">
-          <div class="callout-title">📐 5) Chỉ số tốc độ thực thi MIPS và MFLOPS</div>
+          <div class="callout-title">📐 5) Chỉ số tốc độ thực thi MIPS và MFLOPS / GFLOPS / TFLOPS / PFLOPS</div>
           <p><strong>MIPS</strong> (Millions of Instructions Per Second – số triệu lệnh thực hiện được trong 1 giây):</p>
           <p>$$\\text{MIPS} = \\frac{IC}{t_{\\text{CPU}} \\times 10^6} = \\frac{f_0}{CPI \\times 10^6} = \\frac{f_0\\text{ (MHz)}}{CPI} = \\frac{f_0\\text{ (GHz)} \\times 1000}{CPI}$$</p>
-          <p>Suy ngược $CPI$ khi biết MIPS: $$CPI = \\frac{f_0}{\\text{MIPS} \\times 10^6} = \\frac{f_0\\text{ (GHz)} \\times 1000}{\\text{MIPS}}$$</p>
-          <p><strong>MFLOPS</strong> (Millions of Floating-Point Operations Per Second): $$\\text{MFLOPS} = \\frac{\\text{Số phép toán dấu phẩy động thực thi}}{t_{\\text{CPU}} \\times 10^6}$$ Các bội số lớn hơn: GFLOPS ($10^9$), TFLOPS ($10^{12}$), PFLOPS ($10^{15}$).</p>
+          <p>Suy ngược $CPI$ khi biết MIPS: $$CPI = \\frac{f_0}{\\text{MIPS} \\times 10^6} = \\frac{f_0\\text{ (MHz)}}{\\text{MIPS}} = \\frac{f_0\\text{ (GHz)} \\times 1000}{\\text{MIPS}}$$</p>
+          <p><strong>MFLOPS</strong> (Millions of Floating-Point Operations Per Second) và các bội số lớn hơn:</p>
+          <p>$$\\text{MFLOPS} = \\frac{\\text{Số phép toán FP thực thi}}{t_{\\text{CPU}} \\times 10^6} \\quad;\\quad \\text{GFLOPS} = \\frac{\\text{FP ops}}{t_{\\text{CPU}} \\times 10^9} \\quad;\\quad \\text{TFLOPS} = \\frac{\\text{FP ops}}{t_{\\text{CPU}} \\times 10^{12}} \\quad;\\quad \\text{PFLOPS} = \\frac{\\text{FP ops}}{t_{\\text{CPU}} \\times 10^{15}}$$</p>
         </div>
 
         <div class="callout callout-trap">
-          <div class="callout-title">⚠️ Hạn chế của chỉ số MIPS</div>
-          <p>MIPS chỉ đo tốc độ thực thi lệnh mà không phản ánh khả năng của từng lệnh; <strong>không dùng để so sánh hai máy khác kiến trúc tập lệnh (khác ISA)</strong>; thay đổi theo từng chương trình trên cùng một máy; đôi khi một chương trình có nhiều lệnh đơn giản hơn lại cho chỉ số MIPS cao hơn nhưng tổng thời gian chạy thực tế lại lâu hơn.</p>
+          <div class="callout-title">⚠️ 5 hạn chế của chỉ số MIPS</div>
+          <ol>
+            <li>Chỉ đo tốc độ thực thi lệnh, <strong>không phản ánh được khả năng</strong> của tập lệnh (ISA).</li>
+            <li><strong>Không thể dùng để so sánh</strong> giữa các máy tính có kiến trúc tập lệnh (ISA) khác nhau.</li>
+            <li>Giá trị MIPS <strong>thay đổi theo từng chương trình</strong> trên cùng một máy tính.</li>
+            <li>Phụ thuộc trực tiếp vào <strong>$CPI$ và tần số xung nhịp $f_0$</strong> (hai tham số có thể thay đổi ngược chiều nhau).</li>
+            <li><strong>Có thể độc lập với hiệu năng thực sự:</strong> một chương trình dùng nhiều lệnh đơn giản hơn có thể đạt chỉ số MIPS cao hơn nhưng tổng thời gian thực thi $t_{\\text{CPU}}$ thực tế lại lâu hơn.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 1.2.3: Bài tập chỉ số MIPS, suy ngược $CPI$ &amp; MFLOPS</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Tính số triệu lệnh/giây ($\\text{MIPS}$) từ $f_0$ và $CPI$ (hoặc từ $IC$ và $t_{\\text{CPU}}$); tìm ngược $CPI$ khi biết $\\text{MIPS}$ và $f_0$ (hoặc $T_0$); hoặc tính $\\text{MFLOPS/GFLOPS}$ và nhận diện hạn chế của $\\text{MIPS}$.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Đổi nhanh $f_0$ về $\\text{MHz}$):</strong> Nhân $f_0\\text{ (GHz)} \\times 1000$ để ra $\\text{MHz}$. Nếu đề cho chu kỳ $T_0$ theo $\\text{ps}$, tính $f_0\\text{ (MHz)} = \\frac{10^6}{T_0\\text{ (ps)}}$ (vì $1\\text{ MHz} \\cdot 1\\text{ }\\mu\\text{s} = 1$ và $1\\text{ }\\mu\\text{s} = 10^6\\text{ ps}$).</li>
+                <li><strong>Bước 2 (Áp dụng công thức triệt tiêu $10^6$):</strong> Tính $\\text{MIPS} = \\frac{f_0\\text{ (MHz)}}{CPI}$, hoặc tìm ngược $CPI = \\frac{f_0\\text{ (MHz)}}{\\text{MIPS}}$.</li>
+                <li><strong>Bước 3 (Với bài $\\text{MFLOPS}$):</strong> Đếm đúng tổng số phép toán dấu phẩy động (Floating-Point) thực hiện và chia cho $t_{\\text{CPU}} \\times 10^6$ (hoặc $10^9$ cho $\\text{GFLOPS}$).</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng nhầm lẫn hệ số $10^6$ (MHz / MIPS / MFLOPS) với $10^9$ (GHz / GFLOPS). Nhớ rằng chỉ số $\\text{MIPS}$ cao hơn KHÔNG đồng nghĩa thời gian chạy ngắn hơn nếu khác ISA hoặc khác số lệnh $IC$.</li>
+          </ul>
         </div>
 
         <div class="formula-practice-inline" data-group-link="1.2.3">
@@ -549,6 +670,28 @@
           </svg>
           <figcaption>Hình 2.1 – Sơ đồ ghép nối các thành phần cơ bản qua Bus hệ thống (KTMT_GK.pdf trang 30)</figcaption>
         </figure>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 2.2.1: Cấu trúc CPU, Bộ nhớ &amp; Hệ thống vào-ra</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Hỏi chức năng từng khối bên trong CPU (<code>CU, ALU, RF</code>), phân biệt bộ nhớ trong vs bộ nhớ ngoài, tính chất của ngăn nhớ, vai trò chính của Cache, hoặc cách kết nối thiết bị ngoại vi.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Ánh xạ chức năng khối phần cứng):</strong> Lưu tạm thời tức thời bên trong CPU &rarr; <strong>Tập thanh ghi (RF)</strong>; giải mã &amp; phát điều khiển &rarr; <strong>CU</strong>; tính toán số học/logic &rarr; <strong>ALU</strong>; ngăn nhớ có <em>nội dung thay đổi được</em> nhưng <em>địa chỉ vật lý cố định</em>.</li>
+                <li><strong>Bước 2 (Phân biệt Bộ nhớ &amp; Thiết bị ngoại vi):</strong> Cache đặt đệm giữa CPU và bộ nhớ chính để <strong>tăng tốc độ truy cập bộ nhớ chính</strong>; thiết bị ngoại vi (như bàn phím, màn hình) không nối trực tiếp với CPU hay Bus hệ thống mà luôn kết nối qua <strong>Mô-đun vào-ra</strong>.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Bộ nhớ ngoài (SSD/HDD/USB Flash/DVD) KHÔNG thuộc bộ nhớ trong; thiết bị lưu trữ về mặt liên kết hệ thống được ghép nối dưới dạng thiết bị vào-ra.</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="2.2.1">
+          <span>📝 <strong>Nhóm 2.2.1: Cấu trúc CPU, Bộ nhớ &amp; Hệ thống vào-ra (<span class="group-q-count">6 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('2.2.1', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('2.2.1', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -566,10 +709,10 @@
         <ul>
           <li><strong>Quá trình Tìm nạp lệnh (Fetch):</strong>
             <ul>
-              <li><strong>Bộ đếm chương trình PC (Program Counter):</strong> Là thanh ghi của CPU luôn chứa <strong>địa chỉ của lệnh tiếp theo</strong> sẽ được nạp vào để thực hiện (trên kiến trúc Intel x86, thanh ghi này được gọi là <code>IP</code> – Instruction Pointer).</li>
+              <li><strong>Bộ đếm chương trình PC (Program Counter):</strong> Là thanh ghi của CPU luôn chứa <strong>địa chỉ của lệnh tiếp theo</strong> sẽ được nạp vào để thực hiện (trên kiến trúc Intel x86, thanh ghi này được gọi là <code>IP</code> – Instruction Pointer). <em>Địa chỉ khởi động ban đầu của PC khi bật máy do người thiết kế CPU quy định.</em></li>
               <li>Bắt đầu mỗi chu trình lệnh, CPU phát địa chỉ từ thanh ghi <code>PC</code> ra bộ nhớ chính để tìm ngăn nhớ chứa lệnh.</li>
               <li>Lệnh đọc từ bộ nhớ chính được nạp vào <strong>Thanh ghi lệnh IR (Instruction Register)</strong> của CPU.</li>
-              <li>Sau khi lệnh được nạp vào <code>IR</code>, nếu chương trình thực hiện tuần tự, CPU sẽ <strong>tự động tăng nội dung thanh ghi PC</strong> để trỏ sang lệnh kế tiếp (với tập lệnh 32-bit cố định của RISC-V, mỗi lệnh chiếm 4 byte nên $PC \\leftarrow PC + 4$).</li>
+              <li>Sau khi lệnh được nạp vào <code>IR</code>, nếu chương trình thực hiện tuần tự, CPU sẽ <strong>tự động tăng nội dung thanh ghi PC</strong> theo độ dài lệnh (với tập lệnh 32-bit cố định của RISC-V, mỗi lệnh chiếm 4 byte nên $PC \\leftarrow PC + 4$; nếu là lệnh rẽ nhánh hoặc nhảy thành công thì $PC$ nhận giá trị <em>địa chỉ đích</em>).</li>
             </ul>
           </li>
           <li><strong>Quá trình Giải mã và Thực hiện lệnh (Decode &amp; Execute):</strong>
@@ -623,7 +766,7 @@
               <li>Nếu có tín hiệu ngắt, CPU tạm dừng (suspend) chương trình đang thực hiện.</li>
               <li><strong>Cất ngữ cảnh:</strong> Lưu địa chỉ trở về trên <code>PC</code> và các thông tin liên quan đến chương trình bị ngắt vào ngăn xếp.</li>
               <li>Thiết lập bộ đếm chương trình <code>PC</code> trỏ đến địa chỉ bắt đầu của chương trình con xử lý ngắt tương ứng.</li>
-              <li>Thực hiện chương trình con xử lý ngắt, sau đó khôi phục ngữ cảnh và trở về tiếp tục thực hiện chương trình đang bị tạm dừng.</li>
+              <li>Thực hiện chương trình con xử lý ngắt, sau đó khôi phục ngữ cảnh và trở về tiếp tục thực hiện chương trình đang bị tạm dừng (tại lệnh kế tiếp $i + 1$).</li>
             </ol>
           </li>
           <li><strong>Xử lý khi có nhiều yêu cầu ngắt:</strong> Gồm hai phương pháp là <strong>Xử lý ngắt tuần tự</strong> (thực hiện lần lượt hết chương trình xử lý ngắt X rồi mới thực hiện chương trình xử lý ngắt Y) và <strong>Xử lý ngắt ưu tiên</strong> (chương trình xử lý ngắt Y có mức ưu tiên cao hơn được phép ngắt tạm thời chương trình xử lý ngắt X đang chạy).</li>
@@ -635,6 +778,28 @@
           <li><strong>Vào-ra qua CPU:</strong> CPU trực tiếp trao đổi dữ liệu với mô-đun vào-ra thông qua các lệnh vào-ra trong chương trình (<em>Vào-ra bằng chương trình</em> hoặc <em>Vào-ra điều khiển bằng ngắt</em>).</li>
           <li><strong>DMA (Direct Memory Access – Truy nhập bộ nhớ trực tiếp):</strong> CPU trao quyền điều khiển hệ thống bus cho phép mô-đun vào-ra trao đổi dữ liệu trực tiếp với bộ nhớ chính mà không đi qua CPU.</li>
         </ol>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 2.2.2: Chu trình lệnh (PC / IR) &amp; Hoạt động Ngắt</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Hỏi thứ tự các bước trong chu trình Tìm nạp – Giải mã – Thực hiện, vai trò của thanh ghi <code>PC</code> và <code>IR</code>, hoặc cơ chế và thứ tự xử lý ngắt (đơn / nhiều ngắt).</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Chuỗi Fetch–Decode–Execute):</strong> Tìm nạp: CPU tác động lên <strong>Bộ nhớ chính</strong> bằng địa chỉ từ <code>PC</code> &rarr; nạp lệnh vào <code>IR</code> &rarr; tăng <code>PC</code> (<code>PC += 4</code> với lệnh 32-bit). Giải mã: giải mã mã lệnh đang nằm trong <strong><code>IR</code></strong>. Thực hiện: trao đổi Mem/I/O, ALU hoặc rẽ nhánh cập nhật <code>PC</code>.</li>
+                <li><strong>Bước 2 (Xác định thời điểm &amp; thứ tự Ngắt):</strong> CPU kiểm tra tín hiệu ngắt <strong>sau khi kết thúc mỗi lệnh máy</strong> (không ngắt giữa chừng khi đang thực hiện lệnh). Thứ tự chuẩn: Tạm dừng chương trình chính &rarr; Cất ngữ cảnh (<code>PC</code> &amp; thanh ghi vào Stack) &rarr; Nạp địa chỉ ISR vào <code>PC</code> &rarr; Chạy ISR &rarr; Khôi phục ngữ cảnh &amp; chạy tiếp lệnh $i+1$.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Không nhầm <code>PC</code> (giữ địa chỉ lệnh kế tiếp) với <code>IR</code> (giữ mã lệnh hiện hành đang giải mã); phân biệt <em>Ngắt tuần tự</em> (chạy hết ISR X mới chạy ISR Y) với <em>Ngắt ưu tiên</em> (ISR mức cao ngắt ngang ISR mức thấp).</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="2.2.2">
+          <span>📝 <strong>Nhóm 2.2.2: Chu trình lệnh (PC / IR) &amp; Hoạt động Ngắt (<span class="group-q-count">5 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('2.2.2', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('2.2.2', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -645,13 +810,13 @@
       pdfPage: 31,
       printedPage: 30,
       linkedGroups: ["2.1", "2.2.3"],
-      summary: "Luồng thông tin mô-đun nhớ/I/O/CPU, 3 loại Bus, 11 tín hiệu điều khiển điển hình và Liên kết điểm-điểm (QPI, PCIe, SATA, USB).",
+      summary: "Luồng thông tin mô-đun nhớ/I/O/CPU, 3 loại Bus, 11 tín hiệu điều khiển điển hình, Bus dùng chung vs Đa bus và Liên kết điểm-điểm (QPI 4 lớp Phit/Flit, PCIe 1.0–6.0, SATA, USB).",
       content: `
         <h4>1. Luồng thông tin kết nối tới từng mô-đun</h4>
         <ul>
-          <li><strong>Mô-đun nhớ:</strong> Nhận địa chỉ để xác định ngăn nhớ; nhận dữ liệu khi ghi; đưa dữ liệu hoặc lệnh ra khi đọc (<em>bộ nhớ không phân biệt lệnh và dữ liệu</em>); nhận tín hiệu điều khiển Đọc (Read) và Ghi (Write).</li>
-          <li><strong>Mô-đun vào-ra:</strong> Nhận địa chỉ để xác định cổng vào-ra; chuyển dữ liệu hai chiều giữa bên trong và bên ngoài; nhận tín hiệu điều khiển Đọc/Ghi từ CPU; phát tín hiệu điều khiển đến thiết bị ngoại vi và phát tín hiệu yêu cầu ngắt đến CPU.</li>
-          <li><strong>CPU:</strong> Phát địa chỉ đến mô-đun nhớ hoặc mô-đun vào-ra; đọc lệnh từ bộ nhớ; đọc/ghi dữ liệu với bộ nhớ hoặc mô-đun vào-ra; phát tín hiệu điều khiển đọc/ghi và nhận tín hiệu yêu cầu ngắt.</li>
+          <li><strong>Mô-đun nhớ:</strong> Nhận <strong>Địa chỉ</strong> xác định ngăn nhớ; nhận <strong>Dữ liệu</strong> khi ghi; đưa <strong>Dữ liệu hoặc Lệnh</strong> ra khi đọc (<em>lưu ý quan trọng: bản thân bộ nhớ <strong>không phân biệt lệnh và dữ liệu</strong></em>, mọi ngăn nhớ đều chỉ lưu các chuỗi bit nhị phân; CPU tự phân biệt khi đọc vào <code>IR</code> hay thanh ghi dữ liệu); nhận tín hiệu điều khiển Đọc (<code>Read</code>) và Ghi (<code>Write</code>).</li>
+          <li><strong>Mô-đun vào-ra:</strong> Nhận <strong>Địa chỉ</strong> xác định cổng vào-ra; chuyển <strong>Dữ liệu</strong> hai chiều giữa bên trong máy tính và bên ngoài; nhận tín hiệu điều khiển Đọc/Ghi từ CPU; phát tín hiệu điều khiển đến thiết bị ngoại vi và phát tín hiệu yêu cầu ngắt (<code>INTR</code>) đến CPU.</li>
+          <li><strong>CPU:</strong> Phát <strong>Địa chỉ</strong> đến mô-đun nhớ hoặc mô-đun vào-ra; đọc <strong>Lệnh</strong> từ bộ nhớ; đọc/ghi <strong>Dữ liệu</strong> với bộ nhớ hoặc mô-đun vào-ra; phát tín hiệu điều khiển đọc/ghi và nhận tín hiệu yêu cầu ngắt.</li>
         </ul>
 
         <h4>2. Liên kết Bus trong máy tính</h4>
@@ -729,7 +894,7 @@
         </div>
 
         <div class="formula-practice-inline" data-group-link="2.2.3">
-          <span>📝 <strong>Nhóm 2.2.3: Bus hệ thống, Tín hiệu điều khiển &amp; Không gian địa chỉ (<span class="group-q-count">17 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 2.2.3: Bus hệ thống &amp; Tính toán Không gian địa chỉ (<span class="group-q-count">16 câu</span>)</strong></span>
           <div class="inline-actions">
             <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('2.2.3', 'exam')">⏱️ Test</button>
             <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('2.2.3', 'practice')">🎯 Luyện tập</button>
@@ -763,19 +928,40 @@
           </li>
         </ul>
 
-        <h4>4. Hạn chế của Bus dùng chung (Shared Bus) và Liên kết điểm-điểm</h4>
+        <h4>4. Bus dùng chung (Shared Bus), Đa bus (Multiple Bus) và Liên kết điểm-điểm</h4>
         <ul>
-          <li><strong>Hạn chế của Bus dùng chung:</strong> Cần có bộ phân xử bus; tại một thời điểm chỉ phục vụ được một yêu cầu trao đổi dữ liệu nên độ trễ lớn; khó đồng bộ hóa khi tốc độ truyền cao.</li>
-          <li><strong>Giải pháp khắc phục:</strong> Sử dụng cấu trúc <strong>Đa bus (Multiple bus)</strong> hoặc <strong>Liên kết điểm-điểm (Point-to-point interconnection)</strong>.</li>
-          <li><strong>Các liên kết điểm-điểm và bus ngoại vi phổ biến:</strong>
+          <li><strong>Đặc điểm &amp; hạn chế của Bus dùng chung (Shared Bus):</strong>
             <ul>
-              <li><strong>QPI (Quick Path Interconnect):</strong> Đa kết nối trực tiếp từng cặp giữa các lõi xử lý (Cores) và Chipset, không cần phân xử bus, truyền dữ liệu dạng gói theo kiến trúc phân lớp.</li>
-              <li><strong>PCI Express (PCIe):</strong> Liên kết điểm-điểm tốc độ cao thay thế cho bus dùng chung PCI truyền thống để nối ghép các thiết bị vào-ra băng thông lớn (card đồ họa, ổ SSD NVMe).</li>
-              <li><strong>SATA:</strong> Chuẩn kết nối chuyên dụng chỉ dùng để kết nối với các ổ lưu trữ vật lý (HDD, SSD SATA).</li>
-              <li><strong>USB (Universal Serial Bus):</strong> Chuẩn bus ngoại vi nối tiếp đa dụng kết nối giữa mô-đun vào-ra và các thiết bị ngoại vi.</li>
+              <li>Nhiều mô-đun (CPU, RAM, các mô-đun I/O) cùng kết nối vào một bus chung nên bắt buộc phải có <strong>bộ phân xử bus (Bus Arbiter)</strong> để phân quyền truy cập.</li>
+              <li>Tại một thời điểm chỉ phục vụ được <strong>một yêu cầu</strong> trao đổi dữ liệu nên độ trễ lớn và dễ nghẽn cổ chai.</li>
+              <li>Khó đồng bộ hóa và nâng tốc độ xung nhịp bus khi kết nối chung cả các mô-đun nhanh (CPU, RAM) và các mô-đun chậm (ngoại vi).</li>
+            </ul>
+          </li>
+          <li><strong>Kiến trúc Đa bus (Multiple Bus):</strong> Khắc phục nhược điểm của bus dùng chung bằng cách tách thành các bus phân cấp theo tốc độ: <strong>Bus CPU / Hệ thống</strong> (tốc độ cao nhất nối CPU với Cache/cầu nối), <strong>Bus Bộ nhớ</strong> (nối RAM), và <strong>Bus Vào-Ra / Mở rộng</strong> (nối các thiết bị I/O qua cầu nối/bộ điều khiển), giảm tranh chấp và tăng băng thông tổng thể.</li>
+          <li><strong>Liên kết điểm-điểm (Point-to-point Interconnection) và các bus ngoại vi phổ biến:</strong> Cho độ trễ nhỏ, tốc độ rất cao và khả năng mở rộng tốt:
+            <ul>
+              <li><strong>QPI (Intel Quick Path Interconnect – 2008):</strong> Kết nối trực tiếp từng cặp điểm-điểm giữa các bộ xử lý / lõi (Cores) và bộ điều khiển <strong>I/O Hub</strong> (loại bỏ hoàn toàn bộ phân xử bus). QPI truyền dữ liệu dạng gói tốc độ cao theo kiến trúc giao thức <strong>4 lớp</strong>: <strong>Physical</strong> (Vật lý) $\\rightarrow$ <strong>Link</strong> (Liên kết) $\\rightarrow$ <strong>Routing</strong> (Định tuyến) $\\rightarrow$ <strong>Protocol</strong> (Giao thức), sử dụng đơn vị truyền vật lý <strong>Phit (20-bit)</strong> và đơn vị khung liên kết <strong>Flit (80-bit)</strong> ($1\\text{ Flit} = 4\\text{ Phit}$), đồng thời kết nối qua <strong>I/O Hub</strong> ra khe <strong>PCIe</strong>.</li>
+              <li><strong>PCI Express (PCIe 1.0 – 6.0):</strong> Chuẩn liên kết điểm-điểm nối tiếp băng thông cao thay thế hoàn toàn cho bus dùng chung <strong>PCI</strong> truyền thống để ghép nối các thiết bị ngoại vi tốc độ cao (GPU, card mạng, SSD NVMe). Cấu trúc gồm <strong>Root Complex</strong> (kết nối CPU/RAM), <strong>Switch</strong> (bộ chuyển mạch phân nhánh điểm-điểm), và <strong>Endpoint</strong> (thiết bị đầu cuối); hỗ trợ mở rộng nhiều làn (x1, x4, x8, x16) qua các thế hệ từ <strong>PCIe 1.0 đến PCIe 6.0</strong>.</li>
+              <li><strong>SATA (Serial ATA):</strong> Chuẩn kết nối điểm-điểm chuyên dụng chỉ dùng để kết nối với các ổ lưu trữ vật lý (HDD, SSD SATA).</li>
+              <li><strong>USB (Universal Serial Bus):</strong> Chuẩn bus ngoại vi nối tiếp đa dụng kết nối giữa mô-đun vào-ra và nhiều loại thiết bị ngoại vi (bàn phím, chuột, ổ nhớ Flash, máy in...).</li>
             </ul>
           </li>
         </ul>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 2.2.3: Bus hệ thống &amp; Tính toán Không gian địa chỉ</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Xác định chức năng/độ rộng/hướng truyền của 3 loại Bus và các tín hiệu điều khiển; phân biệt QPI/PCIe/SATA/USB; tính không gian địa chỉ tối đa ($2^N$), độ rộng bus địa chỉ tối thiểu, hoặc dung lượng RAM có thể lắp thêm.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Tính không gian địa chỉ &amp; Dung lượng tối đa):</strong> Độ rộng bus địa chỉ $N$ bit quản lý tối đa $2^N$ địa chỉ (từ <code>0</code> đến $2^N - 1$). Nếu đánh địa chỉ theo byte: $\\text{Dung lượng} = 2^N\\text{ byte}$ (nhớ $2^{10}=1\\text{ KiB},\\; 2^{20}=1\\text{ MiB},\\; 2^{30}=1\\text{ GiB},\\; 2^{40}=1\\text{ TiB}$). Nếu biết địa chỉ cao nhất dạng Hexa (vd <code>0x3FF</code>), lấy $(\\text{Giá trị Hexa} + 1)$ sẽ ra tổng số ô nhớ $= 2^N \\Rightarrow$ tìm ra $N$.</li>
+                <li><strong>Bước 2 (Bài toán trừ phần bộ nhớ/I/O đã dùng):</strong> Tính tổng không gian $2^N$, rồi trừ đi tổng dung lượng RAM đã cắm và vùng cổng vào-ra (nếu dùng chung không gian địa chỉ) để ra dung lượng thanh RAM đơn lẻ còn lắp thêm được; bỏ qua ổ lưu trữ ngoài (HDD/SSD) vì không chiếm không gian địa chỉ bus hệ thống.</li>
+                <li><strong>Bước 3 (Kiểm tra tín hiệu Bus điều khiển &amp; chuẩn Bus):</strong> Phân biệt <code>MEMR/MEMW</code> (đọc/ghi RAM), <code>IOR/IOW</code> (đọc/ghi cổng I/O), <code>INTR/INTA</code> (ngắt), <code>BRQ/BGT</code> (xin/nhượng bus DMA); nhớ độ rộng bus điều khiển <strong>không xác định cố định</strong> theo độ rộng bus dữ liệu hay bus địa chỉ.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Khi tính độ rộng bus địa chỉ tối thiểu, chỉ cộng <strong>Bộ nhớ chính (RAM) + Cổng vào-ra dùng chung</strong>, KHÔNG cộng dung lượng ổ SSD/HDD hay Cache! Với lệnh như <code>sw t2, 4(t4)</code>, giá trị địa chỉ hiệu dụng $4 + t_4$ được gửi ra trên <strong>Bus địa chỉ</strong> (không phải Bus dữ liệu!).</li>
+          </ul>
+        </div>
       `
     },
 
@@ -788,21 +974,42 @@
       pdfPage: 43,
       printedPage: 42,
       linkedGroups: ["3.1", "3.2.1"],
-      summary: "Phân biệt CISC vs RISC, 3 đặc trưng RV32I và Bảng tra cứu 32 thanh ghi kèm quy ước bảo toàn Caller-saved / Callee-saved.",
+      summary: "Phân biệt CISC vs RISC, 9 đặc trưng RISC, số địa chỉ toán hạng (3/2/1/0), 3 cách đọc/ghi bộ nhớ và Bảng tra cứu 32 thanh ghi kèm quy ước Caller-saved / Callee-saved.",
       content: `
-        <h4>1. Đặc trưng của kiến trúc tập lệnh thu gọn RISC và RISC-V</h4>
+        <h4>1. Đặc trưng của kiến trúc tập lệnh RISC-V, Toán hạng và Cách đọc/ghi bộ nhớ</h4>
         <ul>
           <li><strong>Phân biệt CISC và RISC:</strong>
             <ul>
               <li><strong>CISC (Complex Instruction Set Computer):</strong> Máy tính với tập lệnh phức tạp (điển hình là Intel x86, Motorola 680x0). Độ dài lệnh thay đổi từ <strong>1 đến 15 byte</strong>, cho phép lệnh tính toán trực tiếp với toán hạng nằm trong bộ nhớ.</li>
-              <li><strong>RISC (Reduced Instruction Set Computer):</strong> Máy tính với tập lệnh thu gọn (điển hình là RISC-V, MIPS, ARM).</li>
+              <li><strong>RISC (Reduced Instruction Set Computer):</strong> Máy tính với tập lệnh thu gọn (điển hình là RISC-V, MIPS, ARM). <strong>RISC-V</strong> là kiến trúc RISC thế hệ thứ 5 (phát triển từ 2010 tại UC Berkeley; RISC-V Foundation 2015; RISC-V International Association 2020 tại Thụy Sỹ).</li>
             </ul>
           </li>
-          <li><strong>Các đặc trưng cốt lõi của kiến trúc RISC (và RISC-V 32-bit):</strong>
+          <li><strong>9 đặc trưng cốt lõi của kiến trúc RISC (và RISC-V):</strong>
             <ol>
-              <li>Các lệnh chuẩn có <strong>độ dài cố định bằng 32 bit ($= 4$ byte)</strong>. Do đó, địa chỉ của mọi lệnh máy chuẩn trong bộ nhớ luôn là bội số của 4 (chữ số Hexa tận cùng là <code>0, 4, 8, C</code>).</li>
-              <li>Các lệnh số học và logic chỉ thao tác với các toán hạng nằm trong <strong>thanh ghi</strong> (hoặc hằng số nằm ngay trong lệnh).</li>
+              <li>Số lượng lệnh ít, khuôn dạng lệnh đơn giản và các lệnh chuẩn có <strong>độ dài cố định 32 bit ($= 4$ byte)</strong> (địa chỉ mọi lệnh máy chuẩn luôn là bội số của 4, chữ số Hexa tận cùng là <code>0, 4, 8, C</code>).</li>
+              <li>Độ dài và khuôn dạng lệnh cố định giúp <strong>dễ giải mã trực tiếp bằng phần cứng</strong> (<em>hardwired control</em>).</li>
               <li>Chỉ truy cập bộ nhớ dữ liệu thông qua các lệnh chuyên biệt là <strong>Load</strong> (đọc từ bộ nhớ vào thanh ghi) và <strong>Store</strong> (ghi từ thanh ghi ra bộ nhớ).</li>
+              <li>Các lệnh số học và logic chỉ thao tác với các toán hạng nằm trong <strong>thanh ghi</strong> (hoặc hằng số tức thì nằm ngay trong lệnh).</li>
+              <li>Tập thanh ghi đa dụng lớn và đồng nhất (32 thanh ghi 32-bit <code>x0–x31</code>).</li>
+              <li>Ít phương thức định địa chỉ đơn giản (4 phương thức chuẩn trên RISC-V).</li>
+              <li>Ít kiểu dữ liệu cơ bản được hỗ trợ trực tiếp ở mức phần cứng.</li>
+              <li>Hầu hết lệnh đơn giản thực hiện trong <strong>1 chu kỳ xung nhịp</strong>, tối ưu cho kỹ thuật <strong>đường ống lệnh (Pipelining)</strong>.</li>
+              <li>Thiết kế thân thiện với trình biên dịch (<em>Compiler-friendly</em>), hỗ trợ tối ưu hóa sinh mã.</li>
+            </ol>
+          </li>
+          <li><strong>Số lượng địa chỉ toán hạng trong lệnh (3, 2, 1, 0 địa chỉ):</strong>
+            <ul>
+              <li><em>Lệnh 3 địa chỉ:</em> Chỉ rõ 2 toán hạng nguồn và 1 toán hạng đích (như RISC-V: <code>add rd, rs1, rs2</code>).</li>
+              <li><em>Lệnh 2 địa chỉ:</em> Một toán hạng vừa làm nguồn vừa làm đích (như Intel x86: <code>add eax, ebx</code>).</li>
+              <li><em>Lệnh 1 địa chỉ:</em> Sử dụng ngầm thanh ghi tích lũy <em>Accumulator (AC)</em> làm một nguồn và đích.</li>
+              <li><em>Lệnh 0 địa chỉ:</em> Kiến trúc máy ngăn xếp (<em>Stack machine</em>), toán hạng lấy/cất ngầm định ở đỉnh ngăn xếp.</li>
+            </ul>
+          </li>
+          <li><strong>Ba cách CPU đọc/ghi dữ liệu trong bộ nhớ chính:</strong>
+            <ol>
+              <li>Dùng <strong>hằng số địa chỉ trực tiếp</strong> (<em>Direct addressing</em>).</li>
+              <li>Dùng <strong>thanh ghi con trỏ</strong> chứa địa chỉ ngăn nhớ (<em>Register indirect</em>).</li>
+              <li>Dùng <strong>địa chỉ cơ sở (thanh ghi) + độ lệch (offset)</strong> — đây là cách chuẩn mà các lệnh Load/Store của RISC-V sử dụng: <code>lw rd, offset(rs1)</code>.</li>
             </ol>
           </li>
         </ul>
@@ -844,6 +1051,29 @@
             <li><strong>Nhóm lưu trữ (<code>s0 – s11</code>, <code>sp</code>):</strong> Thuộc nhóm <strong>Callee-saved</strong> (hàm được gọi bắt buộc phải cất giá trị cũ vào ngăn xếp trước khi sử dụng và khôi phục lại nguyên trạng trước khi thoát hàm).</li>
           </ul>
         </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.1: Tập Thanh ghi, Kích thước lệnh, Khuôn dạng &amp; Định địa chỉ</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Hỏi quy ước bảo toàn thanh ghi (<code>t0–t6</code> vs <code>s0–s11</code>, thanh ghi <code>x0/zero</code>), lý do trường thanh ghi rộng 5 bit, tính kích thước mã chương trình (lệnh chuẩn 32-bit vs lệnh nén RVC 16-bit), phân biệt lệnh thực RV32I vs giả lệnh, hoặc phân loại 6 khuôn dạng và 4 phương thức định địa chỉ.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Thanh ghi &amp; kích thước lệnh):</strong> Nhớ $32 = 2^5 \Rightarrow$ mỗi trường <code>rs1, rs2, rd</code> rộng <strong>5 bit</strong>; <code>x0/zero</code> luôn bằng 0 không thể ghi đè; <code>t0–t6, a0–a7, ra</code> là <em>Caller-saved</em>; <code>s0–s11, sp</code> là <em>Callee-saved</em>. Mỗi lệnh RV32I chuẩn = <strong>4 byte</strong> (32 bit); mỗi lệnh nén RVC = <strong>2 byte</strong> (16 bit).</li>
+                <li><strong>Bước 2 (Phân loại nhanh 6 khuôn dạng):</strong> Không có <code>imm</code> &rarr; <strong>R-type</strong> (dùng cả <code>funct3</code> và <code>funct7</code>); hằng số 20-bit &rarr; <strong>U-type</strong> (<code>lui, auipc</code>) hoặc <strong>J-type</strong> (<code>jal</code>); không có <code>rd</code> &rarr; <strong>S-type</strong> (Store) hoặc <strong>B-type</strong> (Branch); dịch bit tức thì <code>slli/srli/srai</code> thuộc <strong>I-type</strong> (5 bit <code>shamt</code> ở vị trí <code>[24:20]</code>).</li>
+                <li><strong>Bước 3 (Phát hiện giả lệnh &amp; Định địa chỉ):</strong> Các lệnh như <code>li, mv, not, neg, j, jr, ret, nop, bgt, ble, bgez</code> đều là <strong>giả lệnh (Pseudoinstruction)</strong> — hoặc khi <code>addi</code> dùng hằng ngoài $[-2048, +2047]$ cũng phải tách thành 2 lệnh <code>lui + addi</code>. Định địa chỉ: thanh ghi (R), tức thì (hằng trong <code>addi/lui</code>), cơ sở (<code>lw/sw</code>), tương đối PC (<code>beq/bne/jal</code>).</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> <code>jalr</code> thuộc <strong>I-type</strong> (12-bit imm), không phải J-type! Khi đếm tổng byte mã máy của một đoạn hợp ngữ, kiểm tra kỹ xem hằng số trong <code>addi</code> có vượt $[-2048, +2047]$ hay có giả lệnh nào bị tách thành 2 lệnh thật (8 byte) không!</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="3.2.1">
+          <span>📝 <strong>Nhóm 3.2.1: Tập Thanh ghi, Khuôn dạng Lệnh &amp; Phương thức định địa chỉ (<span class="group-q-count">24 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.1', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.1', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -854,7 +1084,7 @@
       pdfPage: 45,
       printedPage: 44,
       linkedGroups: ["3.1", "3.2.4"],
-      summary: "Các đơn vị dữ liệu Byte / Halfword / Word, quy tắc căn chỉnh biên địa chỉ (Alignment) và sơ đồ đối chiếu Little-Endian vs. Big-Endian.",
+      summary: "Các đơn vị dữ liệu Byte / Halfword / Word, quy tắc căn chỉnh biên địa chỉ (Alignment), Little-Endian vs. Big-Endian và Bảng mã ASCII / lưu trữ xâu ký tự.",
       content: `
         <h4>1. Các đơn vị dữ liệu và Quy tắc căn chỉnh biên địa chỉ (Alignment)</h4>
         <ul>
@@ -912,6 +1142,42 @@
           <div class="callout-title">💡 Mẹo đọc ngược bảng bản đồ bộ nhớ Little-Endian</div>
           <p>Khi nhìn bảng bản đồ bộ nhớ theo hàng ngang (từ địa chỉ thấp sang địa chỉ cao <code>+0, +1, +2, +3</code>), chỉ cần ghép <strong>ngược từ phải sang trái</strong> sẽ ra ngay giá trị Word/Halfword 32-bit hoặc 16-bit chuẩn trong thanh ghi!</p>
         </div>
+
+        <h4>3. Lưu trữ Xâu ký tự và Bộ mã ASCII (theo Little-Endian)</h4>
+        <ul>
+          <li><strong>Bộ mã ASCII chuẩn (7-bit đóng gói trong 1 byte <code>0x00–0x7F</code>):</strong>
+            <ul>
+              <li><strong>Nhóm ký tự điều khiển (<code>0x00–0x1F</code> và <code>0x7F</code>):</strong> Thường gặp: <code>NUL = 0x00</code> (<code>\\0</code> kết thúc chuỗi), <code>BS = 0x08</code> (Backspace), <code>LF = 0x0A</code> (<code>\\n</code>, xuống dòng), <code>FF = 0x0C</code> (Form Feed), <code>CR = 0x0D</code> (<code>\\r</code>, về đầu dòng), <code>DEL = 0x7F</code>.</li>
+              <li><strong>Nhóm ký tự hiển thị (<code>0x20–0x7E</code>):</strong> Dấu cách <code>' ' = 0x20</code> (32); chữ số <code>'0'–'9' = 0x30–0x39</code> (48–57); chữ in hoa <code>'A'–'Z' = 0x41–0x5A</code> (65–90); chữ thường <code>'a'–'z' = 0x61–0x7A</code> (97–122).</li>
+              <li><strong>Mẹo đổi chữ hoa $\\leftrightarrow$ chữ thường:</strong> Mã chữ thường và chữ hoa tương ứng luôn lệch nhau đúng <strong>$32 = \\text{0x20}$</strong> (chỉ khác nhau bit số 5), nên đổi thường &rarr; hoa dùng phép <code>ch &amp; 0xDF</code> (hoặc trừ <code>32</code>), còn hoa &rarr; thường dùng <code>ch | 0x20</code> (hoặc cộng <code>32</code>).</li>
+            </ul>
+          </li>
+          <li><strong>Quy tắc xếp xâu ký tự theo word Little-Endian:</strong> Trong bộ nhớ, các ký tự của chuỗi được lưu tuần tự từng byte từ địa chỉ thấp đến địa chỉ cao (ký tự đầu tiên ở <code>+0</code>). Khi gom mỗi 4 ký tự thành 1 word 32-bit hiển thị theo Little-Endian, byte ở địa chỉ thấp (<code>+0</code>) nằm ở <strong>ngoài cùng bên phải</strong> của word Hexa!
+            <br/><em>Ví dụ:</em> Chuỗi <code>"Hello World!\\r\\nVIETNAM"</code> lưu tuần tự từ offset <code>0</code>:
+            <ul>
+              <li>Word 0 (<code>+0..+3</code>): <code>'H'(0x48), 'e'(0x65), 'l'(0x6C), 'l'(0x6C)</code> &rarr; Word Hexa: <code>0x6C6C6548</code> (đọc theo thứ tự byte cao $\\to$ thấp là <code>"lleH"</code>).</li>
+              <li>Word 1 (<code>+4..+7</code>): <code>'o'(0x6F), ' '(0x20), 'W'(0x57), 'o'(0x6F)</code> &rarr; Word Hexa: <code>0x6F57206F</code>.</li>
+              <li>Word 2 (<code>+8..+11</code>): <code>'r'(0x72), 'l'(0x6C), 'd'(0x64), '!'(0x21)</code> &rarr; Word Hexa: <code>0x21646C72</code>.</li>
+              <li>Word 3 (<code>+12..+15</code>): <code>'\\r'(0x0D), '\\n'(0x0A), 'V'(0x56), 'I'(0x49)</code> &rarr; Word Hexa: <code>0x49560A0D</code>.</li>
+              <li>Word 4 (<code>+16..+19</code>): <code>'E'(0x45), 'T'(0x54), 'N'(0x4E), 'A'(0x41)</code> &rarr; Word Hexa: <code>0x414E5445</code>; tiếp theo <code>'M'(0x4D)</code> và <code>'\\0'(0x00)</code>.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.4: Alignment, Little-Endian &amp; Load/Store Bộ nhớ</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Kiểm tra địa chỉ hợp lệ (căn chỉnh biên Word/Halfword/Lệnh 32-bit), đếm số lần truy cập Data Memory, nạp/ghi từ <code>lw, sw, lh, lhu, sh, lb, lbu, sb</code> trên bảng bản đồ bộ nhớ Little-Endian, hoặc xác định thứ tự byte của số 32-bit / chuỗi ASCII.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Tính địa chỉ hiệu dụng &amp; Căn chỉnh biên):</strong> Tính $\\text{EA} = rs1 + \\text{offset}$. Lệnh <code>lw/sw</code> và địa chỉ lệnh máy 32-bit bắt buộc chia hết cho 4 (ký tự Hexa cuối $\\in \\{0, 4, 8, \\text{C}\\}$); <code>lh/lhu/sh</code> bắt buộc chia hết cho 2 (đuôi chẵn); <code>lb/lbu/sb</code> nhận mọi địa chỉ chẵn lẻ.</li>
+                <li><strong>Bước 2 (Đếm truy cập Data Memory):</strong> Chỉ tính các lệnh <strong>Load/Store</strong> (<code>lw, lh, lb, sw, sh, sb</code>); tuyệt đối không đếm <code>add, addi, lui, slli</code>!</li>
+                <li><strong>Bước 3 (Đọc/Ghi theo Little-Endian &amp; Mở rộng dấu):</strong> Byte thấp nhất (2 chữ số Hexa cuối) luôn đặt ở địa chỉ nhỏ nhất (<code>+0</code>), byte cao nhất ở <code>+3</code>. Nếu bảng cho sẵn Word 32-bit ở địa chỉ gốc <code>Base</code>, tách ngược từ phải sang trái để gán vào <code>Base+0, +1, +2, +3</code>. Với <code>lb/lh</code>: kiểm tra chữ số Hexa đầu của byte/halfword vừa đọc — nếu từ <code>8–F</code> thì điền <code>FFFFFF...</code> / <code>FFFF...</code> lên phần cao; còn <code>lbu/lhu</code> luôn điền <code>0</code>!</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Khi ghi <code>sb/sh</code> chỉ thay đổi đúng 1 byte hoặc 2 byte tại vị trí tương ứng trong Word mà <strong>giữ nguyên các byte còn lại</strong>; nhớ phân biệt <code>lb</code> (có dấu) và <code>lbu</code> (không dấu) khi byte đọc được $\\ge \\text{0x80}$!</li>
+          </ul>
+        </div>
       `
     },
     {
@@ -922,7 +1188,7 @@
       pdfPage: 45,
       printedPage: 44,
       linkedGroups: ["3.2.2", "3.2.3", "3.2.4", "3.2.5", "3.2.6", "3.2.7"],
-      summary: "Đầy đủ 4 nhóm lệnh: Số học & quy tắc nạp hằng 32-bit lui+addi (ví dụ 0x20241120 vs 0x12345EDC), Load/Store, Logic/Dịch bit, So sánh/Rẽ nhánh, jal/jalr và Stack LIFO.",
+      summary: "Số học & nạp hằng 32-bit lui+addi, Load/Store, Logic/Dịch bit, So sánh/Rẽ nhánh, dịch cấu trúc if/else/switch/while/do...while/for, Stack LIFO, 6 bước gọi hàm và Thủ tục lá vs Thủ tục cành (đệ quy).",
       content: `
         <h4>1. Nhóm lệnh số học và Nạp hằng số vào thanh ghi</h4>
         <ul>
@@ -950,8 +1216,23 @@
           </ol>
         </div>
 
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.2: Số học, Logic, Dịch bit &amp; Nạp hằng 32-bit (lui + addi)</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Kiểm tra tính hợp lệ của hằng số 12-bit trong <code>addi</code>, viết cặp lệnh <code>lui + addi</code> nạp hằng 32-bit (thay <code>li</code>), thực hiện từng bit <code>and/andi/or/ori/xor/xori</code>, dịch bit <code>slli/srli/srai</code>, hoặc xóa/đảo bit thanh ghi.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Kiểm tra giới hạn 12-bit &amp; Quy tắc <code>lui + addi</code>):</strong> <code>addi</code> chỉ nhận hằng số $[-2048, +2047]$. Để nạp hằng 32-bit <code>0xABCDE123</code>: nhìn chữ số Hexa thứ 3 từ phải sang (bit 11): nếu từ <code>0–7</code> giữ nguyên <code>0xABCDE</code> cho <code>lui</code>; nếu từ <code>8–F</code> phải <strong>tăng <code>0xABCDE</code> thêm 1</strong> và đổi 3 chữ cuối thành số âm bù 2 (vd <code>0xEDC = -292</code>).</li>
+                <li><strong>Bước 2 (Bitwise &amp; Dịch bit):</strong> Đổi hai toán hạng sang Hexa 8 chữ số (hoặc nhị phân 4 bit mỗi chữ số). Nhớ: trong <code>andi/ori/xori</code>, hằng 12-bit được <strong>mở rộng dấu lên 32-bit</strong> (vd <code>andi ..., 0xFF</code> là <code>0x000000FF</code>, nhưng <code>xori ..., -1</code> là <code>0xFFFFFFFF</code> giúp đảo toàn bộ 32 bit!). Với dịch bit: <code>slli k</code> đẩy sang trái $k$ bit (chèn 0 bên phải); <code>srli k</code> chèn 0 bên trái; <code>srai k</code> chèn <strong>bit dấu 31</strong> (<code>0</code> nếu chữ đầu <code>0–7</code>, <code>1</code> tức chữ <code>F</code> nếu chữ đầu <code>8–F</code>) bên trái!</li>
+                <li><strong>Bước 3 (Mẹo dịch bội 4 bit):</strong> Dịch 4 bit = dịch 1 chữ Hexa; dịch 8 bit = 2 chữ Hexa; dịch 20 bit = 5 chữ Hexa; dịch 24 bit = 6 chữ Hexa.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng dùng <code>lui + ori</code> thay cho <code>lui + addi</code> trong các bài kiểm tra quy tắc bù bit 11 của <code>li</code> (trình hợp dịch chuẩn RISC-V luôn dùng <code>lui + addi</code> nên phải cộng +1 khi bit 11 = 1); phân biệt kỹ <code>srli</code> (chèn 0) và <code>srai</code> (giữ bit dấu) khi giá trị thanh ghi bắt đầu bằng <code>8–F</code>!</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="3.2.2">
-          <span>📝 <strong>Nhóm 3.2.2: Số học, Logic, Dịch bit &amp; lui+addi (<span class="group-q-count">24 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 3.2.2: Số học, Logic, Dịch bit &amp; lui+addi (<span class="group-q-count">42 câu</span>)</strong></span>
           <div class="inline-actions">
             <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.2', 'exam')">⏱️ Test</button>
             <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.2', 'practice')">🎯 Luyện tập</button>
@@ -983,7 +1264,7 @@
         </ul>
 
         <div class="formula-practice-inline" data-group-link="3.2.4">
-          <span>📝 <strong>Nhóm 3.2.4: Load/Store &amp; Bộ nhớ Little-Endian (<span class="group-q-count">12 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 3.2.4: Load/Store &amp; Bộ nhớ Little-Endian (<span class="group-q-count">34 câu</span>)</strong></span>
           <div class="inline-actions">
             <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.4', 'exam')">⏱️ Test</button>
             <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.4', 'practice')">🎯 Luyện tập</button>
@@ -1026,6 +1307,34 @@
               <li><em>Lưu ý khi dịch câu lệnh <code>if / while</code> từ C sang hợp ngữ:</em> Điều kiện kiểm tra trong lệnh rẽ nhánh nhảy tới nhãn thoát (<code>done</code> hoặc <code>else</code>) thường là <strong>điều kiện ngược</strong> với điều kiện viết trong câu lệnh C (ví dụ: trong C viết <code>if (i == j)</code> thì hợp ngữ dùng <code>bne</code> để nhảy qua khối lệnh nếu $i \\neq j$).</li>
             </ul>
           </li>
+
+          <div class="callout callout-method">
+            <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.3: Lệnh So sánh (slt/slti/sltu) &amp; Rẽ nhánh có điều kiện</div>
+            <ul>
+              <li><strong>Dạng nhận biết:</strong> Tính giá trị <code>0</code> hay <code>1</code> sau <code>slt, slti, sltu, sltiu</code> (đặc biệt khi thanh ghi là số Hexa có bit đầu bằng 1 như <code>0xFFFFFFF0</code> hoặc <code>0xAD100002</code>), hoặc dò luồng thực thi qua <code>beq, bne, blt, bge, bltu, bgeu</code>.</li>
+              <li><strong>Các bước làm bài:</strong>
+                <ol>
+                  <li><strong>Bước 1 (Phân biệt Có dấu vs Không dấu):</strong>
+                    <ul>
+                      <li><strong>Có dấu (<code>slt, slti, blt, bge</code>):</strong> Chữ số Hexa đầu từ <code>8–F</code> là <strong>số âm</strong> (luôn nhỏ hơn mọi số dương/0 có chữ đầu <code>0–7</code>).</li>
+                      <li><strong>Không dấu (<code>sltu, sltiu, bltu, bgeu</code>):</strong> Coi mọi giá trị 32-bit là số dương trong $[0, 2^{32}-1]$, nên số đầu <code>8–F</code> (vd <code>0xFFFFFFF0</code> $\\approx 4.29 \\times 10^9$) <strong>lớn hơn rất nhiều</strong> so với số dương nhỏ (vd <code>0x00000005</code>).</li>
+                    </ul>
+                  </li>
+                  <li><strong>Bước 2 (Kiểm tra hằng số mở rộng dấu trong <code>slti / sltiu</code>):</strong> Hằng số 12-bit <code>imm</code> luôn được mở rộng dấu lên 32-bit trước khi so sánh (kể cả với <code>sltiu</code>: hằng số âm như <code>-1</code> mở rộng thành <code>0xFFFFFFFF</code> rồi mới so sánh không dấu!).</li>
+                  <li><strong>Bước 3 (Theo dấu đường nhảy):</strong> Nếu điều kiện nhánh đúng &rarr; nhảy tới nhãn (bỏ qua khối lệnh phía dưới); nếu sai &rarr; thực hiện tuần tự câu lệnh ngay kế tiếp.</li>
+                </ol>
+              </li>
+              <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng đánh đồng <code>0xAD100002</code> là số lớn hơn số dương khi dùng <code>slt / slti / blt</code> (nó là số âm!). Chú ý lệnh <code>beq, bne, blt, bge, slt</code> đều yêu cầu <strong>ALU thực hiện phép trừ</strong> để so sánh!</li>
+            </ul>
+          </div>
+
+          <div class="formula-practice-inline" data-group-link="3.2.3">
+            <span>📝 <strong>Nhóm 3.2.3: Lệnh So sánh (slt/slti/sltu) &amp; Rẽ nhánh (<span class="group-q-count">15 câu</span>)</strong></span>
+            <div class="inline-actions">
+              <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.3', 'exam')">⏱️ Test</button>
+              <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.3', 'practice')">🎯 Luyện tập</button>
+            </div>
+          </div>
           <li><strong>Các lệnh gọi và trở về từ chương trình con (Thủ tục):</strong>
             <ul>
               <li><code>jal rd, Label</code> (Jump and Link): Thực hiện đồng thời 2 việc: (1) Lưu địa chỉ của lệnh kế tiếp vào thanh ghi đích $rd = PC + 4$, và (2) Nhảy tới nhãn đích $PC = PC + imm$.
@@ -1068,6 +1377,41 @@
           </svg>
           <figcaption>Hình 3.2 – Ngăn xếp Stack (LIFO) phát triển về phía địa chỉ thấp khi Push 2 thanh ghi (<code>ra, s0</code>)</figcaption>
         </figure>
+
+        <h4>5. Quy tắc dịch các cấu trúc điều khiển (<code>if</code>, <code>if/else</code>, <code>switch/case</code>, <code>while</code>, <code>do...while</code>, <code>for</code>)</h4>
+        <ul>
+          <li><strong>Cấu trúc <code>if</code>:</strong> Dùng lệnh rẽ nhánh mang <strong>điều kiện đảo (phủ định)</strong> để nhảy vượt qua khối thân <code>if</code> đến nhãn <code>Exit</code> nếu điều kiện sai.</li>
+          <li><strong>Cấu trúc <code>if / else</code>:</strong> Dùng điều kiện đảo ở đầu để nhảy tới nhãn <code>Else</code>; ở cuối khối lệnh của nhánh <code>if</code> phải đặt một lệnh nhảy không điều kiện (<code>jal x0, Exit</code> hoặc <code>beq x0, x0, Exit</code>) để không chạy lọt xuống nhánh <code>Else</code>.</li>
+          <li><strong>Cấu trúc <code>switch / case</code>:</strong>
+            <ul>
+              <li><em>Cách 1 (Chuỗi so sánh):</em> Chuyển thành chuỗi các lệnh <code>addi t0, x0, const_i</code> + <code>beq var, t0, Case_i</code> (kèm <code>jal x0, Done</code> ở cuối mỗi nhánh <code>break</code>).</li>
+              <li><em>Cách 2 (Bảng nhảy – Jump Table):</em> Lưu mảng địa chỉ các nhãn <code>Case_0, Case_1...</code> trong bộ nhớ; kiểm tra biên biến chỉ số, tính offset $4 \\times k$, nạp địa chỉ từ bảng rồi dùng <code>jalr x0, reg, 0</code> để nhảy trực tiếp (tối ưu khi nhiều nhánh <code>case</code> liên tiếp).</li>
+            </ul>
+          </li>
+          <li><strong>Vòng lặp <code>while</code> (kiểm tra đầu vòng):</strong> Đặt nhãn <code>Loop:</code> ở đầu, kiểm tra <strong>điều kiện đảo</strong> để thoát ra <code>Exit</code>, thực hiện thân vòng lặp và cuối thân nhảy ngược lên <code>jal x0, Loop</code>.</li>
+          <li><strong>Vòng lặp <code>do...while</code> (kiểm tra cuối vòng):</strong> Thực hiện thân vòng lặp ít nhất 1 lần ngay dưới nhãn <code>Loop:</code>, đến cuối thân dùng lệnh rẽ nhánh với <strong>điều kiện thuận</strong> để nhảy ngược lại <code>Loop</code> (không cần lệnh nhảy không điều kiện bổ sung!).</li>
+          <li><strong>Vòng lặp <code>for</code>:</strong> Có 2 cách dịch chuẩn: (1) dịch theo mẫu <code>while</code> (khởi tạo trước vòng $\\rightarrow$ kiểm tra đầu vòng $\\rightarrow$ thân + bước lặp + <code>jal x0, Loop</code>), hoặc (2) kiểm tra điều kiện lần đầu rồi dịch thân theo mẫu <code>do...while</code> để giảm số lệnh nhảy trong mỗi vòng lặp.</li>
+        </ul>
+
+        <h4>6. Sáu bước gọi Thủ tục và Phân biệt Thủ tục lá vs. Thủ tục cành (Đệ quy)</h4>
+        <ul>
+          <li><strong>Quy trình 6 bước gọi thủ tục (Procedure Calling Steps):</strong>
+            <ol>
+              <li>Chương trình gọi (<em>Caller</em>) đặt các tham số đầu vào vào vị trí quy ước (<code>a0–a7</code>).</li>
+              <li>Chuyển quyền điều khiển cho thủ tục bằng <code>jal ra, Procedure</code> (lưu địa chỉ lệnh kế tiếp <code>PC + 4</code> vào <code>ra</code>).</li>
+              <li>Thủ tục được gọi (<em>Callee</em>) cấp phát vùng nhớ ngăn xếp (<code>addi sp, sp, -4*k</code>) và cất các thanh ghi cần bảo toàn.</li>
+              <li>Thực hiện các thao tác xử lý trong thân thủ tục.</li>
+              <li>Đặt kết quả trả về vào <code>a0–a1</code>, khôi phục các thanh ghi đã cất từ ngăn xếp và giải phóng ngăn xếp (<code>addi sp, sp, 4*k</code>).</li>
+              <li>Trả quyền điều khiển về vị trí gọi bằng lệnh <code>jalr x0, ra, 0</code>.</li>
+            </ol>
+          </li>
+          <li><strong>Phân biệt Thủ tục lá (Leaf) vs. Thủ tục cành / Đệ quy (Non-leaf):</strong>
+            <ul>
+              <li><strong>Thủ tục lá (Leaf procedure — ví dụ <code>leaf_example</code>):</strong> Là thủ tục <em>không gọi bất kỳ thủ tục con nào khác</em> bên trong nó. Do không làm thay đổi <code>ra</code>, thủ tục lá <strong>không cần cất <code>ra</code></strong> vào Stack; chỉ cần cất/khôi phục các thanh ghi <code>s0–s11</code> nếu có sử dụng (nếu chỉ dùng <code>t0–t6, a0–a7</code> thì không cần động đến Stack).</li>
+              <li><strong>Thủ tục cành / Đệ quy (Non-leaf / Recursive procedure — ví dụ <code>fact(n)</code>):</strong> Là thủ tục có gọi thủ tục con khác (hoặc gọi đệ quy chính nó). Vì lệnh <code>jal ra, ...</code> bên trong sẽ ghi đè <code>ra</code>, thủ tục cành <strong>bắt buộc phải cất <code>ra</code> (và các tham số/biến tạm cần giữ lại sau lời gọi như <code>a0</code>) vào Stack</strong> trước khi gọi, và khôi phục lại từ Stack trước khi <code>jalr x0, ra, 0</code>.</li>
+            </ul>
+          </li>
+        </ul>
       `
     },
     {
@@ -1078,7 +1422,7 @@
       pdfPage: 49,
       printedPage: 48,
       linkedGroups: ["3.1", "3.2.1", "3.2.8"],
-      summary: "Bảng cấu trúc 6 khuôn dạng lệnh 32-bit (R, I, S, B, U, J), bảng tra Opcode/Funct3/Funct7 RV32I đầy đủ, RVC 16-bit và 4 định địa chỉ.",
+      summary: "6 khuôn dạng lệnh 32-bit, quy tắc tối ưu mã hóa imm (instr31, BTA/JTA), Bảng RV32I (Table B.1), RVC 16-bit (Table B.6), Lệnh giả (Table B.7) và 4 định địa chỉ.",
       content: `
         <h4>1. Sáu khuôn dạng lệnh máy 32-bit của RISC-V (RV32I)</h4>
         <p>Mọi câu lệnh chuẩn 32-bit của RISC-V đều thuộc 1 trong 6 khuôn dạng: <strong>R, I, S, B, U, J</strong>. Trường <code>opcode</code> luôn cố định ở 7 bit cuối cùng (bit <code>6:0</code>).</p>
@@ -1152,54 +1496,127 @@
           </ul>
         </div>
 
-        <h4>2. Bảng tra cứu nhanh Opcode, Funct3 và Funct7 của tập lệnh RV32I</h4>
+        <h4>2. Bảng tra cứu đầy đủ Tập lệnh RV32I (Table B.1: Opcode, Funct3 và Funct7)</h4>
         <div class="table-scroll">
           <table class="theory-table">
             <thead>
-              <tr><th>Nhóm / Kiểu</th><th>Opcode (6:0)</th><th>funct3</th><th>funct7</th><th>Tên lệnh hợp ngữ tương ứng</th></tr>
+              <tr><th>Nhóm / Kiểu</th><th>Opcode (6:0)</th><th>funct3</th><th>funct7 / imm[11:5]</th><th>Tên lệnh hợp ngữ tương ứng</th></tr>
             </thead>
             <tbody>
               <tr>
-                <td rowspan="4"><strong>R-type</strong><br/>(Số học / Logic)</td>
-                <td rowspan="4"><code>0110011</code> (51)</td>
+                <td rowspan="6"><strong>R-type</strong><br/>(Số học / Logic)</td>
+                <td rowspan="6"><code>0110011</code><br/>(<code>0x33</code> = 51)</td>
                 <td><code>000</code></td><td><code>0000000</code></td><td><code>add rd, rs1, rs2</code></td>
               </tr>
               <tr><td><code>000</code></td><td><code>0100000</code></td><td><code>sub rd, rs1, rs2</code></td></tr>
-              <tr><td><code>001 / 010</code></td><td><code>0000000</code></td><td><code>sll (001), slt (010), sltu (011)</code></td></tr>
-              <tr><td><code>100 / 101</code></td><td><code>000/010..</code></td><td><code>xor (100), srl/sra (101), or (110), and (111)</code></td></tr>
+              <tr><td><code>001 / 010 / 011</code></td><td><code>0000000</code></td><td><code>sll (001), slt (010), sltu (011)</code></td></tr>
+              <tr><td><code>100</code></td><td><code>0000000</code></td><td><code>xor rd, rs1, rs2</code></td></tr>
+              <tr><td><code>101</code></td><td><code>0000000</code> / <code>0100000</code></td><td><code>srl (0000000)</code> / <code>sra (0100000)</code></td></tr>
+              <tr><td><code>110 / 111</code></td><td><code>0000000</code></td><td><code>or (110), and (111)</code></td></tr>
               <tr>
-                <td rowspan="2"><strong>I-type</strong><br/>(Tính toán)</td>
-                <td rowspan="2"><code>0010011</code> (19)</td>
-                <td><code>000 / 010</code></td><td><code>–</code></td><td><code>addi (000), slti (010), sltiu (011)</code></td>
+                <td rowspan="4"><strong>I-type</strong><br/>(ALU tức thì)</td>
+                <td rowspan="4"><code>0010011</code><br/>(<code>0x13</code> = 19)</td>
+                <td><code>000 / 010 / 011</code></td><td><code>imm[11:0]</code></td><td><code>addi (000), slti (010), sltiu (011)</code></td>
               </tr>
-              <tr><td><code>100 / 110</code></td><td><code>–</code></td><td><code>xori (100), ori (110), andi (111), slli (001), srli/srai (101)</code></td></tr>
-              <tr><td><strong>I-type (Load)</strong></td><td><code>0000011</code> (3)</td><td><code>000..101</code></td><td><code>–</code></td><td><code>lb (000), lh (001), lw (010), lbu (100), lhu (101)</code></td></tr>
-              <tr><td><strong>S-type (Store)</strong></td><td><code>0100011</code> (35)</td><td><code>000..010</code></td><td><code>–</code></td><td><code>sb (000), sh (001), sw (010)</code></td></tr>
-              <tr><td><strong>B-type (Branch)</strong></td><td><code>1100011</code> (99)</td><td><code>000..111</code></td><td><code>–</code></td><td><code>beq (000), bne (001), blt (100), bge (101), bltu (110), bgeu (111)</code></td></tr>
-              <tr><td><strong>U-type</strong></td><td><code>0110111</code> (55)</td><td><code>–</code></td><td><code>–</code></td><td><code>lui rd, upimm</code> (<code>auipc</code> có opcode <code>0010111</code>)</td></tr>
-              <tr><td><strong>J-type &amp; I-jalr</strong></td><td><code>1101111</code> (111)</td><td><code>–</code></td><td><code>–</code></td><td><code>jal rd, label</code> (Riêng <code>jalr</code> là kiểu I, opcode <code>1100111</code>, <code>funct3=000</code>)</td></tr>
+              <tr><td><code>100 / 110 / 111</code></td><td><code>imm[11:0]</code></td><td><code>xori (100), ori (110), andi (111)</code></td></tr>
+              <tr><td><code>001</code></td><td><code>0000000</code> (+ <code>shamt</code>)</td><td><code>slli rd, rs1, uimm</code></td></tr>
+              <tr><td><code>101</code></td><td><code>0000000</code> / <code>0100000</code></td><td><code>srli (0000000)</code> / <code>srai (0100000)</code></td></tr>
+              <tr><td><strong>I-type (Load)</strong></td><td><code>0000011</code> (<code>0x03</code> = 3)</td><td><code>000..101</code></td><td><code>imm[11:0]</code></td><td><code>lb (000), lh (001), lw (010), lbu (100), lhu (101)</code></td></tr>
+              <tr><td><strong>S-type (Store)</strong></td><td><code>0100011</code> (<code>0x23</code> = 35)</td><td><code>000..010</code></td><td><code>imm[11:5] | imm[4:0]</code></td><td><code>sb (000), sh (001), sw (010)</code></td></tr>
+              <tr><td><strong>B-type (Branch)</strong></td><td><code>1100011</code> (<code>0x63</code> = 99)</td><td><code>000..111</code></td><td><code>imm[12,10:5|4:1,11]</code></td><td><code>beq (000), bne (001), blt (100), bge (101), bltu (110), bgeu (111)</code></td></tr>
+              <tr><td><strong>U-type</strong></td><td><code>0110111</code> (<code>0x37</code>) / <code>0010111</code> (<code>0x17</code>)</td><td><code>–</code></td><td><code>imm[31:12]</code></td><td><code>lui rd, upimm</code> (<code>0x37</code> = 55); <code>auipc rd, upimm</code> (<code>0x17</code> = 23)</td></tr>
+              <tr><td><strong>J-type &amp; I-jalr</strong></td><td><code>1101111</code> (<code>0x6F</code>) / <code>1100111</code> (<code>0x67</code>)</td><td><code>–</code> / <code>000</code></td><td><code>–</code></td><td><code>jal rd, label</code> (J-type, <code>0x6F</code> = 111); <code>jalr rd, rs1, imm</code> (I-type, <code>0x67</code> = 103, <code>funct3=000</code>)</td></tr>
+              <tr><td><strong>I-type (System)</strong></td><td><code>1110011</code> (<code>0x73</code> = 115)</td><td><code>000</code></td><td><code>0x000</code> / <code>0x001</code></td><td><code>ecall</code> (<code>imm=0</code>) / <code>ebreak</code> (<code>imm=1</code>)</td></tr>
             </tbody>
           </table>
         </div>
 
+        <div class="callout callout-formula">
+          <div class="callout-title">📐 Quy tắc tối ưu mã hóa bit hằng số (<code>imm</code>) cho phần cứng RISC-V</div>
+          <ul>
+            <li><strong>Cố định vị trí bit dấu &amp; các thanh ghi:</strong> Trên tất cả khuôn dạng có hằng số (I, S, B, U, J), bit cao nhất <code>instr[31]</code> <strong>luôn là bit dấu</strong> của <code>imm</code> giúp bộ tạo hằng số (<code>Imm Gen</code>) thực hiện mở rộng dấu ngay lập tức. Đồng thời các trường <code>rs1 [19:15]</code>, <code>rs2 [24:20]</code>, <code>rd [11:7]</code> luôn giữ cố định một vị trí duy nhất để đọc thanh ghi song song với giải mã opcode.</li>
+            <li><strong>Tái sử dụng tối đa vị trí bit <code>imm</code>:</strong> Bit <code>instr[30:25]</code> luôn là <code>imm[10:5]</code> (ở cả I, S, B, J); bit <code>instr[19:12]</code> là <code>imm[19:12]</code> (ở cả U, J). Chỉ bit <code>imm[11]</code> ở B/J được dời sang vị trí trống (<code>instr[7]</code> ở B, <code>instr[20]</code> ở J) để hạn chế tối đa số ngõ vào bộ dồn kênh (MUX) trong phần cứng!</li>
+            <li><strong>Địa chỉ đích nhảy rẽ nhánh (bội số của 2 byte):</strong> Vì lệnh RISC-V (cả 32-bit lẫn RVC 16-bit) luôn nằm ở địa chỉ chẵn, bit <code>imm[0]</code> luôn bằng <code>0</code> nên không lưu trong mã máy; phần cứng tự chèn <code>1'b0</code> vào vị trí bit 0:
+              $$\\text{BTA} = PC + \\text{SignExt}(\\{\\text{imm}[12:1],\\; 1'\\text{b}0\\}) \\qquad ; \\qquad \\text{JTA} = PC + \\text{SignExt}(\\{\\text{imm}[20:1],\\; 1'\\text{b}0\\})$$
+            </li>
+          </ul>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.8: Dịch Mã máy 32-bit, Đích nhảy &amp; Bản đồ bộ nhớ</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Chuyển hợp ngữ RV32I sang mã máy Hexa 32-bit (R, I, S, B, U, J); dịch ngược mã máy Hexa (hoặc dãy byte Little-Endian trong Memory Map) sang hợp ngữ; tìm thanh ghi <code>rs1, rs2, rd</code>, trường <code>shamt/funct3/funct7</code>, tính độ lệch <code>imm</code> hoặc địa chỉ đích nhảy <code>BTA / JTA</code> và giá trị <code>PC</code>.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Đọc Bản đồ bộ nhớ &amp; Tách Opcode <code>[6:0]</code>):</strong> Nếu đề cho từng byte tại <code>+0, +1, +2, +3</code>, ghép <strong>ngược từ phải sang trái</strong> (<code>+3</code> trái nhất &rarr; <code>+0</code> phải nhất) thành số Hexa 8 chữ số rồi đổi ra 32 bit nhị phân. Lấy <strong>7 bit phải nhất <code>[6:0]</code></strong> để xác định loại lệnh: <code>0110011</code> (R), <code>0010011</code> (I-ALU), <code>0000011</code> (I-Load), <code>1100111</code> (<code>jalr</code>), <code>0100011</code> (S), <code>1100011</code> (B), <code>0110111</code> (<code>lui</code>), <code>1101111</code> (<code>jal</code>).</li>
+                <li><strong>Bước 2 (Mã hóa / Giải mã theo đúng khuôn dạng):</strong>
+                  <ul>
+                    <li><em>R-type:</em> <code>funct7[31:25] | rs2[24:20] | rs1[19:15] | funct3[14:12] | rd[11:7] | opcode[6:0]</code>.</li>
+                    <li><em>I-type:</em> <code>imm[11:0]</code> (đủ 12 bit bù 2 nếu âm) <code>| rs1 | funct3 | rd | opcode</code>. (Lưu ý <code>slli/srli/srai</code>: <code>[31:25]</code> là <code>0000000</code> hoặc <code>0100000</code>, còn <code>[24:20]</code> là <code>shamt</code>).</li>
+                    <li><em>S-type:</em> cắt <code>imm[11:0]</code> thành 7 bit cao <code>imm[11:5]</code> ở <code>[31:25]</code> và 5 bit thấp <code>imm[4:0]</code> ở <code>[11:7]</code>!</li>
+                    <li><em>B-type &amp; J-type:</em> Tính độ lệch byte $\\text{offset} = \\text{Đích} - PC_{\\text{lệnh hiện tại}}$, đổi ra nhị phân có dấu <strong>13 bit</strong> (B-type) hoặc <strong>21 bit</strong> (J-type), <strong>bỏ bit 0 cuối cùng</strong>, rồi xếp đúng thứ tự xáo trộn: B-type đặt <code>imm[12|10:5]</code> vào <code>[31:25]</code> và <code>imm[4:1|11]</code> vào <code>[11:7]</code>; J-type đặt <code>imm[20|10:1|11|19:12]</code> vào <code>[31:12]</code>.</li>
+                  </ul>
+                </li>
+                <li><strong>Bước 3 (Gom nhóm 4 bit ra Hexa):</strong> Chia 32 bit thành 8 cụm 4 bit từ trái sang phải (<code>[31:28] ... [3:0]</code>) rồi viết thành 8 chữ số Hexa <code>0x........</code>.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Khi tính <code>offset</code> cho <code>beq/bne/jal</code> của RISC-V, mốc luôn là <strong>$PC_{\\text{lệnh hiện tại}}$</strong> (KHÔNG tính từ $PC+4$!). Khi giải mã S-type, nhớ thanh ghi lưu dữ liệu là <code>rs2 [24:20]</code>, thanh ghi địa chỉ cơ sở là <code>rs1 [19:15]</code>.</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="3.2.8">
-          <span>📝 <strong>Nhóm 3.2.8: Dịch Mã máy 32-bit, Đích nhảy &amp; Bản đồ bộ nhớ Đề 0012/0013 (<span class="group-q-count">38 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 3.2.8: Dịch Mã máy 32-bit, Đích nhảy &amp; Bản đồ bộ nhớ (<span class="group-q-count">60 câu</span>)</strong></span>
           <div class="inline-actions">
             <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.8', 'exam')">⏱️ Test</button>
             <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.8', 'practice')">🎯 Luyện tập</button>
           </div>
         </div>
 
-        <h4>3. Tập lệnh nén 16-bit (Compressed Instructions – RVC)</h4>
-        <p>Để giảm dung lượng bộ nhớ lưu trữ mã chương trình, RISC-V (cũng như ARM Thumb) cung cấp tập lệnh nén có <strong>độ dài 16 bit (2 byte)</strong> cho các thao tác thường gặp, ký hiệu bằng tiền tố <code>c.</code> (ví dụ: <code>c.add, c.addi, c.lw</code>).</p>
+        <h4>3. Tập lệnh nén 16-bit (Compressed Instructions – RVC, Table B.6)</h4>
+        <p>Để giảm dung lượng bộ nhớ lưu trữ mã chương trình (tiết kiệm khoảng 25–30% kích thước mã máy), RISC-V (tương tự ARM Thumb) cung cấp tập lệnh nén có <strong>độ dài 16 bit (2 byte)</strong> cho các thao tác thường gặp, ký hiệu bằng tiền tố <code>c.</code>.</p>
         <p><strong>Các hạn chế của lệnh nén 16-bit so với lệnh 32-bit:</strong></p>
         <ol>
-          <li><strong>Giảm số lượng thanh ghi</strong> có thể truy cập trực tiếp (nhiều lệnh nén chỉ dùng 3 bit để định danh 8 thanh ghi phổ biến từ <code>x8</code> đến <code>x15</code>).</li>
+          <li><strong>Giảm số lượng thanh ghi</strong> có thể truy cập trực tiếp (nhiều lệnh nén dùng 3 bit để chỉ định 8 thanh ghi phổ biến <code>x8–x15</code>, ký hiệu <code>rd', rs1', rs2'</code>).</li>
           <li><strong>Giảm số lượng toán hạng</strong> trong lệnh (thường gộp thanh ghi đích trùng với thanh ghi nguồn thứ nhất: $rd = rd + rs2$).</li>
           <li><strong>Phạm vi biểu diễn của hằng số tức thời (<code>imm</code>)</strong> và khoảng cách nhảy rẽ nhánh bị thu hẹp đáng kể.</li>
         </ol>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Nhóm RVC 16-bit</th><th>Các lệnh tiêu biểu (Table B.6)</th><th>Ý nghĩa tương đương RV32I 32-bit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Load / Store</strong></td><td><code>c.lw rd', uimm(rs1')</code> ; <code>c.sw rs2', uimm(rs1')</code><br/><code>c.lwsp rd, uimm(sp)</code> ; <code>c.swsp rs2, uimm(sp)</code></td><td>Đọc/ghi word dùng thanh ghi <code>x8–x15</code> hoặc theo con trỏ ngăn xếp <code>sp</code></td></tr>
+              <tr><td><strong>ALU &amp; Nạp hằng</strong></td><td><code>c.addi rd, imm</code> ; <code>c.li rd, imm</code> ; <code>c.lui rd, uimm</code><br/><code>c.add rd, rs2</code> ; <code>c.mv rd, rs2</code> ; <code>c.sub rd', rs2'</code><br/><code>c.and / c.or / c.xor</code> ; <code>c.slli / c.srli / c.srai</code></td><td>Cộng/nạp hằng nhỏ; thao tác 2 toán hạng ($rd = rd \\;\\text{op}\\; rs2$); dịch bit 5-bit</td></tr>
+              <tr><td><strong>Nhảy &amp; Rẽ nhánh</strong></td><td><code>c.j imm</code> ; <code>c.jal imm</code> ; <code>c.jr rs1</code> ; <code>c.jalr rs1</code><br/><code>c.beqz rs1', imm</code> ; <code>c.bnez rs1', imm</code> ; <code>c.nop</code></td><td>Nhảy không điều kiện / gọi hàm / rẽ nhánh so sánh với <code>x0</code> (<code>== 0</code>, <code>!= 0</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-        <h4>4. Bốn phương thức định địa chỉ của RISC-V</h4>
+        <h4>4. Bảng Lệnh giả phổ biến (Pseudoinstructions – Table B.7)</h4>
+        <p>Lệnh giả giúp lập trình viên viết hợp ngữ ngắn gọn hơn; trình hợp dịch (Assembler) sẽ tự động dịch chúng sang 1 hoặc 2 lệnh thật RV32I trước khi sinh mã máy:</p>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Lệnh giả (Pseudoinstruction)</th><th>Lệnh thật RV32I tương ứng</th><th>Chức năng</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>nop</code></td><td><code>addi x0, x0, 0</code></td><td>Không làm gì (No operation)</td></tr>
+              <tr><td><code>mv rd, rs</code></td><td><code>addi rd, rs, 0</code></td><td>Sao chép thanh ghi: $rd = rs$</td></tr>
+              <tr><td><code>not rd, rs</code></td><td><code>xori rd, rs, -1</code></td><td>Đảo từng bit (NOT bitwise)</td></tr>
+              <tr><td><code>neg rd, rs</code></td><td><code>sub rd, x0, rs</code></td><td>Đổi dấu số nguyên: $rd = -rs$</td></tr>
+              <tr><td><code>li rd, imm32</code></td><td><code>lui rd, upimm</code> + <code>addi rd, rd, loimm</code> (hoặc <code>addi</code> nếu vừa 12-bit)</td><td>Nạp hằng số 32-bit bất kỳ vào <code>rd</code></td></tr>
+              <tr><td><code>seqz rd, rs</code> / <code>snez rd, rs</code></td><td><code>sltiu rd, rs, 1</code> / <code>sltu rd, x0, rs</code></td><td>Đặt $rd = 1$ nếu $rs == 0$ (hoặc $rs \\neq 0$)</td></tr>
+              <tr><td><code>beqz rs, off</code> / <code>bnez rs, off</code></td><td><code>beq rs, x0, off</code> / <code>bne rs, x0, off</code></td><td>Rẽ nhánh nếu $rs == 0$ (hoặc $rs \\neq 0$)</td></tr>
+              <tr><td><code>bgez rs, off</code> / <code>bltz rs, off</code></td><td><code>bge rs, x0, off</code> / <code>blt rs, x0, off</code></td><td>Rẽ nhánh nếu $rs \\ge 0$ (hoặc $rs &lt; 0$)</td></tr>
+              <tr><td><code>bgt rs, rt, off</code> / <code>ble rs, rt, off</code></td><td><code>blt rt, rs, off</code> / <code>bge rt, rs, off</code> (đảo 2 toán hạng)</td><td>Rẽ nhánh nếu $rs &gt; rt$ (hoặc $rs \\le rt$)</td></tr>
+              <tr><td><code>j offset</code> / <code>jr rs</code> / <code>ret</code></td><td><code>jal x0, offset</code> / <code>jalr x0, rs, 0</code> / <code>jalr x0, ra, 0</code></td><td>Nhảy không điều kiện / Trở về từ thủ tục</td></tr>
+              <tr><td><code>la rd, symbol</code> / <code>call offset</code></td><td><code>auipc</code> + <code>addi</code> / <code>auipc ra, ...</code> + <code>jalr ra, ...</code></td><td>Nạp địa chỉ nhãn / Gọi thủ tục ở xa</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>5. Bốn phương thức định địa chỉ của RISC-V</h4>
         <ol>
           <li><strong>Định địa chỉ thanh ghi (Register Addressing):</strong> Toán hạng nằm hoàn toàn trong các thanh ghi (áp dụng cho các lệnh kiểu R).</li>
           <li><strong>Định địa chỉ tức thì (Immediate Addressing):</strong> Toán hạng là hằng số nằm ngay bên trong lệnh máy (áp dụng cho toán hạng hằng số của <code>addi, andi, ori, lui...</code>).</li>
@@ -1218,7 +1635,7 @@
       pdfPage: 70,
       printedPage: 69,
       linkedGroups: ["3.2.5", "3.2.6", "3.2.7"],
-      summary: "Quy trình 4 bước đọc hiểu code RISC-V không bị lú, Bảng mẫu đối chiếu nhanh Assembly ↔ C/C++, hướng dẫn giải chi tiết 5 dạng bài kèm Trace Table và các bẫy hay gặp.",
+      summary: "Quy trình 4 bước đọc hiểu code RISC-V, Bảng mẫu Assembly ↔ C/C++, phương pháp giải 5 dạng bài tập (kèm Trace Table & các bẫy hay gặp) và đọc thêm x86 / ARM / ARMv8.",
       content: `
         <div class="callout callout-tip">
           <div class="callout-title">🧭 Quy trình 4 bước đọc hiểu &amp; dịch ngược RISC-V sang C/C++ (Không bị lú)</div>
@@ -1469,27 +1886,166 @@ L1:
           </ol>
         </div>
 
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.5: Chuyển đổi Ngôn ngữ C $\\leftrightarrow$ Hợp ngữ RISC-V</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Dịch biểu thức số học / logic tối ưu không dùng <code>mul</code>, tính địa chỉ phần tử mảng 1 chiều <code>A[i]</code> / mảng 2 chiều <code>M[i][j]</code> / con trỏ <code>*p</code>, hoặc chuyển đổi qua lại cấu trúc rẽ nhánh <code>if / else</code> và câu lệnh gán.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Tối ưu phép nhân/chia hằng số &amp; Biểu thức):</strong> Nhân $2^k$ dùng <code>slli ..., k</code>; chia không dấu/có dấu $2^k$ dùng <code>srli/srai ..., k</code>; nhân hằng không phải lũy thừa 2 tách thành tổng dịch bit (vd $5x = 4x + x \Rightarrow$ <code>slli t0, x, 2; add t0, t0, x</code>; $8(a-7) \Rightarrow$ <code>addi t0, a, -7; slli t0, t0, 3</code>). Khi dịch ngược, thay thế ngược các thanh ghi tạm <code>t0, t1</code> vào biểu thức cuối.</li>
+                <li><strong>Bước 2 (Tính địa chỉ mảng 1D / 2D &amp; Con trỏ):</strong>
+                  <ul>
+                    <li>Mảng <code>int</code> 1 chiều (4 byte/phần tử): $\\&A[i] = \\text{Base}_A + 4 \\times i$ (dùng <code>slli t0, i, 2</code> rồi <code>add</code>). Nếu gặp offset hằng <code>k(s2)</code> thì chỉ số phần tử là $k/4$.</li>
+                    <li>Mảng 2 chiều $R \\times C$ (32-bit, lưu theo hàng – row-major): $\\&M[i][j] = \\text{Base}_M + (i \\times C + j) \\times 4$.</li>
+                    <li>Mảng <code>char</code> (1 byte/phần tử): $\\&S[i] = \\text{Base}_S + i$ (KHÔNG nhân 4, dùng <code>lb/lbu/sb</code>).</li>
+                  </ul>
+                </li>
+                <li><strong>Bước 3 (Dịch <code>if / else</code>):</strong> Dùng lệnh nhánh mang <strong>điều kiện phủ định</strong> nhảy xuống <code>Else</code> (hoặc <code>Exit</code>), và luôn đặt <code>jal zero, Exit</code> (hoặc <code>j Exit</code>) ở cuối khối <code>if</code> để tránh rơi vào khối <code>Else</code>.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Chú ý mảng có thanh ghi cơ sở giữ <code>&amp;A[0]</code> hay giữ <code>&amp;A[1]</code> (vd cho <code>s1 = 0x1000CDC4</code> là <code>A[1]</code> thì <code>4(s1)</code> là <code>A[2]</code> chứ không phải <code>A[1]</code>!). Luôn kiểm tra kỹ bẫy đảo điều kiện nhánh ở câu <code>if / else</code>.</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="3.2.5">
-          <span>📝 <strong>Nhóm 3.2.5: Thực hành Chuyển đổi C $\\leftrightarrow$ RISC-V (<span class="group-q-count">30 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 3.2.5: Thực hành Chuyển đổi C $\\leftrightarrow$ RISC-V (<span class="group-q-count">35 câu</span>)</strong></span>
           <div class="inline-actions">
-            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.5', 'exam')">⏱️ Test</button>
-            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.5', 'practice')">🎯 Luyện tập</button>
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.5', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.5', 'practice')">🎯 Luyện tập</button>
           </div>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.6: Phân tích Vòng lặp &amp; Đếm tổng số lệnh thực thi</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Cho đoạn hợp ngữ RISC-V có vòng lặp (1 vòng hoặc 2 vòng lồng nhau), yêu cầu xác định giá trị thanh ghi sau khi thoát vòng lặp hoặc đếm tổng số lệnh máy đã thực thi.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Khoanh vùng 3 phần của vòng lặp):</strong> (1) Các lệnh khởi tạo trước nhãn <code>loop:</code>; (2) Phần kiểm tra điều kiện nhảy thoát; (3) Thân vòng lặp + bước tăng biến đếm + lệnh nhảy quay lại đầu vòng.</li>
+                <li><strong>Bước 2 (Kẻ bảng Trace Table xác định số lượt lặp $N$):</strong> Viết rõ biến đếm và biến tích lũy ở vòng 1, vòng 2, và vòng cuối cùng ngay sát điều kiện dừng. Đừng nhẩm miệng nếu bước tăng khác 1 (vd <code>i += 2</code>) hoặc mảng bắt đầu từ chỉ số 0 hay 1!</li>
+                <li><strong>Bước 3 (Áp dụng công thức đếm tổng số lệnh động):</strong>
+                  $$\\text{Tổng lệnh} = \\text{Khởi tạo} + N \\times (\\text{Số lệnh trong 1 vòng}) + \\text{Lệnh kiểm tra lần cuối để thoát} + \\text{Lệnh sau vòng}$$
+                  <em>(Với 2 vòng lồng nhau: tính tổng số lệnh của vòng trong ứng với mỗi lượt vòng ngoài rồi cộng tổng lại!).</em>
+                </li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Sai lầm phổ biến nhất là <strong>quên cộng lần kiểm tra thoát vòng lặp cuối cùng</strong> (vòng <code>while/for</code> chạy $N$ lượt thì khối kiểm tra điều kiện chạy $N + 1$ lượt) hoặc nhầm dấu so sánh biên <code>&lt;</code> vs <code>&le;</code> trong cặp lệnh <code>slt + beq/bne</code>!</li>
+          </ul>
         </div>
 
         <div class="formula-practice-inline" data-group-link="3.2.6">
-          <span>📝 <strong>Nhóm 3.2.6: Phân tích Vòng lặp &amp; Đếm tổng số lệnh (<span class="group-q-count">10 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 3.2.6: Phân tích Vòng lặp &amp; Đếm tổng số lệnh (<span class="group-q-count">13 câu</span>)</strong></span>
           <div class="inline-actions">
-            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.6', 'exam')">⏱️ Test</button>
-            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.6', 'practice')">🎯 Luyện tập</button>
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.6', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.6', 'practice')">🎯 Luyện tập</button>
           </div>
         </div>
 
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.7: Chương trình con (Thủ tục), Ngăn xếp &amp; <code>jal / jalr</code></div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Hỏi thanh ghi <code>sp</code>, cơ chế LIFO, viết đúng cặp lệnh Push/Pop trên Stack, xác định giá trị <code>PC</code> và <code>ra</code> ngay khi chạy <code>jal / jalr</code>, phân tích hàm lồng nhau hoặc đệ quy (tìm kết quả trả về <code>a0</code>, lỗi quên cất <code>ra</code>).</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Kiểm tra chuẩn Push / Pop trên Stack):</strong> Stack RISC-V mọc theo chiều <strong>giảm địa chỉ</strong>:
+                  <ul>
+                    <li><em>Push $k$ thanh ghi:</em> Giảm <code>sp</code> trước (<code>addi sp, sp, -4*k</code>) rồi mới <code>sw</code> vào <code>0(sp), 4(sp)...</code>.</li>
+                    <li><em>Pop $k$ thanh ghi:</em> Đọc <code>lw</code> từ <code>0(sp), 4(sp)...</code> trước rồi mới tăng <code>sp</code> trả lại (<code>addi sp, sp, 4*k</code>).</li>
+                  </ul>
+                </li>
+                <li><strong>Bước 2 (Theo dõi <code>jal</code> và <code>jalr</code>):</strong> Khi thực hiện <code>jal ra, Proc</code> tại địa chỉ $A$: đồng thời đặt <code>ra = A + 4</code> và nhảy <code>PC = địa chỉ Proc</code>. Khi gặp <code>jalr x0, 0(ra)</code> ở cuối hàm: <code>PC</code> nhảy về đúng địa chỉ đang lưu trong <code>ra</code>.</li>
+                <li><strong>Bước 3 (Phân tích hàm lồng nhau / Đệ quy):</strong> Kiểm tra xem hàm có gọi tiếp hàm khác không: nếu <strong>có gọi</strong> mà không cất <code>ra</code> lên Stack thì <code>ra</code> bị ghi đè $\\Rightarrow$ <code>jalr x0, 0(ra)</code> sẽ nhảy lặp vô tận tại lệnh sau lời gọi trong cùng hàm đó! Với đệ quy, vẽ cây gọi hàm từ tham số đầu vào tới điều kiện cơ sở (Base case) rồi tính ngược lên <code>a0</code>.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng dịch phần Prologue/Epilogue (<code>addi sp, sp, ±4k</code>) thành phép tính logic C của bài toán! Kiểm tra kỹ khi thanh ghi truyền vào bị thay đổi trước khi nhảy đệ quy, cần xem hàm khôi phục thanh ghi nào từ Stack (<code>lw t0, 0(sp)</code>) để tính tổng/tích sau lời gọi.</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="3.2.7">
-          <span>📝 <strong>Nhóm 3.2.7: Chương trình con, Ngăn xếp &amp; jal/jalr (<span class="group-q-count">5 câu</span>)</strong></span>
+          <span>📝 <strong>Nhóm 3.2.7: Chương trình con, Ngăn xếp &amp; jal/jalr (<span class="group-q-count">14 câu</span>)</strong></span>
           <div class="inline-actions">
-            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.7', 'exam')">⏱️ Test</button>
-            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.7', 'practice')">🎯 Luyện tập</button>
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.7', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.7', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+
+        <h4>3. Đọc thêm: So sánh nhanh RISC-V với kiến trúc x86 và ARM / ARMv8</h4>
+        <ul>
+          <li><strong>Kiến trúc Intel x86 (CISC – 32-bit IA-32 &amp; 64-bit x86-64):</strong> Độ dài lệnh thay đổi linh hoạt từ <strong>1 đến 15 byte</strong>; số lượng thanh ghi đa dụng ít hơn nhiều (8 thanh ghi 32-bit <code>EAX..EDI</code> ở IA-32, mở rộng lên 16 thanh ghi 64-bit ở x86-64); phổ biến lệnh <strong>2 địa chỉ</strong> và cho phép toán hạng tính toán nằm trực tiếp trong bộ nhớ (không thuần Load/Store); dùng con trỏ lệnh <code>IP / EIP / RIP</code> và thứ tự byte Little-Endian.</li>
+          <li><strong>Kiến trúc ARM &amp; ARMv8 / AArch64 (RISC):</strong> Chia sẻ rất nhiều điểm tương đồng với RISC-V (kiến trúc Load/Store, lệnh chuẩn 32-bit cố định kết hợp tập lệnh nén Thumb 16-bit tiết kiệm bộ nhớ, tập thanh ghi lớn: 16 thanh ghi ở ARMv7 và 31 thanh ghi đa dụng 64-bit <code>X0–X30</code> ở ARMv8). Điểm khác biệt nổi bật của ARM truyền thống (ARMv7) là hầu hết lệnh có trường điều kiện (<em>Conditional Execution</em>) dựa vào các cờ trạng thái <code>N, Z, C, V</code> trong thanh ghi CPSR, trong khi RISC-V tách riêng so sánh và rẽ nhánh (<code>blt/beq</code>) không dùng thanh ghi cờ trạng thái.</li>
+        </ul>
+      `
+    },
+    {
+      id: "3.1.6",
+      chapter: 3,
+      code: "3.1.6",
+      title: "Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz) và Lời gọi hệ thống (ecall)",
+      pdfPage: 98,
+      printedPage: 97,
+      linkedGroups: ["3.2.9"],
+      summary: "Bố cục bộ nhớ mặc định trên RARS (.text 0x00400000, .data 0x10010000, gp, sp), chỉ thị .word/.ascii/.asciz, dịch vụ ecall (a7=1,4,5,10,11,32,34) và định địa chỉ mảng 2D Bitmap.",
+      content: `
+        <h4>1. Bố cục Bộ nhớ mặc định &amp; Chỉ thị Hợp ngữ trên RARS</h4>
+        <ul>
+          <li><strong>Bố cục các phân đoạn mặc định (Default Memory Configuration):</strong>
+            <ul>
+              <li><code>.text</code> (vùng lệnh): Mặc định bắt đầu tại <strong><code>0x00400000</code></strong>.</li>
+              <li><code>.data</code> (vùng dữ liệu tĩnh): Mặc định bắt đầu tại <strong><code>0x10010000</code></strong> (cửa sổ <em>Data Segment</em> cho phép xem <code>.data</code>, <code>gp</code> và <code>sp [stack]</code>).</li>
+              <li><strong>Điều kiện lắp ráp (Assemble):</strong> Tệp mã nguồn bắt buộc <strong>phải được lưu (Save)</strong> trên ổ đĩa và <strong>không có lỗi cú pháp</strong> (không bắt buộc phải khai báo <code>.data</code> nếu không dùng biến tĩnh).</li>
+            </ul>
+          </li>
+          <li><strong>Các chỉ thị khai báo dữ liệu quan trọng:</strong>
+            <ul>
+              <li><code>.word v1, v2...</code>: Cấp phát 4 byte/phần tử và <strong>tự động căn lề chia hết cho 4 byte</strong> (padding nếu trước đó là chuỗi lẻ byte). Dạng <code>.word val:count</code> tạo <code>count</code> phần tử lặp giá trị <code>val</code> (chiếm $4 \\times \\text{count}$ byte).</li>
+              <li><code>.byte</code> (1 byte), <code>.half</code> (2 byte), <code>.space N</code> (cấp phát $N$ byte trống).</li>
+              <li><strong>Phân biệt <code>.asciz</code> và <code>.ascii</code>:</strong> Chỉ thị <code>.asciz "ABC"</code> (hoặc <code>.string</code>) tự động chèn thêm 1 byte kết thúc null <code>\\0</code> (tổng 4 byte); còn <code>.ascii "ABC"</code> <strong>KHÔNG</strong> chèn byte <code>\\0</code> nên nếu in chuỗi kế tiếp ngay sau sẽ bị nối chuỗi tràn sang biến kế bên!</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4>2. Lời gọi hệ thống (<code>ecall</code>) &amp; Mảng 2 chiều Bitmap trên RARS</h4>
+        <p>Đặt mã số dịch vụ vào thanh ghi <strong><code>a7</code></strong>, truyền tham số vào <code>a0</code> (<code>a1</code>), rồi gọi lệnh <strong><code>ecall</code></strong>:</p>
+        <div class="theory-table-wrap">
+          <table class="theory-table">
+            <thead>
+              <tr><th><code>a7</code></th><th>Tên dịch vụ</th><th>Tham số vào</th><th>Kết quả trả về</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>1</code></td><td>PrintInt</td><td><code>a0</code> = số nguyên cần in</td><td>In hệ 10 ra Run I/O</td></tr>
+              <tr><td><code>4</code></td><td>PrintString</td><td><code>a0</code> = địa chỉ chuỗi kết thúc <code>\\0</code></td><td>In chuỗi ra Run I/O</td></tr>
+              <tr><td><code>5</code></td><td>ReadInt</td><td>–</td><td><code>a0</code> = số nguyên nhập vào</td></tr>
+              <tr><td><code>10</code></td><td>Exit</td><td>–</td><td>Kết thúc chương trình</td></tr>
+              <tr><td><code>11</code></td><td>PrintChar</td><td><code>a0</code> = mã ASCII (byte thấp)</td><td>In 1 ký tự ra Run I/O</td></tr>
+              <tr><td><code>32</code></td><td>Sleep</td><td><code>a0</code> = thời gian chờ (ms)</td><td>Tạm dừng thực thi</td></tr>
+              <tr><td><code>34</code></td><td>PrintIntHex</td><td><code>a0</code> = số nguyên 32-bit</td><td>In dạng <code>0x...</code> ra Run I/O</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li><strong>Mảng 2 chiều Bitmap Display trong vùng nhớ dữ liệu:</strong> Mỗi pixel trên Bitmap Display chiếm 1 word (4 byte màu RGB 24-bit dạng <code>0x00RRGGBB</code>, màu đỏ = <code>0x00FF0000</code>), tọa độ 0-based <code>(row, col)</code> có offset byte $= (\\text{row} \\times \\text{Số cột} + \\text{col}) \\times 4$ tính từ Base Address (vd <code>0x10010000</code>).</li>
+        </ul>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 3.2.9: Thực hành RARS, Chỉ thị <code>.data</code> &amp; <code>ecall</code></div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Tính địa chỉ biến trong vùng <code>.data</code> (<code>.word, .half, .byte, .space, .ascii, .asciz</code>), xác định kết quả dịch vụ <code>ecall</code> (theo mã <code>a7</code>), điều kiện Assemble trên RARS, số byte lệnh <code>li</code> sau hợp dịch và tính offset mảng 2D Bitmap Display.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Tính địa chỉ biến trong <code>.data</code> từ <code>0x10010000</code>):</strong> Cộng tuần tự kích thước từng khai báo: <code>.byte</code> (+1), <code>.half</code> (+2, căn lề chẵn), <code>.space N</code> (+N), <code>.ascii</code> (+độ dài chuỗi), <code>.asciz / .string</code> (+độ dài chuỗi <strong>+ 1</strong> cho byte <code>\\0</code>). Riêng trước khi cấp phát <code>.word</code> (<code>.word val:count</code> chiếm $4 \\times \\text{count}$ byte), bắt buộc <strong>làm tròn địa chỉ hiện tại lên bội số tiếp theo của 4</strong>!</li>
+                <li><strong>Bước 2 (Tra <code>ecall</code>, Kích thước lệnh &amp; Điều kiện Assemble):</strong> Nhớ mã <code>a7</code> trọng tâm: <code>1</code> (PrintInt), <code>4</code> (PrintString), <code>5</code> (ReadInt), <code>10</code> (Exit), <code>11</code> (PrintChar), <code>32</code> (Sleep ms), <code>34</code> (PrintIntHex). Lệnh giả <code>li rd, imm32</code> lớn hơn 12 bit sẽ bung thành <code>lui + addi</code> (8 byte = 2 lệnh thật). RARS chỉ lắp ráp được khi file <strong>đã lưu</strong> và <strong>không có lỗi cú pháp</strong>.</li>
+                <li><strong>Bước 3 (Mảng 2D Bitmap Display):</strong> Hàng 1, cột 1 ứng chỉ số 0-based <code>(0, 0)</code> $\\Rightarrow$ địa chỉ pixel tại hàng $r$, cột $c$ là $\\text{Base} + [(r - 1) \\times \\text{Số cột} + (c - 1)] \\times 4$.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng quên <strong>byte padding căn lề 4 byte</strong> trước <code>.word</code> nếu ngay phía trên là chuỗi <code>.ascii / .asciz</code> có độ dài không chia hết cho 4! Nếu chuỗi dùng <code>.ascii</code> (không có <code>\\0</code>), lệnh <code>ecall a7=4</code> sẽ in nối tiếp cả chuỗi liền sau cho tới khi gặp byte <code>0x00</code>!</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="3.2.9">
+          <span>📝 <strong>Nhóm 3.2.9: Thực hành RARS, Chỉ thị .data &amp; ecall (<span class="group-q-count">14 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.9', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('3.2.9', 'practice')">🎯 Luyện tập</button>
           </div>
         </div>
       `
@@ -1504,7 +2060,7 @@ L1:
       pdfPage: 100,
       printedPage: 99,
       linkedGroups: ["4.1", "4.2.1"],
-      summary: "3 hệ đếm (10, 2, 16), Bảng quy đổi chuẩn 4-bit Nhị phân – Hexa – Thập phân, công thức tổng quát phần nguyên + phần lẻ và số thực không biểu diễn chính xác hữu hạn.",
+      summary: "3 hệ đếm (10, 2, 16), Bảng quy đổi 4-bit Nhị phân – Hexa – Thập phân, công thức phần nguyên + phần lẻ, số thực không hữu hạn và Bảng đơn vị dữ liệu truyền thống vs IEC mới (KiB–EiB).",
       content: `
         <h4>1. Ba hệ đếm cơ bản trong máy tính</h4>
         <ul>
@@ -1548,6 +2104,47 @@ L1:
           <div class="callout-title">⚠️ Số thực KHÔNG thể biểu diễn chính xác tuyệt đối trong hệ nhị phân</div>
           <p>Một số lẻ thập phân chỉ biểu diễn chính xác hữu hạn trong hệ nhị phân nếu phần lẻ của nó viết được dưới dạng phân số tối giản có mẫu số là <strong>lũy thừa của 2</strong> ($\\frac{k}{2^m}$, như $0.5 = \\frac{1}{2},\\; 0.25 = \\frac{1}{4},\\; 0.75 = \\frac{3}{4},\\; 0.125 = \\frac{1}{8},\\; 0.375 = \\frac{3}{8},\\; 0.625 = \\frac{5}{8}$). Các số như <strong>$0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 0.9$</strong> khi nhân đôi liên tiếp sẽ lặp vô hạn tuần hoàn nên <strong>không thể biểu diễn chính xác tuyệt đối</strong> bằng số dấu phẩy động nhị phân.</p>
         </div>
+
+        <h4>3. Bảng đơn vị dữ liệu: Quy ước truyền thống (KHMT) vs. Chuẩn IEC mới &amp; Thập phân SI</h4>
+        <p>Trong máy tính, truyền thông và thiết bị lưu trữ có hai hệ bội số cần phân biệt rõ: hệ nhị phân (lũy thừa của $2^{10} = 1024$) và hệ thập phân SI (lũy thừa của $10^3 = 1000$):</p>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Bội số</th><th>Quy ước truyền thống (KHMT / RAM)</th><th>Chuẩn nhị phân IEC mới (Chính xác $2^{10k}$)</th><th>Chuẩn thập phân SI (Ổ đĩa / Mạng)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>$10^3$ / $2^{10}$</td><td><code>1 KB</code> = $2^{10}$ B $= 1\\,024$ B</td><td><strong><code>1 KiB</code></strong> (Kibibyte) $= 2^{10}$ B</td><td><code>1 KB</code> = $10^3$ B $= 1\\,000$ B</td></tr>
+              <tr><td>$10^6$ / $2^{20}$</td><td><code>1 MB</code> = $2^{20}$ B</td><td><strong><code>1 MiB</code></strong> (Mebibyte) $= 2^{20}$ B</td><td><code>1 MB</code> = $10^6$ B</td></tr>
+              <tr><td>$10^9$ / $2^{30}$</td><td><code>1 GB</code> = $2^{30}$ B</td><td><strong><code>1 GiB</code></strong> (Gibibyte) $= 2^{30}$ B</td><td><code>1 GB</code> = $10^9$ B</td></tr>
+              <tr><td>$10^{12}$ / $2^{40}$</td><td><code>1 TB</code> = $2^{40}$ B</td><td><strong><code>1 TiB</code></strong> (Tebibyte) $= 2^{40}$ B</td><td><code>1 TB</code> = $10^{12}$ B</td></tr>
+              <tr><td>$10^{15}$ / $2^{50}$</td><td><code>1 PB</code> = $2^{50}$ B</td><td><strong><code>1 PiB</code></strong> (Pebibyte) $= 2^{50}$ B</td><td><code>1 PB</code> = $10^{15}$ B</td></tr>
+              <tr><td>$10^{18}$ / $2^{60}$</td><td><code>1 EB</code> = $2^{60}$ B</td><td><strong><code>1 EiB</code></strong> (Exbibyte) $= 2^{60}$ B</td><td><code>1 EB</code> = $10^{18}$ B</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 4.2.1: Hệ đếm &amp; Chuyển đổi cơ số</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Chuyển đổi số có cả phần nguyên và phần lẻ giữa hệ nhị phân (cơ số 2), thập phân (cơ số 10) và thập lục phân (cơ số 16); nhận diện số thực thập phân nào không thể biểu diễn hữu hạn trong hệ nhị phân; hoặc quy đổi đơn vị dữ liệu IEC/SI.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Chuyển Hệ 2 &rarr; Hệ 10):</strong> Tách tại dấu phẩy: các bit bên trái nhân trọng số tăng dần $2^0, 2^1, 2^2, \\dots$; các bit bên phải nhân trọng số giảm dần $2^{-1}=0.5,\\; 2^{-2}=0.25,\\; 2^{-3}=0.125,\\; 2^{-4}=0.0625,\\dots$ rồi cộng tổng lại.</li>
+                <li><strong>Bước 2 (Chuyển Hệ 10 &rarr; Hệ 2):</strong> Phần nguyên chia liên tiếp cho 2 lấy phần dư viết <strong>ngược từ dưới lên</strong> (hoặc tách tổng các lũy thừa $2^i$); phần lẻ nhân liên tiếp với 2 lấy phần nguyên viết <strong>xuôi từ trên xuống</strong>.</li>
+                <li><strong>Bước 3 (Chuyển Hệ 2 &harr; Hệ 16):</strong> Từ dấu phẩy gom từng cụm <strong>4 bit sang hai bên</strong> (bù thêm <code>0</code> nếu thiếu), tra bảng 4-bit ra 1 chữ số Hexa <code>0–F</code>.</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Khi kiểm tra một số thập phân có viết hữu hạn được ở nhị phân hay không, đổi phần lẻ về phân số tối giản $p/q$: nếu mẫu số $q$ có chứa ước nguyên tố khác $2$ (vd $0.1 = 1/10$, $0.3 = 3/10$, $0.6 = 3/5$) thì <strong>lặp vô hạn</strong>, không biểu diễn chính xác tuyệt đối được!</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="4.2.1">
+          <span>📝 <strong>Nhóm 4.2.1: Hệ đếm &amp; Chuyển đổi cơ số (<span class="group-q-count">1 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.1', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.1', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -1558,7 +2155,7 @@ L1:
       pdfPage: 101,
       printedPage: 100,
       linkedGroups: ["4.1", "4.2.2"],
-      summary: "Ký hiệu 6 cổng logic chuẩn IEEE (AND, OR, NOT, NAND, NOR, XOR), định lý De Morgan, mạch tổ hợp (MUX, Decoder, Half/Full Adder) và mạch dãy Flip-Flop.",
+      summary: "Ký hiệu 6 cổng logic chuẩn IEEE, định lý De Morgan, mạch tổ hợp (SOP, MUX 2-1/4-1/2^n-1, Decoder, Half/Full Adder, bộ cộng 4/32-bit) và mạch dãy (Flip-Flop S-R/J-K/D, thanh ghi song song & dịch).",
       content: `
         <h4>1. Các phép toán Đại số Boolean và Cổng logic cơ bản</h4>
         <ul>
@@ -1643,19 +2240,61 @@ L1:
 
         <h4>2. Các mạch tổ hợp và mạch dãy cơ bản trong máy tính</h4>
         <ul>
-          <li><strong>Mạch tổ hợp (Combinational Circuits – mạch không nhớ):</strong> Giá trị đầu ra chỉ phụ thuộc vào tổ hợp giá trị đầu vào tại thời điểm hiện tại. Các bộ phận điển hình:
+          <li><strong>Mạch tổ hợp (Combinational Circuits – mạch không nhớ):</strong> Giá trị đầu ra chỉ phụ thuộc vào tổ hợp giá trị đầu vào tại thời điểm hiện tại. Quy trình thiết kế chuẩn: <em>Bảng chân lý (Truth Table) $\\rightarrow$ Biểu thức Boolean dạng Tổng các tích (SOP – Sum of Products) $\\rightarrow$ Sơ đồ cổng logic</em>. Các mạch tổ hợp trọng tâm:
             <ul>
-              <li><strong>Bộ ghép kênh (MUX – Multiplexer):</strong> Có $2^n$ đầu vào dữ liệu, $n$ đầu vào chọn ($S$) và 1 đầu ra. Với MUX 2-ra-1: $$F = D_0 \\cdot \\overline{S} + D_1 \\cdot S$$ (khi $S = 0$ thì nối $D_0$ ra $F$; khi $S = 1$ thì nối $D_1$ ra $F$).</li>
-              <li><strong>Bộ giải mã (Decoder):</strong> Có $n$ đầu vào và $2^n$ đầu ra. Với mỗi tổ hợp của $n$ đầu vào, chỉ có duy nhất 1 đầu ra tích cực.</li>
-              <li><strong>Bộ cộng bán phần 1-bit (Half Adder):</strong> Cộng 2 bit $A, B$ tạo ra bit tổng $S = A \\oplus B$ (dùng cổng XOR) và bit nhớ ra $C_{\\text{out}} = A \\cdot B$ (dùng cổng AND).</li>
-              <li><strong>Bộ cộng toàn phần 1-bit (Full Adder):</strong> Cộng 3 bit ($A, B$ và bit nhớ vào $C_{\\text{in}}$, hoặc ký hiệu là $C$) tạo ra bit tổng $S$ và bit nhớ ra $C_{\\text{out}}$:
-                $$S = A \\oplus B \\oplus C = \\overline{A}\\,\\overline{B}C + \\overline{A}B\\overline{C} + A\\overline{B}\\,\\overline{C} + ABC \\qquad ; \\qquad C_{\\text{out}} = AB + AC + BC$$
-                <em>Quy tắc nhớ nhanh Full Adder:</em> Đếm số lượng bit 1 trong 3 đầu vào $(A, B, C)$: nếu có <strong>lẻ bit 1</strong> (1 hoặc 3 bit 1) thì $S = 1$, ngược lại $S = 0$; nếu có <strong>từ 2 bit 1 trở lên</strong> thì $C_{\\text{out}} = 1$, ngược lại $C_{\\text{out}} = 0$.
+              <li><strong>Bộ dồn kênh / Bộ chọn (MUX – Multiplexer):</strong> Có $2^n$ đường vào dữ liệu, $n$ bit đầu vào chọn ($S$) và 1 đầu ra $F$:
+                <ul>
+                  <li><em>MUX 2-1:</em> 2 đầu vào $(D_0, D_1)$, 1 bit chọn $S$: $$F = D_0 \\cdot \\overline{S} + D_1 \\cdot S$$</li>
+                  <li><em>MUX 4-1:</em> 4 đầu vào $(D_0, D_1, D_2, D_3)$, 2 bit chọn $(S_1, S_0)$: $$F = D_0\\overline{S_1}\\,\\overline{S_0} + D_1\\overline{S_1}S_0 + D_2 S_1\\overline{S_0} + D_3 S_1 S_0$$</li>
+                  <li><em>Tổng quát MUX $2^n$-to-1:</em> $2^n$ đầu vào dữ liệu, $n$ đầu vào chọn $S_{n-1}\\dots S_0$, 1 đầu ra.</li>
+                </ul>
               </li>
+              <li><strong>Bộ giải mã (Decoder $N$-to-$2^N$):</strong> Có $N$ đầu vào và $2^N$ đầu ra; với mỗi tổ hợp đầu vào chỉ có <strong>duy nhất 1 đầu ra tích cực</strong> bằng 1 (dùng để giải mã opcode hoặc chọn chip RAM <code>CS</code>). Ví dụ <em>Decoder 2-4</em> với $(A_1, A_0)$:
+                $$Y_0 = \\overline{A_1}\\,\\overline{A_0},\\quad Y_1 = \\overline{A_1}A_0,\\quad Y_2 = A_1\\overline{A_0},\\quad Y_3 = A_1 A_0$$
+              </li>
+              <li><strong>Bộ cộng bán phần 1-bit (Half-Adder):</strong> Cộng 2 bit $A, B$ (chưa có nhớ vào):
+                $$S = A \\oplus B \\qquad ; \\qquad C_{\\text{out}} = A \\cdot B$$
+              </li>
+              <li><strong>Bộ cộng toàn phần 1-bit (Full-Adder):</strong> Cộng 3 bit ($A, B$ và bit nhớ vào $C_{\\text{in}}$, hoặc ký hiệu là $C$) tạo ra bit tổng $S$ và bit nhớ ra $C_{\\text{out}}$:
+                $$S = A \\oplus B \\oplus C_{\\text{in}} = \\overline{A}\\,\\overline{B}C_{\\text{in}} + \\overline{A}B\\overline{C_{\\text{in}}} + A\\overline{B}\\,\\overline{C_{\\text{in}}} + ABC_{\\text{in}} \\qquad ; \\qquad C_{\\text{out}} = AB + AC_{\\text{in}} + BC_{\\text{in}}$$
+                <em>Quy tắc nhớ nhanh Full Adder:</em> Đếm số lượng bit 1 trong 3 đầu vào $(A, B, C_{\\text{in}})$: nếu có <strong>lẻ bit 1</strong> (1 hoặc 3 bit 1) thì $S = 1$, ngược lại $S = 0$; nếu có <strong>từ 2 bit 1 trở lên</strong> thì $C_{\\text{out}} = 1$, ngược lại $C_{\\text{out}} = 0$.
+              </li>
+              <li><strong>Bộ cộng nhiều bit (Bộ cộng 4-bit / 32-bit Ripple-Carry Adder):</strong> Ghép nối tiếp 4 (hoặc 32) bộ Full-Adder cạnh nhau, trong đó $C_{\\text{out}}$ của tầng bit thứ $i$ nối trực tiếp vào $C_{\\text{in}}$ của tầng bit thứ $i+1$. Khi thực hiện phép cộng đặt $C_0 = 0$; khi thực hiện phép trừ $X - Y = X + \\overline{Y} + 1$, đặt $C_0 = 1$ và đảo các bit của $Y$ qua cổng NOT!</li>
             </ul>
           </li>
-          <li><strong>Mạch dãy (Sequential Circuits – mạch có nhớ):</strong> Đầu ra phụ thuộc cả đầu vào hiện tại và trạng thái quá khứ. Được xây dựng từ các phần tử nhớ <strong>Flip-Flop (S-R, J-K, D)</strong> kết hợp xung nhịp (Clock) để tạo thành các <strong>Thanh ghi song song</strong> và <strong>Thanh ghi dịch</strong>.</li>
+          <li><strong>Mạch dãy (Sequential Circuits – mạch có nhớ):</strong> Đầu ra phụ thuộc cả đầu vào hiện tại lẫn trạng thái lưu trước đó (đồng bộ theo xung nhịp <strong>Clock</strong>). Các phần tử và khối mạch dãy cơ bản:
+            <ul>
+              <li><strong>Flip-Flop S-R (Set–Reset):</strong> $S=1, R=0 \\Rightarrow Q=1$; $S=0, R=1 \\Rightarrow Q=0$; $S=0, R=0 \\Rightarrow$ giữ trạng thái cũ; $S=1, R=1 \\Rightarrow$ <em>trạng thái cấm / không xác định</em>.</li>
+              <li><strong>Flip-Flop J-K:</strong> Cải tiến từ S-R (loại bỏ trạng thái cấm): khi $J=1, K=1$ sẽ <strong>đảo trạng thái</strong> ($Q_{\\text{next}} = \\overline{Q}$).</li>
+              <li><strong>Flip-Flop D (Data / Delay):</strong> Chỉ có 1 đầu vào dữ liệu $D$, lưu đúng giá trị $D$ vào ngõ ra $Q$ tại cạnh xung nhịp Clock ($Q_{\\text{next}} = D$) — là đơn vị nhớ 1-bit cấu tạo nên thanh ghi và SRAM.</li>
+              <li><strong>Thanh ghi song song (Parallel Register):</strong> Ghép $n$ Flip-Flop D dùng chung một tín hiệu Clock để đọc/ghi đồng thời $n$ bit dữ liệu.</li>
+              <li><strong>Thanh ghi dịch (Shift Register):</strong> Nối nối tiếp ngõ ra $Q_i$ vào ngõ vào $D_{i+1}$ để dịch chuỗi bit sang trái hoặc sang phải sau mỗi nhịp Clock (dùng trong bộ nhân/chia và giao tiếp nối tiếp).</li>
+            </ul>
+          </li>
         </ul>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 4.2.2: Cổng logic, Mạch tổ hợp &amp; Full Adder</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Nhận dạng ký hiệu hình vẽ của 6 cổng logic (<code>AND, OR, NOT, NAND, NOR, XOR</code>), rút gọn biểu thức Boolean từ sơ đồ mạch nhiều tầng về dạng SOP, hỏi phép toán của Half Adder, hoặc tính $(S, C_{\\text{out}})$ của Full Adder.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Nhận diện ký hiệu 6 cổng):</strong> Thân chữ D (một bên phẳng, một bên cong tròn) là <code>AND</code>; thân cong nhọn đầu mũi tên là <code>OR</code>; có thêm <strong>đường cong phụ tách rời ở phần đuôi</strong> là <code>XOR</code>; tam giác có vòng tròn nhỏ là <code>NOT</code>; có vòng tròn đảo ở đầu ra của AND/OR là <code>NAND / NOR</code>.</li>
+                <li><strong>Bước 2 (Phân tích sơ đồ mạch tổ hợp):</strong> Đặt biến tại đầu vào, viết biểu thức đầu ra từng cổng từ trái sang phải, sau đó áp dụng luật De Morgan ($\\overline{A\\cdot B} = \\overline{A} + \\overline{B}$ và $\\overline{A + B} = \\overline{A}\\cdot \\overline{B}$) để đưa về dạng chuẩn tổng các tích (SOP).</li>
+                <li><strong>Bước 3 (Tính nhanh Half Adder &amp; Full Adder):</strong> Half Adder gồm <code>XOR</code> (tính $S$) và <code>AND</code> (tính $C_{\\text{out}}$). Với Full Adder $(A, B, C_{\\text{in}})$, chỉ cần <strong>cộng số học 3 bit đầu vào</strong> (tổng từ $0$ đến $3$) rồi đổi sang nhị phân 2 bit $(C_{\\text{out}}\\; S)_2$ (vd $1 + 1 + 0 = 2 = 10_2 \\Rightarrow C_{\\text{out}} = 1, S = 0$; $1 + 1 + 1 = 3 = 11_2 \\Rightarrow C_{\\text{out}} = 1, S = 1$).</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đừng nhầm lẫn thứ tự cặp $(S, C_{\\text{out}})$ với $(C_{\\text{out}}, S)$ khi chọn đáp án! Kiểm tra kỹ dấu đảo (vòng tròn nhỏ) trên hình vẽ cổng NAND / NOR / XOR để không đọc nhầm sang AND / OR.</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="4.2.2">
+          <span>📝 <strong>Nhóm 4.2.2: Cổng logic, Mạch tổ hợp &amp; Full Adder (<span class="group-q-count">5 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.2', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.2', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -1666,7 +2305,7 @@ L1:
       pdfPage: 102,
       printedPage: 101,
       linkedGroups: ["4.1", "4.2.3"],
-      summary: "Dải không dấu [0, 2^n - 1], Mã bù 2 [-2^{n-1}, 2^{n-1} - 1], tìm bù 2, Sign/Zero-extension, bảng dải biểu diễn 6–32 bit và 3 mẹo tính nhẩm Hexa.",
+      summary: "Dải không dấu [0, 2^n - 1], Mã bù 2 [-2^{n-1}, 2^{n-1} - 1], Trục tròn số học, Sign/Zero-extension, lệnh so sánh có dấu/không dấu và 3 mẹo tính nhẩm Hexa.",
       content: `
         <h4>1. Biểu diễn số nguyên không dấu (Unsigned Integer) với $n$ bit</h4>
         <ul>
@@ -1733,6 +2372,45 @@ L1:
             </li>
           </ol>
         </div>
+
+        <h4>3. Trục tròn số học máy tính và Lệnh so sánh trong RISC-V</h4>
+        <ul>
+          <li><strong>Trục tròn số học $n$-bit (Modular Arithmetic):</strong> Vì thanh ghi có độ rộng cố định $n$ bit, tất cả $2^n$ tổ hợp bit tạo thành một vòng tròn khép kín theo modulo $2^n$:
+            <ul>
+              <li>Với <strong>số nguyên không dấu</strong>: giá trị tăng theo chiều kim đồng hồ từ $0$ đến $2^n - 1$; khi cộng vượt qua ranh giới $2^n - 1 \\to 0$ sẽ quay vòng và phát sinh cờ nhớ $C_{\\text{out}} = 1$.</li>
+              <li>Với <strong>số nguyên có dấu mã bù hai</strong>: nửa vòng đầu ($0 \\dots +(2^{n-1}-1)$) có bit dấu <code>0</code>; nửa vòng còn lại ($-2^{n-1} \\dots -1$) có bit dấu <code>1</code>. Chỉ có <strong>duy nhất một giá trị $0$</strong>, và hai số đối nhau $A, -A$ cộng lại bằng $2^n \\equiv 0 \\pmod{2^n}$. Vượt qua ranh giới giữa $+(2^{n-1}-1)$ và $-2^{n-1}$ chính là hiện tượng <strong>Tràn số học (Overflow)</strong>.</li>
+            </ul>
+          </li>
+          <li><strong>Lệnh so sánh trong RISC-V:</strong> Phân biệt cặp lệnh <strong>có dấu</strong> (<code>slt, slti, blt, bge</code>) với cặp lệnh <strong>không dấu</strong> (<code>sltu, sltiu, bltu, bgeu</code>) để tránh đọc nhầm các số Hexa có bit dấu bằng 1 (<code>0x80000000–0xFFFFFFFF</code>).</li>
+        </ul>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 4.2.3: Biểu diễn Số nguyên &amp; Mã bù hai</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Xác định dải biểu diễn hoặc giá trị lớn nhất/nhỏ nhất của $n$ bit (có dấu/không dấu), tìm số bit tối thiểu $n$ để biểu diễn $M$ đối tượng, đổi qua lại giữa số thập phân âm và mã bù 2 (nhị phân/Hexa), mở rộng dấu, hoặc sắp xếp dãy số nguyên 8-bit/16-bit/32-bit theo thứ tự tăng/giảm.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Dải biểu diễn &amp; Số bit tối thiểu $n$):</strong>
+                  <ul>
+                    <li>Không dấu $n$ bit: $[0,\\; 2^n - 1]$; chứa $M$ đối tượng dùng $2^n \\ge M$ (nếu chứa cả giá trị từ $0$ đến $M$ thì $2^n - 1 \\ge M$).</li>
+                    <li>Có dấu mã bù 2 $n$ bit: $[-2^{n-1},\\; +(2^{n-1} - 1)]$; chứa $[-K, +K]$ chọn $n$ nhỏ nhất thỏa $2^{n-1} - 1 \\ge K$.</li>
+                  </ul>
+                </li>
+                <li><strong>Bước 2 (Tìm mã bù 2 &amp; Tính nhẩm nhanh số âm):</strong> Để đổi dấu số nhị phân, đi từ <strong>phải sang trái</strong>: giữ nguyên các bit 0 tận cùng và bit 1 đầu tiên gặp, rồi đảo ngược toàn bộ các bit bên trái. Với byte 8-bit có dấu: trọng số bit đầu là $-128$, 7 bit sau cộng dương ($+64, +32, +16, +8, +4, +2, +1$). Với Hexa đầu toàn chữ <code>F</code>: lấy chữ cuối trừ $16$ (vd <code>0xFFFFFFF3</code> $\\rightarrow 3 - 16 = -13$).</li>
+                <li><strong>Bước 3 (Sắp xếp dãy số Hexa):</strong> Nếu là <strong>không dấu</strong>, so sánh từ trái sang phải như bình thường. Nếu là <strong>có dấu</strong>, tách thành 2 nhóm: nhóm đầu <code>8–F</code> (số âm — đặt nhỏ hơn mọi số đầu <code>0–7</code>!) và nhóm đầu <code>0–7</code> (số dương); trong nội bộ nhóm âm, giá trị Hexa càng nhỏ thì số âm càng sâu (<code>0x80 = -128 &lt; 0xFF = -1</code>)!</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Đọc kỹ đề hỏi <strong>có dấu</strong> hay <strong>không dấu</strong> và <strong>tăng dần</strong> hay <strong>giảm dần</strong>! Đừng quên quy tắc $2^n - 1$ (vd 9 bit không dấu lớn nhất là $511$, có dấu là $[-256, +255]$).</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="4.2.3">
+          <span>📝 <strong>Nhóm 4.2.3: Biểu diễn Số nguyên &amp; Mã bù hai (<span class="group-q-count">29 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.3', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.3', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -1743,7 +2421,7 @@ L1:
       pdfPage: 104,
       printedPage: 103,
       linkedGroups: ["4.1", "4.2.4", "4.2.5"],
-      summary: "Tràn nhớ (Cout) vs Tràn số học (Overflow), 2 dạng bài toán tràn số trọng tâm (char +-256 & phạm vi add 32-bit), nhân 64-bit và quy tắc dấu phép chia div/rem RV32M.",
+      summary: "Tràn nhớ (Cout) vs Tràn số học (Overflow), bài toán char & add 32-bit, thuật toán nhân/chia không dấu & có dấu và Bảng RV32M (Table B.5: mul/mulh/div/rem).",
       content: `
         <h4>1. Cộng số nguyên không dấu và Tràn nhớ (Carry Out)</h4>
         <p>Khi cộng hai số nguyên không dấu $n$ bit, nếu tổng vượt quá $2^n - 1$ thì phát sinh bit nhớ ra ngoài cùng $C_{\\text{out}} = 1$, làm kết quả $n$ bit bị sai (gọi là <strong>tràn nhớ</strong>). Nếu $C_{\\text{out}} = 0$ thì kết quả đúng.</p>
@@ -1779,6 +2457,26 @@ L1:
           </ul>
         </div>
 
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 4.2.4: Cộng/Trừ số nguyên &amp; Hiện tượng Tràn số học (Overflow)</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Kiểm tra bit $C_{\\text{out}}$ của phép cộng không dấu, nhận diện cặp số 8-bit/32-bit có dấu gây tràn (Overflow), tính giá trị thực sự hiển thị của biến <code>char</code> (8-bit có dấu) sau phép cộng tràn, hoặc tìm dải giá trị thanh ghi thứ hai gây tràn trong lệnh <code>add</code> 32-bit.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Phân biệt Tràn nhớ $C_{\\text{out}}$ vs Tràn số học Overflow):</strong>
+                  <ul>
+                    <li><em>Không dấu $n$-bit:</em> Cộng lấy đúng $n$ bit cuối; nếu có bit nhớ $C_{\\text{out}} = 1$ thì kết quả $n$-bit bị sai (tràn nhớ).</li>
+                    <li><em>Có dấu $n$-bit (bỏ qua $C_{\\text{out}}$!):</em> Hai số <strong>trái dấu</strong> cộng nhau <strong>KHÔNG BAO GIỜ tràn</strong>. Hai số <strong>cùng dấu</strong> cộng nhau chỉ tràn khi dấu kết quả <strong>ngược lại</strong> (dương + dương = âm; âm + âm = dương). Với phép trừ $X - Y = X + (-Y)$, kiểm tra tràn tương đương phép cộng $X$ và $(-Y)$ (trừ 2 số cùng dấu không bao giờ tràn!).</li>
+                  </ul>
+                </li>
+                <li><strong>Bước 2 (Tính giá trị tràn cho biến <code>char</code> 8-bit):</strong> Cộng bình thường ra $S = x + y$: nếu $S &gt; 127$ thì lấy $S - 256$; nếu $S &lt; -128$ thì lấy $S + 256$.</li>
+                <li><strong>Bước 3 (Tìm dải giá trị gây tràn cho <code>add rd, rs1, rs2</code> khi biết $rs1 = K &gt; 0$):</strong> Tràn dương xảy ra khi $rs2 &gt; 0$ và $K + rs2 &gt; \\text{0x7FFFFFFF}$ $\\iff rs2 \\in [\\text{0x80000000} - K,\\; \\text{0x7FFFFFFF}]$. (Nếu $rs1 = -K &lt; 0$, tràn âm xảy ra khi $rs2 \\in [\\text{0x80000000},\\; \\text{0x7FFFFFFF} - K + 1]$).</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Tuyệt đối không dùng cờ $C_{\\text{out}}$ để kết luận tràn số có dấu! Với dải gây tràn của số dương $K &gt; 0$, cận trên luôn là <code>0x7FFFFFFF</code> (KHÔNG bao giờ là <code>0x80000000</code> vì <code>0x80000000</code> là số âm $-2^{31}$!).</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="4.2.4">
           <span>📝 <strong>Nhóm 4.2.4: Bài tập Cộng/Trừ &amp; Tràn số học Overflow (<span class="group-q-count">15 câu</span>)</strong></span>
           <div class="inline-actions">
@@ -1787,17 +2485,67 @@ L1:
           </div>
         </div>
 
-        <h4>3. Nhân/Chia số nguyên và Quy tắc dấu của phép chia trong RISC-V (RV32M)</h4>
+        <h4>3. Thuật toán Nhân/Chia số nguyên và Tập lệnh RV32M (Table B.5)</h4>
         <ul>
-          <li><strong>Nhân hai số 32-bit tạo tích 64-bit:</strong> Lệnh <code>mul rd, rs1, rs2</code> lấy <strong>32 bit thấp</strong> của tích; các lệnh <code>mulh</code> (2 số có dấu), <code>mulhu</code> (2 số không dấu), <code>mulhsu</code> (<code>rs1</code> có dấu, <code>rs2</code> không dấu) lấy <strong>32 bit cao</strong> của tích.</li>
-          <li><strong>Chia hai số nguyên 32-bit có dấu (<code>div</code> và <code>rem</code>):</strong>
-            $$\\text{Số bị chia} = (\\text{Số chia} \\times \\text{Thương}) + \\text{Số dư}$$
+          <li><strong>Phép nhân số nguyên (tích $n$-bit $\\times$ $n$-bit $\\rightarrow$ $2n$-bit):</strong> Vì thanh ghi tích rộng $2n$ bit (vd 32-bit $\\times$ 32-bit cho tích 64-bit), phép nhân hai số nguyên $n$-bit <strong>không bao giờ bị tràn số học</strong> trong kết quả $2n$-bit:
             <ul>
-              <li><strong>Dấu của Thương (<code>div rd, rs1, rs2</code>):</strong> Cùng dấu thì thương dương ($+$); khác dấu thì thương âm ($-$).</li>
-              <li><strong>Dấu của Số dư (<code>rem rd, rs1, rs2</code>):</strong> Số dư <strong>luôn luôn cùng dấu với SỐ BỊ CHIA (<code>rs1</code>)</strong>, bất kể số chia âm hay dương.</li>
+              <li><strong>Thuật toán nhân không dấu (Bộ nhân dùng thanh ghi <code>C, A, Q</code> và số bị nhân <code>M</code>):</strong> Khởi tạo $A = 0, C = 0$, $Q$ = số nhân. Lặp $n$ bước: nếu bit thấp nhất $Q_0 == 1$ thì thực hiện $A \\leftarrow A + M$ (có nhớ vào $C$); sau đó dịch phải toàn bộ cụm $(C, A, Q)$ đi 1 bit. Kết quả $2n$-bit nằm ở cặp thanh ghi $(A, Q)$.</li>
+              <li><strong>Nhân có dấu:</strong> Cách chuẩn là đưa hai thừa số về dạng dương (lấy bù 2 nếu âm), thực hiện nhân không dấu, rồi hiệu chỉnh dấu tích $2n$-bit (cùng dấu $\\rightarrow$ dương; khác dấu $\\rightarrow$ lấy bù 2 sang âm); hoặc dùng <strong>Thuật toán Booth</strong> nhân trực tiếp số bù 2 theo cặp bit $(Q_0, Q_{-1})$.</li>
+            </ul>
+          </li>
+          <li><strong>Phép chia số nguyên:</strong>
+            <ul>
+              <li><strong>Thuật toán chia không dấu (Khôi phục – Restoring Division với <code>A, Q, M</code>):</strong> Khởi tạo $A = 0$, $Q$ = số bị chia, $M$ = số chia. Lặp $n$ bước: dịch trái cụm $(A, Q)$ đi 1 bit $\\rightarrow$ trừ $A \\leftarrow A - M$. Nếu $A &lt; 0$ thì đặt $Q_0 = 0$ và <strong>khôi phục</strong> $A \\leftarrow A + M$; ngược lại ($A \\ge 0$) đặt $Q_0 = 1$. Sau $n$ bước: <strong>Thương</strong> nằm ở thanh ghi <code>Q</code> và <strong>Số dư</strong> nằm ở thanh ghi <code>A</code>.</li>
+              <li><strong>Chia số nguyên có dấu &amp; Quy tắc dấu thương / số dư:</strong> Đưa cả hai số về dương, chia không dấu tìm trị tuyệt đối thương $|q|$ và số dư $|r|$, rồi hiệu chỉnh dấu sao cho thỏa mãn đồng nhất thức:
+                $$\\text{Số bị chia} = (\\text{Số chia} \\times \\text{Thương}) + \\text{Số dư} \\qquad (|\\text{Số dư}| &lt; |\\text{Số chia}|)$$
+                <ul>
+                  <li><strong>Dấu của Thương:</strong> Hai số cùng dấu $\\rightarrow$ thương dương ($+$); khác dấu $\\rightarrow$ thương âm ($-$).</li>
+                  <li><strong>Dấu của Số dư:</strong> Số dư <strong>luôn luôn cùng dấu với SỐ BỊ CHIA</strong> (bất kể số chia âm hay dương!).</li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>
+
+        <p><strong>Bảng các lệnh Nhân / Chia mở rộng RV32M của RISC-V (Table B.5):</strong></p>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Lệnh RV32M</th><th>Kiểu toán hạng</th><th>Kết quả lưu vào thanh ghi đích <code>rd</code></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>mul rd, rs1, rs2</code></td><td>Có dấu / Không dấu</td><td>Lấy <strong>32 bit thấp</strong> của tích 64-bit: <code>(rs1 * rs2)[31:0]</code></td></tr>
+              <tr><td><code>mulh rd, rs1, rs2</code></td><td><code>rs1</code> có dấu $\\times$ <code>rs2</code> có dấu</td><td>Lấy <strong>32 bit cao</strong> của tích 64-bit: <code>(rs1 * rs2)[63:32]</code></td></tr>
+              <tr><td><code>mulhu rd, rs1, rs2</code></td><td><code>rs1</code> không dấu $\\times$ <code>rs2</code> không dấu</td><td>Lấy <strong>32 bit cao</strong> của tích 64-bit: <code>(rs1 * rs2)[63:32]</code></td></tr>
+              <tr><td><code>mulhsu rd, rs1, rs2</code></td><td><code>rs1</code> có dấu $\\times$ <code>rs2</code> không dấu</td><td>Lấy <strong>32 bit cao</strong> của tích 64-bit: <code>(rs1 * rs2)[63:32]</code></td></tr>
+              <tr><td><code>div rd, rs1, rs2</code> / <code>divu</code></td><td>Có dấu / Không dấu</td><td>Thương nguyên của phép chia <code>rs1 / rs2</code></td></tr>
+              <tr><td><code>rem rd, rs1, rs2</code> / <code>remu</code></td><td>Có dấu / Không dấu</td><td>Phần dư của phép chia <code>rs1 % rs2</code> (<code>rem</code> luôn cùng dấu <code>rs1</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 4.2.5: Lệnh Nhân/Chia số nguyên RV32M (<code>mul, div, rem</code>)</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Xác định giá trị thanh ghi đích sau các lệnh chia/lấy dư <code>div, divu, rem, remu</code> (đặc biệt với số bị chia hoặc số chia âm) hoặc hỏi chức năng của các lệnh nhân 64-bit <code>mul, mulh, mulhu, mulhsu</code>.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Chia lấy thương &amp; dư theo trị tuyệt đối):</strong> Tính phần nguyên $|q| = \\lfloor |a| / |b| \\rfloor$ và phần dư $|r| = |a| - |b|\\cdot |q|$.</li>
+                <li><strong>Bước 2 (Áp dụng quy tắc dấu cho <code>div</code> và <code>rem</code>):</strong> Nếu <code>a</code> và <code>b</code> cùng dấu thì $q = +|q|$, khác dấu thì $q = -|q|$. Còn dấu của số dư $r$ trong <code>rem</code> <strong>bắt buộc lấy theo dấu của SỐ BỊ CHIA $a$</strong> (<code>rs1</code>). Kiểm tra lại: $b \\times q + r$ có đúng bằng $a$ không! (Ví dụ: $(-17) \\div 3 \\Rightarrow q = -5,\\; r = -2$; còn $17 \\div (-3) \\Rightarrow q = -5,\\; r = +2$).</li>
+                <li><strong>Bước 3 (Phân biệt nhóm nhân RV32M):</strong> <code>mul</code> luôn lấy 32 bit thấp (dùng chung cho cả có dấu &amp; không dấu); muốn lấy 32 bit cao thì kiểm tra đúng hậu tố <code>h</code> (signed $\\times$ signed), <code>hu</code> (unsigned $\\times$ unsigned), hoặc <code>hsu</code> (<code>rs1</code> signed $\\times$ <code>rs2</code> unsigned).</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Sai lầm hay gặp nhất là gán dấu của số dư <code>rem</code> theo số chia hoặc luôn để số dư dương — nhớ kỹ <strong>số dư luôn cùng dấu với SỐ BỊ CHIA <code>rs1</code></strong>!</li>
+          </ul>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="4.2.5">
+          <span>📝 <strong>Nhóm 4.2.5: Lệnh Chia &amp; Lấy dư số nguyên div/rem (<span class="group-q-count">1 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.5', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP && window.KTMT_APP.startGroupTest('4.2.5', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
       `
     },
     {
@@ -1808,10 +2556,26 @@ L1:
       pdfPage: 106,
       printedPage: 105,
       linkedGroups: ["4.1", "4.2.6"],
-      summary: "Cấu trúc Binary32 (1-8-23, Bias = 127), Double Precision 64-bit, công thức X = (-1)^S * (1.m) * 2^(e-127), các giá trị đặc biệt (+-0, +-Infinity) và tổng số biểu diễn NaN (2^24 - 2).",
+      summary: "Chuẩn IEEE 754-2008 (Binary32, Binary64, Binary128), công thức (-1)^S*(1.m)*2^(e-127), giá trị đặc biệt & NaN, 4 khả năng tràn, lưu đồ + Guard bits và Bảng lệnh FP (Table B.3).",
       content: `
-        <h4>1. Cấu trúc chuẩn IEEE 754 độ chính xác đơn 32-bit (Single Precision – Binary32)</h4>
-        <p>Một số thực dấu phẩy động 32-bit gồm <strong>3 trường từ trái sang phải (1 bit – 8 bit – 23 bit)</strong>:</p>
+        <h4>1. Dạng tổng quát và Bảng chuẩn IEEE 754-2008 (8-bit, 16-bit, 32-bit, 64-bit, 128-bit)</h4>
+        <p>Tổng quát một số dấu phẩy động được biểu diễn dạng $X = \\pm M \\times R^E$. Chuẩn <strong>IEEE 754-2008</strong> sử dụng cơ số $R = 2$ với 3 trường bit <code>[S | e | m]</code> (trong đó $\\text{Bias} = 2^{k-1} - 1$ với $k$ là số bit của trường mũ $e$):</p>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Định dạng IEEE 754-2008</th><th>Tổng bit</th><th>S (Dấu)</th><th>e (Mũ lệch)</th><th>Bias</th><th>m (Định trị)</th><th>Dải giá trị chuẩn hóa (xấp xỉ)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>8-bit (Minifloat 1-4-3)</strong></td><td>8 bit</td><td>1 bit</td><td>4 bit</td><td>$7$</td><td>3 bit</td><td>Dạng thu gọn minh họa ($1-4-3$)</td></tr>
+              <tr><td><strong>Binary16 (Half Precision)</strong></td><td>16 bit</td><td>1 bit</td><td>5 bit</td><td>$15$</td><td>10 bit</td><td>$6.1 \\times 10^{-5} \\dots 6.55 \\times 10^{4}$</td></tr>
+              <tr><td><strong>Binary32 (Single / <code>float</code>)</strong></td><td>32 bit</td><td>1 bit</td><td>8 bit</td><td>$127$</td><td>23 bit</td><td><strong>$2^{-126} \\dots (2^{128} - 2^{104})$</strong> ($\\approx 10^{-38} \\dots 10^{+38}$)</td></tr>
+              <tr><td><strong>Binary64 (Double / <code>double</code>)</strong></td><td>64 bit</td><td>1 bit</td><td>11 bit</td><td>$1023$</td><td>52 bit</td><td>$\\approx 2.2 \\times 10^{-308} \\dots 1.8 \\times 10^{+308}$</td></tr>
+              <tr><td><strong>Binary128 (Quad Precision)</strong></td><td>128 bit</td><td>1 bit</td><td>15 bit</td><td>$16\\,383$</td><td>112 bit</td><td>$\\approx 3.36 \\times 10^{-4932} \\dots 1.18 \\times 10^{+4932}$</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Một số thực dấu phẩy động chuẩn hóa 32-bit (<strong>Binary32</strong>) gồm <strong>3 trường từ trái sang phải (1 bit – 8 bit – 23 bit)</strong>:</p>
 
         <figure class="theory-svg-diagram">
           <svg viewBox="0 0 680 96" width="660" height="94" role="img" aria-label="Cấu trúc 32-bit chuẩn IEEE 754 Single Precision (1-8-23)">
@@ -1874,6 +2638,66 @@ L1:
           <p>$$2 \\times (2^{23} - 1) = 2^{24} - 2$$</p>
         </div>
 
+        <h4>3. Bốn khả năng tràn số dấu phẩy động &amp; Lưu đồ Cộng / Trừ / Nhân / Chia</h4>
+        <ul>
+          <li><strong>Bốn khả năng tràn khi tính toán số dấu phẩy động:</strong>
+            <ol>
+              <li><strong>Exponent Overflow (Tràn dương số mũ):</strong> Kết quả quá lớn khiến số mũ dương vượt quá giới hạn trên ($E &gt; +127$ ở Binary32) $\\Rightarrow$ kết quả thành $\\pm\\infty$.</li>
+              <li><strong>Exponent Underflow (Tràn âm số mũ):</strong> Kết quả quá nhỏ gần 0 khiến số mũ âm nhỏ hơn giới hạn dưới ($E &lt; -126$ ở Binary32) $\\Rightarrow$ đưa về $\\pm 0$ (hoặc số dưới chuẩn).</li>
+              <li><strong>Mantissa / Significand Overflow (Tràn phần định trị):</strong> Khi cộng hai phần định trị cho kết quả $\\ge 2$ (phát sinh nhớ ra ngoài dấu phẩy) $\\Rightarrow$ khắc phục bằng cách <strong>dịch phải phần định trị 1 bit và tăng số mũ lên $+1$</strong>.</li>
+              <li><strong>Mantissa / Significand Underflow (Tràn âm phần định trị):</strong> Khi trừ hai số gần nhau hoặc căn chỉnh mũ khiến các bit có nghĩa bị đẩy ra khỏi 23 bit lẻ hoặc phần định trị $&lt; 1.0$ $\\Rightarrow$ dịch trái chuẩn hóa lại và dùng các <strong>Guard bits</strong> (bit bảo vệ, làm tròn, sticky) để giảm sai số làm tròn.</li>
+            </ol>
+          </li>
+          <li><strong>Lưu đồ Cộng / Trừ hai số dấu phẩy động ($X \\pm Y$):</strong>
+            <ol>
+              <li>Kiểm tra các toán hạng đặc biệt ($0, \\pm\\infty, \\text{NaN}$).</li>
+              <li><strong>Căn chỉnh số mũ (Align):</strong> Dịch phải phần định trị của số có mũ nhỏ hơn để đưa về cùng số mũ lớn hơn (các <strong>Guard bits</strong> tạm giữ những bit bị dịch ra ngoài bên phải để giữ độ chính xác khi làm tròn).</li>
+              <li>Thực hiện cộng / trừ phần định trị.</li>
+              <li><strong>Chuẩn hóa (Normalize)</strong> về dạng $1.m$ (dịch phải $+1$ mũ nếu $\\ge 2$, dịch trái giảm mũ nếu $&lt; 1$), kiểm tra tràn số mũ, rồi <strong>Làm tròn (Round)</strong> kết quả.</li>
+            </ol>
+          </li>
+          <li><strong>Lưu đồ Nhân / Chia hai số dấu phẩy động:</strong>
+            <ul>
+              <li><em>Phép nhân ($X \\times Y$):</em> Tính dấu $S = S_X \\oplus S_Y$; cộng mũ lệch rồi trừ Bias: $e = e_X + e_Y - \\text{Bias}$; nhân phần định trị $(1.m_X) \\times (1.m_Y)$; chuẩn hóa và làm tròn.</li>
+              <li><em>Phép chia ($X / Y$):</em> Tính dấu $S = S_X \\oplus S_Y$; trừ mũ lệch rồi cộng Bias: $e = e_X - e_Y + \\text{Bias}$; chia phần định trị $(1.m_X) / (1.m_Y)$; chuẩn hóa và làm tròn.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4>4. Tập lệnh Số thực của RISC-V (RV32F / RV32D – Table B.3)</h4>
+        <p>RISC-V cung cấp riêng <strong>32 thanh ghi số thực</strong> đánh số <code>f0–f31</code> (hỗ trợ độ chính xác đơn <code>.s</code> 32-bit và kép <code>.d</code> 64-bit):</p>
+        <ul>
+          <li><strong>Quy ước tên ABI của 32 thanh ghi số thực:</strong> <code>ft0–ft7</code> (<code>f0–f7</code>, tạm thời), <code>fs0–fs1</code> (<code>f8–f9</code>, lưu trữ), <code>fa0–fa1</code> (<code>f10–f11</code>, tham số &amp; trả về), <code>fa2–fa7</code> (<code>f12–f17</code>, tham số), <code>fs2–fs11</code> (<code>f18–f27</code>, lưu trữ), <code>ft8–ft11</code> (<code>f28–f31</code>, tạm thời).</li>
+        </ul>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr><th>Nhóm lệnh FP (Table B.3)</th><th>Độ chính xác đơn (32-bit)</th><th>Độ chính xác kép (64-bit)</th><th>Ghi chú</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Đọc / Ghi bộ nhớ</strong></td><td><code>flw fd, imm(rs1)</code> / <code>fsw fs2, imm(rs1)</code></td><td><code>fld fd, imm(rs1)</code> / <code>fsd fs2, imm(rs1)</code></td><td>Thanh ghi địa chỉ cơ sở <code>rs1</code> là thanh ghi số nguyên <code>x</code></td></tr>
+              <tr><td><strong>Số học dấu phẩy động</strong></td><td><code>fadd.s, fsub.s, fmul.s, fdiv.s, fsqrt.s</code></td><td><code>fadd.d, fsub.d, fmul.d, fdiv.d, fsqrt.d</code></td><td>Thao tác trên các thanh ghi <code>f0–f31</code></td></tr>
+              <tr><td><strong>So sánh số thực</strong></td><td><code>feq.s, flt.s, fle.s rd, fs1, fs2</code></td><td><code>feq.d, flt.d, fle.d rd, fs1, fs2</code></td><td>Ghi kết quả <code>1/0</code> vào thanh ghi <strong>số nguyên <code>rd</code></strong>!</td></tr>
+              <tr><td><strong>Chuyển đổi &amp; Di chuyển</strong></td><td><code>fcvt.w.s</code> / <code>fcvt.s.w</code> / <code>fmv.s</code></td><td><code>fcvt.w.d</code> / <code>fcvt.d.w</code> / <code>fmv.d</code></td><td>Đổi giữa <code>int</code> và <code>float/double</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-method">
+          <div class="callout-title">🧭 Phương pháp làm bài — Nhóm 4.2.6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)</div>
+          <ul>
+            <li><strong>Dạng nhận biết:</strong> Xác định số thập phân không biểu diễn chính xác hữu hạn được trong chuẩn IEEE 754; đổi mã nhị phân hoặc mã Hexa 32-bit sang số thực thập phân; đổi số thực thập phân (dương hoặc âm) sang mã Hexa IEEE 754; nhận diện $\\pm 0, \\pm\\infty, \\text{NaN}$ và đếm số lượng NaN.</li>
+            <li><strong>Các bước làm bài:</strong>
+              <ol>
+                <li><strong>Bước 1 (Hexa / Nhị phân &rarr; Số thực):</strong> Viết đủ 32 bit (mỗi chữ số Hexa = 4 bit) rồi cắt theo ranh giới <strong><code>1 bit S | 8 bit e | 23 bit m</code></strong> (hoặc đọc nhanh 3 chữ Hexa đầu: bit 31 là dấu, bit 30..23 là $e$). Kiểm tra trường hợp đặc biệt trước ($e = 0$ hoặc $e = 255$). Nếu $0 &lt; e &lt; 255$, tính số mũ thực $E = e - 127$, tính $(1.m)_2 = 1 + \\sum b_i 2^{-i}$, rồi nhân $(-1)^S \\times (1.m)_2 \\times 2^E$.</li>
+                <li><strong>Bước 2 (Số thực &rarr; Mã Hexa 32-bit):</strong> Xác định bit dấu $S$ ($0$ dương, $1$ âm) $\\rightarrow$ đổi trị tuyệt đối ra nhị phân có dấu phẩy $\\rightarrow$ dịch dấu phẩy về dạng chuẩn $1.m \\times 2^E$ để lấy $E$ và chuỗi bit sau dấu chấm $m$ (bù 0 bên phải cho đủ 23 bit) $\\rightarrow$ tính $e = E + 127$ đổi ra 8 bit nhị phân $\\rightarrow$ ghép <code>S | e | m</code> rồi gom 4 bit thành 8 chữ số Hexa!</li>
+                <li><strong>Bước 3 (Nhận diện đặc biệt):</strong> $e = 255, m = 0 \\Rightarrow \\pm\\infty$ (<code>0x7F800000</code> hoặc <code>0xFF800000</code>); $e = 255, m \\neq 0 \\Rightarrow \\text{NaN}$ (tổng cộng $2 \\times (2^{23} - 1) = 2^{24} - 2$ mã NaN).</li>
+              </ol>
+            </li>
+            <li><strong>Bẫy thường gặp / Lưu ý kiểm tra đáp án:</strong> Sai lầm hay gặp là cắt sai ranh giới 8 bit của trường $e$ khi viết theo Hexa (nhớ $e$ chiếm 7 bit của 2 chữ Hexa đầu cộng thêm <strong>bit cao nhất của chữ Hexa thứ 3</strong> — ví dụ <code>0xC1460000</code> thì <code>C14</code> = <code>1 10000010 1...</code> có $S=1$, $e=10000010_2 = 130$). Đừng quên cộng thêm bit <code>1.</code> ẩn trước phần lẻ $m$!</li>
+          </ul>
+        </div>
+
         <div class="formula-practice-inline" data-group-link="4.2.6">
           <span>📝 <strong>Nhóm 4.2.6: Bài tập Số thực dấu phẩy động IEEE 754 32-bit (<span class="group-q-count">14 câu</span>)</strong></span>
           <div class="inline-actions">
@@ -1885,40 +2709,41 @@ L1:
     }
   ];
 
-  // 4. Dữ liệu Tờ Công thức Bỏ túi (Cheat Sheet) tổng hợp 4 Chương theo KTMT_GK.pdf
+  // 4. Dữ liệu Tờ Công thức Bỏ túi (Cheat Sheet) tổng hợp 4 Chương theo KTMT_GK.pdf + Chuyên đề nâng cao
   root.KTMT_CHEATSHEET = [
     {
       chapter: 1,
-      title: "Chương 1: Hiệu năng máy tính",
+      title: "Chương 1: Hiệu năng máy tính & Phân loại Flynn",
       pdfPage: 7,
       items: [
         { label: "Chu kỳ & Tần số", formula: "$$T_0 = \\frac{1}{f_0} \\quad;\\quad T_0\\text{ (ns)} = \\frac{1}{f_0\\text{ (GHz)}}$$" },
         { label: "Tổng chu kỳ & Thời gian CPU", formula: "$$n = IC \\times CPI \\quad;\\quad t_{\\text{CPU}} = n \\cdot T_0 = \\frac{IC \\times CPI}{f_0}$$" },
         { label: "CPI trung bình nhiều lớp lệnh", formula: "$$CPI_{\\text{TB}} = \\frac{\\sum (CPI_i \\times IC_i)}{\\sum IC_i} = \\sum (p_i\\% \\times CPI_i)$$" },
-        { label: "So sánh Hiệu năng", formula: "$$P = \\frac{1}{t_{\\text{CPU}}} \\quad;\\quad \\frac{P_A}{P_B} = \\frac{t_B}{t_A} = \\frac{CPI_B/f_B}{CPI_A/f_A}\\text{ (cùng ISA)}$$" },
-        { label: "Chỉ số MIPS & MFLOPS", formula: "$$\\text{MIPS} = \\frac{IC}{t_{\\text{CPU}} \\cdot 10^6} = \\frac{f_0\\text{ (MHz)}}{CPI} = \\frac{f_0\\text{ (GHz)} \\cdot 1000}{CPI}$$" }
+        { label: "So sánh Hiệu năng & Amdahl", formula: "$$P = \\frac{1}{t_{\\text{CPU}}} \\quad;\\quad \\frac{P_A}{P_B} = \\frac{t_B}{t_A} \\quad;\\quad S_{\\text{tổng}} = \\frac{1}{(1-p) + \\frac{p}{S}}$$" },
+        { label: "Chỉ số MIPS & MFLOPS..PFLOPS", formula: "$$\\text{MIPS} = \\frac{IC}{t_{\\text{CPU}} \\cdot 10^6} = \\frac{f_0\\text{ (MHz)}}{CPI} = \\frac{f_0\\text{ (GHz)} \\cdot 1000}{CPI}$$ $\\text{MFLOPS/G/T/P} = \\frac{\\text{FP ops}}{t_{\\text{CPU}} \\cdot 10^{6/9/12/15}}$." }
       ]
     },
     {
       chapter: 2,
-      title: "Chương 2: Hệ thống máy tính & Bus",
-      pdfPage: 31,
+      title: "Chương 2: Hệ thống máy tính, Chu trình lệnh & Bus",
+      pdfPage: 28,
       items: [
-        { label: "Thành phần & Ngăn nhớ", formula: "4 phần: CPU (CU, ALU, RF), Main Memory (lệnh/dữ liệu đang chạy), I/O, Bus. Ngăn nhớ: nội dung đổi, địa chỉ cố định." },
-        { label: "Chu trình lệnh (RV32I)", formula: "Fetch ($IR \\leftarrow \\text{Mem}[PC],\\; PC \\leftarrow PC + 4$) $\\rightarrow$ Decode &amp; Execute $\\rightarrow$ Kiểm tra Ngắt sau mỗi lệnh." },
-        { label: "Bus Địa chỉ & Không gian địa chỉ", formula: "1 chiều (CPU/DMA $\\rightarrow$ Mem, I/O). Độ rộng $N$ bit $\\Rightarrow 2^N$ địa chỉ ($00\\dots 0_2$ đến $11\\dots 1_2$)." },
-        { label: "Bus Dữ liệu & Control Bus", formula: "Dữ liệu: 2 chiều, độ rộng $M$ bit $= M/8$ byte/lần. Điều khiển: <code>MEMR, MEMW, IOR, IOW, INTR, INTA, NMI, BRQ, BGT</code>." }
+        { label: "Thành phần & Ngăn nhớ", formula: "4 phần: CPU (CU, ALU, RF), Bộ nhớ (Main Memory: địa chỉ cố định, nội dung đổi, không phân biệt lệnh/dữ liệu; Cache; Storage), Hệ thống vào-ra (ngoại vi nối qua Mô-đun I/O), Liên kết hệ thống." },
+        { label: "Chu trình lệnh & Ngắt", formula: "Tìm nạp ($IR \\leftarrow \\text{Mem}[PC],\\; PC \\leftarrow PC+4$) &rarr; Giải mã (trong <code>IR</code>) &rarr; Thực hiện. Kiểm tra Ngắt sau mỗi lệnh: Tạm dừng &rarr; Cất ngữ cảnh &rarr; Chạy ISR &rarr; Khôi phục &rarr; Lệnh $i+1$." },
+        { label: "Bus hệ thống & Không gian địa chỉ", formula: "Địa chỉ $N$ bit $\\Rightarrow 2^N$ ô nhớ ($0 \\to 2^N-1$); SSD/HDD không chiếm không gian địa chỉ bus hệ thống. Điều khiển: <code>MEMR/W, IOR/W, INTR/INTA, BRQ/BGT</code> (độ rộng không phụ thuộc bus dữ liệu/địa chỉ)." },
+        { label: "Đa bus, QPI & PCIe", formula: "QPI (2008): điểm-điểm, 4 lớp, Phit 20-bit, Flit 80-bit, I/O Hub; PCIe 1.0–6.0 (Root Complex / Switch / Endpoint); SATA chuyên dụng ổ lưu trữ (HDD/SSD); USB nối tiếp ngoại vi." }
       ]
     },
     {
       chapter: 3,
-      title: "Chương 3: Tập lệnh RISC-V (RV32I)",
+      title: "Chương 3: Tập lệnh RISC-V (RV32I) & RARS",
       pdfPage: 44,
       items: [
-        { label: "Little-Endian & Alignment", formula: "LSB ở địa chỉ nhỏ nhất; MSB ở địa chỉ lớn nhất. Word ⋮ 4 (đuôi <code>0,4,8,C</code>), Halfword ⋮ 2 (đuôi chẵn)." },
+        { label: "Little-Endian, Alignment & ASCII", formula: "LSB ở địa chỉ nhỏ nhất; Word ⋮ 4 (<code>0,4,8,C</code>), Halfword ⋮ 2. ASCII: <code>'0'=0x30</code>, <code>'A'=0x41</code>, <code>'a'=0x61</code> (lệch <code>0x20</code>), <code>BS=0x08</code>, <code>LF=0x0A</code>, <code>FF=0x0C</code>, <code>CR=0x0D</code>." },
         { label: "Nạp hằng 32-bit (lui + addi)", formula: "Hằng số <code>addi</code>: $[-2048, +2047]$. Chữ Hexa thứ 3 từ phải $\\ge 8$ (bit 11 $=1$) $\\Rightarrow$ <strong>cộng +1 vào 20 bit cao của <code>lui</code></strong>." },
-        { label: "Định địa chỉ PC-relative", formula: "$$\\text{BTA / JTA} = PC_{\\text{hiện tại}} + imm \\iff imm = \\text{Đích} - PC_{\\text{hiện tại}}$$" },
-        { label: "Gọi hàm & Ngăn xếp LIFO", formula: "Caller-saved: <code>ra, t0–t6, a0–a7</code>. Callee-saved: <code>sp, s0–s11</code>. Push: <code>addi sp, sp, -4k</code> trước <code>sw</code>; Pop: <code>lw</code> trước <code>addi sp, sp, 4k</code>." }
+        { label: "Định địa chỉ PC-relative & Mã máy", formula: "$$\\text{BTA / JTA} = PC_{\\text{hiện tại}} + imm \\iff imm = \\text{Đích} - PC_{\\text{hiện tại}}$$ <code>instr[31]</code> luôn là bit dấu; RVC 16-bit (<code>c.</code>); Giả lệnh: <code>mv, not, li, j, jr, ret, bgt, bgez</code>." },
+        { label: "Gọi hàm & Ngăn xếp LIFO", formula: "Caller-saved: <code>ra, t0–t6, a0–a7</code>. Callee-saved: <code>sp, s0–s11</code>. Push: <code>addi sp, sp, -4k</code> trước <code>sw</code>; Pop: <code>lw</code> trước <code>addi sp, sp, 4k</code>." },
+        { label: "RARS, Chỉ thị .data & ecall (a7)", formula: "<code>.text=0x00400000</code>, <code>.data=0x10010000</code>; <code>.ascii</code> thiếu <code>\\0</code>, <code>.asciz</code> có <code>\\0</code>; <code>.word</code> tự căn lề 4 byte. <code>a7</code>: <code>1</code>(Int), <code>4</code>(Str), <code>5</code>(ReadInt), <code>10</code>(Exit), <code>11</code>(Char), <code>32</code>(Sleep), <code>34</code>(Hex)." }
       ]
     },
     {
@@ -1926,10 +2751,10 @@ L1:
       title: "Chương 4: Số học máy tính",
       pdfPage: 100,
       items: [
-        { label: "Dải biểu diễn n-bit", formula: "Không dấu: $[0, 2^n - 1]$ ($2^n \\ge M$). Có dấu bù 2: $[-2^{n-1},\\; 2^{n-1}-1]$, đổi dấu: đảo bit $+ 1$." },
-        { label: "Mạch tổ hợp & Full Adder", formula: "De Morgan: $\\overline{AB} = \\overline{A}+\\overline{B}$, $\\overline{A+B} = \\overline{A}\\cdot\\overline{B}$. Full Adder: $S = A\\oplus B\\oplus C$, $C_{\\text{out}} = AB+AC+BC$." },
-        { label: "Tràn số học & Chia RV32M", formula: "Tràn khi cộng cùng dấu ra trái dấu. <code>char</code>: $S&gt;127 \\Rightarrow S-256$; $S&lt;-128 \\Rightarrow S+256$. <code>add</code>: $[\\text{0x80000000}-K,\\; \\text{0x7FFFFFFF}]$. <code>rem</code> cùng dấu Số bị chia." },
-        { label: "IEEE 754 Binary32 (1-8-23)", formula: "$$X = (-1)^S \\times (1.m)_2 \\times 2^{e-127}$$ $\\pm\\infty$: <code>0x7F800000 / 0xFF800000</code>; Số lượng NaN: $2^{24}-2$." }
+        { label: "Đơn vị IEC & Dải biểu diễn n-bit", formula: "IEC: <code>KiB..EiB</code> ($2^{10}..2^{60}$). Không dấu: $[0, 2^n - 1]$ ($2^n \\ge M$). Có dấu bù 2: $[-2^{n-1},\\; 2^{n-1}-1]$, đổi dấu: đảo bit $+ 1$." },
+        { label: "Mạch tổ hợp & Mạch dãy", formula: "De Morgan: $\\overline{AB} = \\overline{A}+\\overline{B}$. MUX 2-1: $D_0\\overline{S}+D_1 S$. Full Adder: $S = A\\oplus B\\oplus C$, $C_{\\text{out}} = AB+AC+BC$. Flip-Flop S-R, J-K, D ($Q_{\\text{next}}=D$)." },
+        { label: "Tràn số học & RV32M (Table B.5)", formula: "Tràn khi cộng cùng dấu ra trái dấu. <code>char</code>: $S&gt;127 \\Rightarrow S-256$; $S&lt;-128 \\Rightarrow S+256$. <code>add</code>: $[\\text{0x80000000}-K,\\; \\text{0x7FFFFFFF}]$. <code>mul/mulh/mulhu/mulhsu</code>; <code>rem</code> cùng dấu Số bị chia." },
+        { label: "IEEE 754-2008 & Lệnh FP (f0–f31)", formula: "Binary32 (<code>1-8-23</code>, Bias=127): $X = (-1)^S (1.m)_2 \\cdot 2^{e-127}$; Binary64 (<code>1-11-52</code>, Bias=1023); Binary128 (<code>1-15-112</code>). $\\pm\\infty$: <code>0x7F800000 / 0xFF800000</code>; NaN: $2^{24}-2$. Lệnh FP: <code>fadd.s/d, flw/fld, feq.s/d</code>." }
       ]
     }
   ];

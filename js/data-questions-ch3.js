@@ -1,4 +1,5 @@
-// Auto-generated from build_data_ch3.py based on KTMT_GK.pdf (Chapter 3: RISC-V)
+// Dữ liệu câu hỏi bài tập và lý thuyết Chương 3 (Hợp ngữ RISC-V RV32I / RV32M & RARS - Phạm vi Giữa kỳ)
+// Đã lọc tách các câu Chương 7 (MMIO/Polling/Interrupt CSRs) sang js/data-questions-ch5-ch7.js
 (function(root) {
   root.KTMT_QUESTIONS_CH3 = [
   {
@@ -222,7 +223,7 @@
     "svgDiagram": null,
     "options": [
       "opcode luôn nằm ở 7 bit thấp [6:0]; B-type bỏ qua bit 0 (luôn bằng 0 vì địa chỉ lệnh chẵn) để tăng gấp đôi tầm nhảy trong phạm vi ±4 KB",
-      "opcode nằm ở 6 bit cao [31:26] giống MIPS; B-type bỏ qua 2 bit cuối nên lưu imm[13:2]",
+      "opcode nằm ở 6 bit cao [31:26]; B-type bỏ qua 2 bit cuối nên lưu imm[13:2]",
       "opcode thay đổi vị trí tùy loại R/I/S; B-type chỉ lưu hằng số không dấu 12-bit",
       "opcode nằm ở bit [14:12]; B-type dùng bước nhảy 4 byte cố định từ bit 0"
     ],
@@ -271,7 +272,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.1",
-    "source": "Đề CK 2023.1, 2023.2 & Ôn tập CK 2025.1, 2025.2 Câu 53",
+    "source": "Đề CK 2023.1, 2023.2 & Ôn tập CK 2025.1, 2025.2 Câu 53 | ôn tập cuối kì 20251 (Câu 72); ôn tập cuối kì 20252 (P2-53) | cuối kì 20231 (#08de08) | cuối kì 20232 (#08de08)",
     "examTags": [
       "CK",
       "OT"
@@ -305,7 +306,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.2a",
-    "source": "Đề GK 2022.2 (Đề 0008 Câu 10 & Đề 0006 Câu 5)",
+    "source": "Đề GK 2022.2 (Đề 0008 Câu 10 & Đề 0006 Câu 5) | giữa kì 20222 (Đề 0008 (bản 2) - Câu 10)",
     "examTags": [
       "GK"
     ],
@@ -342,7 +343,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.2b",
-    "source": "Đề GK 2022.2 (Đề 0008 Câu 10 & Đề 0006 Câu 5)",
+    "source": "Đề GK 2022.2 (Đề 0008 Câu 10 & Đề 0006 Câu 5) | giữa kì 20222 (Đề 0006 (IT3283) - Câu 5)",
     "examTags": [
       "GK"
     ],
@@ -375,7 +376,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.3",
-    "source": "Đề GK 2022.2 (Đề 0006 Câu 8)",
+    "source": "Đề GK 2022.2 (Đề 0006 Câu 8) | giữa kì 20222 (Đề 0006 (IT3283) - Câu 8)",
     "examTags": [
       "GK"
     ],
@@ -411,7 +412,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.4a",
-    "source": "Đề GK 2019.2 (Mã đề 243 Câu 17)",
+    "source": "Đề GK 2019.2 (Mã đề 243 Câu 17) | giữa kì 20192 (Mã đề 243 - Câu 17); giữa kì 20192 (Mã đề 244 - Câu 10)",
     "examTags": [
       "GK"
     ],
@@ -483,7 +484,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.5a",
-    "source": "Đề GK 2019.2 (Mã đề 243 Câu 20)",
+    "source": "Đề GK 2019.2 (Mã đề 243 Câu 20) | giữa kì 20192 (Mã đề 243 - Câu 20); giữa kì 20192 (Mã đề 244 - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -555,7 +556,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.6",
-    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 34",
+    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 34 | cuối kì 20222 (#17e1a7); cuối kì 20242 (#17e1a7); ôn tập cuối kì 20251 (Câu 60) | ôn tập cuối kì 20252 (P2-34)",
     "examTags": [
       "CK",
       "OT"
@@ -589,7 +590,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.7",
-    "source": "Đề GK 2018.2 (Mã đề 198, 199, 204)",
+    "source": "Đề GK 2018.2 (Mã đề 198, 199, 204) | giữa kì 20182 (Mã đề 198 - Câu 19); giữa kì 20182 (Mã đề 199 - Câu 13); giữa kì 20182 (Mã đề 204 - Câu 15)",
     "examTags": [
       "GK"
     ],
@@ -622,7 +623,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.8a",
-    "source": "Đề CK 2020.2 (Trang 5)",
+    "source": "Đề CK 2020.2 (Trang 5) | cuối kì 20202 (Câu 12)",
     "examTags": [
       "CK"
     ],
@@ -655,7 +656,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.8b",
-    "source": "Đề CK 2022.2 & 2024.2 (#3ace1f)",
+    "source": "Đề CK 2022.2 & 2024.2 (#3ace1f) | cuối kì 20211 (Câu 13); cuối kì 20222 (#3ace1f); cuối kì 20242 (#3acelf)",
     "examTags": [
       "CK"
     ],
@@ -688,7 +689,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.8c",
-    "source": "Đề GK 2018.2 (Mã đề 198 Câu 9)",
+    "source": "Đề GK 2018.2 (Mã đề 198 Câu 9) | giữa kì 20182 (Mã đề 198 - Câu 9); giữa kì 20182 (Mã đề 199 - Câu 7); giữa kì 20182 (Mã đề 204 - Câu 10)",
     "examTags": [
       "GK"
     ],
@@ -721,7 +722,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.9",
-    "source": "Đề CK 2023.1 & Ôn tập 2025.2 Câu 28",
+    "source": "Đề CK 2023.1 & Ôn tập 2025.2 Câu 28 | cuối kì 20231 (Câu Không có mã (p6)) | ôn tập cuối kì 20252 (P1-28) | cuối kì 20232 (#534179)",
     "examTags": [
       "CK",
       "OT"
@@ -755,7 +756,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.10a-b",
-    "source": "Đề CK 2020.2 (Trang 2, Trang 8)",
+    "source": "Đề CK 2020.2 (Trang 2, Trang 8) | cuối kì 20202 (Câu 3)",
     "examTags": [
       "CK"
     ],
@@ -791,7 +792,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.10c",
-    "source": "Đề GK 2018.2 (Mã đề 204 Câu 7)",
+    "source": "Đề GK 2018.2 (Mã đề 204 Câu 7) | giữa kì 20182 (Mã đề 204 - Câu 7)",
     "examTags": [
       "GK"
     ],
@@ -827,7 +828,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.11",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 18)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 18) | ôn tập cuối kì 20252 (P1-18)",
     "examTags": [
       "OT"
     ],
@@ -860,9 +861,10 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.12a",
-    "source": "Đề CK 2025.1 (#9853fd)",
+    "source": "Đề CK 2025.1 (#9853fd) | cuối kì 20251 (#9853fd); thi thử kì 20251 (Câu 23)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 56,
     "printedPage": 55,
@@ -893,7 +895,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.12b",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 42)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 42) | ôn tập cuối kì 20252 (P1-42)",
     "examTags": [
       "OT"
     ],
@@ -926,7 +928,7 @@
     "groupId": "3.2.1",
     "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.13",
-    "source": "Đề GK 2021.1 (IT3030E, Problem 6)",
+    "source": "Đề GK 2021.1 (IT3030E, Problem 6) | giữa kì 20211 (Problem 6)",
     "examTags": [
       "GK"
     ],
@@ -959,7 +961,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.14",
-    "source": "Đề CK 2020.2 (Trang 4) & Đề CK 2021.1 (Trang 3)",
+    "source": "Đề CK 2020.2 (Trang 4) & Đề CK 2021.1 (Trang 3) | cuối kì 20202 (Câu 9) | cuối kì 20211 (Câu 10)",
     "examTags": [
       "CK"
     ],
@@ -996,7 +998,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.15",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#014753)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#014753) | cuối kì 20222 (#014753) | cuối kì 20242 (#014753)",
     "examTags": [
       "CK"
     ],
@@ -1029,10 +1031,11 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.16a",
-    "source": "Đề GK 2024.1 (#4610c2) & Ôn tập 2025.2 Câu 75",
+    "source": "Đề GK 2024.1 (#4610c2) & Ôn tập 2025.2 Câu 75 | giữa kì 20231 (#925948); giữa kì 20241 (#4610c2) | ôn tập cuối kì 20252 (P1-75) | Lab - cuối kì 20222 (Câu 10) | Lab - cuối kì 20232 (Câu 2)",
     "examTags": [
       "GK",
-      "OT"
+      "OT",
+      "Lab"
     ],
     "pdfPage": 59,
     "printedPage": 58,
@@ -1063,7 +1066,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.16b",
-    "source": "Đề GK 2018.2 (Mã đề 198 Câu 18)",
+    "source": "Đề GK 2018.2 (Mã đề 198 Câu 18) | giữa kì 20182 (Mã đề 198 - Câu 18); giữa kì 20182 (Mã đề 199 - Câu 15)",
     "examTags": [
       "GK"
     ],
@@ -1096,7 +1099,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.17a",
-    "source": "Đề GK 2024.1 (#99ef6) & Ôn tập 2025.2 Câu 6",
+    "source": "Đề GK 2024.1 (#99ef6) & Ôn tập 2025.2 Câu 6 | giữa kì 20241 (#99ef6) | ôn tập cuối kì 20252 (P1-6)",
     "examTags": [
       "GK",
       "OT"
@@ -1130,7 +1133,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.17b",
-    "source": "Đề GK 2024.1 (#e10492)",
+    "source": "Đề GK 2024.1 (#e10492) | giữa kì 20241 (#e10492)",
     "examTags": [
       "GK"
     ],
@@ -1196,7 +1199,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.18b",
-    "source": "Đề GK 2022.2 (Đề 0009 Câu 9)",
+    "source": "Đề GK 2022.2 (Đề 0009 Câu 9) | giữa kì 20222 (Đề 0009 - Câu 9); giữa kì 20222 (Đề 0008 (bản 1) - Câu 9); giữa kì 20222 (Đề 0008 (bản 2) - Câu 9)",
     "examTags": [
       "GK"
     ],
@@ -1229,7 +1232,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.18c",
-    "source": "Đề GK 2022.2 (Đề 0006 Câu 9)",
+    "source": "Đề GK 2022.2 (Đề 0006 Câu 9) | giữa kì 20222 (Đề 0006 (IT3283) - Câu 9)",
     "examTags": [
       "GK"
     ],
@@ -1262,7 +1265,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.19",
-    "source": "Đề GK 2024.1 (#1b55cf) & Ôn tập CK 2025.2 Câu 24",
+    "source": "Đề GK 2024.1 (#1b55cf) & Ôn tập CK 2025.2 Câu 24 | giữa kì 20241 (#1b55cf)",
     "examTags": [
       "GK",
       "OT"
@@ -1299,7 +1302,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.20a",
-    "source": "Đề GK 2024.1 (#5e7591) & Ôn tập 2025.2 Câu 64",
+    "source": "Đề GK 2024.1 (#5e7591) & Ôn tập 2025.2 Câu 64 | giữa kì 20241 (#5e7591) | ôn tập cuối kì 20252 (P1-64)",
     "examTags": [
       "GK",
       "OT"
@@ -1335,9 +1338,10 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.20b",
-    "source": "Đề CK 2025.1 (#48b64c)",
+    "source": "Đề CK 2025.1 (#48b64c) | cuối kì 20251 (#48b64c); thi thử kì 20251 (Câu 5)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 61,
     "printedPage": 60,
@@ -1370,9 +1374,10 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.21",
-    "source": "Đề GK 2018.2 (Mã đề 204 Câu 9)",
+    "source": "Đề GK 2018.2 (Mã đề 204 Câu 9) | giữa kì 20182 (Mã đề 204 - Câu 9) | Lab - cuối kì 20222 (Câu 8); Lab - cuối kì 20222 (Câu 22); Lab - cuối kì 20232 (Câu 7) | Lab - cuối kì 20222 (Câu 11); Lab - cuối kì 20232 (Câu 4)",
     "examTags": [
-      "GK"
+      "GK",
+      "Lab"
     ],
     "pdfPage": 61,
     "printedPage": 60,
@@ -1403,7 +1408,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.22a",
-    "source": "Đề CK 2024.1 (#d9f3db) & Ôn tập 2025.2 Câu 54",
+    "source": "Đề CK 2024.1 (#d9f3db) & Ôn tập 2025.2 Câu 54 | cuối kì 20241 (#d9f3db)",
     "examTags": [
       "CK",
       "OT"
@@ -1440,7 +1445,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.22b",
-    "source": "Đề CK 2022.2 & 2024.2 (#585834)",
+    "source": "Đề CK 2022.2 & 2024.2 (#585834) | cuối kì 20222 (#585834); cuối kì 20242 (#585834)",
     "examTags": [
       "CK"
     ],
@@ -1478,7 +1483,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23a",
-    "source": "Đề CK 2020.2 (Trang 3)",
+    "source": "Đề CK 2020.2 (Trang 3) | cuối kì 20202 (Câu 6) | cuối kì 20211 (Câu 7)",
     "examTags": [
       "CK"
     ],
@@ -1514,7 +1519,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23b",
-    "source": "Đề CK 2020.2 (Trang 7)",
+    "source": "Đề CK 2020.2 (Trang 7) | cuối kì 20202 (Câu 18) | cuối kì 20211 (Câu 18)",
     "examTags": [
       "CK"
     ],
@@ -1551,7 +1556,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23c",
-    "source": "Đề CK 2022.2, 2024.2 (#5070f9) & Ôn tập 2025.2 Câu 64",
+    "source": "Đề CK 2022.2, 2024.2 (#5070f9) & Ôn tập 2025.2 Câu 64 | cuối kì 20222 (#5070f9) | cuối kì 20242 (#5070f9) | ôn tập cuối kì 20251 (Câu 48); ôn tập cuối kì 20252 (P2-64)",
     "examTags": [
       "CK",
       "OT"
@@ -1585,7 +1590,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23d",
-    "source": "Đề GK 2025.2 (Đề 0012 Câu 108)",
+    "source": "Đề GK 2025.2 (Đề 0012 Câu 108) | giữa kì 20252 (Đề 0012 (trang 1) - Câu 108)",
     "examTags": [
       "GK"
     ],
@@ -1621,7 +1626,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23e",
-    "source": "Đề GK 2023.2 (Đề 2 Câu 4)",
+    "source": "Đề GK 2023.2 (Đề 2 Câu 4) | giữa kì 20232 (Trang 2 - Câu 4)",
     "examTags": [
       "GK"
     ],
@@ -1657,7 +1662,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.24",
-    "source": "Đề GK 2022.2 (Đề 0008 & 0007 Câu 5)",
+    "source": "Đề GK 2022.2 (Đề 0008 & 0007 Câu 5) | giữa kì 20222 (Đề 0008 (IT3030) - Câu 5)",
     "examTags": [
       "GK"
     ],
@@ -1690,7 +1695,7 @@
     "groupId": "3.2.2",
     "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.25",
-    "source": "Đề CK 2020.2 (Trang 6) & CK 2021.1 (Trang 5)",
+    "source": "Đề CK 2020.2 (Trang 6) & CK 2021.1 (Trang 5) | cuối kì 20202 (Câu 15) | cuối kì 20211 (Câu 1)",
     "examTags": [
       "CK"
     ],
@@ -1793,7 +1798,7 @@
     "groupId": "3.2.3",
     "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
     "exerciseCode": "Bài 3.27",
-    "source": "Đề CK 2021.2 (Mã đề B8 Câu 2.1)",
+    "source": "Đề CK 2021.2 (Mã đề B8 Câu 2.1) | cuối kì 20212 (B8-2)",
     "examTags": [
       "CK"
     ],
@@ -1826,9 +1831,10 @@
     "groupId": "3.2.3",
     "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
     "exerciseCode": "Bài 3.28a",
-    "source": "Đề CK 2025.1 (#a91b41)",
+    "source": "Đề CK 2025.1 (#a91b41) | cuối kì 20251 (#a91b41); thi thử kì 20251 (Câu 15)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 65,
     "printedPage": 64,
@@ -1861,7 +1867,7 @@
     "groupId": "3.2.3",
     "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
     "exerciseCode": "Bài 3.28b",
-    "source": "Ôn tập CK 2025.2 (Câu 23)",
+    "source": "Ôn tập CK 2025.2 (Câu 23) | ôn tập cuối kì 20252 (P1-23)",
     "examTags": [
       "OT"
     ],
@@ -1896,7 +1902,7 @@
     "groupId": "3.2.3",
     "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
     "exerciseCode": "Bài 3.28c",
-    "source": "Ôn tập CK 2025.2 (Câu 61)",
+    "source": "Ôn tập CK 2025.2 (Câu 61) | ôn tập cuối kì 20252 (P1-61)",
     "examTags": [
       "OT"
     ],
@@ -1931,7 +1937,7 @@
     "groupId": "3.2.3",
     "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
     "exerciseCode": "Bài 3.28d (1)",
-    "source": "Đề GK 2024.1 (#8d33e2)",
+    "source": "Đề GK 2024.1 (#8d33e2) | giữa kì 20241 (#8d33e2); giữa kì 20241 (#484325)",
     "examTags": [
       "GK"
     ],
@@ -2001,7 +2007,7 @@
     "groupId": "3.2.3",
     "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
     "exerciseCode": "Bài 3.72",
-    "source": "Đề CK 2022.2, 2024.1 (#ada646), 2024.2 (#f56cc1) & Ôn tập 2025.2 Câu 27",
+    "source": "Đề CK 2022.2, 2024.1 (#ada646), 2024.2 (#f56cc1) & Ôn tập 2025.2 Câu 27 | cuối kì 20222 (#f56cc1); cuối kì 20241 (#ada646); cuối kì 20242 (#f56cc1); ôn tập cuối kì 20252 (P1-27)",
     "examTags": [
       "CK",
       "OT"
@@ -2035,7 +2041,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.29",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#56e53f)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#56e53f) | cuối kì 20222 (#56e53f) | cuối kì 20242 (#56e53f)",
     "examTags": [
       "CK"
     ],
@@ -2068,9 +2074,10 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.30",
-    "source": "Đề CK 2025.1 (#1f833e)",
+    "source": "Đề CK 2025.1 (#1f833e) | cuối kì 20251 (#1f833e); thi thử kì 20251 (Câu 6)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 66,
     "printedPage": 65,
@@ -2101,7 +2108,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.31",
-    "source": "Đề GK 2018.2 (Mã đề 198, 199, 204)",
+    "source": "Đề GK 2018.2 (Mã đề 198, 199, 204) | giữa kì 20182 (Mã đề 198 - Câu 20); giữa kì 20182 (Mã đề 199 - Câu 6); giữa kì 20182 (Mã đề 204 - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -2134,7 +2141,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.32",
-    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 20",
+    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 20 | cuối kì 20222 (#757298); cuối kì 20241 (#c99f87); cuối kì 20242 (#757298) | ôn tập cuối kì 20252 (P1-20)",
     "examTags": [
       "CK",
       "OT"
@@ -2168,7 +2175,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33a",
-    "source": "Đề GK 2019.2 (Mã đề 243 Câu 19)",
+    "source": "Đề GK 2019.2 (Mã đề 243 Câu 19) | giữa kì 20192 (Mã đề 243 - Câu 19); giữa kì 20192 (Mã đề 244 - Câu 3)",
     "examTags": [
       "GK"
     ],
@@ -2240,7 +2247,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33c",
-    "source": "Đề GK 2018.2 (Mã đề 204 Câu 12)",
+    "source": "Đề GK 2018.2 (Mã đề 204 Câu 12) | giữa kì 20182 (Mã đề 204 - Câu 12)",
     "examTags": [
       "GK"
     ],
@@ -2273,7 +2280,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33d",
-    "source": "Đề GK 2018.2 (Mã đề 198 Câu 11)",
+    "source": "Đề GK 2018.2 (Mã đề 198 Câu 11) | giữa kì 20182 (Mã đề 198 - Câu 11); giữa kì 20182 (Mã đề 199 - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -2306,7 +2313,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.34a",
-    "source": "Đề GK 2023.2 (Đề 1 Câu 3)",
+    "source": "Đề GK 2023.2 (Đề 1 Câu 3) | giữa kì 20232 (Trang 1 - Câu 3)",
     "examTags": [
       "GK"
     ],
@@ -2342,7 +2349,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.34b",
-    "source": "Đề GK 2023.2 (Đề 2 Câu 1)",
+    "source": "Đề GK 2023.2 (Đề 2 Câu 1) | giữa kì 20232 (Trang 2 - Câu 1)",
     "examTags": [
       "GK"
     ],
@@ -2375,7 +2382,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.34c",
-    "source": "Đề GK 2022.2 (Đề 0008 & 0007 Câu 2)",
+    "source": "Đề GK 2022.2 (Đề 0008 & 0007 Câu 2) | giữa kì 20222 (Đề 0008 (IT3030) - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -2408,7 +2415,7 @@
     "groupId": "3.2.4",
     "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.35",
-    "source": "Đề GK 2024.1 (#6a94a2) & Ôn tập CK 2025.2 Câu 49",
+    "source": "Đề GK 2024.1 (#6a94a2) & Ôn tập CK 2025.2 Câu 49 | giữa kì 20231 (#fee138); giữa kì 20241 (#6a94a2) | ôn tập cuối kì 20252 (P1-49)",
     "examTags": [
       "GK",
       "OT"
@@ -2445,7 +2452,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.36a",
-    "source": "Đề GK 2018.2 (Mã đề 198 & 199)",
+    "source": "Đề GK 2018.2 (Mã đề 198 & 199) | giữa kì 20182 (Mã đề 198 - Câu 13); giữa kì 20182 (Mã đề 199 - Câu 5); giữa kì 20182 (Mã đề 204 - Câu 2)",
     "examTags": [
       "GK"
     ],
@@ -2511,7 +2518,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.37",
-    "source": "Đề CK 2020.2, 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 68",
+    "source": "Đề CK 2020.2, 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 68 | cuối kì 20222 (#154); cuối kì 20241 (#f4); cuối kì 20242 (Câu Page 15 (Không có mã)); ôn tập cuối kì 20252 (P1-68) | cuối kì 20202 (Câu 21)",
     "examTags": [
       "CK",
       "OT"
@@ -2545,7 +2552,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.38",
-    "source": "Đề GK 2021.1 (IT3030E, Problem 1)",
+    "source": "Đề GK 2021.1 (IT3030E, Problem 1) | giữa kì 20211 (Problem 1)",
     "examTags": [
       "GK"
     ],
@@ -2578,7 +2585,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.39a",
-    "source": "Đề GK 2022.2 & GK 2025.2 (Đề 0012 Câu 107)",
+    "source": "Đề GK 2022.2 & GK 2025.2 (Đề 0012 Câu 107) | giữa kì 20252 (Đề 0012 (trang 1) - Câu 107)",
     "examTags": [
       "GK"
     ],
@@ -2611,7 +2618,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.39b",
-    "source": "Đề GK 2022.2 (Đề 0008 Câu 6)",
+    "source": "Đề GK 2022.2 (Đề 0008 Câu 6) | giữa kì 20222 (Đề 0008 (IT3030) - Câu 6)",
     "examTags": [
       "GK"
     ],
@@ -2677,7 +2684,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.40a",
-    "source": "Đề GK 2024.1 (#f96f43)",
+    "source": "Đề GK 2024.1 (#f96f43) | giữa kì 20241 (#f96f43); giữa kì 20241 (#12416e)",
     "examTags": [
       "GK"
     ],
@@ -2710,7 +2717,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.40b",
-    "source": "Đề GK 2024.1 (#12416e) & Ôn tập 2025.2 Câu 32",
+    "source": "Đề GK 2024.1 (#12416e) & Ôn tập 2025.2 Câu 32 | ôn tập cuối kì 20252 (P1-32)",
     "examTags": [
       "GK",
       "OT"
@@ -2744,7 +2751,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.41a",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#13504d)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#13504d) | cuối kì 20222 (#13504d); cuối kì 20242 (#13504d)",
     "examTags": [
       "CK"
     ],
@@ -2777,7 +2784,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.41b",
-    "source": "Đề GK 2024.1 (#d0125d)",
+    "source": "Đề GK 2024.1 (#d0125d) | giữa kì 20241 (#d0125d)",
     "examTags": [
       "GK"
     ],
@@ -2810,7 +2817,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.42a",
-    "source": "Đề GK 2023.2 (Đề 1 Câu 5)",
+    "source": "Đề GK 2023.2 (Đề 1 Câu 5) | giữa kì 20232 (Trang 1 - Câu 5)",
     "examTags": [
       "GK"
     ],
@@ -2843,7 +2850,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.42b",
-    "source": "Đề GK 2023.2 (Đề 2 Câu 3)",
+    "source": "Đề GK 2023.2 (Đề 2 Câu 3) | giữa kì 20232 (Trang 2 - Câu 3)",
     "examTags": [
       "GK"
     ],
@@ -2876,7 +2883,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.43a",
-    "source": "Đề CK 2021.2 (Mã đề B2 Câu 2)",
+    "source": "Đề CK 2021.2 (Mã đề B2 Câu 2) | cuối kì 20212 (B2-2); cuối kì 20212 (B3-2)",
     "examTags": [
       "CK"
     ],
@@ -2942,7 +2949,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.44a",
-    "source": "Đề GK 2019.2 (Mã đề 243 Câu 7)",
+    "source": "Đề GK 2019.2 (Mã đề 243 Câu 7) | giữa kì 20192 (Mã đề 243 - Câu 7)",
     "examTags": [
       "GK"
     ],
@@ -2978,7 +2985,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.44b",
-    "source": "Đề GK 2019.2 (Mã đề 243 Câu 8 & 244 Câu 16)",
+    "source": "Đề GK 2019.2 (Mã đề 243 Câu 8 & 244 Câu 16) | giữa kì 20192 (Mã đề 243 - Câu 8); giữa kì 20192 (Mã đề 244 - Câu 16)",
     "examTags": [
       "GK"
     ],
@@ -3013,7 +3020,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.44c",
-    "source": "Đề GK 2022.2 (Đề 0008 Câu 8)",
+    "source": "Đề GK 2022.2 (Đề 0008 Câu 8) | giữa kì 20222 (Đề 0008 (IT3030) - Câu 8); giữa kì 20222 (Đề 0007 (IT3282) - Câu 7)",
     "examTags": [
       "GK"
     ],
@@ -3046,10 +3053,11 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.44d",
-    "source": "Đề GK 2024.1 (#3602ec) & CK 2025.1 (#da417b)",
+    "source": "Đề GK 2024.1 (#3602ec) & CK 2025.1 (#da417b) | cuối kì 20251 (#da417b); giữa kì 20241 (#3602ec); thi thử kì 20251 (Câu 16) | ôn tập cuối kì 20252 (P1-72)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 75,
     "printedPage": 74,
@@ -3082,7 +3090,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.45a",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#0542f)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#0542f) | cuối kì 20222 (#0542f); cuối kì 20242 (#0542f)",
     "examTags": [
       "CK"
     ],
@@ -3115,7 +3123,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.45b",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#70e201)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#70e201) | cuối kì 20222 (#70e201); cuối kì 20242 (#70e201)",
     "examTags": [
       "CK"
     ],
@@ -3184,9 +3192,10 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.46b",
-    "source": "Ôn tập CK 2025.2 (P2, Câu 67)",
+    "source": "Ôn tập CK 2025.2 (P2, Câu 67) | cuối kì 20212 (B1-4); ôn tập cuối kì 20251 (Câu 25); ôn tập cuối kì 20251 (Câu 69); ôn tập cuối kì 20252 (P2-23) | ôn tập cuối kì 20252 (P2-67)",
     "examTags": [
-      "OT"
+      "OT",
+      "CK"
     ],
     "pdfPage": 77,
     "printedPage": 76,
@@ -3221,9 +3230,10 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.47a",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#bcfd00)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#bcfd00) | cuối kì 20222 (#bcfd00); cuối kì 20242 (#bcfd00) | ôn tập cuối kì 20251 (Câu 27); ôn tập cuối kì 20252 (P2-76)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 77,
     "printedPage": 76,
@@ -3254,7 +3264,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.47b",
-    "source": "Đề CK 2025.1 (#31d5bf) & Ôn tập 2025.2 Câu 46",
+    "source": "Đề CK 2025.1 (#31d5bf) & Ôn tập 2025.2 Câu 46 | cuối kì 20251 (#31d5bf); thi thử kì 20251 (Câu 4) | ôn tập cuối kì 20252 (P2-46)",
     "examTags": [
       "CK",
       "OT"
@@ -3288,7 +3298,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.48a",
-    "source": "Đề GK 2023.2 (Đề 2 Câu 5)",
+    "source": "Đề GK 2023.2 (Đề 2 Câu 5) | giữa kì 20232 (Trang 2 - Câu 5)",
     "examTags": [
       "GK"
     ],
@@ -3321,7 +3331,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.48d",
-    "source": "Đề CK 2021.2 (Mã đề B8 Câu 3)",
+    "source": "Đề CK 2021.2 (Mã đề B8 Câu 3) | cuối kì 20212 (B8-3)",
     "examTags": [
       "CK"
     ],
@@ -3354,7 +3364,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.49",
-    "source": "Đề GK 2021.1 (IT3030E, Problem 5)",
+    "source": "Đề GK 2021.1 (IT3030E, Problem 5) | giữa kì 20211 (Problem 5)",
     "examTags": [
       "GK"
     ],
@@ -3387,7 +3397,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.50a",
-    "source": "Đề CK 2021.2 (Mã đề B1 Câu 3)",
+    "source": "Đề CK 2021.2 (Mã đề B1 Câu 3) | cuối kì 20212 (B1-3); cuối kì 20212 (B4-2); cuối kì 20212 (B7-3)",
     "examTags": [
       "CK"
     ],
@@ -3420,7 +3430,7 @@
     "groupId": "3.2.5",
     "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
     "exerciseCode": "Bài 3.50c-d",
-    "source": "Đề CK 2021.2 (Mã đề B6 & B7 Câu 3)",
+    "source": "Đề CK 2021.2 (Mã đề B6 & B7 Câu 3) | cuối kì 20212 (B6-3)",
     "examTags": [
       "CK"
     ],
@@ -3453,7 +3463,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.51",
-    "source": "Đề CK 2020.2 (Trang 4) & CK 2021.1 (Trang 3)",
+    "source": "Đề CK 2020.2 (Trang 4) & CK 2021.1 (Trang 3) | cuối kì 20202 (Câu 8) | cuối kì 20211 (Câu 9)",
     "examTags": [
       "CK"
     ],
@@ -3488,7 +3498,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.52",
-    "source": "Đề GK 2024.1 (#f4fd9f) & Ôn tập CK 2025.2 Câu 35",
+    "source": "Đề GK 2024.1 (#f4fd9f) & Ôn tập CK 2025.2 Câu 35 | giữa kì 20241 (#f4fd9f) | ôn tập cuối kì 20252 (P1-35)",
     "examTags": [
       "GK",
       "OT"
@@ -3524,7 +3534,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.53",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 33)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 33) | ôn tập cuối kì 20252 (P1-33)",
     "examTags": [
       "OT"
     ],
@@ -3559,7 +3569,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.54a (2.1)",
-    "source": "Đề CK 2021.2 (Mã đề B1 Câu 2.1)",
+    "source": "Đề CK 2021.2 (Mã đề B1 Câu 2.1) | cuối kì 20212 (B1-2)",
     "examTags": [
       "CK"
     ],
@@ -3595,7 +3605,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.54a (2.2)",
-    "source": "Đề CK 2021.2 (Mã đề B1 Câu 2.2)",
+    "source": "Đề CK 2021.2 (Mã đề B1 Câu 2.2) | cuối kì 20212 (B1-2)",
     "examTags": [
       "CK"
     ],
@@ -3628,7 +3638,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.54b",
-    "source": "Đề CK 2021.2 (Mã đề B5 Câu 2)",
+    "source": "Đề CK 2021.2 (Mã đề B5 Câu 2) | cuối kì 20212 (B5-2)",
     "examTags": [
       "CK"
     ],
@@ -3661,7 +3671,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.55a",
-    "source": "Đề CK 2021.2 (Mã đề B2 & B3 Câu 3)",
+    "source": "Đề CK 2021.2 (Mã đề B2 & B3 Câu 3) | cuối kì 20212 (B2-3); cuối kì 20212 (B3-3)",
     "examTags": [
       "CK"
     ],
@@ -3694,7 +3704,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.55b",
-    "source": "Đề CK 2021.2 (Mã đề B4 Câu 3)",
+    "source": "Đề CK 2021.2 (Mã đề B4 Câu 3) | cuối kì 20212 (B4-3)",
     "examTags": [
       "CK"
     ],
@@ -3727,7 +3737,7 @@
     "groupId": "3.2.6",
     "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
     "exerciseCode": "Bài 3.56a",
-    "source": "Đề CK 2021.2 (Mã đề B6 Câu 2)",
+    "source": "Đề CK 2021.2 (Mã đề B6 Câu 2) | cuối kì 20212 (B6-2); cuối kì 20212 (B7-2)",
     "examTags": [
       "CK"
     ],
@@ -3793,7 +3803,7 @@
     "groupId": "3.2.7",
     "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
     "exerciseCode": "Bài 3.57",
-    "source": "Đề GK 2024.1 (#5ebf59) & Ôn tập CK 2025.2 Câu 50",
+    "source": "Đề GK 2024.1 (#5ebf59) & Ôn tập CK 2025.2 Câu 50 | giữa kì 20241 (#5ebf59) | ôn tập cuối kì 20252 (P1-50)",
     "examTags": [
       "GK",
       "OT"
@@ -3827,7 +3837,7 @@
     "groupId": "3.2.7",
     "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
     "exerciseCode": "Bài 3.58",
-    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 31",
+    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 31 | cuối kì 20222 (#a3c257); cuối kì 20242 (#a3c257) | ôn tập cuối kì 20251 (Câu 63) | ôn tập cuối kì 20252 (P2-31)",
     "examTags": [
       "CK",
       "OT"
@@ -3861,7 +3871,7 @@
     "groupId": "3.2.7",
     "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
     "exerciseCode": "Bài 3.59",
-    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 65",
+    "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 65 | cuối kì 20222 (#9aec2f); cuối kì 20242 (#9aec2f) | ôn tập cuối kì 20252 (P2-65) | ôn tập cuối kì 20251 (Câu 38)",
     "examTags": [
       "CK",
       "OT"
@@ -3895,7 +3905,7 @@
     "groupId": "3.2.7",
     "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
     "exerciseCode": "Bài 3.60a",
-    "source": "Đề CK 2022.2, 2024.1 & CK 2024.2 (#526d03)",
+    "source": "Đề CK 2022.2, 2024.1 & CK 2024.2 (#526d03) | cuối kì 20222 (#526d03); cuối kì 20242 (#526d03)",
     "examTags": [
       "CK"
     ],
@@ -3963,7 +3973,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.61a",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 65)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 65) | ôn tập cuối kì 20252 (P1-65)",
     "examTags": [
       "OT"
     ],
@@ -3999,7 +4009,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.61b",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 19)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 19) | ôn tập cuối kì 20252 (P1-19)",
     "examTags": [
       "OT"
     ],
@@ -4035,7 +4045,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.61c",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 78)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 78) | ôn tập cuối kì 20252 (P1-78)",
     "examTags": [
       "OT"
     ],
@@ -4071,7 +4081,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.61d",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 22)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 22) | ôn tập cuối kì 20252 (P1-22)",
     "examTags": [
       "OT"
     ],
@@ -4107,7 +4117,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.61e",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 11)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 11) | ôn tập cuối kì 20252 (P1-11); ôn tập cuối kì 20252 (P1-14)",
     "examTags": [
       "OT"
     ],
@@ -4179,7 +4189,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.61g",
-    "source": "Ôn tập CK 2025.2 (P1, Câu 5)",
+    "source": "Ôn tập CK 2025.2 (P1, Câu 5) | ôn tập cuối kì 20252 (P1-5)",
     "examTags": [
       "OT"
     ],
@@ -4215,7 +4225,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.62",
-    "source": "Đề CK 2024.1 (#b9e098) & Ôn tập CK 2025.2 Câu 8",
+    "source": "Đề CK 2024.1 (#b9e098) & Ôn tập CK 2025.2 Câu 8 | cuối kì 20241 (#b9e098)",
     "examTags": [
       "CK",
       "OT"
@@ -4249,9 +4259,10 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.63",
-    "source": "Đề CK 2022.2 & CK 2024.2 (#b7c77a)",
+    "source": "Đề CK 2022.2 & CK 2024.2 (#b7c77a) | cuối kì 20222 (#b7c77a); cuối kì 20242 (#b7c77a); ôn tập cuối kì 20252 (P1-8)",
     "examTags": [
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 93,
     "printedPage": 92,
@@ -4282,7 +4293,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.64",
-    "source": "Đề CK 2024.1 (#3ad10f) & Ôn tập CK 2025.2 Câu 62",
+    "source": "Đề CK 2024.1 (#3ad10f) & Ôn tập CK 2025.2 Câu 62 | cuối kì 20241 (#3ad10f) | ôn tập cuối kì 20252 (P1-62)",
     "examTags": [
       "CK",
       "OT"
@@ -4319,7 +4330,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.65a",
-    "source": "Đề CK 2020.2 (Trang 4)",
+    "source": "Đề CK 2020.2 (Trang 4) | cuối kì 20211 (Câu 11) | cuối kì 20202 (Câu 10)",
     "examTags": [
       "CK"
     ],
@@ -4352,7 +4363,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.65b",
-    "source": "Đề GK 2024.1 (#a2a36c) & Ôn tập 2025.2 Câu 47",
+    "source": "Đề GK 2024.1 (#a2a36c) & Ôn tập 2025.2 Câu 47 | giữa kì 20231 (#ecf96a); giữa kì 20231 (#b36c6a) | giữa kì 20241 (#a2a36c) | ôn tập cuối kì 20252 (P1-47)",
     "examTags": [
       "GK",
       "OT"
@@ -4388,7 +4399,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.65c",
-    "source": "Ôn tập CK 2025.2 (Câu 57)",
+    "source": "Ôn tập CK 2025.2 (Câu 57) | ôn tập cuối kì 20252 (P1-57)",
     "examTags": [
       "OT"
     ],
@@ -4424,7 +4435,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.66a",
-    "source": "Đề CK 2023.1 (#e08504)",
+    "source": "Đề CK 2023.1 (#e08504) | cuối kì 20231 (#e08504) | cuối kì 20232 (#e08504)",
     "examTags": [
       "CK"
     ],
@@ -4457,7 +4468,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.66b",
-    "source": "Đề CK 2023.1 (#5a6d48)",
+    "source": "Đề CK 2023.1 (#5a6d48) | cuối kì 20231 (#5a6d48) | cuối kì 20232 (#5a6d48)",
     "examTags": [
       "CK"
     ],
@@ -4490,7 +4501,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.66c",
-    "source": "Ôn tập CK 2025.2 (P2, Câu 16)",
+    "source": "Ôn tập CK 2025.2 (P2, Câu 16) | ôn tập cuối kì 20251 (Câu 4); ôn tập cuối kì 20252 (P2-16)",
     "examTags": [
       "OT"
     ],
@@ -4523,10 +4534,11 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.66d",
-    "source": "Đề GK 2024.1 (#1c2f2d) & CK 2025.1 (#794d71)",
+    "source": "Đề GK 2024.1 (#1c2f2d) & CK 2025.1 (#794d71) | cuối kì 20251 (#794d71); giữa kì 20241 (#1c2f2d); thi thử kì 20251 (Câu 20) | ôn tập cuối kì 20252 (P1-77)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 95,
     "printedPage": 94,
@@ -4557,10 +4569,11 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.66e",
-    "source": "Đề GK 2024.1 (#65dce1) & CK 2025.1 (#0c9d)",
+    "source": "Đề GK 2024.1 (#65dce1) & CK 2025.1 (#0c9d) | cuối kì 20251 (#0c9d); giữa kì 20241 (#65dce1); thi thử kì 20251 (Câu 31) | ôn tập cuối kì 20252 (P1-60)",
     "examTags": [
       "GK",
-      "CK"
+      "CK",
+      "OT"
     ],
     "pdfPage": 95,
     "printedPage": 94,
@@ -4591,7 +4604,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.67",
-    "source": "Đề CK 2025.1 (#15fd1c) & Ôn tập CK 2025.2 Câu 48",
+    "source": "Đề CK 2025.1 (#15fd1c) & Ôn tập CK 2025.2 Câu 48 | cuối kì 20251 (#15fd1c); thi thử kì 20251 (Câu 14) | ôn tập cuối kì 20251 (Câu 2) | ôn tập cuối kì 20252 (P2-48)",
     "examTags": [
       "CK",
       "OT"
@@ -4629,7 +4642,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.68 (Câu 67)",
-    "source": "Đề GK 2025.2 (Đề 0013 Bản 1)",
+    "source": "Đề GK 2025.2 (Đề 0013 Bản 1) | giữa kì 20252 (Đề 0013 (trang 7) - Câu 67); giữa kì 20252 (Đề 0013 (trang 7) - Câu 69); giữa kì 20252 (Đề 0013 (trang 7) - Câu 71); giữa kì 20252 (Đề 0013 (trang 7) - Câu 72); giữa kì 20252 (Đề 0013 (trang 7) - Câu 73); giữa kì 20252 (Đề 0013 (trang 86) - Câu 936); giữa kì 20252 (Đề 0013 (trang 86) - Câu 941)",
     "examTags": [
       "GK"
     ],
@@ -4666,7 +4679,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.68 (Câu 68)",
-    "source": "Đề GK 2025.2 (Đề 0013 Bản 1)",
+    "source": "Đề GK 2025.2 (Đề 0013 Bản 1) | giữa kì 20252 (Đề 0013 (trang 7) - Câu 68); giữa kì 20252 (Đề 0013 (trang 86) - Câu 937)",
     "examTags": [
       "GK"
     ],
@@ -4736,7 +4749,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.68 (Câu 70)",
-    "source": "Đề GK 2025.2 (Đề 0013 Bản 1)",
+    "source": "Đề GK 2025.2 (Đề 0013 Bản 1) | giữa kì 20252 (Đề 0013 (trang 7) - Câu 70); giữa kì 20252 (Đề 0013 (trang 86) - Câu 939)",
     "examTags": [
       "GK"
     ],
@@ -4912,7 +4925,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.69 (Câu 938)",
-    "source": "Đề GK 2025.2 (Đề 0013 Bản 2)",
+    "source": "Đề GK 2025.2 (Đề 0013 Bản 2) | giữa kì 20252 (Đề 0013 (trang 86) - Câu 938); giữa kì 20252 (Đề 0013 (trang 86) - Câu 940)",
     "examTags": [
       "GK"
     ],
@@ -5056,7 +5069,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.70 (Câu 100)",
-    "source": "Đề GK 2025.2 (Đề 0012)",
+    "source": "Đề GK 2025.2 (Đề 0012) | giữa kì 20252 (Đề 0012 (trang 1) - Câu 100); giữa kì 20252 (Đề 0012 (trang 1) - Câu 102); giữa kì 20252 (Đề 0012 (trang 1) - Câu 104); giữa kì 20252 (Đề 0012 (trang 1) - Câu 105)",
     "examTags": [
       "GK"
     ],
@@ -5092,7 +5105,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.70 (Câu 101)",
-    "source": "Đề GK 2025.2 (Đề 0012)",
+    "source": "Đề GK 2025.2 (Đề 0012) | giữa kì 20252 (Đề 0012 (trang 1) - Câu 101)",
     "examTags": [
       "GK"
     ],
@@ -5162,7 +5175,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.70 (Câu 103)",
-    "source": "Đề GK 2025.2 (Đề 0012)",
+    "source": "Đề GK 2025.2 (Đề 0012) | giữa kì 20252 (Đề 0012 (trang 1) - Câu 103)",
     "examTags": [
       "GK"
     ],
@@ -5270,7 +5283,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.70 (Câu 106/109)",
-    "source": "Đề GK 2025.2 (Đề 0012)",
+    "source": "Đề GK 2025.2 (Đề 0012) | giữa kì 20252 (Đề 0012 (trang 1) - Câu 109)",
     "examTags": [
       "GK"
     ],
@@ -5303,7 +5316,7 @@
     "groupId": "3.2.8",
     "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
     "exerciseCode": "Bài 3.71",
-    "source": "Đề Cuối kỳ 2024.2 (Trang 15, Câu #30) & MOOC 2022.2",
+    "source": "Đề Cuối kỳ 2024.2 (Trang 15, Câu #30) & MOOC 2022.2 | cuối kì 20222 (#3a); cuối kì 20242 (#30)",
     "examTags": [
       "CK"
     ],
@@ -5315,11 +5328,9 @@
     "fillPrompt": "Nhập địa chỉ đích dạng Hexa (vd: 0x00401058)",
     "acceptedAnswers": [
       "0x00401058",
-      "00401058",
-      "0x0040105C",
-      "0040105C"
+      "00401058"
     ],
-    "question": "Giả thiết lệnh <code>bne</code> của RISC-V có mã máy là <code>0x15330006</code>, được đặt tại word nhớ có địa chỉ <code>0x00401040</code>. Hãy chỉ ra địa chỉ đích của lệnh đó (nếu điều kiện thỏa mãn):",
+    "question": "Giả thiết lệnh <code>bne</code> của RISC-V có mã máy là <code>0x01331C63</code>, được đặt tại word nhớ có địa chỉ <code>0x00401040</code>. Hãy chỉ ra địa chỉ đích của lệnh đó (nếu điều kiện thỏa mãn):",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -5333,7 +5344,3407 @@
     "correctIndices": [
       0
     ],
-    "explanation": "<p><strong>Phân tích nguồn gốc câu hỏi trên hệ thống thi:</strong> Mã máy <code>0x15330006</code> là câu hỏi chuyển đổi từ đề thi hệ thống MOOC 2022.2 (Trang 14), trong đó 16 bit cuối cùng là hằng số $\\text{imm} = \\texttt{0x0006} = 6$ (nhảy tiến $6\\text{ lệnh} = 6 \\times 4 = 24\\text{ byte} = \\texttt{0x18}\\text{ byte}$):</p><ul><li><strong>Nếu tính từ $PC = \\texttt{0x00401040}$ (cộng độ lệch $6 \\times 4 = \\texttt{0x18}\\text{ byte}$ theo chuẩn RISC-V):</strong>$$\\text{Địa chỉ đích} = \\texttt{0x00401040} + \\texttt{0x18} = \\mathbf{\\texttt{0x00401058}}$$</li><li><strong>Nếu tính từ $PC + 4 = \\texttt{0x00401044}$ (theo kết quả cài đặt gốc từ đề 2022.2):</strong>$$\\text{Địa chỉ đích} = (\\texttt{0x00401040} + 4) + 6 \\times 4 = \\texttt{0x00401044} + \\texttt{0x18} = \\mathbf{\\texttt{0x0040105C}}$$</li></ul>"
+    "explanation": "<p>Giải mã lệnh B-type RISC-V <code>0x01331C63</code> (<code>0000\\;0001\\;0011\\;0011\\;0001\\;1100\\;0110\\;0011_2</code>):</p><ul><li><code>opcode = 1100011</code> (Branch), <code>funct3 = 001</code> (<code>bne</code>), <code>rs1 = x6 (t1)</code>, <code>rs2 = x19 (s3)</code>.</li><li>Ghép hằng số $\\text{imm[12:0]}$ (<code>imm[12]=bit31=0</code>, <code>imm[11]=bit7=0</code>, <code>imm[10:5]=bits[30:25]=000000</code>, <code>imm[4:1]=bits[11:8]=1100</code>, <code>imm[0]=0</code>) được <code>0000000011000_2</code> $= +24 = +\\texttt{0x18}$ byte (<code>bne t1, s3, 24</code>).</li><li>Theo chuẩn RISC-V, địa chỉ đích rẽ nhánh (BTA) luôn cộng độ lệch với <strong><code>PC</code> hiện tại</strong> (không phải <code>PC + 4</code> như bẫy <code>0x0040105C</code>): $$\\text{BTA} = \\text{PC} + \\text{imm} = \\texttt{0x00401040} + \\texttt{0x18} = \\mathbf{\\texttt{0x00401058}}$$</li></ul>"
+  },
+  {
+    "id": "pdf-3_2_1-1",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.1",
+    "source": "cuối kì 20231 (#408fcb)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong hệ tập lệnh kiến trúc RISC-V (RV32I), những lệnh thuộc khuôn dạng nào bắt buộc sử dụng đồng thời cả hai trường mã chức năng <code>funct3</code> và <code>funct7</code> trong mã máy 32-bit để định nghĩa phép toán của CPU?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Các lệnh định dạng kiểu R (R-type như add, sub, sll)",
+      "Các lệnh định dạng kiểu I (I-type như addi, lw)",
+      "Các lệnh định dạng kiểu B (B-type như beq, bne)",
+      "Các lệnh định dạng kiểu S (S-type như sw, sb)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong RISC-V 32-bit, chỉ khuôn dạng <strong>R-type</strong> sử dụng đầy đủ cả trường <code>funct3</code> (bit [14:12]) và trường <code>funct7</code> (bit [31:25]). Các kiểu B, S chỉ có <code>funct3</code> còn I-type chuẩn chỉ có <code>funct3</code> (trừ nhóm dịch tức thời dùng 7 bit cao làm bit điều khiển).</p>"
+  },
+  {
+    "id": "pdf-3_2_1-2",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.2",
+    "source": "cuối kì 20232 (#408fcb); cuối kì 20232 (#9f7fd7)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong kiến trúc RISC-V (RV32I), câu lệnh nào sau đây thuộc khuôn dạng <strong>R-type</strong> và sử dụng đồng thời cả hai trường chức năng <code>funct3</code> và <code>funct7</code> trong mã máy?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "sll",
+      "beq",
+      "jalr",
+      "sw"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>sll rd, rs1, rs2</code> là lệnh R-type nên có cả <code>funct3</code> (<code>001</code>) và <code>funct7</code> (<code>0000000</code>). Ngược lại, <code>beq</code> là B-type, <code>jalr</code> là I-type, và <code>sw</code> là S-type — đều chỉ có trường <code>funct3</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-3",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.3",
+    "source": "cuối kì 20231 (#9f7fd7)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Phát biểu nào sau đây đúng về trường mã lệnh thao tác cốt lõi (<code>opcode</code>) 7-bit ở vị trí bit <code>[6:0]</code> trong mã máy 32-bit của kiến trúc RISC-V?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Mọi lệnh thực 32-bit trong RV32I (bao gồm bne, jal và sw) đều bắt buộc có trường opcode 7-bit [6:0]",
+      "Chỉ các lệnh rẽ nhánh có điều kiện như bne mới có trường opcode",
+      "Chỉ các lệnh nhảy liên kết địa chỉ như jal mới cần trường opcode",
+      "Chỉ các lệnh truy xuất bộ nhớ như sw mới sử dụng trường opcode"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mọi câu lệnh hợp ngữ thực 32-bit trong cả 6 khuôn dạng của RISC-V (R, I, S, B, U, J) đều luôn bắt buộc có trường <strong><code>opcode</code> 7-bit</strong> nằm cố định tại các bit thấp <code>[6:0]</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-4",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.4",
+    "source": "ôn tập cuối kì 20251 (Câu 3); ôn tập cuối kì 20252 (P2-52)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong số các câu lệnh hợp ngữ RISC-V dưới đây, câu lệnh nào là <strong>giả lệnh (pseudo-instruction)</strong> (không có mã opcode riêng mà được trình hợp dịch biến đổi sang lệnh thực tương đương)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "j label",
+      "sw t0, 0(sp)",
+      "ori t0, t1, 5",
+      "bge t0, t1, label"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>j label</code> là giả lệnh trong RISC-V, được hợp dịch thành lệnh thực <code>jal zero, offset</code> (đặt thanh ghi đích là <code>x0</code> để bỏ qua địa chỉ trả về). Ba lệnh <code>sw</code>, <code>ori</code>, <code>bge</code> đều là lệnh thực trong RV32I.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-5",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.5",
+    "source": "cuối kì 20232 (#61621e); giữa kì 20192 (Mã đề 243 - Câu 15); giữa kì 20192 (Mã đề 244 - Câu 20)",
+    "examTags": [
+      "CK",
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong tập lệnh RISC-V (RV32I), câu lệnh hợp ngữ nào dưới đây có mã máy sử dụng trường 5-bit <code>shamt</code> (shift amount — số bit cần dịch)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "srli t0, t1, 4",
+      "addi t0, t1, 4",
+      "lui t0, 4",
+      "sw t0, 4(sp)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Các lệnh dịch bit tức thời (<code>slli</code>, <code>srli</code>, <code>srai</code>) sử dụng 5 bit <code>[24:20]</code> làm trường <strong><code>shamt</code></strong> (giá trị từ $0$ đến $31$) để biểu diễn số bit cần dịch trong thanh ghi 32-bit.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-6",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.6",
+    "source": "giữa kì 20192 (Mã đề 243 - Câu 18); giữa kì 20192 (Mã đề 244 - Câu 14)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong các câu lệnh hợp ngữ RISC-V (RV32I) dưới đây, lệnh nào có khuôn dạng mã máy (R / I / S / B / U / J) <strong>khác</strong> với ba lệnh còn lại?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "add t1, t2, t3",
+      "addi t1, t4, 9",
+      "xori t1, t5, 2",
+      "ori t1, t2, 6"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>add t1, t2, t3</code> thuộc khuôn dạng <strong>R-type</strong> (3 toán hạng đều là thanh ghi), trong khi <code>addi</code>, <code>xori</code>, <code>ori</code> đều thuộc khuôn dạng <strong>I-type</strong> (2 thanh ghi và 1 hằng số 12-bit có dấu).</p>"
+  },
+  {
+    "id": "pdf-3_2_1-7",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.7",
+    "source": "giữa kì 20222 (Đề 0007 (IT3282) - Câu 3)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Câu lệnh nào sau đây của bộ xử lý RISC-V 32-bit (RV32I) thuộc khuôn dạng lệnh kiểu <strong>R (R-type)</strong>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "add t0, t1, t2",
+      "addi t0, t1, 5",
+      "lw t0, 0(sp)",
+      "beq t0, t1, loop"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>add t0, t1, t2</code> thao tác trên 3 thanh ghi (<code>rd, rs1, rs2</code>) nên thuộc khuôn dạng <strong>R-type</strong>. Các lệnh <code>addi</code>, <code>lw</code> thuộc I-type, còn <code>beq</code> thuộc B-type.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-8",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.8",
+    "source": "giữa kì 20231 (#80bfcb); Lab - cuối kì 20222 (Câu 3)",
+    "examTags": [
+      "GK",
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Lệnh hợp ngữ RISC-V dưới đây thuộc khuôn dạng lệnh (format/type) nào?",
+    "codeBlock": "addi s0, zero, 0x0000",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "I-type",
+      "R-type",
+      "J-type",
+      "Pseudo-instruction (Giả lệnh)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>addi s0, zero, 0x0000</code> là lệnh thật thuộc khuôn dạng <strong>I-type</strong> (có thanh ghi đích <code>s0</code>, thanh ghi nguồn <code>zero</code> và hằng số 12-bit <code>0x000</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_1-9",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.9",
+    "source": "giữa kì 20241 (#b744e1)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong tập lệnh cơ bản RISC-V 32-bit (RV32I), nhóm lệnh nào dưới đây sở hữu trường hằng số tức thời (<code>immediate</code>) dài <strong>20 bit</strong> trong mã máy?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Các lệnh khuôn dạng U-type (lui, auipc) và J-type (jal)",
+      "Các lệnh khuôn dạng I-type (addi, lw) và S-type (sw)",
+      "Các lệnh khuôn dạng B-type (beq, bne) và U-type (lui)",
+      "Các lệnh khuôn dạng R-type (add, sub) và J-type (jal)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong 6 khuôn dạng của RV32I: <strong>U-type</strong> (<code>lui, auipc</code>) lưu 20 bit cao <code>imm[31:12]</code> và <strong>J-type</strong> (<code>jal</code>) lưu 20 bit offset nhảy <code>imm[20:1]</code>. Các kiểu I, S, B chỉ dùng hằng số 12 bit.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-10",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.10",
+    "source": "giữa kì 20252 (Đề 0013 (trang 7) - Câu 76)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên khuôn dạng (vd: R):",
+    "acceptedAnswers": [
+      "R",
+      "R-type",
+      "kiểu R",
+      "dạng R"
+    ],
+    "question": "Trong 6 khuôn dạng lệnh của RISC-V 32-bit (<code>R, I, S, B, U, J</code>), dạng lệnh nào KHÔNG chứa trường hằng số (immediate)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ khuôn dạng <strong>R (R-type)</strong> dành cho phép toán 3 thanh ghi (<code>rs1, rs2, rd</code>) là không chứa trường hằng số.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-11",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.11",
+    "source": "giữa kì 20252 (Đề 0013 (trang 86) - Câu 945)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập 2 chữ cái cách nhau bởi dấu phẩy (vd: U, J):",
+    "acceptedAnswers": [
+      "U, J",
+      "U và J",
+      "U-type, J-type",
+      "U-type và J-type",
+      "U,J",
+      "J, U"
+    ],
+    "question": "Hãy liệt kê các khuôn dạng lệnh trong 6 dạng của RISC-V 32-bit (<code>R, I, S, B, U, J</code>) có chứa trường hằng số với độ dài <strong>20 bit</strong>.",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Hai khuôn dạng có hằng số 20 bit trong RV32I là <strong>U-type</strong> (<code>lui, auipc</code>) và <strong>J-type</strong> (<code>jal</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_1-12",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.12",
+    "source": "Lab - cuối kì 20232 (Câu 33)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong hợp ngữ RISC-V 32-bit (RV32I), câu lệnh nào sau đây <strong>KHÔNG PHẢI</strong> là giả lệnh (Pseudo-instruction)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "addi t0, zero, 2047",
+      "addi t0, zero, 2048",
+      "add t0, zero, 2047",
+      "add t0, zero, 2048"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trường hằng số của lệnh <code>addi</code> trong RV32I dài 12 bit có dấu, phạm vi hợp lệ là $[-2048, +2047]$. Vì vậy <code>addi t0, zero, 2047</code> là <strong>lệnh thực</strong> duy nhất; giá trị $2048$ vượt giới hạn dương $+2047$ nên sẽ được trình hợp dịch tách thành giả lệnh (<code>lui + addi</code>), còn <code>add</code> không nhận toán hạng hằng số.</p>"
+  },
+  {
+    "id": "pdf-3_2_1-13",
+    "chapter": 3,
+    "groupId": "3.2.1",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
+    "exerciseCode": "Đề thi 3.2.1.13",
+    "source": "Lab - cuối kì 20232 (Câu 35)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Lệnh dịch bit tức thời dưới đây của kiến trúc RISC-V (RV32I) thuộc khuôn dạng lệnh nào?",
+    "codeBlock": "slli s0, s0, 3",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "I-type",
+      "R-type",
+      "S-type",
+      "J-type"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong RISC-V (RV32I), khác với lệnh dịch giữa hai thanh ghi (<code>sll rd, rs1, rs2</code> thuộc R-type), các lệnh dịch bit với hằng số tức thời như <code>slli</code>, <code>srli</code>, <code>srai</code> dùng <code>opcode = 0010011</code> (<code>OP-IMM</code>) nên được xếp vào nhóm khuôn dạng <strong>I-type</strong> (đặc biệt hóa 5 bit thấp của trường imm làm <code>shamt</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_2-1",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.1",
+    "source": "cuối kì 20202 (Câu 7); cuối kì 20211 (Câu 8)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Câu lệnh hợp ngữ RISC-V nào dưới đây biến đổi nội dung thanh ghi <code>t0</code> từ giá trị ban đầu <code>0x000000FF</code> thành <code>0x00000FF0</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "slli t0, t0, 4",
+      "srli t0, t0, 1",
+      "srli t0, t0, 4",
+      "slli t0, t0, 1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mỗi chữ số Hexa tương ứng với 4 bit nhị phân. Để dịch các chữ số Hexa sang trái 1 vị trí (<code>0x000000FF</code> &rarr; <code>0x00000FF0</code>), ta dùng lệnh dịch trái logic 4 bit: <code>slli t0, t0, 4</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-2",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.2",
+    "source": "cuối kì 20202 (Câu 20); cuối kì 20211 (Câu 20)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập phần chữ số Hexa còn thiếu (vd: F):",
+    "acceptedAnswers": [
+      "F",
+      "0xF",
+      "f",
+      "0xf"
+    ],
+    "question": "Biết rằng sau khi hoàn tất đoạn mã hợp ngữ RISC-V dưới đây, giá trị thanh ghi <code>s0</code> đo được là <code>0x15F</code>. Hãy xác định hằng số Hexa cần điền vào chỗ trống <code>____</code>:",
+    "codeBlock": "addi t3, zero, 0x15\nslli t2, t3, 4\naddi s0, t2, 0x____",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh 1 đặt $t_3 = \\text{0x15}$. Lệnh 2 dịch trái 4 bit: $t_2 = \\text{0x15} \\ll 4 = \\text{0x150}$. Để $s_0 = \\text{0x15F}$, lệnh thứ 3 cần cộng thêm hằng số <strong><code>0xF</code></strong> (điền <code>F</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_2-3",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.3",
+    "source": "cuối kì 20222 (#7a3120); cuối kì 20241 (#25c9d6); cuối kì 20242 (#7a3120); ôn tập cuối kì 20252 (P1-44)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho đoạn chương trình hợp ngữ RISC-V dưới đây. Giá trị thập phân của các thanh ghi <code>t2</code>, <code>t3</code>, <code>t4</code> lần lượt là bao nhiêu sau khi thực thi?",
+    "codeBlock": "addi t0, zero, 6\naddi t1, zero, 12\nand  t2, t0, t1\nor   t3, t0, t1\nxor  t4, t0, t1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "t2 = 4, t3 = 14, t4 = 10",
+      "t2 = 4, t3 = 14, t4 = 5",
+      "t2 = 14, t3 = 4, t4 = 10",
+      "t2 = 14, t3 = 4, t4 = 5"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Biểu diễn nhị phân 4-bit: $6 = 0110_2$, $12 = 1100_2$.<br>&bull; <code>AND</code>: $0110 \\;\\&\\; 1100 = 0100_2 = 4$ ($t_2$).<br>&bull; <code>OR</code>: $0110 \\mid 1100 = 1110_2 = 14$ ($t_3$).<br>&bull; <code>XOR</code>: $0110 \\oplus 1100 = 1010_2 = 10$ ($t_4$).</p>"
+  },
+  {
+    "id": "pdf-3_2_2-4",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.4",
+    "source": "cuối kì 20222 (#75a1b2)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa 32-bit của t1 (vd: 0x00390000):",
+    "acceptedAnswers": [
+      "0x00390000",
+      "0x390000",
+      "00390000"
+    ],
+    "question": "Cho nội dung thanh ghi <code>t0 = 0x61728394</code>. Hãy viết theo dạng Hexa 32-bit giá trị của thanh ghi <code>t1</code> sau khi chạy đoạn lệnh hợp ngữ RISC-V sau:",
+    "codeBlock": "srli t1, t0, 4\nslli t1, t1, 24\nsrli t1, t1, 8",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bước 1: <code>srli 4</code> dịch phải 1 chữ số Hexa &rarr; <code>0x06172839</code>.<br>Bước 2: <code>slli 24</code> đẩy 6 chữ số Hexa cao ra ngoài, chỉ giữ byte thấp nhất lên MSB &rarr; <code>0x39000000</code>.<br>Bước 3: <code>srli 8</code> dịch phải 2 chữ số Hexa &rarr; <strong><code>0x00390000</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-5",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.5",
+    "source": "cuối kì 20222 (#0); cuối kì 20242 (#0); cuối kì 20241 (#2a8241)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho đoạn chương trình hợp ngữ RISC-V sau. Giá trị của thanh ghi <code>t1</code> bằng bao nhiêu sau khi thực hiện?",
+    "codeBlock": "li   t0, 0x1234\nsrli t1, t0, 3",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x00000246",
+      "0x01234000",
+      "0x000091A0",
+      "0x00000001"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$\\text{0x1234} = 4660_{10} = 0001\\;0010\\;0011\\;0100_2$.<br>Dịch phải logic 3 bit (tương đương chia nguyên không dấu cho $2^3 = 8$): $4660 \\mathbin{//} 8 = 582 = 0010\\;0100\\;0110_2 = \\mathbf{\\text{0x00000246}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-6",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.6",
+    "source": "cuối kì 20241 (#b58d32); cuối kì 20242 (#75a1b2)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa của t1 (vd: 0x003B0000):",
+    "acceptedAnswers": [
+      "0x003B0000",
+      "0x003b0000",
+      "0x3B0000",
+      "0x3b0000"
+    ],
+    "question": "Cho nội dung thanh ghi <code>t0 = 0x8192A3B4</code>. Hãy viết theo số Hexa 32-bit giá trị của thanh ghi <code>t1</code> sau khi chạy đoạn lệnh RISC-V sau:",
+    "codeBlock": "srli t1, t0, 4\nslli t1, t1, 24\nsrli t1, t1, 8",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>srli 4</code> &rarr; <code>0x08192A3B</code>.<br><code>slli 24</code> &rarr; <code>0x3B000000</code>.<br><code>srli 8</code> (chèn 0 ở đầu) &rarr; <strong><code>0x003B0000</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-7",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.7",
+    "source": "giữa kì 20192 (Mã đề 243 - Câu 10); giữa kì 20192 (Mã đề 244 - Câu 1)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Biểu thức logic giữa 2 số 8-bit <code>0x3F = 0x3C ??? 0x0F</code> bị khuyết mất tên phép toán thao tác bit (bitwise). Phép toán đó là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "OR",
+      "AND",
+      "XOR",
+      "NOT"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$\\text{0x3C} = 0011\\;1100_2$, $\\text{0x0F} = 0000\\;1111_2$. Thực hiện phép <strong><code>OR</code></strong> theo từng bit ta được $0011\\;1111_2 = \\text{0x3F}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-8",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.8",
+    "source": "giữa kì 20222 (Đề 0007 (IT3282) - Câu 5)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Thực hiện hai phép toán logic bitwise sau: (1) <code>0x0000FFFF AND 0x079CC0D1</code> và (2) <code>0xAC4F013D OR 0xFFFF0000</code>. Cặp kết quả Hexa đúng lần lượt là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "(1) 0x0000C0D1 và (2) 0xFFFF013D",
+      "(1) 0x079C0000 và (2) 0xAC4FFFFF",
+      "(1) 0x0000C0D1 và (2) 0xAC4F013D",
+      "(1) 0x079CC0D1 và (2) 0xFFFF013D"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; Phép <code>AND</code> với mặt nạ <code>0x0000FFFF</code> xóa 16 bit cao về 0 và giữ nguyên 16 bit thấp &rarr; <strong><code>0x0000C0D1</code></strong>.<br>&bull; Phép <code>OR</code> với mặt nạ <code>0xFFFF0000</code> đặt 16 bit cao thành <code>0xFFFF</code> và giữ nguyên 16 bit thấp &rarr; <strong><code>0xFFFF013D</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-9",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.9",
+    "source": "giữa kì 20231 (#28e839)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa 32-bit của s2 (vd: 0xFFFF4000):",
+    "acceptedAnswers": [
+      "0xFFFF4000",
+      "0xffff4000"
+    ],
+    "question": "Cho đoạn chương trình hợp ngữ RISC-V (RV32I) dưới đây. Hãy xác định giá trị thanh ghi <code>s2</code> ở dạng số Hexa 32-bit sau khi đoạn mã thực thi:",
+    "codeBlock": "li   s0, 2049\nlui  s1, 0xFFFF3\nori  s1, s1, 2047\nadd  s2, s0, s1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; <code>li s0, 2049</code> đặt $s_0 = 2049 = \\text{0x00000801}$.<br>&bull; <code>lui s1, 0xFFFF3</code> nạp 20 bit cao: $s_1 = \\text{0xFFFF3000}$.<br>&bull; <code>ori s1, s1, 2047</code> thực hiện phép OR với $2047 = \\text{0x7FF}$ (hằng số 12-bit dương lớn nhất): $s_1 = \\text{0xFFFF37FF}$.<br>&bull; <code>add s2, s0, s1</code> = $\\text{0xFFFF37FF} + \\text{0x00000801} = \\mathbf{\\text{0xFFFF4000}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-10",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.10",
+    "source": "giữa kì 20232 (Trang 1 - Câu 4)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập t2/t3 dạng Hexa (vd: 0x15555555/0x15FF5555):",
+    "acceptedAnswers": [
+      "0x15555555/0x15FF5555",
+      "0x15555555/0x15ff5555",
+      "0x15555555, 0x15FF5555",
+      "t2 = 0x15555555, t3 = 0x15FF5555"
+    ],
+    "question": "Cho giá trị ban đầu của các thanh ghi RISC-V: <code>t0 = 0xAAAAAAAA</code>, <code>t1 = 0x00FF0000</code>. Hãy xác định nội dung thanh ghi <code>t2</code> và <code>t3</code> (dạng Hexa 8 chữ số, ngăn cách bởi dấu <code>/</code>) sau khi chạy 2 lệnh sau:",
+    "codeBlock": "srli t2, t0, 3\nor   t3, t2, t1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>0xAAAAAAAA</code> là chuỗi $1010\\;1010\\dots_2$. Dịch phải logic 3 bit (chèn ba bit $0$ vào MSB) cho $0001\\;0101\\;0101\\dots_2 = \\mathbf{\\text{0x15555555}}$ ($t_2$). Thực hiện <code>or t3, t2, 0x00FF0000</code> đặt byte 2 thành <code>0xFF</code> &rarr; <strong><code>0x15FF5555</code></strong> ($t_3$).</p>"
+  },
+  {
+    "id": "pdf-3_2_2-11",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.11",
+    "source": "giữa kì 20252 (Đề 0013 (trang 7) - Câu 74); giữa kì 20252 (Đề 0013 (trang 86) - Câu 943)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập câu lệnh RISC-V còn thiếu:",
+    "acceptedAnswers": [
+      "addi t2, x0, -6",
+      "addi t2, zero, -6",
+      "ADDI t2, x0, -6",
+      "ADDI t2, zero, -6",
+      "li t2, -6"
+    ],
+    "question": "Sau khi kết thúc đoạn chương trình RISC-V dưới đây, thanh ghi <code>a0</code> có giá trị bằng <code>-7</code>. Hãy viết 1 câu lệnh chuẩn bị thanh ghi <code>t2</code> còn thiếu vào chỗ trống:",
+    "codeBlock": "addi t1, x0, 3\n....................\nxor  a0, t1, t2   # a0 = -7",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Ta có $t_1 = 3 = \\text{0x00000003}$ và $a_0 = -7 = \\text{0xFFFFFFF9}$. Vì phép XOR có tính đối xứng ($t_2 = t_1 \\oplus a_0$), ta tính được $t_2 = \\text{0x00000003} \\oplus \\text{0xFFFFFFF9} = \\text{0xFFFFFFFA} = -6$. Do đó câu lệnh thiếu là <strong><code>addi t2, x0, -6</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-12",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.12",
+    "source": "ôn tập cuối kì 20252 (P1-24)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa 32-bit của s2 (vd: 0x0FFFF800):",
+    "acceptedAnswers": [
+      "0x0FFFF800",
+      "0x0ffff800",
+      "0xFFFF800",
+      "0xffff800"
+    ],
+    "question": "Giá trị của thanh ghi <code>s2</code> ở dạng số Hexa 32-bit sau khi chạy đoạn chương trình RISC-V dưới đây là bao nhiêu?",
+    "codeBlock": "li   s0, 1\nlui  s1, 0xFFFF\nori  s1, s1, 2047\nadd  s2, s0, s1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>lui s1, 0xFFFF</code> đặt 20 bit cao là <code>0x0FFFF</code> nên $s_1 = \\text{0x0FFFF000}$. Sau <code>ori s1, s1, 2047</code> ($\\text{0x7FF}$), $s_1 = \\text{0x0FFFF7FF}$. Cộng thêm $s_0 = 1$ thu được <strong><code>0x0FFFF800</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-13",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.13",
+    "source": "ôn tập cuối kì 20252 (P1-52)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa của t1 (vd: 0xFF8B0000):",
+    "acceptedAnswers": [
+      "0xFF8B0000",
+      "0xff8b0000"
+    ],
+    "question": "Cho nội dung thanh ghi <code>t0 = 0x8192A8B4</code>. Hãy viết theo số Hexa 32-bit nội dung thanh ghi <code>t1</code> sau khi chạy đoạn lệnh RISC-V dưới đây:",
+    "codeBlock": "srli t1, t0, 4\nslli t1, t1, 24\nsrai t1, t1, 8",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>srli 4</code> &rarr; <code>0x08192A8B</code>.<br><code>slli 24</code> &rarr; <code>0x8B000000</code> (chú ý bit dấu MSB = 1 vì $8 = 1000_2$).<br><code>srai 8</code> (dịch phải <strong>số học</strong>) kéo dài bit dấu <code>1</code> vào 8 bit cao &rarr; <strong><code>0xFF8B0000</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-14",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.14",
+    "source": "Lab - cuối kì 20222 (Câu 5); Lab - cuối kì 20232 (Câu 24)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong nhóm lệnh khuôn dạng I-type của tập lệnh RISC-V 32-bit (không tính giả lệnh), ví dụ <code>addi t0, zero, imm</code> với <code>imm</code> là số nguyên có dấu, giá trị dương lớn nhất của <code>imm</code> là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "2^11 - 1 (tức 2047)",
+      "2^12 - 1 (tức 4095)",
+      "2^8 - 1 (tức 255)",
+      "2^15 - 1 (tức 32767)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Toán hạng hằng số <code>imm</code> trong các lệnh I-type của RV32I dài <strong>12 bit</strong> mã bù 2 có dấu ($[-2^{11}, 2^{11}-1]$), nên giá trị dương lớn nhất là $2^{11} - 1 = 2047$.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-15",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.15",
+    "source": "Lab - cuối kì 20222 (Câu 14); Lab - cuối kì 20232 (Câu 22)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Để thực hiện đảo tất cả các bit của byte thấp nhất (LSB, bits <code>[7:0]</code>) của thanh ghi <code>s0</code> (và giữ nguyên 24 bit cao), ta dùng lệnh nào sau đây biết <code>t0 = 0xFF</code>, <code>t1 = 0x00</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "xor s0, s0, t0",
+      "or s0, s0, t0",
+      "and s0, s0, t1",
+      "and s0, s0, t0"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Phép <code>XOR</code> với bit <code>1</code> sẽ đảo bit ($x \\oplus 1 = \\bar{x}$) và <code>XOR</code> với bit <code>0</code> sẽ giữ nguyên ($x \\oplus 0 = x$). Do đó <code>xor s0, s0, t0</code> với $t_0 = \\text{0x000000FF}$ đảo đúng 8 bit thấp nhất của $s_0$.</p>"
+  },
+  {
+    "id": "pdf-3_2_2-16",
+    "chapter": 3,
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
+    "exerciseCode": "Đề thi 3.2.2.16",
+    "source": "Lab - cuối kì 20222 (Câu 27); Lab - cuối kì 20232 (Câu 13)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị hệ 10 của s1:",
+    "acceptedAnswers": [
+      "2"
+    ],
+    "question": "Cho biết giá trị thanh ghi <code>s1</code> trong hệ thập phân (hệ 10) sau khi đoạn chương trình RISC-V sau được thực hiện:",
+    "codeBlock": ".text\n    addi s0, zero, 0xA\n    andi s1, s0, 0x7",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>0xA</code> $= 10_{10} = 1010_2$; <code>0x7</code> $= 0111_2$. Thực hiện <code>andi</code> từng bit: $1010_2 \\;\\&\\; 0111_2 = 0010_2 = \\mathbf{2}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-1",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.1",
+    "source": "cuối kì 20222 (#09f26f); cuối kì 20241 (#b46ff9); cuối kì 20242 (#09f26f)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho đoạn chương trình hợp ngữ RISC-V dưới đây. Nội dung hai thanh ghi <code>t0</code> và <code>t1</code> sau khi thực thi lần lượt là bao nhiêu?",
+    "codeBlock": "addi s0, zero, 50\naddi s1, zero, -51\nslt  t0, s0, s1\nsltu t1, s0, s1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "t0 = 0 và t1 = 1",
+      "t0 = 1 và t1 = 1",
+      "t0 = 1 và t1 = 0",
+      "t0 = 0 và t1 = 0"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; <code>slt t0, s0, s1</code> so sánh <strong>có dấu</strong>: $50 &lt; -51$ là sai &rarr; $t_0 = 0$.<br>&bull; <code>sltu t1, s0, s1</code> so sánh <strong>không dấu</strong>: $-51$ biểu diễn 32-bit là $\\text{0xFFFFFFCD} \\approx 4.29\\times 10^9 &gt; 50$, nên $50 &lt; \\text{0xFFFFFFCD}$ là đúng &rarr; $t_1 = 1$.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-2",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.2",
+    "source": "giữa kì 20252 (Đề 0013 (trang 7) - Câu 77); giữa kì 20252 (Đề 0013 (trang 86) - Câu 946)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét đoạn mã hợp ngữ RISC-V sau. Nhận xét nào sau đây là ĐÚNG về mã hóa offset của các lệnh rẽ nhánh và nhảy?",
+    "codeBlock": "L1: beq  t1, t2, L2\n    addi t3, x0, 0\nL2: jal  ra, L1\nL3: jalr x0, ra, 8",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Hằng số 8 trong lệnh jalr và hằng số offset tới L2 trong lệnh beq có số lượng bit biểu diễn trong mã máy bằng nhau (đều 12 bit)",
+      "Hằng số offset tới L1 trong lệnh jal sẽ được biên dịch thành số dương",
+      "Hằng số offset tới L2 trong lệnh beq sẽ được biên dịch thành số âm",
+      "Thanh ghi ra sau lệnh jal sẽ nhận địa chỉ là một số nguyên âm (bit 31 bằng 1)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong mã máy RV32I, <code>jalr</code> (I-type) và <code>beq</code> (B-type) đều có trường hằng số độ rộng <strong>12 bit</strong>. Các nhận xét khác sai vì: nhãn <code>L1</code> nằm trước <code>L2</code> nên offset nhảy lùi phải âm; <code>L2</code> nằm sau <code>L1</code> nên offset nhánh xuôi là dương; vùng mã <code>.text</code> mặc định ở <code>0x0040xxxx</code> nên thanh ghi <code>ra</code> chứa địa chỉ dương.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-3",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.3",
+    "source": "ôn tập cuối kì 20252 (P1-1)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giả sử thanh ghi <code>x10</code> chứa giá trị <code>0xFFFFFFF0</code> và <code>x11</code> chứa <code>0x00000005</code>. Sau khi thực thi đoạn mã RISC-V sau, giá trị cuối cùng của thanh ghi <code>x12</code> (hệ thập phân) là bao nhiêu?",
+    "codeBlock": "    addi x12, x0, 20\n    blt  x10, x11, TakeBranch\n    addi x12, x12, 10\n    j    Done\nTakeBranch:\n    addi x12, x12, 5\nDone:\n    addi x12, x12, 1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "26",
+      "31",
+      "25",
+      "35"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>blt</code> so sánh <strong>có dấu</strong>: <code>0xFFFFFFF0</code> tương ứng $-16 &lt; 5$ là đúng, nên chương trình rẽ nhánh sang <code>TakeBranch</code>: $x_{12} = 20 + 5 + 1 = \\mathbf{26}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-4",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.4",
+    "source": "ôn tập cuối kì 20252 (P1-3)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Với cùng giá trị khởi tạo <code>x10 = 0xFFFFFFF0</code> và <code>x11 = 0x00000005</code>, sau khi thực thi đoạn mã RISC-V dùng lệnh <code>bltu</code> dưới đây, giá trị cuối cùng của thanh ghi <code>x13</code> là bao nhiêu?",
+    "codeBlock": "    addi x13, x0, 20\n    bltu x10, x11, TakeBranchU\n    addi x13, x13, 10\n    j    DoneU\nTakeBranchU:\n    addi x13, x13, 5\nDoneU:\n    addi x13, x13, 1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "31",
+      "26",
+      "25",
+      "30"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>bltu</code> so sánh <strong>không dấu</strong>: $\\text{0xFFFFFFF0} = 4\\,294\\,967\\,280 &gt; 5$, nên điều kiện sai và KHÔNG rẽ nhánh. Chương trình thực hiện tiếp $x_{13} = 20 + 10 + 1 = \\mathbf{31}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-5",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.5",
+    "source": "ôn tập cuối kì 20252 (P1-36)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Lệnh <code>beq rs1, rs2, offset</code> trong RISC-V là ví dụ điển hình cho nhóm hoạt động cơ bản nào của bộ xử lý?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Hoạt động điều khiển luồng (Control Flow Operation)",
+      "Hoạt động số học / logic (Arithmetic / Logic Operation)",
+      "Hoạt động truyền dữ liệu bộ nhớ (Data Transfer Operation)",
+      "Hoạt động vào-ra ngoại vi (I/O Operation)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>beq</code> (Branch if Equal) kiểm tra điều kiện bằng nhau để thay đổi thanh ghi <code>PC</code>, thuộc nhóm lệnh <strong>điều khiển luồng (Control Flow)</strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-6",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.6",
+    "source": "ôn tập cuối kì 20252 (P1-43)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Kết quả số nguyên được in ra màn hình sau khi thực hiện chương trình RISC-V dưới đây là bao nhiêu?",
+    "codeBlock": ".text\n    li   t0, -10\n    li   t1, 10\n    bltu t0, t1, else\n    li   a0, 10\n    addi a0, a0, 5\n    j    print\nelse:\n    li   a0, 20\n    addi a0, a0, 7\nprint:\n    li   a7, 1\n    ecall",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "15",
+      "27",
+      "20",
+      "10"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Vì dùng <code>bltu</code> (so sánh <strong>không dấu</strong>), giá trị $-10$ (<code>0xFFFFFFF6</code>) lớn hơn $10$ (<code>0x0000000A</code>). Điều kiện sai nên luồng đi thẳng: $a_0 = 10 + 5 = \\mathbf{15}$ và được <code>ecall</code> (<code>a7=1</code>) in ra màn hình.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-7",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.7",
+    "source": "Lab - cuối kì 20232 (Câu 1)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Câu lệnh <code>slt t2, t1, t0</code> trong RISC-V thực hiện phép so sánh tương đương với mệnh đề điều kiện nào sau đây?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "if (t1 < t0) then t2 = 1 else t2 = 0 (so sánh có dấu)",
+      "if (t1 > t0) then t2 = 1 else t2 = 0 (so sánh có dấu)",
+      "if (t1 < t0) then t2 = 0 else t2 = 1 (so sánh có dấu)",
+      "if (t2 < t1) then t0 = 1 else t0 = 0 (so sánh có dấu)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>slt rd, rs1, rs2</code> (Set on Less Than) đặt <code>rd = 1</code> nếu giá trị có dấu của <code>rs1 &lt; rs2</code>, ngược lại đặt <code>rd = 0</code>. Ở đây <code>rd=t2, rs1=t1, rs2=t0</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_3-8",
+    "chapter": 3,
+    "groupId": "3.2.3",
+    "groupTitle": "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh",
+    "exerciseCode": "Đề thi 3.2.3.8",
+    "source": "Lab - cuối kì 20232 (Câu 6)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giá trị của hai thanh ghi <code>t0</code> và <code>t1</code> sau khi thực thi đoạn chương trình RISC-V dưới đây lần lượt là bao nhiêu?",
+    "codeBlock": ".text\n    li   s1, 3\n    li   s2, 2\n    slt  t0, s2, s1\n    bne  t0, zero, label\n    addi t1, zero, 1\n    j    end\nlabel:\n    addi t1, zero, 2\nend:",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "t0 = 1, t1 = 2",
+      "t0 = 1, t1 = 1",
+      "t0 = 0, t1 = 2",
+      "t0 = 0, t1 = 1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>slt t0, s2, s1</code> kiểm tra $s_2 (2) &lt; s_1 (3)$ &rarr; đúng nên $t_0 = 1$. Vì $t_0 \\neq 0$, lệnh <code>bne t0, zero, label</code> rẽ nhánh tới <code>label</code> và gán $t_1 = 2$.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-1",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.1",
+    "source": "cuối kì 20202 (Câu 19); cuối kì 20211 (Câu 19)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Phân tích đoạn chương trình hợp ngữ RISC-V dưới đây và cho biết tổng số lần CPU phải thực hiện thao tác đọc/ghi dữ liệu trực tiếp với bộ nhớ dữ liệu (Data Memory) là bao nhiêu?",
+    "codeBlock": "lw   a1, 0(a2)\naddi a1, a1, -4\nslli a1, a1, 0\nsw   zero, -8(a1)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "2 lần",
+      "1 lần",
+      "3 lần",
+      "4 lần"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ các lệnh tải (<code>lw</code>) và lưu (<code>sw</code>) mới truy cập Bộ nhớ dữ liệu (Data Memory); các lệnh <code>addi</code> và <code>slli</code> chỉ thao tác trên các thanh ghi nội tại. Tổng cộng có <strong>2 lần</strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-2",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.2",
+    "source": "cuối kì 20222 (#fe0e91); cuối kì 20242 (#fe0e91); ôn tập cuối kì 20251 (Câu 61); ôn tập cuối kì 20252 (P2-5)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập t0/t1 dạng Hexa (vd: 0x11223344/0xFFFFFFBB):",
+    "acceptedAnswers": [
+      "0x11223344/0xFFFFFFBB",
+      "0x11223344/0xffffffbb",
+      "0x11223344, 0xFFFFFFBB"
+    ],
+    "question": "Cho vùng nhớ dữ liệu (tổ chức theo thứ tự Little-Endian) với mỗi dòng là một word 32-bit như dưới đây. Giả sử thanh ghi cơ sở <code>a6</code> (<code>x16</code>) chứa địa chỉ <code>0x10012000</code>. Hãy viết giá trị thanh ghi <code>t0</code> và <code>t1</code> ở dạng Hexa 8 chữ số (ngăn cách bởi dấu <code>/</code>) sau khi thực hiện hai lệnh:<br><code>0x10012000: 0x12345678</code> | <code>0x10012004: 0xA1B2C3D4</code> | <code>0x10012008: 0x11223344</code> | <code>0x1001200C: 0xAABBCCDD</code> | <code>0x10012010: 0x66778899</code>",
+    "codeBlock": "lw t0, 8(a6)\nlb t1, 14(a6)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; <code>lw t0, 8(a6)</code> nạp 1 word tại <code>0x10012008</code> &rarr; $t_0 = \\mathbf{\\text{0x11223344}}$.<br>&bull; <code>lb t1, 14(a6)</code> truy cập byte tại <code>0x1001200E</code> (tức byte có trọng số thứ 2 trong word tại <code>0x1001200C = 0xAABBCCDD</code>). Theo Little-Endian: byte $+0=\\text{DD}$, $+1=\\text{CC}$, $+2=\\text{BB}$, $+3=\\text{AA}$. Lệnh <code>lb</code> nạp byte <code>0xBB</code> (có bit dấu = 1) và mở rộng dấu lên 32 bit &rarr; $t_1 = \\mathbf{\\text{0xFFFFFFBB}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-3",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.3",
+    "source": "cuối kì 20222 (#ad4a6e); cuối kì 20242 (#ad4a6e)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bộ nhớ máy tính đánh địa chỉ theo byte và lưu trữ theo thứ tự <strong>Little-Endian</strong>. Cho <code>A</code> là mảng số nguyên 32-bit bắt đầu tại địa chỉ cơ sở <code>0x10012500</code>, biết phần tử <code>A[1] = 0x22334455</code>. Nội dung byte nhớ tại địa chỉ <code>0x10012506</code> là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0x33",
+      "0x22",
+      "0x44",
+      "0x55"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>A[0]</code> chiếm 4 byte <code>0x10012500..03</code>, nên <code>A[1]</code> chiếm <code>0x10012504..07</code>. Theo Little-Endian (byte thấp nhất ở địa chỉ nhỏ nhất):<br><code>+4 = 0x55</code>, <code>+5 = 0x44</code>, <strong><code>+6 = 0x33</code></strong>, <code>+7 = 0x22</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-4",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.4",
+    "source": "cuối kì 20231 (#d4c0fb); cuối kì 20232 (#d4c0fb); giữa kì 20241 (#2f8025); ôn tập cuối kì 20252 (P1-29)",
+    "examTags": [
+      "CK",
+      "GK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa 32-bit của s1 (vd: 0x00006f5e):",
+    "acceptedAnswers": [
+      "0x00006f5e",
+      "0x00006F5E",
+      "0x6f5e",
+      "0x6F5E"
+    ],
+    "question": "Cho hệ thống RISC-V <strong>Little-Endian</strong> với các byte bộ nhớ được gán như sau:<br><code>0x10010000: 0x1a</code> | <code>0x10010001: 0x2b</code> | <code>0x10010002: 0x3c</code> | <code>0x10010003: 0x4d</code> | <code>0x10010004: 0x5e</code> | <code>0x10010005: 0x6f</code><br>Hãy xác định giá trị thanh ghi <code>s1</code> dưới dạng Hexa 32-bit sau khi thực thi đoạn mã sau:",
+    "codeBlock": "lui  t0, 0x10010\naddi t0, t0, 2\nlh   s1, 2(t0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>lui</code> và <code>addi</code> đặt $t_0 = \\text{0x10010002}$. Lệnh <code>lh s1, 2(t0)</code> đọc 2 byte kể từ địa chỉ $t_0 + 2 = \\text{0x10010004}$ là <code>0x5e</code> (byte thấp) và <code>0x6f</code> (byte cao), ghép thành halfword <code>0x6f5e</code>. Vì bit cao nhất của <code>0x6f5e</code> bằng 0 (số dương), mở rộng dấu 32 bit thu được <strong><code>0x00006f5e</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-5",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.5",
+    "source": "cuối kì 20251 (#325163); giữa kì 20241 (#f5f091); thi thử kì 20251 (Câu 1); ôn tập cuối kì 20251 (Câu 54); ôn tập cuối kì 20252 (P2-50)",
+    "examTags": [
+      "CK",
+      "GK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giá trị của thanh ghi <code>s0</code> dưới dạng Hexa 32-bit sau khi thực thi đoạn chương trình hợp ngữ RISC-V dưới đây là bao nhiêu?",
+    "codeBlock": ".data\n    x: .byte 27\n.text\n    la   t0, x\n    lbu  s0, 0(t0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x0000001b",
+      "0x0000ffe5",
+      "0xffffffe5",
+      "0x000000e5"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Giá trị thập phân $27 = 16 + 11 = \\text{0x1B}$ ($0001\\;1011_2$). Lệnh <code>lbu</code> (Load Byte Unsigned) mở rộng không dấu với các bit 0 ở 24 bit cao &rarr; <strong><code>0x0000001b</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-6",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.6",
+    "source": "cuối kì 20251 (#037064); giữa kì 20231 (#03d084); giữa kì 20241 (#cd0189); thi thử kì 20251 (Câu 12)",
+    "examTags": [
+      "CK",
+      "GK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giả sử bộ xử lý RISC-V sử dụng thứ tự lưu trữ bộ nhớ <strong>Little-Endian</strong>. Giá trị thập lục phân (Hexa) trong thanh ghi <code>s2</code> sau khi thực thi đoạn mã sau là gì?",
+    "codeBlock": ".data\n    A: .word 0xa12bc3d4\n.text\n    la   t0, A\n    lb   s1, 2(t0)\n    andi s2, s1, 0xf0",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x00000020",
+      "0x000000b2",
+      "0x00000002",
+      "0x00000040"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo Little-Endian, word <code>0xa12bc3d4</code> lưu các byte từ offset $+0$ đến $+3$ là: <code>+0 = 0xd4</code>, <code>+1 = 0xc3</code>, <strong><code>+2 = 0x2b</code></strong>, <code>+3 = 0xa1</code>.<br>Lệnh <code>lb s1, 2(t0)</code> nạp <code>0x2b</code> (dương) thành <code>0x0000002b</code>. Sau đó <code>andi s2, s1, 0xf0</code> $= \\text{0x0000002b} \\;\\&\\; \\text{0x000000f0} = \\mathbf{\\text{0x00000020}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-7",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.7",
+    "source": "giữa kì 20192 (Mã đề 244 - Câu 18)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Mảng số nguyên 32-bit <code>A</code> có phần tử <code>A[2]</code> được lưu tại địa chỉ <code>0x20200008</code>. Hỏi phần tử <code>A[5]</code> nằm ở địa chỉ nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0x20200014",
+      "0x201FFFF8",
+      "0x20200008",
+      "0x20200011"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mỗi phần tử số nguyên 32-bit chiếm $4$ byte. Phần tử <code>A[5]</code> cách <code>A[2]</code> đúng $(5 - 2) \\times 4 = 12 = \\text{0xC}$ byte. Vậy địa chỉ của <code>A[5]</code> là $\\text{0x20200008} + \\text{0xC} = \\mathbf{\\text{0x20200014}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-8",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.8",
+    "source": "giữa kì 20222 (Đề 0007 (IT3282) - Câu 2)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Biến 32-bit giá trị <code>0x04CDC001</code> được lưu theo <strong>Little-Endian</strong> tại địa chỉ <code>0x1001272C</code>. Thứ tự các byte từ <code>0x1001272C</code> đến <code>0x1001272F</code> và dãy lệnh chuẩn RV32I (không dùng giả lệnh) để nạp biến này vào thanh ghi <code>t1</code> là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Byte: 0x01, 0xC0, 0xCD, 0x04 | Lệnh: lui s0, 0x10012 ; addi s0, s0, 0x72C ; lw t1, 0(s0)",
+      "Byte: 0x04, 0xCD, 0xC0, 0x01 | Lệnh: lui s0, 0x10012 ; addi s0, s0, 0x72C ; lw t1, 0(s0)",
+      "Byte: 0x01, 0xC0, 0xCD, 0x04 | Lệnh: lui s0, 0x10010 ; ori s0, s0, 0x72C ; lw t1, 0(s0)",
+      "Byte: 0x04, 0xCD, 0xC0, 0x01 | Lệnh: lui s0, 0x10013 ; addi s0, s0, 0x72C ; lw t1, 0(s0)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; Little-Endian đặt byte thấp nhất vào địa chỉ nhỏ nhất: <code>0x2C: 0x01</code>, <code>0x2D: 0xC0</code>, <code>0x2E: 0xCD</code>, <code>0x2F: 0x04</code>.<br>&bull; Tách địa chỉ <code>0x1001272C</code>: 12 bit thấp <code>0x72C = +1836 &le; 2047</code> (bit dấu 11 bằng 0), nên 20 bit cao giữ nguyên <code>0x10012</code>: <code>lui s0, 0x10012</code> + <code>addi s0, s0, 0x72C</code> rồi <code>lw t1, 0(s0)</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-9",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.9",
+    "source": "giữa kì 20232 (Trang 2 - Câu 2)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập t0/t1 dạng Hexa (vd: 0xE2D3C4B5/0xFFFFE6B5):",
+    "acceptedAnswers": [
+      "0xE2D3C4B5/0xFFFFE6B5",
+      "0xe2d3c4b5/0xffffe6b5",
+      "0xE2D3C4B5, 0xFFFFE6B5"
+    ],
+    "question": "Cho bảng giá trị các word nhớ 32-bit lưu trữ theo kiểu <strong>Little-Endian</strong> (mỗi địa chỉ liệt kê là giá trị word 32-bit tại địa chỉ đó):<br><code>0x10012010: 0x2F3B4A5B</code> | <code>0x10012014: 0x6E7D8C9B</code> | <code>0x10012018: 0xAAB9C8D7</code><br><code>0x1001201C: 0xE6B5A4B3</code> | <code>0x10012020: 0xC2D1E0F1</code> | <code>0x10012024: 0xE2D3C4B5</code><br>Biết thanh ghi <code>s3 = 0x10012010</code>. Hãy xác định giá trị Hexa 8 chữ số của <code>t0</code> và <code>t1</code> (ngăn cách bởi dấu <code>/</code>) sau 2 lệnh sau:",
+    "codeBlock": "lw t0, 20(s3)\nlh t1, 14(s3)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; <code>lw t0, 20(s3)</code>: $\\text{0x10012010} + 20 (\\text{0x14}) = \\text{0x10012024}$, đọc word $t_0 = \\mathbf{\\text{0xE2D3C4B5}}$.<br>&bull; <code>lh t1, 14(s3)</code>: $\\text{0x10012010} + 14 (\\text{0xE}) = \\text{0x1001201E}$, nằm ở 2 byte cao của word tại <code>0x1001201C</code> (<code>0xE6B5A4B3</code>). Byte $+2$ là <code>0xB5</code>, byte $+3$ là <code>0xE6</code> &rarr; halfword <code>0xE6B5</code> (bit dấu = 1), mở rộng dấu lên 32 bit thành $t_1 = \\mathbf{\\text{0xFFFFE6B5}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-10",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.10",
+    "source": "ôn tập cuối kì 20252 (P1-58)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giá trị của thanh ghi <code>s0</code> dưới dạng Hexa 32-bit sau khi thực hiện đoạn mã RISC-V dưới đây là gì?",
+    "codeBlock": ".data\n    x: .byte -24\n.text\n    la  t0, x\n    lb  s0, 0(t0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0xffffffe8",
+      "0x000000e8",
+      "0xffe8",
+      "0xe8"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số $-24$ ở dạng mã bù 2 8-bit là $256 - 24 = 232 = \\text{0xE8}$ (MSB = 1). Lệnh <code>lb</code> (Load Byte có dấu) thực hiện mở rộng dấu bit 1 lên 24 bit cao của thanh ghi 32-bit &rarr; <strong><code>0xffffffe8</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-11",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.11",
+    "source": "Lab - cuối kì 20222 (Câu 9)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xác định giá trị thanh ghi <code>a1</code> sau khi đoạn chương trình RISC-V sau chạy trên trình mô phỏng RARS (biết RARS lưu trữ dữ liệu trong bộ nhớ theo thứ tự Little-Endian):",
+    "codeBlock": ".data\n    A0: .byte 0x01, 0x02, 0x03, 0x04\n.text\n    la  a0, A0\n    lw  a1, 0(a0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x04030201",
+      "0x01020304",
+      "0x04",
+      "0x01"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mỗi giá trị <code>.byte</code> nằm ở 1 byte liên tiếp: byte $+0 = \\text{0x01}$ (LSB), byte $+1 = \\text{0x02}$, byte $+2 = \\text{0x03}$, byte $+3 = \\text{0x04}$ (MSB). Theo Little-Endian, nạp cả 1 word vào <code>a1</code> cho <strong><code>0x04030201</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-12",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.12",
+    "source": "Lab - cuối kì 20222 (Câu 13)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giả sử có đoạn chương trình RISC-V sau (hệ thống Little-Endian). Giá trị của thanh ghi <code>t0</code> sau khi thực thi là bao nhiêu?",
+    "codeBlock": ".data\n    x: .word 2023\n.text\n    la  t6, x\n    lb  t0, 1(t6)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x07",
+      "0xE7",
+      "0x00",
+      "0x23"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đổi số thập phân $2023_{10} = 7 \\times 256 + 231 = \\mathbf{\\text{0x000007E7}}$. Theo thứ tự Little-Endian: byte 0 = <code>0xE7</code>, <strong>byte 1 = <code>0x07</code></strong>, byte 2 = <code>0x00</code>, byte 3 = <code>0x00</code>. Do đó <code>lb t0, 1(t6)</code> nạp được <strong><code>0x07</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-13",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.13",
+    "source": "Lab - cuối kì 20222 (Câu 26)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Biết rằng phân đoạn dữ liệu <code>.data</code> bắt đầu tại địa chỉ <code>0x10010000</code>. Trong đoạn mã RISC-V sau, thanh ghi <code>t1</code> sẽ nạp nội dung byte nhớ nằm ở địa chỉ nào?",
+    "codeBlock": ".data\n    x: .word 0x01020304\n.text\n    la  t0, x\n    lb  t1, 2(t0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x10010002",
+      "0x10010000",
+      "0x10010001",
+      "0x10010003"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Biến <code>x</code> đặt đầu tiên trong <code>.data</code> nên có địa chỉ cơ sở <code>t0 = 0x10010000</code>. Độ lệch <code>2(t0)</code> trỏ tới địa chỉ <code>0x10010000 + 2 = 0x10010002</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-14",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.14",
+    "source": "Lab - cuối kì 20232 (Câu 5)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho biết giá trị của biến 32-bit <code>x</code> (dạng Hexa) sau khi thực hiện đoạn mã RISC-V trên hệ thống Little-Endian dưới đây?",
+    "codeBlock": ".data\n    x: .word 0x01020304\n.text\n    la   t0, x\n    li   t1, 0x2023\n    sb   t1, 2(t0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x01230304",
+      "0x01022023",
+      "0x01022304",
+      "0x01020323"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Các byte ban đầu của <code>x</code> (Little-Endian): byte $+0=04$, $+1=03$, $+2=02$, $+3=01$. Lệnh <code>sb t1, 2(t0)</code> chỉ ghi <strong>byte thấp nhất</strong> của thanh ghi <code>t1 = 0x00002023</code> (tức <code>0x23</code>) đè vào byte offset $+2$ (thay <code>0x02</code> thành <code>0x23</code>), nên $x$ trở thành <strong><code>0x01230304</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_4-15",
+    "chapter": 3,
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
+    "exerciseCode": "Đề thi 3.2.4.15",
+    "source": "Lab - cuối kì 20232 (Câu 30)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị hệ 10 của s0:",
+    "acceptedAnswers": [
+      "43"
+    ],
+    "question": "Hãy xác định giá trị của thanh ghi <code>s0</code> ở hệ thập phân (cơ số 10) sau khi đoạn chương trình RISC-V dưới đây thực thi xong (hệ thống Little-Endian):",
+    "codeBlock": ".text\n    addi sp, sp, -4\n    li   s0, 555\n    sw   s0, 0(sp)\n    lb   s0, 0(sp)\n    addi sp, sp, 4",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$555_{10} = 2 \\times 256 + 43 = \\text{0x0000022B}$. Theo Little-Endian, byte thấp <code>0x2B</code> ($= 43 &lt; 128$, bit dấu 0) nằm ở <code>0(sp)</code>. Lệnh <code>lb s0, 0(sp)</code> chỉ đọc byte đó và giữ nguyên dấu dương &rarr; $s_0 = \\mathbf{43}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_5-1",
+    "chapter": 3,
+    "groupId": "3.2.5",
+    "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
+    "exerciseCode": "Đề thi 3.2.5.1",
+    "source": "cuối kì 20212 (B5-3)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đoạn chương trình hợp ngữ RISC-V tối thiểu (KHÔNG dùng giả lệnh) nào sau đây thực hiện đúng cấu trúc C: <code>if (a == b) i += 1; else i += 3;</code> (biết <code>a, b, i</code> lưu lần lượt trong <code>s0, s1, s2</code>)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "bne s0, s1, ELSE ; addi s2, s2, 1 ; jal zero, DONE ; ELSE: addi s2, s2, 3 ; DONE:",
+      "beq s0, s1, ELSE ; addi s2, s2, 1 ; jal zero, DONE ; ELSE: addi s2, s2, 3 ; DONE:",
+      "bne s0, s1, ELSE ; addi s2, s2, 1 ; ELSE: addi s2, s2, 3 ; DONE:",
+      "bne s0, s1, DONE ; addi s2, s2, 3 ; ELSE: addi s2, s2, 1 ; DONE:"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Ta kiểm tra điều kiện phủ định <code>bne s0, s1, ELSE</code> để nhảy sang nhánh <code>else</code> cộng 3. Nếu <code>a == b</code>, thực hiện <code>addi s2, s2, 1</code> rồi nhảy không điều kiện qua <code>ELSE</code> bằng lệnh thực <code>jal zero, DONE</code> (không dùng giả lệnh <code>j</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_5-2",
+    "chapter": 3,
+    "groupId": "3.2.5",
+    "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
+    "exerciseCode": "Đề thi 3.2.5.2",
+    "source": "giữa kì 20222 (Đề 0009 - Câu 8); giữa kì 20222 (Đề 0008 (bản 1) - Câu 8); giữa kì 20222 (Đề 0008 (bản 2) - Câu 8)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập 1 câu lệnh RISC-V còn thiếu:",
+    "acceptedAnswers": [
+      "slli t3, t2, 4",
+      "SLLI t3, t2, 4"
+    ],
+    "question": "Hãy viết <strong>1 câu lệnh hợp ngữ RISC-V</strong> còn thiếu vào vị trí trống để hoàn chỉnh đoạn mã tính biểu thức <code>y = (x + y) * 16 - x</code> (với <code>x</code> trong <code>s4</code>, <code>y</code> trong <code>s3</code>):",
+    "codeBlock": "add  t2, s3, s4\n....................\nsub  s3, t3, s4",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Sau <code>add t2, s3, s4</code>, ta có $t_2 = x + y$. Để nhân $t_2$ với $16 = 2^4$ và lưu kết quả vào $t_3$ phục vụ lệnh <code>sub s3, t3, s4</code>, ta chỉ cần dịch trái 4 bit: <strong><code>slli t3, t2, 4</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_5-3",
+    "chapter": 3,
+    "groupId": "3.2.5",
+    "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
+    "exerciseCode": "Đề thi 3.2.5.3",
+    "source": "giữa kì 20222 (Đề 0008 (IT3030) - Câu 7); giữa kì 20222 (Đề 0007 (IT3282) - Câu 6)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đoạn lệnh hợp ngữ RISC-V nào sau đây thực hiện đúng và tối ưu biểu thức: <code>t0 = 4 * (t1 + t2) + 5</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "add t0, t1, t2 ; slli t0, t0, 2 ; addi t0, t0, 5",
+      "add t0, t1, t2 ; srli t0, t0, 2 ; addi t0, t0, 5",
+      "slli t0, t1, 2 ; add t0, t0, t2 ; addi t0, t0, 5",
+      "add t0, t1, t2 ; slli t0, t0, 4 ; addi t0, t0, 5"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đầu tiên tính $t_0 = t_1 + t_2$ bằng <code>add</code>, sau đó nhân $4 = 2^2$ bằng <code>slli t0, t0, 2</code>, cuối cùng cộng thêm $5$ bằng <code>addi t0, t0, 5</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_5-4",
+    "chapter": 3,
+    "groupId": "3.2.5",
+    "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
+    "exerciseCode": "Đề thi 3.2.5.4",
+    "source": "giữa kì 20222 (Đề 0007 (IT3282) - Câu 8)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đoạn hợp ngữ RISC-V nào thực hiện đúng cấu trúc điều kiện: <code>if (s1 == 0) { t2 = 1; } else { t2 = 2; }</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "bne s1, zero, else ; addi t2, zero, 1 ; j exit ; else: addi t2, zero, 2 ; exit:",
+      "beq s1, zero, else ; addi t2, zero, 1 ; j exit ; else: addi t2, zero, 2 ; exit:",
+      "bne s1, zero, else ; addi t2, zero, 2 ; j exit ; else: addi t2, zero, 1 ; exit:",
+      "bne s1, zero, else ; addi t2, zero, 1 ; else: addi t2, zero, 2 ; exit:"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Nếu <code>s1 != zero</code> thì dùng <code>bne s1, zero, else</code> nhảy tới nhãn <code>else</code> để gán <code>t2 = 2</code>. Ngược lại (<code>s1 == 0</code>), gán <code>t2 = 1</code> rồi nhảy vượt qua khối <code>else</code> tới <code>exit</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_5-5",
+    "chapter": 3,
+    "groupId": "3.2.5",
+    "groupTitle": "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V",
+    "exerciseCode": "Đề thi 3.2.5.5",
+    "source": "giữa kì 20222 (Đề 0006 (IT3283) - Câu 10)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đoạn lệnh hợp ngữ RISC-V nào sau đây thực hiện đúng biểu thức: <code>s2 = 8 * (t3 + t6) + 6</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "add s2, t3, t6 ; slli s2, s2, 3 ; addi s2, s2, 6",
+      "add s2, t3, t6 ; slli s2, s2, 8 ; addi s2, s2, 6",
+      "slli s2, t3, 3 ; add s2, s2, t6 ; addi s2, s2, 6",
+      "add s2, t3, t6 ; srli s2, s2, 3 ; addi s2, s2, 6"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Cộng <code>t3 + t6</code> lưu vào <code>s2</code>, nhân $8 = 2^3$ bằng lệnh dịch trái 3 bit <code>slli s2, s2, 3</code>, rồi cộng hằng số 6 bằng <code>addi s2, s2, 6</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_6-1",
+    "chapter": 3,
+    "groupId": "3.2.6",
+    "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
+    "exerciseCode": "Đề thi 3.2.6.1",
+    "source": "giữa kì 20231 (#c8db43)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập kết quả số nguyên in ra màn hình:",
+    "acceptedAnswers": [
+      "35"
+    ],
+    "question": "Kết quả số nguyên được in ra màn hình khi chạy đoạn chương trình RISC-V dưới đây trên RARS là bao nhiêu?",
+    "codeBlock": ".data\n    A: .word 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15\n.text\n    li  s4, 3\n    li  s1, 0\n    li  s3, 0x0F\n    la  s2, A\n    li  s5, 0\nloop:\n    slli t1, s1, 2\n    add  t1, t1, s2\n    lw   t0, 0(t1)\n    add  s5, s5, t0\n    add  s1, s1, s4\n    blt  s1, s3, loop\n    li   a7, 1\n    add  a0, s5, zero\n    ecall",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ số $s_1$ bắt đầu từ $0$, tăng bước $s_4 = 3$, lặp khi $s_1 &lt; 15$ (<code>0x0F</code>): $s_1 \\in \\{0, 3, 6, 9, 12\\}$.<br>Các phần tử mảng được cộng dồn vào $s_5$ (lưu ý chỉ số bắt đầu từ 0):<br>$A[0]=1$, $A[3]=4$, $A[6]=7$, $A[9]=10$, $A[12]=13$.<br>Tổng $= 1 + 4 + 7 + 10 + 13 = \\mathbf{35}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_6-2",
+    "chapter": 3,
+    "groupId": "3.2.6",
+    "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
+    "exerciseCode": "Đề thi 3.2.6.2",
+    "source": "Lab - cuối kì 20222 (Câu 21)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị thập phân của s0:",
+    "acceptedAnswers": [
+      "5"
+    ],
+    "question": "Xác định giá trị của thanh ghi <code>s0</code> ở hệ thập phân sau khi đoạn chương trình RISC-V sau chạy xong:",
+    "codeBlock": ".text\n    addi s0, zero, 0\n    addi s1, zero, 1\n    addi s2, zero, 10\nloop:\n    slt  t0, s2, s1\n    bne  t0, zero, end\n    addi s0, s0, 1\n    addi s1, s1, 1\n    addi s2, s2, -1\n    j    loop\nend:",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo dõi cặp $(s_1, s_2)$ qua từng vòng lặp (thoát khi $s_2 &lt; s_1$):<br>&bull; Ban đầu $(1, 10) \\rightarrow s_0=1$;<br>&bull; Lần 2: $(2, 9) \\rightarrow s_0=2$;<br>&bull; Lần 3: $(3, 8) \\rightarrow s_0=3$;<br>&bull; Lần 4: $(4, 7) \\rightarrow s_0=4$;<br>&bull; Lần 5: $(5, 6) \\rightarrow s_0=5$;<br>&bull; Lần 6: $(6, 5) \\Rightarrow s_2 &lt; s_1 \\Rightarrow t_0 = 1$, thoát vòng lặp. Vậy $s_0 = \\mathbf{5}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_6-3",
+    "chapter": 3,
+    "groupId": "3.2.6",
+    "groupTitle": "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi",
+    "exerciseCode": "Đề thi 3.2.6.3",
+    "source": "Lab - cuối kì 20232 (Câu 25)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xác định giá trị thanh ghi <code>t2</code> sau khi đoạn chương trình RISC-V dưới đây thực hiện xong:",
+    "codeBlock": ".data\n    A0: .word 1,2,3,4,5,6,7,8,9\n.text\n    la   a0, A0\n    li   t0, 1\n    li   t1, 9\n    li   t2, 0\nloop:\n    slt  t3, t0, t1\n    beq  t3, zero, end\n    slli t4, t0, 2\n    add  t4, t4, a0\n    lw   t5, 0(t4)\n    add  t2, t2, t5\n    addi t0, t0, 2\n    j    loop\nend:",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "20",
+      "45",
+      "25",
+      "0"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ số <code>t0</code> khởi tạo bằng $1$, bước nhảy $2$, điều kiện $t_0 &lt; 9$: $t_0 \\in \\{1, 3, 5, 7\\}$.<br>Tổng cộng các phần tử chỉ số lẻ: $A_0[1] + A_0[3] + A_0[5] + A_0[7] = 2 + 4 + 6 + 8 = \\mathbf{20}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-1",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.1",
+    "source": "cuối kì 20222 (#6f0a57); cuối kì 20242 (#6f0a57); ôn tập cuối kì 20251 (Câu 70); ôn tập cuối kì 20252 (P2-33)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hãy chỉ ra tên của thanh ghi trong bộ xử lý có nhiệm vụ lưu giữ địa chỉ của ô nhớ đỉnh ngăn xếp (stack)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Stack Pointer (SP)",
+      "Base Register",
+      "Program Counter (PC)",
+      "Instruction Register (IR)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>Stack Pointer (SP)</strong> (trong RISC-V là thanh ghi <code>x2</code> / <code>sp</code>) luôn trỏ vào phần tử ở đỉnh ngăn xếp hiện tại.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-2",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.2",
+    "source": "giữa kì 20182 (Mã đề 204 - Câu 11)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khi lấy một phần tử (pop) ra khỏi ngăn xếp (Stack) theo quy ước chuẩn, bộ xử lý sẽ cập nhật con trỏ ngăn xếp <code>sp</code> như thế nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Tăng nội dung giá trị của thanh ghi sp",
+      "Giảm nội dung giá trị của thanh ghi sp",
+      "Giảm nội dung giá trị của thanh ghi pc",
+      "Xóa trắng thanh ghi sp về 0"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Ngăn xếp phát triển từ địa chỉ cao xuống địa chỉ thấp. Khi cất dữ liệu (push) thì giảm <code>sp</code>, còn khi lấy ra (pop) thì giải phóng bằng cách <strong>tăng nội dung thanh ghi <code>sp</code></strong> (ví dụ <code>addi sp, sp, 4</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_7-3",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.3",
+    "source": "giữa kì 20192 (Mã đề 243 - Câu 1); giữa kì 20192 (Mã đề 244 - Câu 12)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Vùng nhớ ngăn xếp (Stack) tổ chức cơ chế lưu trữ và truy xuất dữ liệu theo quy tắc nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "LIFO (Last In First Out — Vào sau ra trước)",
+      "FIFO (First In First Out — Vào trước ra trước)",
+      "LILO (Last In Last Out — Vào sau ra sau)",
+      "Truy cập ngẫu nhiên theo chỉ số Hash"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Ngăn xếp (Stack) hoạt động theo cơ chế <strong>LIFO (Last In First Out)</strong>: phần tử được cất vào sau cùng nằm trên đỉnh và sẽ được lấy ra đầu tiên.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-4",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.4",
+    "source": "giữa kì 20222 (Đề 0006 (IT3283) - Câu 4)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên ABI hoặc số hiệu thanh ghi (vd: sp):",
+    "acceptedAnswers": [
+      "sp",
+      "x2",
+      "sp (x2)"
+    ],
+    "question": "Trong bộ xử lý RISC-V 32-bit, thanh ghi ABI nào giữ vai trò chứa địa chỉ đỉnh của ngăn xếp (Stack Pointer)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Thanh ghi con trỏ ngăn xếp trong quy ước gọi hàm (ABI) của RISC-V là <strong><code>sp</code></strong> (tức thanh ghi vật lý <code>x2</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_7-5",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.5",
+    "source": "giữa kì 20231 (#eb372b); giữa kì 20241 (#907ec8); ôn tập cuối kì 20252 (P1-31); Lab - cuối kì 20222 (Câu 28)",
+    "examTags": [
+      "GK",
+      "OT",
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Ngăn xếp (Stack) của RISC-V mở rộng bằng cách giảm địa chỉ bộ nhớ. Đoạn chương trình nào dưới đây phù hợp để cấp phát và lưu 1 word từ thanh ghi <code>s0</code> lên đỉnh ngăn xếp?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "addi sp, sp, -4 ; sw s0, 0(sp)",
+      "addi sp, sp, 0 ; sw s0, 0(sp)",
+      "addi sp, sp, 4 ; sw s0, 0(sp)",
+      "addi sp, sp, -8 ; sw s0, 4(sp)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Vì stack mọc về phía địa chỉ thấp hơn và một word chiếm 4 byte, ta phải giảm <code>sp</code> đi 4 byte trước (<code>addi sp, sp, -4</code>), rồi ghi giá trị <code>s0</code> vào đúng đỉnh mới <code>0(sp)</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-6",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.6",
+    "source": "giữa kì 20231 (#ea7df8)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Giá trị của thanh ghi <code>t0</code> ngay trước khi chương trình RISC-V dưới đây kết thúc là bao nhiêu?",
+    "codeBlock": ".text\n    addi t0, zero, 1\n    jal  f1\n    addi t0, zero, 2\n    li   a7, 10      # terminate\n    ecall\nf1:\n    addi t0, zero, 3\n    jalr zero, 0(ra)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "2",
+      "3",
+      "1",
+      "Chương trình bị lỗi không thực thi được"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>jal f1</code> lưu địa chỉ của lệnh kế tiếp (<code>addi t0, zero, 2</code>) vào thanh ghi <code>ra</code> và nhảy tới <code>f1</code>. Bên trong <code>f1</code> đặt $t_0 = 3$ rồi thực hiện <code>jalr zero, 0(ra)</code> quay trở về chạy <code>addi t0, zero, 2</code> trước khi gọi <code>ecall</code> (<code>a7=10</code>) thoát chương trình. Kết quả cuối: $t_0 = \\mathbf{2}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-7",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.7",
+    "source": "ôn tập cuối kì 20252 (P1-37)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Phát biểu nào sau đây ĐÚNG về con trỏ ngăn xếp <code>SP</code> (Stack Pointer)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "SP là thanh ghi nằm trong CPU chứa địa chỉ của ô nhớ đỉnh ngăn xếp và giảm giá trị khi cất (push) dữ liệu",
+      "Khi cất thêm dữ liệu vào ngăn xếp, nội dung của thanh ghi SP được tăng lên",
+      "SP là thanh ghi chỉ chứa địa chỉ cố định của ô nhớ đáy ngăn xếp",
+      "SP là một biến đặc biệt nằm trong bộ nhớ chính (RAM), không nằm trong CPU"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong><code>SP</code></strong> là thanh ghi chuyên dụng bên trong CPU (<code>sp</code>/<code>x2</code> trong RISC-V), luôn trỏ tới đỉnh ngăn xếp hiện tại; do ngăn xếp mọc về phía địa chỉ nhỏ nên khi cất dữ liệu vào, <code>SP</code> phải giảm đi.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-8",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.8",
+    "source": "Lab - cuối kì 20222 (Câu 2); Lab - cuối kì 20232 (Câu 36)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Chọn phát biểu đúng khi thực thi đoạn chương trình gọi hàm lồng nhau RISC-V sau đây:",
+    "codeBlock": ".text\n    addi t0, zero, 1\n    jal  f1\n    addi t0, zero, 2\nf1:\n    addi t0, zero, 3\n    jal  f2\n    addi t0, zero, 4\n    jalr zero, 0(ra)\nf2:\n    addi t0, zero, 5\n    jalr zero, 0(ra)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Chương trình bị lặp vô hạn, không dừng",
+      "Sau khi kết thúc thanh ghi t0 có giá trị bằng 2",
+      "Sau khi kết thúc thanh ghi t0 có giá trị bằng 4",
+      "Sau khi kết thúc thanh ghi t0 có giá trị bằng 5"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Hàm <code>f1</code> gọi lồng hàm <code>f2</code> bằng <code>jal f2</code> mà <strong>không lưu giá trị thanh ghi <code>ra</code> vào ngăn xếp</strong>. Lệnh <code>jal f2</code> ghi đè địa chỉ của dòng <code>addi t0, zero, 4</code> vào <code>ra</code>. Vì vậy khi <code>f1</code> thực hiện <code>jalr zero, 0(ra)</code>, CPU lại nhảy ngược về chính dòng <code>addi t0, zero, 4</code> trong <code>f1</code> tạo thành vòng lặp vô hạn.</p>"
+  },
+  {
+    "id": "pdf-3_2_7-9",
+    "chapter": 3,
+    "groupId": "3.2.7",
+    "groupTitle": "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr",
+    "exerciseCode": "Đề thi 3.2.7.9",
+    "source": "Lab - cuối kì 20222 (Câu 7); Lab - cuối kì 20232 (Câu 26)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho đoạn chương trình RISC-V dưới đây. Sau khi thực thi câu lệnh <code>jalr zero, 0(ra)</code> ở cuối <code>func</code>, thanh ghi <code>PC</code> sẽ trỏ tới địa chỉ của câu lệnh nào tiếp theo?",
+    "codeBlock": "main:\n    li   a0, -45\n    jal  func\n    nop\nendmain:\nfunc:\n    ...\n    jalr zero, 0(ra)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "nop",
+      "jal func",
+      "jalr zero, 0(ra)",
+      "li a0, -45"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Khi thực hiện <code>jal func</code>, CPU tự động lưu địa chỉ lệnh kế tiếp nó (tức lệnh <code>nop</code>) vào thanh ghi <code>ra</code>. Sau đó <code>jalr zero, 0(ra)</code> nạp lại địa chỉ trong <code>ra</code> vào <code>PC</code> để thực thi <code>nop</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-1",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.1",
+    "source": "cuối kì 20231 (#61621e)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong cấu trúc mã máy 32-bit của tập lệnh RISC-V (RV32I), các lệnh dịch bit tức thời như <code>slli</code> sử dụng một phần 5 bit thấp của trường immediate để chỉ định giá trị nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Số lượng bit cần dịch (shamt — shift amount)",
+      "Mã opcode của lệnh",
+      "Số hiệu thanh ghi nguồn thứ hai",
+      "Mã chức năng mở rộng funct3"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>slli</code> dùng 5 bit <code>[24:20]</code> của trường immediate làm giá trị <strong><code>shamt</code></strong> (từ $0$ đến $31$) biểu thị số lượng bit dịch chuyển.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-2",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.2",
+    "source": "Lab - cuối kì 20232 (Câu 16)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khi biên dịch thành mã máy RISC-V 32-bit (RV32I), hai lệnh sau đây khác nhau DUY NHẤT ở trường thông tin nào?",
+    "codeBlock": "and t0, t1, t2\nor  x5, x6, x7",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Giá trị trường funct3",
+      "Giá trị trường opcode",
+      "Giá trị trường số hiệu các thanh ghi (rd, rs1, rs2)",
+      "Giá trị trường funct7"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo quy ước ABI RISC-V, <code>t0, t1, t2</code> chính là <code>x5, x6, x7</code>. Cả <code>and</code> và <code>or</code> đều là lệnh R-type có cùng <code>opcode = 0110011</code> (<code>0x33</code>) và <code>funct7 = 0000000</code>, nên hai mã máy chỉ khác nhau ở trường 3-bit <strong><code>funct3</code></strong> (<code>111</code> cho <code>and</code>, <code>110</code> cho <code>or</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-3",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.3",
+    "source": "Lab - cuối kì 20232 (Câu 39)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong mã máy 32-bit RV32I của các câu lệnh hợp ngữ, lệnh nào dưới đây dùng 5 bit ở vị trí <code>[24:20]</code> để mã hóa trường hằng số số bit dịch chuyển (<code>shamt</code>) thay vì chỉ số thanh ghi nguồn <code>rs2</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "slli",
+      "add",
+      "slt",
+      "and"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>add, slt, and</code> là các lệnh R-type nên bit <code>[24:20]</code> là thanh ghi nguồn thứ hai <code>rs2</code>. Riêng các lệnh dịch bit tức thời như <strong><code>slli</code></strong> sử dụng vị trí bit <code>[24:20]</code> để lưu <code>shamt</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-4",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.4",
+    "source": "Lab - cuối kì 20232 (Câu 40)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hằng số <code>2</code> trong câu lệnh RISC-V <code>slli s1, s0, 2</code> được mã hóa vào trường <code>shamt</code> ở vị trí bit nào của mã máy 32-bit?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Từ bit 20 đến bit 24",
+      "Từ bit 0 đến bit 6",
+      "Từ bit 7 đến bit 11",
+      "Từ bit 15 đến bit 19"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong mã máy RV32I, các trường của lệnh <code>slli rd, rs1, shamt</code> được sắp xếp từ thấp lên cao: <code>opcode[6:0]</code>, <code>rd[11:7]</code>, <code>funct3[14:12]</code>, <code>rs1[19:15]</code>, <strong><code>shamt[24:20]</code></strong>, <code>funct7[31:25]</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-5",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.5",
+    "source": "giữa kì 20182 (Mã đề 198 - Câu 4); giữa kì 20182 (Mã đề 199 - Câu 19)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong số các mã máy 32-bit của RISC-V (RV32I) dưới đây (biết lệnh <code>addi</code> có <code>opcode = 0010011</code> tức <code>0x13</code>), mã máy nào <strong>KHÔNG PHẢI</strong> là lệnh <code>addi</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0x009402B3",
+      "0x00140293",
+      "0xFFC90493",
+      "0x01058513"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Kiểm tra 7 bit thấp nhất (<code>bit [6:0]</code>):<br>&bull; <code>0x00140293</code> (<code>0x93 &amp; 0x7F = 0x13</code>) &rarr; <code>addi t0, s0, 1</code>.<br>&bull; <code>0xFFC90493</code> (<code>0x93 &amp; 0x7F = 0x13</code>) &rarr; <code>addi s1, s2, -4</code>.<br>&bull; <code>0x01058513</code> (<code>0x13 &amp; 0x7F = 0x13</code>) &rarr; <code>addi a0, a1, 16</code>.<br>&bull; <strong><code>0x009402B3</code></strong> có 7 bit thấp bằng <code>0110011_2 = 0x33</code> &rarr; là lệnh R-type (<code>add t0, s0, s1</code>), KHÔNG phải <code>addi</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-6",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.6",
+    "source": "giữa kì 20182 (Mã đề 204 - Câu 14)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong số các mã máy 32-bit của RISC-V (RV32I) sau, mã máy nào thuộc khuôn dạng <strong>kiểu J (J-type, <code>jal</code>)</strong> (biết <code>opcode</code> của <code>jal</code> là <code>1101111_2 = 0x6F</code>)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0x00C0006F",
+      "0x00240413",
+      "0x013904B3",
+      "0x00040263"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Nhìn byte thấp nhất để xác định 7 bit <code>opcode [6:0]</code>:<br>&bull; <strong><code>0x00C0006F</code></strong> có 7 bit thấp <code>0x6F</code> = <code>1101111_2</code> &rarr; lệnh J-type (<code>jal zero, 12</code>).<br>&bull; <code>0x00240413</code> là I-type (<code>0x13</code> = <code>addi</code>); <code>0x013904B3</code> là R-type (<code>0x33</code> = <code>add</code>); <code>0x00040263</code> là B-type (<code>0x63</code> = <code>beq</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-7",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.7",
+    "source": "giữa kì 20192 (Mã đề 243 - Câu 3); giữa kì 20192 (Mã đề 244 - Câu 19)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Mã máy của 1 lệnh dạng I (I-type, <code>addi</code>) trong RISC-V (RV32I) được viết ở hệ 16 là <code>0x01A38313</code>. Hãy cho biết giá trị toán hạng hằng số tức thời (<code>imm[11:0]</code>) của lệnh bằng bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "26 (viết ở hệ 10)",
+      "01A38313 (viết ở hệ 16)",
+      "19 (viết ở hệ 10)",
+      "33 (viết ở hệ 10)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong khuôn dạng I-type của RV32I, hằng số 12-bit nằm ở 12 bit cao nhất <code>[31:20]</code> (tức 3 chữ số Hexa đầu tiên của mã máy 32-bit). Từ <code>0x01A38313</code>, ta tách 3 chữ số Hexa đầu: $\\text{0x01A} = 1 \\times 16 + 10 = \\mathbf{26}$ (lệnh <code>addi t1, t2, 26</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-8",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.8",
+    "source": "giữa kì 20222 (Đề 0009 - Câu 1); giữa kì 20222 (Đề 0009 - Câu 3); giữa kì 20222 (Đề 0009 - Câu 4); giữa kì 20222 (Đề 0009 - Câu 6); giữa kì 20222 (Đề 0008 (bản 1) - Câu 1); giữa kì 20222 (Đề 0008 (bản 2) - Câu 1)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập mã máy 32-bit tại 0x400010:",
+    "acceptedAnswers": [
+      "0x013904B3",
+      "0x013904b3"
+    ],
+    "question": "Cho bản đồ bộ nhớ chương trình RISC-V (RV32I) lưu theo thứ tự <strong>Little-Endian</strong>:<br><code>0x400000: 0x33 | 0x400001: 0x83 | 0x400002: 0x6A | 0x400003: 0x41</code><br><code>0x400004: 0x37 | 0x400005: 0x0B | 0x400006: 0x04 | 0x400007: 0x00</code><br><code>0x400008: 0x13 | 0x400009: 0x6B | 0x40000A: 0x8B | 0x40000B: 0x03</code><br><code>0x40000C: 0xE3 | 0x40000D: 0x0E | 0x40000E: 0xFB | 0x40000F: 0xFF</code><br><code>0x400010: 0xB3 | 0x400011: 0x04 | 0x400012: 0x39 | 0x400013: 0x01</code><br><code>0x400014: 0x6F | 0x400015: 0xF0 | 0x400016: 0x1F | 0x400017: 0xFF</code><br>Hãy viết mã máy 32-bit (ở hệ 16) của lệnh nằm ở địa chỉ <code>0x400010</code> (ví dụ: <code>0x12345678</code>):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo thứ tự Little-Endian, byte địa chỉ thấp nhất đứng ở phần thấp của word 32-bit (LSB). Ghép 4 byte tại <code>0x400010..13</code> (<code>0xB3, 0x04, 0x39, 0x01</code>) từ phải sang trái thu được mã máy: <strong><code>0x013904B3</code></strong> (lệnh <code>add s1, s2, s3</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-9",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.9",
+    "source": "giữa kì 20222 (Đề 0009 - Câu 5); giữa kì 20222 (Đề 0008 (bản 1) - Câu 5); giữa kì 20222 (Đề 0008 (bản 2) - Câu 5)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị hằng số hệ 10 của lệnh I-type (vd: 56):",
+    "acceptedAnswers": [
+      "56",
+      "0x38",
+      "0x038"
+    ],
+    "question": "Cho bản đồ bộ nhớ chương trình RISC-V (RV32I) lưu theo thứ tự <strong>Little-Endian</strong>:<br><code>0x400000: 0x33 | 0x400001: 0x83 | 0x400002: 0x6A | 0x400003: 0x41</code><br><code>0x400004: 0x37 | 0x400005: 0x0B | 0x400006: 0x04 | 0x400007: 0x00</code><br><code>0x400008: 0x13 | 0x400009: 0x6B | 0x40000A: 0x8B | 0x40000B: 0x03</code><br><code>0x40000C: 0xE3 | 0x40000D: 0x0E | 0x40000E: 0xFB | 0x40000F: 0xFF</code><br><code>0x400010: 0xB3 | 0x400011: 0x04 | 0x400012: 0x39 | 0x400013: 0x01</code><br><code>0x400014: 0x6F | 0x400015: 0xF0 | 0x400016: 0x1F | 0x400017: 0xFF</code><br>Tìm lệnh <strong>khuôn dạng I (I-type)</strong> duy nhất trong bản đồ bộ nhớ trên và cho biết giá trị hằng số tức thời (<code>imm[11:0]</code>) của lệnh đó ở hệ 10:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Kiểm tra 7 bit opcode của 6 lệnh: <code>0x400000</code> (<code>0x33</code> = R), <code>0x400004</code> (<code>0x37</code> = U), <strong><code>0x400008</code> (<code>0x13</code> = I-type)</strong>, <code>0x40000C</code> (<code>0x63</code> = B), <code>0x400010</code> (<code>0x33</code> = R), <code>0x400014</code> (<code>0x6F</code> = J).<br>Mã máy tại <code>0x400008</code> là <code>0x038B6B13</code> (lệnh <code>ori s6, s6, 56</code>). Trường <code>imm[11:0]</code> = <code>0x038</code> = <strong><code>56</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-10",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.10",
+    "source": "giữa kì 20222 (Đề 0009 - Câu 7); giữa kì 20222 (Đề 0008 (bản 1) - Câu 7)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên ABI 2 thanh ghi (vd: s6, t6):",
+    "acceptedAnswers": [
+      "s6, t6",
+      "s6,t6",
+      "t6, s6",
+      "x22, x31",
+      "x22,x31"
+    ],
+    "question": "Cho bản đồ bộ nhớ chương trình RISC-V (RV32I) lưu theo thứ tự <strong>Little-Endian</strong>:<br><code>0x400000: 0x33 | 0x400001: 0x83 | 0x400002: 0x6A | 0x400003: 0x41</code><br><code>0x400004: 0x37 | 0x400005: 0x0B | 0x400006: 0x04 | 0x400007: 0x00</code><br><code>0x400008: 0x13 | 0x400009: 0x6B | 0x40000A: 0x8B | 0x40000B: 0x03</code><br><code>0x40000C: 0xE3 | 0x40000D: 0x0E | 0x40000E: 0xFB | 0x40000F: 0xFF</code><br><code>0x400010: 0xB3 | 0x400011: 0x04 | 0x400012: 0x39 | 0x400013: 0x01</code><br><code>0x400014: 0x6F | 0x400015: 0xF0 | 0x400016: 0x1F | 0x400017: 0xFF</code><br>Lệnh rẽ nhánh <code>beq</code> duy nhất trong bản đồ bộ nhớ này so sánh 2 thanh ghi ABI nào với nhau? (nhập theo thứ tự <code>rs1, rs2</code>, ví dụ: <code>t1, t2</code>):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh rẽ nhánh nằm ở <code>0x40000C</code> (vì byte thấp là <code>0xE3 &amp; 0x7F = 0x63</code> = B-type), có mã máy là <code>0xFFFB0EE3</code>.<br>Nhị phân: <code>1111 1111 1111 1011 0000 1110 1110 0011</code>.<br>&bull; <code>rs1 [19:15]</code> = <code>10110_2 = 22</code> = <strong><code>s6</code></strong>.<br>&bull; <code>rs2 [24:20]</code> = <code>11111_2 = 31</code> = <strong><code>t6</code></strong> (lệnh <code>beq s6, t6, -4</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-11",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.11",
+    "source": "giữa kì 20222 (Đề 0008 (bản 1) - Câu 3); giữa kì 20222 (Đề 0008 (bản 1) - Câu 4); giữa kì 20222 (Đề 0008 (bản 2) - Câu 3); giữa kì 20222 (Đề 0008 (bản 2) - Câu 4)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số lượng câu lệnh mã máy:",
+    "acceptedAnswers": [
+      "6"
+    ],
+    "question": "Cho bản đồ bộ nhớ chương trình RISC-V (RV32I) lưu theo thứ tự <strong>Little-Endian</strong>:<br><code>0x400000: 0xB3 | 0x400001: 0x83 | 0x400002: 0x49 | 0x400003: 0x41</code><br><code>0x400004: 0x37 | 0x400005: 0x0B | 0x400006: 0x04 | 0x400007: 0x00</code><br><code>0x400008: 0x13 | 0x400009: 0x0B | 0x40000A: 0x8B | 0x40000B: 0x03</code><br><code>0x40000C: 0xE3 | 0x40000D: 0x0E | 0x40000E: 0xFB | 0x40000F: 0xFF</code><br><code>0x400010: 0xB3 | 0x400011: 0x04 | 0x400012: 0x39 | 0x400013: 0x01</code><br><code>0x400014: 0x6F | 0x400015: 0xF0 | 0x400016: 0x1F | 0x400017: 0xFF</code><br>Bản đồ bộ nhớ trên mô tả chính xác bao nhiêu câu lệnh mã máy 32-bit? (ví dụ: 3):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Vùng nhớ kéo dài từ <code>0x400000</code> đến <code>0x400017</code> gồm $24$ byte. Mỗi lệnh RV32I tiêu chuẩn dài $4$ byte nên bản đồ mô tả $24 / 4 = \\mathbf{6}$ lệnh.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-12",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.12",
+    "source": "giữa kì 20222 (Đề 0008 (bản 1) - Câu 6); giữa kì 20222 (Đề 0008 (bản 2) - Câu 6)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên lệnh hợp ngữ (vd: sub):",
+    "acceptedAnswers": [
+      "sub",
+      "SUB"
+    ],
+    "question": "Cho bản đồ bộ nhớ chương trình RISC-V (RV32I) lưu theo thứ tự <strong>Little-Endian</strong>:<br><code>0x400000: 0xB3 | 0x400001: 0x83 | 0x400002: 0x49 | 0x400003: 0x41</code><br><code>0x400004: 0x37 | 0x400005: 0x0B | 0x400006: 0x04 | 0x400007: 0x00</code><br><code>0x400008: 0x13 | 0x400009: 0x0B | 0x40000A: 0x8B | 0x40000B: 0x03</code><br><code>0x40000C: 0xE3 | 0x40000D: 0x0E | 0x40000E: 0xFB | 0x40000F: 0xFF</code><br><code>0x400010: 0xB3 | 0x400011: 0x04 | 0x400012: 0x39 | 0x400013: 0x01</code><br><code>0x400014: 0x6F | 0x400015: 0xF0 | 0x400016: 0x1F | 0x400017: 0xFF</code><br>Hãy cho biết tên thao tác (mnemonic) của lệnh tại địa chỉ <code>0x400000</code> là gì (ví dụ: <code>add, bne, sub</code>)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Ghép 4 byte từ <code>0x400000..03</code> (<code>0xB3, 0x83, 0x49, 0x41</code>) theo Little-Endian ta được mã máy <code>0x414983B3</code>.<br>Trong đó <code>opcode = 0x33</code> (R-type), <code>funct3 = 000</code>, <code>funct7 = 0100000</code> (<code>0x20</code>) &rarr; đó chính là phép trừ <strong><code>sub</code></strong> (cụ thể là <code>sub t2, s3, s4</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-13",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.13",
+    "source": "giữa kì 20222 (Đề 0008 (bản 2) - Câu 7)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập địa chỉ đích Hexa (vd: 0x00400004):",
+    "acceptedAnswers": [
+      "0x00400004",
+      "0x400004",
+      "0x00400004"
+    ],
+    "question": "Cho bản đồ bộ nhớ chương trình RISC-V (RV32I) lưu theo thứ tự <strong>Little-Endian</strong>:<br><code>0x400000: 0xB3 | 0x400001: 0x83 | 0x400002: 0x49 | 0x400003: 0x41</code><br><code>0x400004: 0x37 | 0x400005: 0x0B | 0x400006: 0x04 | 0x400007: 0x00</code><br><code>0x400008: 0x13 | 0x400009: 0x0B | 0x40000A: 0x8B | 0x40000B: 0x03</code><br><code>0x40000C: 0xE3 | 0x40000D: 0x0E | 0x40000E: 0xFB | 0x40000F: 0xFF</code><br><code>0x400010: 0xB3 | 0x400011: 0x04 | 0x400012: 0x39 | 0x400013: 0x01</code><br><code>0x400014: 0x6F | 0x400015: 0xF0 | 0x400016: 0x1F | 0x400017: 0xFF</code><br>Lệnh <code>jal</code> duy nhất trong bản đồ bộ nhớ này (tại <code>0x400014</code>) sẽ nhảy tới lệnh ở địa chỉ nào (viết ở hệ 16, ví dụ <code>0x00400004</code>)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>jal</code> tại <code>PC = 0x00400014</code> có mã máy <code>0xFF1FF06F</code> (<code>1111 1111 0001 1111 1111 0000 0110 1111_2</code>).<br>Giải mã hằng số J-type: <code>imm[20]=1</code>, <code>imm[19:12]=0xFF</code>, <code>imm[11]=1</code>, <code>imm[10:1]=1111111000_2</code>, <code>imm[0]=0</code> &rarr; <code>imm = -16</code> byte (<code>-0x10</code>).<br>Địa chỉ nhảy $= \\text{0x00400014} - \\text{0x10} = \\mathbf{\\text{0x00400004}}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-14",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.14",
+    "source": "giữa kì 20222 (Đề 0007 (IT3282) - Câu 4)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tên thanh ghi ABI hoặc x27 (vd: s11):",
+    "acceptedAnswers": [
+      "s11",
+      "x27",
+      "s11 (x27)"
+    ],
+    "question": "Lệnh mã máy RISC-V (RV32I) <code>0x009DA023</code> (lệnh S-type <code>sw s1, 0(s11)</code>) có thanh ghi nguồn cơ sở <code>rs1</code> (tại các bit <code>[19:15]</code>) là thanh ghi ABI nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đổi sang nhị phân 32 bit: <code>0x009DA023</code> = <code>0000 000 01001 11011 010 00000 0100011</code>.<br>Nhóm bit <code>[19:15]</code> là <code>11011_2 = 27</code>, tương ứng với thanh ghi <code>x27</code> hay tên ABI là <strong><code>s11</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-15",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.15",
+    "source": "giữa kì 20222 (Đề 0006 (IT3283) - Câu 6)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập khuôn dạng (vd: R):",
+    "acceptedAnswers": [
+      "R",
+      "R-type",
+      "kiểu R",
+      "dạng R"
+    ],
+    "question": "Lệnh mã máy <code>0x00951533</code> của bộ xử lý RISC-V 32-bit (RV32I) thuộc khuôn dạng lệnh nào (nhập chữ cái khuôn dạng: <code>R / I / S / B / U / J</code>)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Xét 7 bit thấp nhất (<code>bit [6:0]</code>) của <code>0x00951533</code>: <code>0x33 &amp; 0x7F = 0110011_2</code> (<code>0x33</code>). Đây là mã <code>opcode</code> của khuôn dạng <strong><code>R</code></strong> (R-type, cụ thể là lệnh <code>sll a0, a0, s1</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-16",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.16",
+    "source": "giữa kì 20222 (Đề 0006 (IT3283) - Câu 7)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập chuỗi nhị phân 12 bit (vd: 1111 1111 1001):",
+    "acceptedAnswers": [
+      "1111 1111 1001",
+      "111111111001"
+    ],
+    "question": "Lệnh hợp ngữ RISC-V (RV32I) <code>addi t1, s5, -7</code> được dịch sang mã máy 32-bit. Hãy viết <strong>12 bit cao nhất</strong> (trường <code>imm[11:0]</code>, từ bit 31 đến bit 20) của mã máy đó ở hệ nhị phân:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong khuôn dạng I-type của RISC-V, 12 bit cao <code>[31:20]</code> chứa hằng số có dấu <code>imm[11:0]</code>.<br>Ta có $+7_{10} = 0000\\;0000\\;0111_2$. Đảo bit rồi cộng 1 để lấy mã bù 2 của $-7$: <strong><code>1111 1111 1001</code></strong> (<code>0xFF9</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_8-17",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.17",
+    "source": "giữa kì 20231 (#dd5b6b)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập mã máy Hexa 32-bit (vd: 0x01C3AFB3):",
+    "acceptedAnswers": [
+      "0x01C3AFB3",
+      "0x01c3afb3"
+    ],
+    "question": "Hãy viết mã máy 32-bit ở dạng số Hexa của câu lệnh RISC-V (RV32I) dưới đây:<br><code>slt t6, t2, t3</code><br>(Biết lệnh <code>slt</code> thuộc R-type có <code>opcode = 0110011</code>, <code>funct3 = 010</code>, <code>funct7 = 0000000</code>; số hiệu các thanh ghi <code>t6 = x31</code>, <code>t2 = x7</code>, <code>t3 = x28</code>):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Ghép các trường R-type theo thứ tự từ bit 31 về 0:<br>&bull; <code>funct7 = 0000000</code> (7 bit)<br>&bull; <code>rs2 (t3 = 28) = 11100</code> (5 bit)<br>&bull; <code>rs1 (t2 = 7) = 00111</code> (5 bit)<br>&bull; <code>funct3 = 010</code> (3 bit)<br>&bull; <code>rd (t6 = 31) = 11111</code> (5 bit)<br>&bull; <code>opcode = 0110011</code> (7 bit)<br>Nhị phân: <code>0000 0001 1100 0011 1010 1111 1011 0011</code> = <strong><code>0x01C3AFB3</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-18",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.18",
+    "source": "Lab - cuối kì 20222 (Câu 12)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập mã máy Hexa 32-bit (vd: 0x01DE02B3):",
+    "acceptedAnswers": [
+      "0x01DE02B3",
+      "0x01de02b3"
+    ],
+    "question": "Hãy dịch câu lệnh hợp ngữ RISC-V sau đây thành mã máy 32-bit dạng Hexa:<br><code>add t0, t3, t4</code><br>(Biết <code>add</code> là R-type có <code>opcode = 0110011</code>, <code>funct3 = 000</code>, <code>funct7 = 0000000</code>; thanh ghi <code>t0 = x5</code>, <code>t3 = x28</code>, <code>t4 = x29</code>):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Sắp xếp các trường R-type: <code>funct7=0000000</code> | <code>rs2(t4=29)=11101</code> | <code>rs1(t3=28)=11100</code> | <code>funct3=000</code> | <code>rd(t0=5)=00101</code> | <code>opcode=0110011</code>.<br>Nhóm từng 4 bit: <code>0000 0001 1101 1110 0000 0010 1011 0011</code> = <strong><code>0x01DE02B3</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-19",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.19",
+    "source": "Lab - cuối kì 20222 (Câu 18); Lab - cuối kì 20232 (Câu 3)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong tất cả các khuôn dạng lệnh 32-bit của kiến trúc RISC-V (RV32I), trường <code>opcode</code> (mã thao tác 7-bit) nằm ở vị trí bit nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Bit 0 đến bit 6 (7 bit thấp nhất)",
+      "Bit 25 đến bit 31 (7 bit cao nhất)",
+      "Bit 12 đến bit 14",
+      "Bit 15 đến bit 19"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Một điểm thiết kế nhất quán của RISC-V là trường <strong><code>opcode</code> luôn cố định tại 7 bit thấp nhất <code>[6:0]</code></strong> (cùng với các vị trí <code>rd, rs1, rs2</code> cố định) giúp phần cứng giải mã song song nhanh chóng.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-20",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.20",
+    "source": "Lab - cuối kì 20222 (Câu 24); Lab - cuối kì 20232 (Câu 34)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Biết rằng <code>0x00130313</code> là mã máy 32-bit của một lệnh <code>addi</code> trong RISC-V (RV32I) (<code>t0=x5, t1=x6, t2=x7, s0=x8</code>). Lựa chọn nào là câu lệnh tương ứng?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "addi t1, t1, 1",
+      "addi t0, t0, 1",
+      "addi t2, t2, 1",
+      "addi s0, s0, 1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Phân tích mã máy <code>0x00130313</code>: <code>000000000001 00110 000 00110 0010011</code>.<br>&bull; <code>imm = 1</code>, <code>rs1 = 00110_2 = 6 (t1)</code>, <code>funct3 = 000 (addi)</code>, <code>rd = 00110_2 = 6 (t1)</code> &rarr; lệnh <strong><code>addi t1, t1, 1</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_8-21",
+    "chapter": 3,
+    "groupId": "3.2.8",
+    "groupTitle": "Nhóm 8: Dịch Mã máy – Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ",
+    "exerciseCode": "Đề thi 3.2.8.21",
+    "source": "Lab - cuối kì 20232 (Câu 31)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đâu là mã máy 32-bit của lệnh RISC-V <code>add t0, t1, t2</code>? (Biết <code>add</code> có <code>opcode = 0110011</code>, <code>funct3 = 000</code>, <code>funct7 = 0000000</code>; số hiệu thanh ghi <code>t0 = x5</code>, <code>t1 = x6</code>, <code>t2 = x7</code>):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0x007302B3",
+      "0x006382B3",
+      "0x00730333",
+      "0x407302B3"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lắp ghép R-type: <code>funct7=0000000</code>, <code>rs2(t2=7)=00111</code>, <code>rs1(t1=6)=00110</code>, <code>funct3=000</code>, <code>rd(t0=5)=00101</code>, <code>opcode=0110011</code> &rarr; <code>0000 0000 0111 0011 0000 0010 1011 0011</code> = <strong><code>0x007302B3</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-7",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.7",
+    "source": "Lab - cuối kì 20222 (Câu 15)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khai báo biến trong vùng <code>.data</code> của RARS như dưới đây chiếm bao nhiêu byte bộ nhớ?",
+    "codeBlock": ".data\n    X: .word 10",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "4",
+      "10",
+      "1",
+      "2"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ thị <code>.word</code> cấp phát một từ dữ liệu chuẩn 32-bit, tương đương <strong>4 byte</strong> trong bộ nhớ (bất kể giá trị khởi tạo là 10 hay bao nhiêu).</p>"
+  },
+  {
+    "id": "pdf-3_2_9-8",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.8",
+    "source": "Lab - cuối kì 20222 (Câu 20); Lab - cuối kì 20232 (Câu 37)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Câu lệnh RISC-V sau đây sau khi trình hợp dịch RARS biên dịch thành mã máy thực sẽ chiếm bao nhiêu byte bộ nhớ?",
+    "codeBlock": "li a0, 0x10203040",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "8",
+      "4",
+      "2",
+      "12"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>li a0, 0x10203040</code> là giả lệnh nạp hằng số 32-bit đầy đủ nên được trình hợp dịch tách thành <strong>2 lệnh thật</strong> 32-bit là <code>lui</code> (20 bit cao) + <code>addi</code> (12 bit thấp). Tổng kích thước: $2 \\times 4 = \\mathbf{8}$ byte.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-9",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.9",
+    "source": "Lab - cuối kì 20222 (Câu 23); Lab - cuối kì 20232 (Câu 23)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong trình mô phỏng RARS, cửa sổ hiển thị bộ nhớ <strong>Data Segment</strong> cho phép người dùng quan sát dữ liệu ở các phân vùng bộ nhớ nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Cả vùng nhớ chứa các biến (.data / gp) và vùng nhớ ngăn xếp (sp / stack)",
+      "Chỉ hiển thị vùng nhớ chứa các lệnh máy (.text)",
+      "Chỉ hiển thị nội dung 32 thanh ghi x0..x31 của CPU",
+      "Chỉ hiển thị cấu trúc bên trong bộ nhớ đệm Cache L1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong cửa sổ <em>Execute &rarr; Data Segment</em> của RARS, hộp chọn địa chỉ ở góc dưới cho phép chuyển đổi qua lại giữa <code>.data (0x10010000)</code> (vùng biến tĩnh), <code>gp</code>, <code>sp (stack)</code> (vùng ngăn xếp), và <code>MMIO</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-10",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.10",
+    "source": "Lab - cuối kì 20222 (Câu 29); Lab - cuối kì 20232 (Câu 14)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập địa chỉ Hexa của t2 (vd: 0x10010008):",
+    "acceptedAnswers": [
+      "0x10010008"
+    ],
+    "question": "Cho đoạn chương trình RISC-V sau trên RARS. Biết sau khi thực hiện xong, thanh ghi <code>t1</code> có giá trị là <code>0x10010004</code>. Hỏi thanh ghi <code>t2</code> có giá trị là bao nhiêu (viết ở dạng Hexa 32-bit)?",
+    "codeBlock": ".data\n    x: .word 10\n    y: .word 11\n    z: .word 12\n.text\n    la  t0, x\n    la  t1, y\n    la  t2, z",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Biến <code>y</code> bắt đầu tại <code>0x10010004</code> và kiểu <code>.word</code> chiếm 4 byte (<code>0x10010004..07</code>), nên biến <code>z</code> nằm liên tiếp ngay sau đó ở địa chỉ <strong><code>0x10010008</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-11",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.11",
+    "source": "Lab - cuối kì 20232 (Câu 8)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập chuỗi ký tự in ra màn hình:",
+    "acceptedAnswers": [
+      "234567"
+    ],
+    "question": "Đoạn chương trình RISC-V dưới đây hiển thị chuỗi ký tự nào ra cửa sổ Run I/O của RARS (biết mã dịch vụ <code>a7 = 11</code> thực hiện in 1 ký tự ASCII trong <code>a0</code>)?",
+    "codeBlock": ".data\n    str: .asciz \"123456\"\n.text\n    la   a3, str\n    li   a2, 0\n    li   a7, 11\nl1:\n    add  a1, a2, a3\n    lb   a0, 0(a1)\n    beq  a0, zero, end\n    addi a0, a0, 1\n    ecall\n    addi a2, a2, 1\n    j    l1\nend:",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Vòng lặp lần lượt đọc từng ký tự của chuỗi <code>\"123456\"</code> đến khi gặp ký tự kết thúc null (<code>0</code>), cộng thêm $1$ vào mã ASCII của từng ký tự rồi in ra: <code>'1'+1='2'</code>, <code>'2'+1='3'</code>, ..., <code>'6'+1='7'</code> &rarr; <strong><code>234567</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-12",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.12",
+    "source": "Lab - cuối kì 20232 (Câu 10); Lab - cuối kì 20222 (Câu 25)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đoạn chương trình RISC-V dưới đây hiển thị chuỗi gì ra màn hình Run I/O của RARS? (Biết <code>a7 = 4</code> là dịch vụ in chuỗi kết thúc bởi ký tự null):",
+    "codeBlock": ".data\n    str1: .ascii \"Hello\"\n    str2: .asciz \"World\"\n.text\n    li   a7, 4\n    la   a0, str1\n    ecall",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "HelloWorld",
+      "Hello",
+      "Hello World",
+      "World"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ thị <code>.ascii</code> tạo chuỗi ký tự nhưng <strong>KHÔNG</strong> chèn byte kết thúc <code>\\0</code> ở cuối như <code>.asciz</code>. Vì vậy <code>ecall</code> với <code>a7 = 4</code> tiếp tục đọc nối sang vùng nhớ ngay sau của <code>str2</code> cho tới khi gặp byte <code>\\0</code> &rarr; kết quả in ra <strong><code>HelloWorld</code></strong>.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-13",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.13",
+    "source": "Lab - cuối kì 20232 (Câu 12)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập địa chỉ mặc định của .text (vd: 0x00400000):",
+    "acceptedAnswers": [
+      "0x00400000",
+      "0x400000"
+    ],
+    "question": "Trong cấu hình bộ nhớ mặc định của công cụ RARS, vùng nhớ phân đoạn lệnh <code>.text</code> bắt đầu từ địa chỉ 32-bit nào (viết ở hệ Hexa)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo bố cục bộ nhớ mặc định (Default Memory Configuration) của RARS, phân đoạn mã lệnh <code>.text</code> bắt đầu tại địa chỉ <strong><code>0x00400000</code></strong> (còn <code>.data</code> mặc định bắt đầu tại <code>0x10010000</code>).</p>"
+  },
+  {
+    "id": "pdf-3_2_9-15",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.15",
+    "source": "Lab - cuối kì 20232 (Câu 18)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị hệ 10 của a2:",
+    "acceptedAnswers": [
+      "20"
+    ],
+    "question": "Xác định giá trị thanh ghi <code>a2</code> ở hệ thập phân sau khi đoạn chương trình RISC-V dưới đây thực hiện xong:",
+    "codeBlock": ".data\n    A0: .word 1,3,5,7,9\n    A1:\n.text\n    la   a0, A0\n    la   a1, A1\n    sub  a2, a1, a0",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Nhãn <code>A0</code> khai báo 5 giá trị kiểu <code>.word</code>, mỗi phần tử chiếm $4$ byte nên chiếm tổng cộng $5 \\times 4 = 20$ byte. Nhãn <code>A1</code> đặt ngay sau phần dữ liệu đó nên hiệu địa chỉ $a_1 - a_0 = \\mathbf{20}$.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-16",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.16",
+    "source": "Lab - cuối kì 20232 (Câu 19)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong trình mô phỏng RARS, biến <code>X</code> được khai báo như sau chiếm bao nhiêu byte bộ nhớ?",
+    "codeBlock": ".data\n    X: .word 3:4",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "16",
+      "4",
+      "12",
+      "3"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Cú pháp <code>.word value:count</code> khai báo một mảng gồm <code>count</code> phần tử kiểu word có giá trị lặp bằng <code>value</code>. Ở đây <code>.word 3:4</code> tạo 4 word (mỗi word giá trị 3), chiếm tổng cộng $4 \\times 4 = \\mathbf{16}$ byte.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-17",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.17",
+    "source": "Lab - cuối kì 20232 (Câu 20)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Màn hình đồ họa Bitmap Display trong công cụ RARS biểu diễn mỗi điểm ảnh (pixel) bằng 1 word (chứa giá trị màu RGB 24-bit). Để hiển thị một bức ảnh kích thước <code>32 x 32</code> pixels cần sử dụng bao nhiêu byte bộ nhớ?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "4096",
+      "3072",
+      "2048",
+      "1024"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số điểm ảnh của ảnh $32 \\times 32$ là $1024$ pixels. Vì mỗi pixel chiếm 1 word $= 4$ byte trong bộ nhớ màn hình, tổng dung lượng cần thiết là $1024 \\times 4 = \\mathbf{4096}$ byte.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-18",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.18",
+    "source": "Lab - cuối kì 20232 (Câu 21); Lab - cuối kì 20222 (Câu 30)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong hợp ngữ RISC-V trên trình mô phỏng RARS, chỉ thị (directive) nào sau đây dùng để khai báo vùng bộ nhớ chứa các câu lệnh của chương trình?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      ".text",
+      ".code",
+      ".stack",
+      ".data"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chỉ thị <strong><code>.text</code></strong> báo hiệu phân đoạn mã lệnh (Text/Code Segment), còn <code>.data</code> báo hiệu phân đoạn dữ liệu (Data Segment).</p>"
+  },
+  {
+    "id": "pdf-3_2_9-19",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.19",
+    "source": "Lab - cuối kì 20232 (Câu 27)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Điều kiện nào cần được đảm bảo để một tệp chương trình hợp ngữ RISC-V có thể lắp ráp (Assemble) thành công trong công cụ RARS?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Tệp mã nguồn đã được lưu (Save) vào ổ đĩa và không tồn tại lỗi cú pháp nào",
+      "Bắt buộc phải khai báo đầy đủ cả hai chỉ thị .data và .text trong cùng một tệp",
+      "Chương trình không có lỗi cú pháp (RARS không yêu cầu lưu tệp trước khi Assemble)",
+      "Mọi chương trình bắt buộc phải có lời gọi ecall kết thúc a7 = 10"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trên RARS, nút <em>Assemble</em> yêu cầu tệp nguồn phải được lưu (Save) thành tệp trên đĩa (<code>.asm</code> / <code>.s</code>) và mã nguồn phải hợp lệ không có lỗi cú pháp; việc khai báo <code>.data</code> là không bắt buộc nếu chương trình không dùng biến tĩnh.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-21",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.21",
+    "source": "Lab - cuối kì 20232 (Câu 29)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Thiết bị Bitmap Display trong RARS đặt Base Address ở <code>0x10010000</code>, Unit Width = <code>16</code>, Unit Height = <code>16</code>, Display Width = <code>256</code>, Display Height = <code>256</code>. Để tô màu đỏ (<code>0x00FF0000</code>) cho ô điểm ảnh tại <strong>hàng 3, cột 3</strong> (hàng 1 ở trên cùng, cột 1 ở ngoài cùng bên trái), đoạn mã RISC-V nào sau đây đúng?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "li a0, 0x10010000 ; li a1, 0x00FF0000 ; sw a1, 136(a0)",
+      "li a0, 0x10010000 ; li a1, 0x00FF0000 ; sw a1, 36(a0)",
+      "li a0, 0x10010000 ; li a1, 0x00FF00FF ; sw a1, 136(a0)",
+      "li a0, 0x10010000 ; li a1, 0x00FF00FF ; sw a1, 36(a0)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; Số cột trên một hàng $= 256 / 16 = 16$ ô.<br>&bull; Ô tại hàng 3, cột 3 tương ứng chỉ số 0-based là $(\\text{row} = 2, \\text{col} = 2)$.<br>&bull; Thứ tự phần tử word: $\\text{index} = 2 \\times 16 + 2 = 34$. Độ lệch byte $= 34 \\times 4 = \\mathbf{136}$. Mã màu đỏ 24-bit RGB là <code>0x00FF0000</code>.</p>"
+  },
+  {
+    "id": "pdf-3_2_9-23",
+    "chapter": 3,
+    "groupId": "3.2.9",
+    "groupTitle": "Nhóm 9: Thực hành RARS, Chỉ thị Hợp ngữ (.data, .word, .asciz), Lời gọi hệ thống (ecall) và Vào-Ra MMIO",
+    "exerciseCode": "Đề thi 3.2.9.23",
+    "source": "Lab - cuối kì 20232 (Câu 38)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Biết rằng phân đoạn <code>.data</code> bắt đầu từ địa chỉ <code>0x10010000</code>. Với khai báo dữ liệu dưới đây trong RARS, biến <code>X</code> sẽ được cấp phát bắt đầu từ địa chỉ nào?",
+    "codeBlock": ".data\n    msg: .asciz \"SoICT\"\n    X:   .word 20232",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0x10010008",
+      "0x10010005",
+      "0x10010006",
+      "0x10010000"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chuỗi <code>\"SoICT\"</code> gồm 5 ký tự cộng thêm 1 byte kết thúc null <code>\\0</code> (vì dùng <code>.asciz</code>) chiếm 6 byte (<code>0x10010000..0x10010005</code>). Do chỉ thị <code>.word</code> tự động căn lề chia hết cho 4 byte (word-aligned), 2 byte <code>06..07</code> được đệm (padding) và biến <code>X</code> bắt đầu ở <strong><code>0x10010008</code></strong>.</p>"
   }
 ];
 })(typeof window !== 'undefined' ? window : globalThis);

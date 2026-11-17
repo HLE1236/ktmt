@@ -64,6 +64,8 @@
   const questionMap = window.KTMT_QUESTION_MAP || {};
   const chaptersList = window.KTMT_CHAPTERS || [];
   const theorySections = window.KTMT_THEORY || [];
+  const examSetsList = window.KTMT_EXAM_SETS || [];
+  const examSetMap = window.KTMT_EXAM_SET_MAP || {};
   const registerLookup = window.RISCV_REGISTER_LOOKUP || window.RISCV_REGISTERS || {};
 
   let currentTab = 'dashboard';
@@ -477,10 +479,18 @@
 
   // Phân loại chính xác 1-1 từng câu hỏi về đúng mục lý thuyết trong KTMT_GK.pdf (4 chương)
   function getQuestionSectionId(q) {
+    const g = q.groupId || q.group || '';
+    if (q.chapter === 3 && g !== '3.1') {
+      if (g === '3.2.1') return '3.1.1';
+      if (g === '3.2.4') return '3.1.2';
+      if (g === '3.2.8') return '3.1.4';
+      if (g === '3.2.5' || g === '3.2.6' || g === '3.2.7') return '3.1.5';
+      if (g === '3.2.9') return '3.1.6';
+      return '3.1.3';
+    }
     if (q.relatedTheoryId && theorySections.some(s => s.id === q.relatedTheoryId)) {
       return q.relatedTheoryId;
     }
-    const g = q.groupId || q.group || '';
     if (q.chapter === 1) {
       if (g === '1.2.1') return '1.1.1';
       if (g === '1.1') return '1.1.2';
@@ -492,10 +502,7 @@
       return '2.1.3';
     }
     if (q.chapter === 3) {
-      if (g === '3.2.7' || g === '3.1') return '3.1.1';
-      if (g === '3.2.4') return '3.1.2';
-      if (g === '3.2.8' || g === '3.2.1') return '3.1.4';
-      return '3.1.3';
+      return '3.1.1';
     }
     if (q.chapter === 4) {
       if (g === '4.2.1') return '4.1.1';
@@ -894,6 +901,11 @@
         const gid = el.getAttribute('data-group-link');
         el.textContent = `(${getGroupQuestions(gid).length} câu)`;
       });
+      contentEl.querySelectorAll('.formula-practice-inline[data-group-link] .group-q-count').forEach(el => {
+        const parent = el.closest('[data-group-link]');
+        const gid = parent && parent.getAttribute('data-group-link');
+        if (gid) el.textContent = `${getGroupQuestions(gid).length} câu`;
+      });
       contentEl.querySelectorAll('[data-pdf-jump-page]').forEach(btn => {
         btn.addEventListener('click', () => {
           openTheoryPdfPage(parseInt(btn.getAttribute('data-pdf-jump-page'), 10) || 1);
@@ -1014,6 +1026,7 @@
     if (tag === 'GK') return 'badge-tag-gk';
     if (tag === 'CK') return 'badge-tag-ck';
     if (tag === 'Ôn tập' || tag === 'OT') return 'badge-tag-ot';
+    if (tag === 'Lab') return 'badge-tag-lab';
     return 'badge-tag-lt';
   }
 
@@ -1045,6 +1058,8 @@
     updateGroupDropdownOptions(String(chNum));
     const grpSelect = document.getElementById('practice-filter-group');
     if (grpSelect) grpSelect.value = 'all';
+    const setSelect = document.getElementById('practice-filter-exam-set');
+    if (setSelect) setSelect.value = 'all';
     const shuf = document.getElementById('practice-shuffle-toggle');
     if (shuf) shuf.checked = false;
     setPracticeViewMode('workbook');
@@ -1062,11 +1077,35 @@
     updateGroupDropdownOptions(String(chNum));
     const grpSelect = document.getElementById('practice-filter-group');
     if (grpSelect) grpSelect.value = groupId;
+    const setSelect = document.getElementById('practice-filter-exam-set');
+    if (setSelect) setSelect.value = 'all';
     const shuf = document.getElementById('practice-shuffle-toggle');
     if (shuf) shuf.checked = false;
     setPracticeViewMode('workbook');
     initPracticeQueue();
     switchTab('practice');
+  }
+
+  function openExamSetPractice(setId, viewMode = 'workbook') {
+    const chSel = document.getElementById('practice-filter-chapter');
+    if (chSel) chSel.value = 'all';
+    const tagSel = document.getElementById('practice-filter-tag');
+    if (tagSel) tagSel.value = 'all';
+    updateGroupDropdownOptions('all');
+    const grpSel = document.getElementById('practice-filter-group');
+    if (grpSel) grpSel.value = 'all';
+    const setSel = document.getElementById('practice-filter-exam-set');
+    if (setSel) setSel.value = setId || 'all';
+    const shuf = document.getElementById('practice-shuffle-toggle');
+    if (shuf) shuf.checked = false;
+
+    setPracticeViewMode(viewMode === 'quiz' ? 'quiz' : 'workbook');
+    initPracticeQueue();
+    switchTab('practice');
+    const setObj = examSetMap[setId];
+    if (setObj) {
+      showToast(`Đang mở ${setObj.shortTitle || setObj.title} (${practiceQueue.length} câu)!`, 'success');
+    }
   }
 
   function renderPracticeWorkbook() {
@@ -1090,6 +1129,8 @@
         document.getElementById('practice-filter-tag').value = 'all';
         updateGroupDropdownOptions('all');
         document.getElementById('practice-filter-group').value = 'all';
+        const setSel = document.getElementById('practice-filter-exam-set');
+        if (setSel) setSel.value = 'all';
         initPracticeQueue();
         renderPracticeWorkbook();
       });
@@ -1162,10 +1203,50 @@
     });
   }
 
+  function populatePracticeExamSetDropdown() {
+    const select = document.getElementById('practice-filter-exam-set');
+    if (!select) return;
+    const currentVal = select.value || 'all';
+    select.innerHTML = '';
+
+    const optAll = document.createElement('option');
+    optAll.value = 'all';
+    optAll.textContent = 'Tất cả các năm / nguồn đề';
+    select.appendChild(optAll);
+
+    const categoryLabels = {
+      GK: '📝 ĐỀ THI GIỮA KỲ (GK)',
+      CK: '🎓 ĐỀ THI CUỐI KỲ (CK)',
+      OT: '📚 ĐỀ ÔN TẬP & THI THỬ',
+      Lab: '🧪 ĐỀ THỰC HÀNH LAB'
+    };
+
+    ['GK', 'CK', 'OT', 'Lab'].forEach(cat => {
+      const catSets = examSetsList.filter(s => s.category === cat && s.count > 0);
+      if (catSets.length === 0) return;
+      const og = document.createElement('optgroup');
+      og.label = categoryLabels[cat] || cat;
+      catSets.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.shortTitle || s.title} (${s.count} câu)`;
+        og.appendChild(opt);
+      });
+      select.appendChild(og);
+    });
+
+    if (Array.from(select.options).some(o => o.value === currentVal)) {
+      select.value = currentVal;
+    } else {
+      select.value = 'all';
+    }
+  }
+
   function initPracticeQueue() {
     const chFilter = document.getElementById('practice-filter-chapter')?.value || 'all';
     const tagFilter = document.getElementById('practice-filter-tag')?.value || 'all';
     const groupFilter = document.getElementById('practice-filter-group')?.value || 'all';
+    const examSetFilter = document.getElementById('practice-filter-exam-set')?.value || 'all';
     const isShuffle = document.getElementById('practice-shuffle-toggle')?.checked || false;
 
     let filtered = allQuestions.slice();
@@ -1184,6 +1265,9 @@
       } else {
         filtered = filtered.filter(q => (q.groupId || q.group) === groupFilter);
       }
+    }
+    if (examSetFilter !== 'all') {
+      filtered = filtered.filter(q => Array.isArray(q.examSets) && q.examSets.includes(examSetFilter));
     }
 
     if (isShuffle) {
@@ -1310,7 +1394,10 @@
       document.getElementById('btn-reset-filters')?.addEventListener('click', () => {
         document.getElementById('practice-filter-chapter').value = 'all';
         document.getElementById('practice-filter-tag').value = 'all';
+        updateGroupDropdownOptions('all');
         document.getElementById('practice-filter-group').value = 'all';
+        const setSel = document.getElementById('practice-filter-exam-set');
+        if (setSel) setSel.value = 'all';
         initPracticeQueue();
         renderPracticeQuestion();
       });
@@ -1691,13 +1778,13 @@
       // Mix both fill-in-the-blank and MCQ per chapter (prioritize GK-tagged, fallback to all in chapter)
       const fillTarget = Math.min(2, Math.floor(target / 2));
       const chPicked = [];
-      chPicked.push(...pickFrom(chGk, q => isFillQuestion(q), fillTarget));
+      chPicked.push(...pickFrom(chGk, q => isFixedFillQuestion(q), fillTarget));
       if (chPicked.length < fillTarget) {
-        chPicked.push(...pickFrom(chAll, q => isFillQuestion(q), fillTarget - chPicked.length));
+        chPicked.push(...pickFrom(chAll, q => isFixedFillQuestion(q), fillTarget - chPicked.length));
       }
 
       const mcqNeeded = target - chPicked.length;
-      chPicked.push(...pickFrom(chGk, q => !isFillQuestion(q), mcqNeeded));
+      chPicked.push(...pickFrom(chGk, q => !isFixedFillQuestion(q), mcqNeeded));
       if (chPicked.length < target) {
         chPicked.push(...pickFrom(chAll, () => true, target - chPicked.length));
       }
@@ -1717,7 +1804,7 @@
   }
 
   function startExam(presetType, customConfig = {}) {
-    if (['gk', 'ck', 'de0012', 'de0013', 'custom'].includes(presetType)) {
+    if (['gk', 'ck', 'de0012', 'de0013', 'exam_set', 'custom'].includes(presetType)) {
       appState.learningContext = null;
     }
 
@@ -1752,6 +1839,14 @@
       questionCount = pool.length;
       durationMins = Math.max(20, Math.ceil(questionCount * 1.5));
       examTitle = `Đề thi mẫu 0013 (Bản 1 & Bản 2) — KTMT_GK.pdf (${questionCount} câu)`;
+      preserveOrder = true;
+    } else if (presetType === 'exam_set') {
+      const setId = customConfig.setId;
+      const setObj = examSetMap[setId];
+      pool = pool.filter(q => Array.isArray(q.examSets) && q.examSets.includes(setId));
+      questionCount = pool.length;
+      durationMins = customConfig.time || Math.max(15, Math.ceil(questionCount * 1.5));
+      examTitle = `${setObj ? setObj.title : ('Bộ đề ' + setId)} (${questionCount} câu)`;
       preserveOrder = true;
     } else if (presetType === 'section' || presetType === 'group') {
       pool = (customConfig.questions || []).slice();
@@ -2864,6 +2959,8 @@
       if (grpSelect) {
         grpSelect.value = groupId;
       }
+      const setSelect = document.getElementById('practice-filter-exam-set');
+      if (setSelect) setSelect.value = 'all';
       initPracticeQueue();
       switchTab('practice');
       showToast(`Đang luyện tập ${questions.length} câu của ${grpTitle}! 🎯`, 'success');
@@ -2942,6 +3039,69 @@
   }
 
   // Điền dữ liệu vào dropdown chọn bài test theo mục tiêu trong tab Phòng thi
+  function renderExamYearSetsGrid(catFilter = 'all') {
+    const grid = document.getElementById('exam-year-sets-grid');
+    if (!grid) return;
+
+    const list = catFilter === 'all'
+      ? examSetsList
+      : examSetsList.filter(s => s.category === catFilter);
+
+    const activeSets = list.filter(s => s.count > 0);
+    if (activeSets.length === 0) {
+      grid.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center; padding: 28px; color: var(--text-secondary);">Chưa có bộ đề nào trong nhóm phân loại này.</div>`;
+      return;
+    }
+
+    const catLabelMap = {
+      GK: 'Giữa kỳ',
+      CK: 'Cuối kỳ',
+      OT: 'Ôn tập / Thi thử',
+      Lab: 'Thực hành Lab'
+    };
+
+    grid.innerHTML = activeSets.map(s => {
+      const badgeCls = getTagBadgeClass(s.category);
+      const catLabel = catLabelMap[s.category] || s.category;
+      const mins = Math.max(15, Math.ceil(s.count * 1.5));
+      return `
+        <article class="exam-year-card">
+          <div>
+            <div class="exam-year-card-top">
+              <span class="badge ${badgeCls}">${catLabel}${s.semester ? ' • ' + s.semester : ''}</span>
+              <span class="exam-year-count">${s.count} câu</span>
+            </div>
+            <h4 class="exam-year-card-title">${s.title}</h4>
+            <p class="exam-year-card-desc">${s.description || ''}</p>
+          </div>
+          <div>
+            <div class="exam-year-card-meta">
+              ${s.mcqCount || 0} trắc nghiệm • ${s.fillCount || 0} điền đáp án • ~${mins} phút
+            </div>
+            <div class="exam-year-card-actions">
+              <button type="button" class="btn btn-primary btn-xs" data-exam-set-start="${s.id}">⏱️ Làm đề bấm giờ</button>
+              <button type="button" class="btn btn-outline-secondary btn-xs" data-exam-set-wb="${s.id}">📖 Lời giải &amp; Ôn tập</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    grid.querySelectorAll('[data-exam-set-start]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const setId = btn.getAttribute('data-exam-set-start');
+        if (setId) startExam('exam_set', { setId });
+      });
+    });
+
+    grid.querySelectorAll('[data-exam-set-wb]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const setId = btn.getAttribute('data-exam-set-wb');
+        if (setId) openExamSetPractice(setId, 'workbook');
+      });
+    });
+  }
+
   function populateExamTargetDropdown() {
     const select = document.getElementById('exam-select-target');
     if (!select) return;
@@ -2961,6 +3121,21 @@
       }
     });
     select.appendChild(ogCh);
+
+    // Nhóm 0b: Theo từng Bộ đề các năm (2018.2 - 2025.2)
+    if (examSetsList.length > 0) {
+      const ogSet = document.createElement('optgroup');
+      ogSet.label = '🗂️ BỘ CÂU HỎI THEO ĐỀ THI CÁC NĂM (2018.2 – 2025.2)';
+      examSetsList.forEach(s => {
+        if (s.count > 0) {
+          const opt = document.createElement('option');
+          opt.value = `set-${s.id}`;
+          opt.textContent = `${s.title} (${s.count} câu)`;
+          ogSet.appendChild(opt);
+        }
+      });
+      select.appendChild(ogSet);
+    }
 
     // Nhóm 1: Theo mục lý thuyết trọng tâm
     const ogSec = document.createElement('optgroup');
@@ -3011,6 +3186,8 @@
         time: Math.max(20, Math.ceil(takeCount * 1.25)),
         title: `Đề tổng hợp ${chObj ? chObj.code + ': ' + chObj.title : 'Chương ' + chNum} (${takeCount} câu)`
       });
+    } else if (val.startsWith('set-')) {
+      startExam('exam_set', { setId: val.replace('set-', '') });
     } else if (val.startsWith('sec-')) {
       startSectionTest(val.replace('sec-', ''), 'exam');
     } else {
@@ -3240,12 +3417,13 @@
 
     // Practice filter change events
     updateGroupDropdownOptions(document.getElementById('practice-filter-chapter')?.value || 'all');
+    populatePracticeExamSetDropdown();
     document.getElementById('practice-filter-chapter')?.addEventListener('change', (e) => {
       updateGroupDropdownOptions(e.target.value);
       initPracticeQueue();
       renderPracticeModeView();
     });
-    ['practice-filter-tag', 'practice-filter-group', 'practice-shuffle-toggle'].forEach(id => {
+    ['practice-filter-tag', 'practice-filter-group', 'practice-filter-exam-set', 'practice-shuffle-toggle'].forEach(id => {
       document.getElementById(id)?.addEventListener('change', () => {
         initPracticeQueue();
         renderPracticeModeView();
@@ -3294,6 +3472,8 @@
         updateGroupDropdownOptions(String(ch));
         const grpSel = document.getElementById('practice-filter-group');
         if (grpSel) grpSel.value = 'all';
+        const setSel = document.getElementById('practice-filter-exam-set');
+        if (setSel) setSel.value = 'all';
         initPracticeQueue();
         switchTab('practice');
       });
@@ -3302,8 +3482,16 @@
     // Initialize tools
     initTools();
 
-    // Populate exam target dropdown
+    // Populate exam target dropdown & yearly exam sets grid
     populateExamTargetDropdown();
+    renderExamYearSetsGrid('all');
+    document.querySelectorAll('#exam-year-cat-filters [data-exam-cat]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#exam-year-cat-filters [data-exam-cat]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderExamYearSetsGrid(btn.getAttribute('data-exam-cat') || 'all');
+      });
+    });
 
     // Initial KaTeX pass on static tabs & initial render
     renderMath(document.getElementById('tab-dashboard'));
@@ -3323,6 +3511,7 @@
     startGroupPractice,
     openWorkbookGroup,
     openWorkbookForChapter,
+    openExamSetPractice,
     renderCheatSheet,
     jumpToTheory,
     jumpToGroup,

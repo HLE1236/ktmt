@@ -246,20 +246,20 @@ console.log('Testing Exam Workflow & Scoring Logic...');
 
 // Test 3.1 Exam Presets (GK, CK, Custom)
 {
-  // GK preset: Chapters 1 & 2 only (88 câu: 53 Ch1 + 35 Ch2), 25 questions
+  // GK preset: Chapters 1 & 2 only (88 câu: 55 Ch1 + 33 Ch2), 25 questions
   const gkPool = allQuestions.filter(q => q.chapter === 1 || q.chapter === 2);
   const gkCount = Math.min(25, gkPool.length);
   const passGK = gkPool.length === 88 && gkCount === 25;
 
-  // CK preset: All chapters (315 câu), 40 questions
+  // CK preset: All active Ch1-4 chapters (420 câu), 40 questions
   const ckPool = allQuestions.slice();
   const ckCount = Math.min(40, ckPool.length);
-  const passCK = ckPool.length === 315 && ckCount === 40;
+  const passCK = ckPool.length === 420 && ckCount === 40;
 
-  // Custom preset: Chapter 3 only (155 câu), 15 questions
+  // Custom preset: Chapter 3 only (259 câu), 15 questions
   const ch3Pool = allQuestions.filter(q => q.chapter === 3);
   const customCount = Math.min(15, ch3Pool.length);
-  const passCustom = ch3Pool.length === 155 && customCount === 15;
+  const passCustom = ch3Pool.length === 259 && customCount === 15;
 
   record(results.examWorkflow, 'Exam Presets filtering (GK=25q from Ch1-2, CK=40q, Custom)', passGK && passCK && passCustom, { gkPool: gkPool.length, ckPool: ckPool.length });
 }
@@ -349,6 +349,19 @@ console.log('Testing Exam Workflow & Scoring Logic...');
                state.mistakes.includes('q2') &&
                state.mistakes.includes('q3');
   record(results.examWorkflow, 'Exam submission pushes wrong and skipped questions to mistakes notebook', pass, state.mistakes);
+}
+
+// Test 3.7 Yearly Exam Sets (22 sets 2018.2–2025.2)
+{
+  const examSets = context.window.KTMT_EXAM_SETS || [];
+  const allValidSets = examSets.length === 22 && examSets.every(s => {
+    const matched = allQuestions.filter(q => Array.isArray(q.examSets) && q.examSets.includes(s.id));
+    return s.count > 0 && matched.length === s.count;
+  });
+  record(results.examWorkflow, 'Yearly Exam Sets metadata & filtering (22 non-empty sets 2018.2-2025.2)', allValidSets, {
+    totalSets: examSets.length,
+    emptySets: examSets.filter(s => !s.count).map(s => s.id)
+  });
 }
 
 // =========================================================================

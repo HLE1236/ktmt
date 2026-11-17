@@ -1,5 +1,5 @@
 // tests/test_questions.js
-// Kiểm thử toàn diện 315 câu hỏi KTMT Hub (KTMT_GK.pdf + Bổ sung)
+// Kiểm thử toàn diện 420 câu hỏi active Giữa kỳ (Chương 1-4) + 83 câu Chương 5-7 lưu trữ riêng
 
 const fs = require('fs');
 const vm = require('vm');
@@ -19,15 +19,18 @@ function loadScript(path) {
 loadScript('js/data-questions-ch1-ch2.js');
 loadScript('js/data-questions-ch3.js');
 loadScript('js/data-questions-ch4.js');
+loadScript('js/data-questions-ch5-ch7.js');
 loadScript('js/data-questions.js');
 
 const questions = context.window.KTMT_QUESTIONS;
 const rawCh1Ch2 = context.window.KTMT_QUESTIONS_CH1_CH2 || [];
 const rawCh3 = context.window.KTMT_QUESTIONS_CH3 || [];
 const rawCh4 = context.window.KTMT_QUESTIONS_CH4 || [];
+const archivedCh57 = context.window.KTMT_QUESTIONS_ARCHIVE || [];
 
 const results = {
   totalQuestions: questions.length,
+  archivedQuestions: archivedCh57.length,
   rawCounts: {
     ch1_ch2: rawCh1Ch2.length,
     ch3: rawCh3.length,
