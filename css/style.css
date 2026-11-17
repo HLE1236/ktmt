@@ -3005,10 +3005,91 @@ code, kbd, samp, pre {
   border: 1px solid var(--purple-border);
 }
 
+/* Pocket Problem-Solving Methods Cheatsheet */
+.cs-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.cs-view-pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+.cs-methods-section {
+  margin-bottom: 24px;
+}
+.cs-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
+  gap: 16px;
+}
+.cs-method-chapter-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  break-inside: avoid;
+}
+.cs-method-chapter-card h3 {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-light);
+}
+.cs-method-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cs-method-item {
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--purple);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  break-inside: avoid;
+}
+.cs-method-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.cs-method-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.cs-method-line {
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 2px 0;
+}
+.cs-method-trap {
+  font-size: 0.81rem;
+  line-height: 1.45;
+  color: #b45309;
+  margin-top: 3px;
+}
 @media print {
   #sidebar,
   #top-header,
   .cheatsheet-toolbar button,
+  .cs-filter-bar,
+  .cs-practice-btn,
   .theory-topbar,
   .theory-sidebar,
   .theory-split-panel,

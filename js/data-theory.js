@@ -2758,4 +2758,193 @@ L1:
       ]
     }
   ];
+
+  // 5. Cheatsheet Sổ tay bỏ túi: Tổng hợp cách làm rút gọn cho toàn bộ 23 dạng bài tập Giữa kỳ (1.2.1 -> 4.2.6)
+  root.KTMT_PROBLEM_METHODS_CHEATSHEET = [
+    {
+      chapter: 1,
+      title: "Chương 1: Giới thiệu chung & Hiệu năng máy tính (5 dạng)",
+      methods: [
+        {
+          id: "1.2.1",
+          name: "1.2.1 • Thành phần hệ thống & Phân loại Flynn",
+          recognize: "Hỏi chức năng 4 khối cơ bản, 5 nhóm máy tính, quy trình sản xuất chip (die/yield) hoặc phân loại SISD/SIMD/MISD/MIMD.",
+          steps: "Ánh xạ: Bộ nhớ chính chứa chương trình đang chạy; CPU xử lý; Bus liên kết; I/O giao tiếp ngoài. Flynn xét 2 luồng <strong>Instruction (I)</strong> &times; <strong>Data (D)</strong> (CPU đa nhân = MIMD, GPU/vector = SIMD).",
+          trap: "Đừng nhầm Bộ nhớ ngoài (HDD/SSD) với Bộ nhớ chính (RAM) là nơi chứa chương trình đang thực thi."
+        },
+        {
+          id: "1.2.2",
+          name: "1.2.2 • Chu kỳ T0, CPI & Thời gian thực thi tCPU",
+          recognize: "Cho $f_0$, $IC$, $CPI$ hoặc tổng chu kỳ $n$, yêu cầu tìm $T_0$, $n$, $t_{\\text{CPU}}$ hay $IC$.",
+          steps: "Dùng $T_0 = \\frac{1}{f_0}$ (mẹo: $f_0\\text{ (GHz)} \\times T_0\\text{ (ns)} = 1$); $n = IC \\times CPI$; $t_{\\text{CPU}} = n \\cdot T_0 = \\frac{IC \\times CPI}{f_0}$.",
+          trap: "Đổi chuẩn đơn vị ($1\\text{ GHz}=10^9\\text{ Hz}$, $1\\text{ ms}=10^{-3}\\text{ s}$, $1\\text{ ns}=10^{-9}\\text{ s}$); nhớ $n$ là tổng chu kỳ chứ không phải số lệnh $IC$."
+        },
+        {
+          id: "1.2.3",
+          name: "1.2.3 • Chỉ số tốc độ MIPS, MFLOPS & 5 hạn chế",
+          recognize: "Tính MIPS / MFLOPS / GFLOPS / TFLOPS hoặc hỏi phát biểu đúng về nhược điểm của MIPS.",
+          steps: "$\\text{MIPS} = \\frac{IC}{t_{\\text{CPU}} \\cdot 10^6} = \\frac{f_0\\text{ (MHz)}}{CPI} = \\frac{f_0\\text{ (GHz)} \\cdot 1000}{CPI}$; $\\text{MFLOPS} = \\frac{\\text{Số phép FP}}{t_{\\text{CPU}} \\cdot 10^6}$.",
+          trap: "Không dùng MIPS so sánh máy khác ISA (RISC vs x86); trên cùng máy MIPS vẫn thay đổi theo từng chương trình."
+        },
+        {
+          id: "1.2.4",
+          name: "1.2.4 • CPI trung bình với nhiều lớp lệnh",
+          recognize: "Bảng nhiều nhóm lệnh (A, B, C...) kèm $CPI_i$ và số lượng $IC_i$ hoặc tỷ lệ phần trăm $p_i\\%$.",
+          steps: "Nếu cho $IC_i$: $CPI_{\\text{TB}} = \\frac{\\sum (CPI_i \\cdot IC_i)}{\\sum IC_i}$. Nếu cho $p_i\\%$: $CPI_{\\text{TB}} = \\sum (p_i\\% \\cdot CPI_i)$, rồi thay vào $t_{\\text{CPU}} = \\frac{IC \\cdot CPI_{\\text{TB}}}{f_0}$.",
+          trap: "Khi đề ẩn 1 nhóm (\"còn lại\"), nhớ lấy $100\\%$ trừ tổng các nhóm đã biết; KHÔNG cộng trung bình cộng giản đơn các $CPI_i$."
+        },
+        {
+          id: "1.2.5",
+          name: "1.2.5 • So sánh hiệu năng & Định luật Amdahl",
+          recognize: "Máy A nhanh hơn máy B bao nhiêu lần, cân bằng $t_{\\text{CPU}}$ khi đổi $f_0 / CPI$, hoặc tăng tốc phần chương trình $p$.",
+          steps: "Dùng $\\frac{P_A}{P_B} = \\frac{t_B}{t_A}$ (cùng $IC \\Rightarrow$ so $\\frac{CPI_B/f_B}{CPI_A/f_A}$). Cân bằng thời gian: giữ $\\frac{IC_1 \\cdot CPI_1}{f_1} = \\frac{IC_2 \\cdot CPI_2}{f_2}$. Amdahl: $S_{\\text{tổng}} = \\frac{1}{(1-p) + p/S}$.",
+          trap: "Hiệu năng tỷ lệ <strong>nghịch</strong> với thời gian thực thi ($P = 1/t_{\\text{CPU}}$): thời gian càng nhỏ thì hiệu năng càng lớn."
+        }
+      ]
+    },
+    {
+      chapter: 2,
+      title: "Chương 2: Hệ thống máy tính (3 dạng)",
+      methods: [
+        {
+          id: "2.2.1",
+          name: "2.2.1 • Cấu trúc CPU, Bộ nhớ & Ngoại vi",
+          recognize: "Hỏi chức năng CU/ALU/RF, bộ nhớ trong vs ngoài, tính chất ngăn nhớ, vai trò Cache hoặc nối ghép ngoại vi.",
+          steps: "CU điều khiển, ALU tính toán, RF lưu tạm tức thời; ngăn nhớ có <em>nội dung đổi</em>, <em>địa chỉ cố định</em>; Cache tăng tốc truy cập RAM; ngoại vi luôn nối qua <strong>Mô-đun I/O</strong>.",
+          trap: "SSD/HDD là bộ nhớ ngoài (không phải bộ nhớ trong) và nối với hệ thống dưới dạng thiết bị vào-ra."
+        },
+        {
+          id: "2.2.2",
+          name: "2.2.2 • Chu trình lệnh (PC / IR) & Ngắt",
+          recognize: "Thứ tự Fetch–Decode–Execute, vai trò PC/IR, thời điểm kiểm tra và thứ tự xử lý Ngắt.",
+          steps: "Fetch: lấy lệnh tại <code>PC</code> vào <code>IR</code>, tăng <code>PC += 4</code>; Decode: giải mã lệnh trong <code>IR</code>; Execute. Cuối mỗi lệnh kiểm tra ngắt &rarr; Tạm dừng &rarr; Cất ngữ cảnh &rarr; Chạy ISR &rarr; Khôi phục &rarr; Lệnh $i+1$.",
+          trap: "Không nhầm <code>PC</code> (địa chỉ lệnh) với <code>IR</code> (mã lệnh); CPU chỉ kiểm tra ngắt sau khi hoàn thành 1 lệnh."
+        },
+        {
+          id: "2.2.3",
+          name: "2.2.3 • Bus hệ thống & Không gian địa chỉ",
+          recognize: "Phân biệt Bus địa chỉ/dữ liệu/điều khiển, QPI/PCIe/SATA/USB, tính dung lượng tối đa $2^N$ hoặc RAM lắp thêm.",
+          steps: "Không gian địa chỉ $= 2^N$ byte (nếu biết max Hexa, cộng $+1$ rồi lấy $\\log_2$ ra $N$). Bài toán lắp thêm RAM: lấy $2^N$ trừ tổng (RAM đã cắm + I/O dùng chung).",
+          trap: "KHÔNG cộng dung lượng SSD/HDD/Cache vào không gian địa chỉ Bus; lệnh <code>sw</code> gửi địa chỉ hiệu dụng lên <strong>Bus địa chỉ</strong>; Bus điều khiển không có độ rộng cố định theo Bus dữ liệu."
+        }
+      ]
+    },
+    {
+      chapter: 3,
+      title: "Chương 3: Kiến trúc Tập lệnh RISC-V RV32I (9 dạng)",
+      methods: [
+        {
+          id: "3.2.1",
+          name: "3.2.1 • 32 thanh ghi, Định dạng & RVC 16-bit",
+          recognize: "Vai trò thanh ghi ABI, kích thước lệnh 32-bit vs RVC 16-bit, giả lệnh và 4 phương thức định địa chỉ.",
+          steps: "Nhớ <code>x0=zero</code>, <code>x1=ra</code>, <code>x2=sp</code>, <code>x5-7/28-31=t0-6</code>, <code>x8-9/18-27=s0-11</code>, <code>x10-17=a0-7</code>. Định địa chỉ: Thanh ghi, Tức thì, Cơ sở+offset (<code>lw/sw</code>), Tương đối PC (<code>beq/jal</code>).",
+          trap: "RVC 16-bit (tiền tố <code>c.</code>) chỉ đánh địa chỉ bằng 3 bit cho 8 thanh ghi <code>x8–x15</code>; lệnh chuẩn RV32I luôn dài 32 bit = 4 byte."
+        },
+        {
+          id: "3.2.2",
+          name: "3.2.2 • Số học, Logic, Dịch bit & Nạp hằng 32-bit",
+          recognize: "Tính giá trị thanh ghi sau <code>add/sub/addi/and/or/xor/sll/srl/sra</code> hoặc cặp lệnh <code>lui + addi</code>.",
+          steps: "Hằng <code>addi</code> chỉ nằm trong $[-2048, +2047]$. Nạp số 32-bit: tách 20 bit cao + 12 bit thấp; nếu bit 11 $= 1$ (chữ Hexa thứ 3 từ phải $\\ge 8$), <strong>cộng $+1$ vào phần 20 bit của <code>lui</code></strong>.",
+          trap: "<code>srai</code> giữ bit dấu (chèn bit 31 vào trái), <code>srli</code> luôn chèn <code>0</code>; <code>xori rd, rs1, -1</code> là phép đảo bit NOT."
+        },
+        {
+          id: "3.2.3",
+          name: "3.2.3 • Lệnh So sánh có dấu vs không dấu",
+          recognize: "Có các lệnh <code>slt, slti, sltu, sltiu, blt, bge, bltu, bgeu</code> với số âm hoặc Hexa có MSB $= 1$.",
+          steps: "<strong>Có dấu</strong> (không có <code>u</code>): bit 31 $= 1$ là số âm (&lt; 0). <strong>Không dấu</strong> (đuôi <code>u</code>): coi cả 32 bit là số nguyên dương $[0, 2^{32}-1]$.",
+          trap: "<code>sltiu rd, rs1, imm</code> vẫn <strong>mở rộng dấu</strong> <code>imm</code> 12-bit thành 32-bit rồi mới so sánh không dấu (vd <code>-1</code> thành <code>0xFFFFFFFF</code> lớn nhất!)."
+        },
+        {
+          id: "3.2.4",
+          name: "3.2.4 • Alignment, Little-Endian & Truy cập bộ nhớ",
+          recognize: "Đọc/ghi <code>lw, lh, lhu, lb, lbu, sw, sh, sb</code> trên bản đồ byte hoặc đếm số lần truy cập Data Memory.",
+          steps: "Little-Endian: byte thấp nhất (LSB) nằm ở địa chỉ nhỏ nhất. <code>lw/sw</code> địa chỉ $\\vdots 4$; <code>lh/sh</code> $\\vdots 2$; <code>lb/sb</code> bất kỳ. Đếm truy cập Data Memory: chỉ tính số lần chạy <code>l*/s*</code>.",
+          trap: "<code>lb/lh</code> mở rộng dấu (bit 7/15 $= 1$ chèn toàn <code>F</code> phía trước); <code>lbu/lhu</code> luôn chèn <code>0</code>; không tính lần tìm nạp lệnh ở IMEM."
+        },
+        {
+          id: "3.2.5",
+          name: "3.2.5 • Dịch giữa ngôn ngữ C và Hợp ngữ RISC-V",
+          recognize: "Chuyển biểu thức C, mảng <code>A[i]</code>, chuỗi ASCII hoặc <code>if/else, while, do..while, for</code> sang RISC-V (hoặc ngược lại).",
+          steps: "Mảng word: <code>slli t0, i, 2; add t0, Base, t0; lw rd, 0(t0)</code>. <code>if (a==b)</code> đảo thành <code>bne a, b, Else</code>; vòng lặp <code>while</code> kiểm tra đầu vòng, <code>do..while</code> nhảy ngược cuối vòng.",
+          trap: "Quên nhân chỉ số <code>i</code> với 4 (word) hay 2 (halfword); chuỗi ASCII nhớ <code>'0'=0x30</code>, <code>'A'=0x41</code>, <code>'a'=0x61</code> (lệch <code>0x20</code>)."
+        },
+        {
+          id: "3.2.6",
+          name: "3.2.6 • Phân tích Vòng lặp & Đếm tổng số lệnh thực thi",
+          recognize: "Tìm kết quả biến sau vòng lặp hoặc đếm tổng số lệnh CPU đã thực thi (dynamic instruction count).",
+          steps: "Lập bảng Trace (<code>i, sum</code>) cho 2–3 vòng đầu + điều kiện dừng để xác định chính xác số vòng lặp $N$. Tổng lệnh $= \\text{Khởi tạo} + N \\cdot (\\text{Thân} + \\text{Kiểm tra}) + \\text{Lần kiểm tra thoát}$.",
+          trap: "Hay đếm thiếu lần kiểm tra điều kiện cuối cùng (lần thoát vòng lặp vẫn thực thi lệnh rẽ nhánh nhưng không nhảy) hoặc đếm sót lệnh <code>j loop</code> cuối thân."
+        },
+        {
+          id: "3.2.7",
+          name: "3.2.7 • Thủ tục, Ngăn xếp (Stack) & Lệnh jal/jalr",
+          recognize: "Gọi hàm lồng nhau/đệ quy, Push/Pop thanh ghi lên <code>sp</code>, hoặc tìm giá trị trả về ở <code>a0</code>.",
+          steps: "Caller-saved: <code>ra, t0–t6, a0–a7</code>; Callee-saved: <code>sp, s0–s11</code>. Push $k$ thanh ghi: <code>addi sp, sp, -4k</code> trước rồi <code>sw</code>. Pop: <code>lw</code> trước rồi <code>addi sp, sp, 4k</code>. Trả về hàm bằng <code>jalr x0, ra, 0</code>.",
+          trap: "Hàm đệ quy/gọi hàm con (non-leaf) bắt buộc cất <code>ra</code> và đối số <code>a0</code> vào stack, nếu không <code>jal</code> sau sẽ ghi đè mất <code>ra</code>."
+        },
+        {
+          id: "3.2.8",
+          name: "3.2.8 • Mã máy 32-bit, BTA/JTA & Bản đồ bộ nhớ",
+          recognize: "Dịch hợp ngữ $\\leftrightarrow$ Hexa 32-bit, tính địa chỉ đích BTA/JTA, hoặc giải mã byte Little-Endian trong Memory Map.",
+          steps: "Đổi Little-Endian ngược từ phải sang trái thành word 32-bit. Nhìn 7 bit <code>opcode [6:0]</code> để định khuôn dạng (R/I/S/B/U/J) &rarr; tách <code>funct3/funct7/rd/rs1/rs2/imm</code>. Tính đích: $\\text{BTA/JTA} = PC_{\\text{hiện tại}} + \\text{SignExt}(\\text{imm})$.",
+          trap: "RISC-V tính BTA/JTA từ <strong><code>PC</code> hiện tại</strong> (KHÔNG phải <code>PC+4</code>); nhớ <code>imm[0]=0</code> và <code>instr[31]</code> luôn là bit dấu."
+        },
+        {
+          id: "3.2.9",
+          name: "3.2.9 • Thực hành RARS, Chỉ thị .data & ecall",
+          recognize: "Tính địa chỉ biến <code>.data</code>, phân biệt <code>.ascii/.asciz</code>, dịch vụ <code>ecall (a7)</code>, kích thước lệnh <code>li</code>, offset Bitmap 2D.",
+          steps: "<code>.text=0x00400000</code>, <code>.data=0x10010000</code>. Cộng kích thước: <code>.byte</code> (+1), <code>.half</code> (+2), <code>.space N</code> (+N), <code>.ascii</code> (+len), <code>.asciz</code> (+len+1); trước <code>.word</code> <strong>làm tròn lên bội 4</strong>. Bitmap hàng $r$, cột $c$: $\\text{Base} + [(r-1)\\cdot\\text{Cols} + (c-1)]\\cdot 4$.",
+          trap: "Quên byte padding căn lề 4 trước <code>.word</code> sau chuỗi <code>.asciz</code>; <code>.ascii</code> không có <code>\\0</code> nên <code>ecall a7=4</code> sẽ in tràn sang biến kế tiếp."
+        }
+      ]
+    },
+    {
+      chapter: 4,
+      title: "Chương 4: Số học máy tính (6 dạng)",
+      methods: [
+        {
+          id: "4.2.1",
+          name: "4.2.1 • Hệ đếm, Đơn vị IEC & Số bit biểu diễn",
+          recognize: "Đổi cơ số $10 \\leftrightarrow 2 \\leftrightarrow 16$ (cả phần lẻ), đơn vị KiB/MiB/GiB hoặc tìm số bit tối thiểu biểu diễn $M$ giá trị.",
+          steps: "Phần nguyên chia 2 (hoặc tách tổng $2^i$); phần lẻ nhân 2 lấy phần nguyên; 4 bit = 1 Hexa. Số bit tối thiểu: tìm $n$ nhỏ nhất thỏa $2^n \\ge M$ (hoặc $\\lceil \\log_2 M \\rceil$).",
+          trap: "Đổi phần lẻ sang Hexa phải nhóm 4 bit <strong>từ dấu phẩy sang phải</strong> (thiếu thì thêm <code>0</code> bên phải, vd $0.11_2 = 0.1100_2 = 0.\\text{C}_{16}$)."
+        },
+        {
+          id: "4.2.2",
+          name: "4.2.2 • Boolean, Cổng logic, SOP, MUX, Adder & Flip-Flop",
+          recognize: "Rút gọn biểu thức Boolean, nhận diện ký hiệu cổng, lập SOP từ bảng chân lý, hoặc xác định đầu ra MUX/Decoder/Adder/FF.",
+          steps: "Ưu tiên <code>NOT &gt; AND &gt; OR</code>; De Morgan $\\overline{AB}=\\overline{A}+\\overline{B}$. Full-Adder: $S = A\\oplus B\\oplus C_{\\text{in}}$, $C_{\\text{out}} = AB + AC_{\\text{in}} + BC_{\\text{in}}$. MUX chọn ngõ vào $D_k$ theo mã chọn $S$; D-FF: $Q_{\\text{next}} = D$.",
+          trap: "Phân biệt XOR (1 đường cong ở đầu vào) với OR; với SOP chỉ lấy các dòng có ngõ ra $F = 1$ rồi cộng (OR) các tích (AND)."
+        },
+        {
+          id: "4.2.3",
+          name: "4.2.3 • Biểu diễn Không dấu & Có dấu Mã bù 2",
+          recognize: "Đổi số âm $\\leftrightarrow$ bù 2 / Hexa, tìm dải biểu diễn $n$-bit, hoặc mở rộng dấu (Sign-extend).",
+          steps: "Không dấu: $[0, 2^n-1]$. Bù 2: $[-2^{n-1}, 2^{n-1}-1]$. Đổi dấu số bù 2: đảo toàn bộ bit rồi $+1$ (mẹo: giữ nguyên từ phải tới bit <code>1</code> đầu tiên, đảo phần bên trái). Giá trị: $A = -a_{n-1}2^{n-1} + \\sum_{i=0}^{n-2} a_i 2^i$.",
+          trap: "Số <code>-1</code> ở mọi độ rộng bit luôn là toàn bit <code>1</code> (<code>0xFF</code>, <code>0xFFFF</code>, <code>0xFFFFFFFF</code>); số âm nhỏ nhất $-(2^{n-1})$ (vd <code>0x80</code> = -128) tự đối xứng chính nó khi lấy bù 2."
+        },
+        {
+          id: "4.2.4",
+          name: "4.2.4 • Cộng/Trừ số nguyên & Tràn số học (Overflow)",
+          recognize: "Kiểm tra cặp số cộng/trừ nào bị tràn (Overflow) hoặc tìm giá trị thanh ghi/biến C bị tràn kiểu <code>char/int</code>.",
+          steps: "<strong>Không dấu:</strong> tràn khi $C_{\\text{out}} = 1$. <strong>Có dấu:</strong> cộng 2 số trái dấu <strong>không bao giờ tràn</strong>; chỉ tràn khi 2 số <strong>cùng dấu</strong> cộng ra kết quả <strong>ngược dấu</strong>. Ép kiểu <code>signed char</code> $S$: cộng/trừ $256$ để đưa về $[-128, 127]$.",
+          trap: "Với số có dấu, $C_{\\text{out}} = 1$ KHÔNG đồng nghĩa tràn (vd $(-1)+(-1)=-2$ có $C_{\\text{out}}=1$ vẫn đúng)."
+        },
+        {
+          id: "4.2.5",
+          name: "4.2.5 • Nhân/Chia số nguyên & Tập lệnh RV32M",
+          recognize: "Thực thi lệnh <code>mul, mulh, mulhu, mulhsu, div, divu, rem, remu</code> hoặc thuật toán nhân/chia từng bước.",
+          steps: "Nhân $32 \\times 32 \\to 64$ bit: <code>mul</code> lấy 32 bit thấp <code>[31:0]</code>; <code>mulh/mulhu/mulhsu</code> lấy 32 bit cao <code>[63:32]</code>. Chia: <code>div</code> thương, <code>rem</code> phần dư.",
+          trap: "Trong phép chia có dấu (RISC-V &amp; C), <strong>số dư <code>rem</code> luôn cùng dấu với số bị chia</strong> (vd $(-7) \\bmod 3 = -1$, $(+67) \\bmod (-13) = +2$)."
+        },
+        {
+          id: "4.2.6",
+          name: "4.2.6 • Số thực dấu phẩy động IEEE 754 Binary32",
+          recognize: "Đổi số thực thập phân $\\leftrightarrow$ Hexa 32-bit chuẩn IEEE 754, nhận diện số đặc biệt hoặc đếm số NaN.",
+          steps: "Bố cục <code>1-8-23</code> (Bias $= 127$): đưa về dạng $(-1)^S (1.m)_2 \\cdot 2^E \\Rightarrow e = E + 127$ (8 bit), lấy phần lẻ $m$ (23 bit), ghép $S\\mid e\\mid m$ rồi gom 4 bit thành 8 chữ số Hexa.",
+          trap: "Giá trị đặc biệt: $e=0, m=0 \\to \\pm 0$; $e=255, m=0 \\to \\pm\\infty$ (<code>0x7F800000 / 0xFF800000</code>); $e=255, m\\neq 0 \\to \\text{NaN}$ (có $2^{24}-2$ mã NaN); số có mẫu chia hết cho $5$ (như $0.4$) không biểu diễn chính xác tuyệt đối."
+        }
+      ]
+    }
+  ];
 })(typeof window !== "undefined" ? window : globalThis);

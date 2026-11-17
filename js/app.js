@@ -940,11 +940,19 @@
   // ==========================================
   // CHEAT SHEET TAB ENGINE
   // ==========================================
+  let cheatSheetViewMode = 'all';
+  let cheatSheetChapterFilter = 'all';
+
   function renderCheatSheet() {
     const container = document.getElementById('cheatsheet-content');
     if (!container) return;
 
-    const csCards = window.KTMT_CHEATSHEET || [];
+    const methodChapters = (window.KTMT_PROBLEM_METHODS_CHEATSHEET || []).filter(
+      c => cheatSheetChapterFilter === 'all' || String(c.chapter) === String(cheatSheetChapterFilter)
+    );
+    const csCards = (window.KTMT_CHEATSHEET || []).filter(
+      c => cheatSheetChapterFilter === 'all' || String(c.chapter) === String(cheatSheetChapterFilter)
+    );
     const regs = window.RISCV_REGISTERS || {};
     const regRows = Object.values(regs).map(r => `
       <tr>
@@ -956,23 +964,66 @@
       </tr>
     `).join('');
 
-    let html = `<div class="cheatsheet-grid">`;
-    csCards.forEach(card => {
-      html += `
-        <article class="cheatsheet-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-            <h3 style="margin:0;border:none;padding:0;">${escapeHtml(card.title)}</h3>
-            <button type="button" class="section-pdf-chip" data-cs-pdf="${card.pdfPage || 1}">Trang ${card.pdfPage || 1}</button>
-          </div>
-          <ul>
-            ${(card.items || []).map(it => `<li><strong>${escapeHtml(it.label)}:</strong> ${it.formula}</li>`).join('')}
-          </ul>
-        </article>
-      `;
-    });
-    html += `</div>`;
+    let html = `
+      <div class="cs-filter-bar">
+        <div class="cs-view-pills" role="tablist" aria-label="Chế độ xem Cheatsheet">
+          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'all' ? 'active' : ''}" data-cs-view="all">Tất cả (23 dạng + Công thức)</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'methods' ? 'active' : ''}" data-cs-view="methods">Chỉ Cách làm 23 dạng bài</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'formulas' ? 'active' : ''}" data-cs-view="formulas">Chỉ Công thức &amp; Bảng tra</button>
+        </div>
+        <div class="cs-view-pills" role="tablist" aria-label="Lọc theo chương">
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === 'all' ? 'active' : ''}" data-cs-ch="all">4 Chương</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '1' ? 'active' : ''}" data-cs-ch="1">Ch.1</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '2' ? 'active' : ''}" data-cs-ch="2">Ch.2</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '3' ? 'active' : ''}" data-cs-ch="3">Ch.3</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '4' ? 'active' : ''}" data-cs-ch="4">Ch.4</button>
+        </div>
+      </div>
+    `;
 
-    html += `
+    if (cheatSheetViewMode !== 'formulas' && methodChapters.length > 0) {
+      html += `<section class="cs-methods-section"><div class="cs-methods-grid">`;
+      methodChapters.forEach(chBlock => {
+        html += `
+          <article class="cs-method-chapter-card">
+            <h3>🧭 ${escapeHtml(chBlock.title)}</h3>
+            <div class="cs-method-list">
+              ${(chBlock.methods || []).map(m => `
+                <div class="cs-method-item">
+                  <div class="cs-method-head">
+                    <span class="cs-method-name">${escapeHtml(m.name)}</span>
+                    <button type="button" class="btn btn-outline-secondary btn-xs cs-practice-btn" data-cs-group="${m.id}" title="Luyện tập nhóm ${m.id}">🎯 Luyện</button>
+                  </div>
+                  <div class="cs-method-line"><strong>Nhận diện:</strong> ${m.recognize}</div>
+                  <div class="cs-method-line"><strong>Cách làm:</strong> ${m.steps}</div>
+                  <div class="cs-method-trap"><strong>⚠️ Bẫy:</strong> ${m.trap}</div>
+                </div>
+              `).join('')}
+            </div>
+          </article>
+        `;
+      });
+      html += `</div></section>`;
+    }
+
+    if (cheatSheetViewMode !== 'methods') {
+      html += `<div class="cheatsheet-grid">`;
+      csCards.forEach(card => {
+        html += `
+          <article class="cheatsheet-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <h3 style="margin:0;border:none;padding:0;">${escapeHtml(card.title)}</h3>
+              <button type="button" class="section-pdf-chip" data-cs-pdf="${card.pdfPage || 1}">Trang ${card.pdfPage || 1}</button>
+            </div>
+            <ul>
+              ${(card.items || []).map(it => `<li><strong>${escapeHtml(it.label)}:</strong> ${it.formula}</li>`).join('')}
+            </ul>
+          </article>
+        `;
+      });
+      html += `</div>`;
+
+      html += `
       <article class="cheatsheet-card" style="margin-bottom: 18px;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
           <h3 style="margin:0;border:none;padding:0;">Bảng 6 Định dạng lệnh &amp; Opcode RISC-V 32-bit (KTMT_GK.pdf trang 61–62)</h3>
@@ -1010,12 +1061,31 @@
           </table>
         </div>
       </article>
-    `;
+      `;
+    }
 
     container.innerHTML = html;
     renderMath(container);
     container.querySelectorAll('[data-cs-pdf]').forEach(btn => {
       btn.addEventListener('click', () => openPdfModal(parseInt(btn.getAttribute('data-cs-pdf'), 10) || 1));
+    });
+    container.querySelectorAll('[data-cs-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cheatSheetViewMode = btn.getAttribute('data-cs-view') || 'all';
+        renderCheatSheet();
+      });
+    });
+    container.querySelectorAll('[data-cs-ch]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cheatSheetChapterFilter = btn.getAttribute('data-cs-ch') || 'all';
+        renderCheatSheet();
+      });
+    });
+    container.querySelectorAll('[data-cs-group]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const gid = btn.getAttribute('data-cs-group');
+        if (gid) startGroupTest(gid, 'practice');
+      });
     });
   }
 
