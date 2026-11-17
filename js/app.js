@@ -1666,6 +1666,56 @@
     return chosen.slice(0, totalCount);
   }
 
+  function sampleMidtermQuestions(basePool, totalCount = 20) {
+    const gkPool = basePool.filter(q => q.examTag === 'GK' || (Array.isArray(q.examTags) && q.examTags.includes('GK')));
+    const chosen = [];
+    const chosenIds = new Set();
+    const chapters = [1, 2, 3, 4];
+
+    chapters.forEach((ch, idx) => {
+      const target = Math.floor(totalCount / 4) + (idx < (totalCount % 4) ? 1 : 0);
+      const chGk = gkPool.filter(q => q.chapter === ch);
+      const chAll = basePool.filter(q => q.chapter === ch);
+
+      const pickFrom = (arr, predicate, limit) => {
+        const picked = [];
+        shuffleArray(arr.filter(predicate)).forEach(q => {
+          if (picked.length < limit && !chosenIds.has(q.id)) {
+            picked.push(q);
+            chosenIds.add(q.id);
+          }
+        });
+        return picked;
+      };
+
+      // Mix both fill-in-the-blank and MCQ per chapter (prioritize GK-tagged, fallback to all in chapter)
+      const fillTarget = Math.min(2, Math.floor(target / 2));
+      const chPicked = [];
+      chPicked.push(...pickFrom(chGk, q => isFillQuestion(q), fillTarget));
+      if (chPicked.length < fillTarget) {
+        chPicked.push(...pickFrom(chAll, q => isFillQuestion(q), fillTarget - chPicked.length));
+      }
+
+      const mcqNeeded = target - chPicked.length;
+      chPicked.push(...pickFrom(chGk, q => !isFillQuestion(q), mcqNeeded));
+      if (chPicked.length < target) {
+        chPicked.push(...pickFrom(chAll, () => true, target - chPicked.length));
+      }
+
+      chosen.push(...chPicked);
+    });
+
+    if (chosen.length < totalCount) {
+      shuffleArray(basePool).forEach(q => {
+        if (chosen.length < totalCount && !chosenIds.has(q.id)) {
+          chosen.push(q);
+          chosenIds.add(q.id);
+        }
+      });
+    }
+    return chosen.slice(0, totalCount);
+  }
+
   function startExam(presetType, customConfig = {}) {
     if (['gk', 'ck', 'de0012', 'de0013', 'custom'].includes(presetType)) {
       appState.learningContext = null;
@@ -1678,13 +1728,11 @@
     let preserveOrder = false;
 
     if (presetType === 'gk') {
-      const gkPool = pool.filter(q => q.examTag === 'GK' || (Array.isArray(q.examTags) && q.examTags.includes('GK')));
-      pool = gkPool.length >= 20 ? gkPool : pool;
       durationMins = 45;
-      questionCount = Math.min(35, pool.length);
-      examTitle = `Đề thi Giữa kỳ KTMT chuẩn KTMT_GK.pdf (4 chương - ${questionCount} câu)`;
-      examQuestions = sampleBalancedByChapters(pool, questionCount);
-      preserveOrder = true; // already balanced-sampled across 4 chapters
+      questionCount = Math.min(20, pool.length);
+      examTitle = `Thi Giữa Kỳ KTMT (Chương 1–4 • ${questionCount} câu • 45 phút)`;
+      examQuestions = sampleMidtermQuestions(pool, questionCount);
+      preserveOrder = true; // already balanced-sampled across 4 chapters with MCQ + Fill mix
     } else if (presetType === 'ck') {
       durationMins = 50;
       questionCount = Math.min(40, pool.length);
@@ -1737,6 +1785,10 @@
     const titleEl = document.getElementById('exam-active-title');
     if (titleEl) {
       titleEl.innerHTML = `<span>⏱️</span> <span>${examTitle}</span>`;
+    }
+    const rulesEl = document.getElementById('exam-midterm-rules');
+    if (rulesEl) {
+      rulesEl.style.display = presetType === 'gk' ? 'block' : 'none';
     }
 
     document.getElementById('exam-setup-view').style.display = 'none';
@@ -3205,6 +3257,9 @@
     document.getElementById('btn-exam-start-ck')?.addEventListener('click', () => startExam('ck'));
     document.getElementById('btn-exam-start-0012')?.addEventListener('click', () => startExam('de0012'));
     document.getElementById('btn-exam-start-0013')?.addEventListener('click', () => startExam('de0013'));
+    document.getElementById('btn-open-riscv-sheet')?.addEventListener('click', () => {
+      document.getElementById('modal-riscv-sheet')?.classList.add('open');
+    });
     document.getElementById('btn-exam-start-target-card')?.addEventListener('click', () => {
       document.getElementById('exam-select-target')?.focus();
       runTargetExamSelection();

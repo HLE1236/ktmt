@@ -463,13 +463,13 @@
             <div class="exam-preset-grid">
 
               <div class="exam-preset-card" id="btn-exam-start-gk">
-                <span class="badge badge-tag-gk" style="margin-bottom: 12px; display: inline-block;">Đề thi Giữa kỳ chuẩn GK</span>
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;">Thi Giữa Kỳ Toàn diện (Ch.1–4)</h3>
+                <span class="badge badge-tag-gk" style="margin-bottom: 12px; display: inline-block;">Thi Giữa Kỳ chuẩn (Ch.1–4)</span>
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;">Thi Giữa Kỳ (45 phút • 20 câu)</h3>
                 <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 14px;">
-                  Bốc cân đối từ 168 câu nhãn <strong>GK</strong> thuộc cả 4 chương trong <code>KTMT_GK.pdf</code>: Hiệu năng, Hệ thống máy tính, RISC-V và Số học.
+                  Phạm vi <strong>Chương 1 – Chương 4</strong>. Kết hợp <strong>Trắc nghiệm</strong> &amp; <strong>Điền đáp án vào ô trống</strong>, sai không bị trừ điểm. Được dùng tờ <em>RISC-V Instruction Set Summary</em> (không tài liệu khác, không máy tính cầm tay).
                 </p>
                 <div style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">
-                  ⏱️ 45 phút • 35 câu hỏi • Thang điểm 10
+                  ⏱️ 45 phút • 20 câu hỏi • Sai không trừ điểm
                 </div>
               </div>
 
@@ -535,14 +535,23 @@
           <div id="exam-active-view" style="display: none;">
             <div id="exam-active-title" style="font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"></div>
 
+            <div id="exam-midterm-rules" class="exam-notice-box" style="display: none; margin-bottom: 14px; padding: 10px 14px; font-size: 0.85rem;">
+              📋 <strong>Quy định Thi Giữa Kỳ:</strong> Phạm vi Chương 1 – Chương 4 • Trắc nghiệm &amp; Điền đáp án • Sai không trừ điểm • Được mang tờ <strong>RISC-V Instruction Set Summary</strong> • Không dùng tài liệu khác • Không máy tính cầm tay.
+            </div>
+
             <div class="exam-timer-bar">
               <div>
                 <span style="font-weight: 600; color: var(--text-secondary); font-size: 0.88rem;">Thời gian còn lại:</span>
                 <span class="timer-display" id="exam-timer-text">45:00</span>
               </div>
-              <button class="btn btn-primary" id="btn-exam-submit-confirm">
-                Nộp bài thi 🏁
-              </button>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-secondary btn-sm" id="btn-open-riscv-sheet" type="button">
+                  📄 RISC-V Summary
+                </button>
+                <button class="btn btn-primary" id="btn-exam-submit-confirm">
+                  Nộp bài thi 🏁
+                </button>
+              </div>
             </div>
 
             <!-- Question Numbers Palette -->
@@ -914,6 +923,105 @@
       <div class="modal-footer">
         <button class="btn btn-secondary modal-close-btn">Hủy</button>
         <button class="btn btn-primary" id="note-modal-save-btn">Lưu ghi chú</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISC-V Instruction Set Summary Modal -->
+  <div class="modal-overlay" id="modal-riscv-sheet">
+    <div class="modal-dialog large">
+      <div class="modal-header">
+        <div class="modal-title">📄 RISC-V (RV32I) Instruction Set Summary</div>
+        <button class="icon-btn modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body" style="overflow-y: auto; max-height: 75vh; font-size: 0.86rem; line-height: 1.55;">
+        <p style="color: var(--text-secondary); margin-bottom: 12px;">
+          Tài liệu tóm tắt được phép mang vào phòng thi Giữa kỳ (không dùng tài liệu khác, không dùng máy tính cầm tay).
+        </p>
+
+        <h4 style="font-weight: 700; margin: 12px 0 6px;">1. Tập thanh ghi RV32I (32 thanh ghi 32-bit)</h4>
+        <div style="overflow-x: auto; margin-bottom: 14px;">
+          <table class="theory-table" style="width: 100%; font-size: 0.82rem;">
+            <thead>
+              <tr>
+                <th>Thanh ghi</th><th>ABI Name</th><th>Mô tả</th><th>Lưu bởi (Saver)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>x0</code></td><td><code>zero</code></td><td>Hằng số 0 (chỉ đọc)</td><td>—</td></tr>
+              <tr><td><code>x1</code></td><td><code>ra</code></td><td>Return address</td><td>Caller</td></tr>
+              <tr><td><code>x2</code></td><td><code>sp</code></td><td>Stack pointer</td><td>Callee</td></tr>
+              <tr><td><code>x3</code></td><td><code>gp</code></td><td>Global pointer</td><td>—</td></tr>
+              <tr><td><code>x4</code></td><td><code>tp</code></td><td>Thread pointer</td><td>—</td></tr>
+              <tr><td><code>x5–x7</code></td><td><code>t0–t2</code></td><td>Temporaries (tạm thời)</td><td>Caller</td></tr>
+              <tr><td><code>x8</code></td><td><code>s0 / fp</code></td><td>Saved register / Frame pointer</td><td>Callee</td></tr>
+              <tr><td><code>x9</code></td><td><code>s1</code></td><td>Saved register</td><td>Callee</td></tr>
+              <tr><td><code>x10–x11</code></td><td><code>a0–a1</code></td><td>Function arguments / return values</td><td>Caller</td></tr>
+              <tr><td><code>x12–x17</code></td><td><code>a2–a7</code></td><td>Function arguments</td><td>Caller</td></tr>
+              <tr><td><code>x18–x27</code></td><td><code>s2–s11</code></td><td>Saved registers</td><td>Callee</td></tr>
+              <tr><td><code>x28–x31</code></td><td><code>t3–t6</code></td><td>Temporaries (tạm thời)</td><td>Caller</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="font-weight: 700; margin: 12px 0 6px;">2. Khuôn dạng lệnh 32-bit (Instruction Formats)</h4>
+        <div style="overflow-x: auto; margin-bottom: 14px;">
+          <table class="theory-table" style="width: 100%; font-size: 0.8rem;">
+            <thead>
+              <tr><th>Format</th><th>31..25</th><th>24..20</th><th>19..15</th><th>14..12</th><th>11..7</th><th>6..0</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>R-type</strong></td><td><code>funct7</code></td><td><code>rs2</code></td><td><code>rs1</code></td><td><code>funct3</code></td><td><code>rd</code></td><td><code>opcode</code></td></tr>
+              <tr><td><strong>I-type</strong></td><td colspan="2"><code>imm[11:0]</code></td><td><code>rs1</code></td><td><code>funct3</code></td><td><code>rd</code></td><td><code>opcode</code></td></tr>
+              <tr><td><strong>S-type</strong></td><td><code>imm[11:5]</code></td><td><code>rs2</code></td><td><code>rs1</code></td><td><code>funct3</code></td><td><code>imm[4:0]</code></td><td><code>opcode</code></td></tr>
+              <tr><td><strong>B-type</strong></td><td><code>imm[12|10:5]</code></td><td><code>rs2</code></td><td><code>rs1</code></td><td><code>funct3</code></td><td><code>imm[4:1|11]</code></td><td><code>opcode</code></td></tr>
+              <tr><td><strong>U-type</strong></td><td colspan="4"><code>imm[31:12]</code></td><td><code>rd</code></td><td><code>opcode</code></td></tr>
+              <tr><td><strong>J-type</strong></td><td colspan="4"><code>imm[20|10:1|11|19:12]</code></td><td><code>rd</code></td><td><code>opcode</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="font-weight: 700; margin: 12px 0 6px;">3. Bảng lệnh RV32I cốt lõi (Opcode, funct3, funct7)</h4>
+        <div style="overflow-x: auto; margin-bottom: 14px;">
+          <table class="theory-table" style="width: 100%; font-size: 0.8rem;">
+            <thead>
+              <tr><th>Lệnh</th><th>Format</th><th>opcode</th><th>funct3</th><th>funct7 / imm</th><th>Ý nghĩa</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>add / sub</code></td><td>R</td><td><code>0110011</code></td><td><code>000</code></td><td><code>0000000 / 0100000</code></td><td>rd = rs1 ± rs2</td></tr>
+              <tr><td><code>sll / slt / sltu</code></td><td>R</td><td><code>0110011</code></td><td><code>001 / 010 / 011</code></td><td><code>0000000</code></td><td>Dịch trái / So sánh nhỏ hơn</td></tr>
+              <tr><td><code>xor / or / and</code></td><td>R</td><td><code>0110011</code></td><td><code>100 / 110 / 111</code></td><td><code>0000000</code></td><td>Bitwise XOR / OR / AND</td></tr>
+              <tr><td><code>srl / sra</code></td><td>R</td><td><code>0110011</code></td><td><code>101</code></td><td><code>0000000 / 0100000</code></td><td>Dịch phải logic / số học</td></tr>
+              <tr><td><code>addi / slti / sltiu</code></td><td>I</td><td><code>0010011</code></td><td><code>000 / 010 / 011</code></td><td>—</td><td>Phép toán với imm[11:0] có dấu</td></tr>
+              <tr><td><code>xori / ori / andi</code></td><td>I</td><td><code>0010011</code></td><td><code>100 / 110 / 111</code></td><td>—</td><td>Logic với imm[11:0] mở rộng dấu</td></tr>
+              <tr><td><code>slli / srli / srai</code></td><td>I</td><td><code>0010011</code></td><td><code>001 / 101 / 101</code></td><td><code>0000000 / 0000000 / 0100000</code></td><td>Dịch bit theo shamt = imm[4:0]</td></tr>
+              <tr><td><code>lb / lh / lw</code></td><td>I</td><td><code>0000011</code></td><td><code>000 / 001 / 010</code></td><td>—</td><td>Nạp byte / half / word (có dấu)</td></tr>
+              <tr><td><code>lbu / lhu</code></td><td>I</td><td><code>0000011</code></td><td><code>100 / 101</code></td><td>—</td><td>Nạp byte / half (không dấu)</td></tr>
+              <tr><td><code>sb / sh / sw</code></td><td>S</td><td><code>0100011</code></td><td><code>000 / 001 / 010</code></td><td>—</td><td>Lưu byte / half / word vào M[rs1+imm]</td></tr>
+              <tr><td><code>beq / bne</code></td><td>B</td><td><code>1100011</code></td><td><code>000 / 001</code></td><td>—</td><td>Nhảy tới PC+imm nếu rs1 == / != rs2</td></tr>
+              <tr><td><code>blt / bge</code></td><td>B</td><td><code>1100011</code></td><td><code>100 / 101</code></td><td>—</td><td>Nhảy nếu rs1 &lt; / &gt;= rs2 (có dấu)</td></tr>
+              <tr><td><code>bltu / bgeu</code></td><td>B</td><td><code>1100011</code></td><td><code>110 / 111</code></td><td>—</td><td>Nhảy nếu rs1 &lt; / &gt;= rs2 (không dấu)</td></tr>
+              <tr><td><code>lui / auipc</code></td><td>U</td><td><code>0110111 / 0010111</code></td><td>—</td><td>—</td><td>rd = imm&lt;&lt;12 (+ PC với auipc)</td></tr>
+              <tr><td><code>jal</code></td><td>J</td><td><code>1101111</code></td><td>—</td><td>—</td><td>rd = PC+4; PC += imm</td></tr>
+              <tr><td><code>jalr</code></td><td>I</td><td><code>1100111</code></td><td><code>000</code></td><td>—</td><td>rd = PC+4; PC = (rs1+imm) &amp; ~1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="font-weight: 700; margin: 12px 0 6px;">4. Lệnh giả (Pseudo-instructions) thông dụng</h4>
+        <div style="font-size: 0.82rem; color: var(--text-secondary);">
+          <code>nop</code> → <code>addi x0, x0, 0</code> &nbsp;|&nbsp;
+          <code>mv rd, rs</code> → <code>addi rd, rs, 0</code> &nbsp;|&nbsp;
+          <code>not rd, rs</code> → <code>xori rd, rs, -1</code> &nbsp;|&nbsp;
+          <code>neg rd, rs</code> → <code>sub rd, x0, rs</code><br>
+          <code>j offset</code> → <code>jal x0, offset</code> &nbsp;|&nbsp;
+          <code>jr rs</code> → <code>jalr x0, rs, 0</code> &nbsp;|&nbsp;
+          <code>ret</code> → <code>jalr x0, ra, 0</code> &nbsp;|&nbsp;
+          <code>beqz rs, off</code> → <code>beq rs, x0, off</code>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary modal-close-btn">Đóng</button>
       </div>
     </div>
   </div>
