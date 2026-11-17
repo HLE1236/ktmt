@@ -7,7 +7,7 @@
     "id": "lt-4.1",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.1",
     "source": "Mục 4.1.1 - Hệ đếm & biểu diễn chính xác",
     "examTags": [
@@ -40,7 +40,7 @@
     "id": "lt-4.2",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.2",
     "source": "Mục 4.1.2 - Đại số Boolean & De Morgan",
     "examTags": [
@@ -73,7 +73,7 @@
     "id": "lt-4.3",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.3",
     "source": "Mục 4.1.2 - Mạch tổ hợp & Mạch dãy",
     "examTags": [
@@ -106,7 +106,7 @@
     "id": "lt-4.4",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.4",
     "source": "Mục 4.1.3 - Dải giá trị Mã bù 2",
     "examTags": [
@@ -139,7 +139,7 @@
     "id": "lt-4.5",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.5",
     "source": "Mục 4.1.4 - Quy tắc Tràn số học",
     "examTags": [
@@ -172,7 +172,7 @@
     "id": "lt-4.6",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.6",
     "source": "Mục 4.1.4 - Nhân chia RV32M",
     "examTags": [
@@ -205,7 +205,7 @@
     "id": "lt-4.7",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.7",
     "source": "Mục 4.1.5 - Cấu trúc IEEE 754 32-bit",
     "examTags": [
@@ -238,7 +238,7 @@
     "id": "lt-4.8",
     "chapter": 4,
     "groupId": "4.1",
-    "groupTitle": "Câu hỏi Ôn tập Lý thuyết Chương 4",
+    "groupTitle": "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)",
     "exerciseCode": "Lý thuyết 4.8",
     "source": "Mục 4.1.5 - Giá trị đặc biệt IEEE 754",
     "examTags": [
@@ -271,7 +271,7 @@
     "id": "c4-4.1",
     "chapter": 4,
     "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupTitle": "Nhóm 1: Hệ đếm và Chuyển đổi cơ số (Nhị phân, Thập phân, Thập lục phân)",
     "exerciseCode": "Bài tập 4.1",
     "source": "Đề GK 2018.2 - Mã 198 C7 & Mã 199 C2",
     "examTags": [
@@ -305,8 +305,8 @@
   {
     "id": "c4-4.2a",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2a",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 3",
     "examTags": [
@@ -338,8 +338,8 @@
   {
     "id": "c4-4.2b",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2b",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 3",
     "examTags": [
@@ -371,8 +371,8 @@
   {
     "id": "c4-4.2c",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2c",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 18",
     "examTags": [
@@ -404,8 +404,8 @@
   {
     "id": "c4-4.2d",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2d",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 12",
     "examTags": [
@@ -440,8 +440,8 @@
   {
     "id": "c4-4.2e",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2e",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 20",
     "examTags": [
@@ -475,8 +475,8 @@
   {
     "id": "c4-4.2f1",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2f (Ý 1)",
     "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 4",
     "examTags": [
@@ -511,8 +511,8 @@
   {
     "id": "c4-4.2f2",
     "chapter": 4,
-    "groupId": "4.2.1",
-    "groupTitle": "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn",
+    "groupId": "4.2.3",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.2f (Ý 2)",
     "source": "Đề Giữa kỳ 2019.2 - Mã đề 244, Câu 11",
     "examTags": [
@@ -557,10 +557,12 @@
     "pdfPage": 109,
     "printedPage": 108,
     "relatedTheoryId": "4.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập đáp án của bạn:",
+    "acceptedAnswers": [
+      "NAND"
+    ],
     "question": "Hãy cho biết hình vẽ ký hiệu cổng logic dưới đây (thân chữ D có vòng tròn nhỏ ở đầu ra) biểu diễn phép toán logic nào?",
     "codeBlock": null,
     "codeLang": null,
@@ -590,10 +592,12 @@
     "pdfPage": 109,
     "printedPage": 108,
     "relatedTheoryId": "4.1.2",
-    "questionType": "single",
-    "canFillBlank": false,
-    "fillPrompt": "",
-    "acceptedAnswers": [],
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập đáp án của bạn:",
+    "acceptedAnswers": [
+      "XOR"
+    ],
     "question": "Hãy cho biết hình vẽ ký hiệu cổng logic dưới đây (đầu nhọn giống OR kèm đường cong tách rời ở phần đuôi) biểu diễn phép toán logic nào?",
     "codeBlock": null,
     "codeLang": null,
@@ -716,7 +720,7 @@
     "id": "c4-4.6a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.6a",
     "source": "Đề GK 2018.2 - Mã 198 C6 & Mã 199 C10",
     "examTags": [
@@ -749,7 +753,7 @@
     "id": "c4-4.6b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.6b",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 8",
     "examTags": [
@@ -782,7 +786,7 @@
     "id": "c4-4.7a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.7a",
     "source": "Đề Giữa kỳ 2019.2 - Mã đề 243, Câu 9",
     "examTags": [
@@ -815,7 +819,7 @@
     "id": "c4-4.7b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.7b",
     "source": "Đề Giữa kỳ 2019.2 - Mã đề 244, Câu 15",
     "examTags": [
@@ -848,7 +852,7 @@
     "id": "c4-4.8",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.8",
     "source": "Đề Cuối kỳ 2020.2 & 2021.1 - Trang 2",
     "examTags": [
@@ -883,7 +887,7 @@
     "id": "c4-4.9",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.9",
     "source": "Đề CK 2022.2 - #f9c617, 2024.2 & Ôn tập 2025.2 - P1, Câu 69",
     "examTags": [
@@ -919,7 +923,7 @@
     "id": "c4-4.10a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.10a",
     "source": "Đề CK 2022.2, 2024.2 - #7151 & Ôn tập 2025.2 Câu 73",
     "examTags": [
@@ -954,7 +958,7 @@
     "id": "c4-4.10b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.10b",
     "source": "Đề CK 2024.1 - #0182da & Ôn tập 2025.2 Câu 45",
     "examTags": [
@@ -989,7 +993,7 @@
     "id": "c4-4.11a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.11a",
     "source": "Đề Cuối kỳ 2023.1 - #581f03",
     "examTags": [
@@ -1024,7 +1028,7 @@
     "id": "c4-4.11b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.11b",
     "source": "Đề GK 2024.1 - #30a33e & Ôn tập 2025.2 Câu 48",
     "examTags": [
@@ -1060,7 +1064,7 @@
     "id": "c4-4.12a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.12a",
     "source": "Đề Giữa kỳ 2023.2 - Đề 1, Câu 2",
     "examTags": [
@@ -1093,7 +1097,7 @@
     "id": "c4-4.12b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.12b",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0008 C4 & Đề 0006 C2",
     "examTags": [
@@ -1126,7 +1130,7 @@
     "id": "c4-4.13a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.13a",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 198, Câu 16",
     "examTags": [
@@ -1162,7 +1166,7 @@
     "id": "c4-4.13b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.13b",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 204, Câu 17",
     "examTags": [
@@ -1198,7 +1202,7 @@
     "id": "c4-4.13c",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.13c",
     "source": "Đề Giữa kỳ 2018.2 - Mã đề 199, Câu 11",
     "examTags": [
@@ -1234,7 +1238,7 @@
     "id": "c4-4.14a",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14a",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0006, Câu 1",
     "examTags": [
@@ -1267,7 +1271,7 @@
     "id": "c4-4.14b",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14b",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0009, Câu 2",
     "examTags": [
@@ -1300,7 +1304,7 @@
     "id": "c4-4.14c",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14c",
     "source": "Đề Giữa kỳ 2022.2 - Đề 0008, Câu 2",
     "examTags": [
@@ -1333,7 +1337,7 @@
     "id": "c4-4.14d",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14d",
     "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 73",
     "examTags": [
@@ -1366,7 +1370,7 @@
     "id": "c4-4.14e",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14e",
     "source": "Đề Giữa kỳ 2025.2 - Đề 0013, Câu 942",
     "examTags": [
@@ -1399,7 +1403,7 @@
     "id": "c4-4.14f",
     "chapter": 4,
     "groupId": "4.2.3",
-    "groupTitle": "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)",
+    "groupTitle": "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh",
     "exerciseCode": "Bài tập 4.14f",
     "source": "Đề Giữa kỳ 2025.2 - Đề 0012, Câu 106",
     "examTags": [
@@ -1611,7 +1615,7 @@
     "pdfPage": 119,
     "printedPage": 118,
     "relatedTheoryId": "4.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị z:",
     "acceptedAnswers": [
@@ -1647,7 +1651,7 @@
     "pdfPage": 119,
     "printedPage": 118,
     "relatedTheoryId": "4.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập kết quả:",
     "acceptedAnswers": [
@@ -1682,7 +1686,7 @@
     "pdfPage": 119,
     "printedPage": 118,
     "relatedTheoryId": "4.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập kết quả:",
     "acceptedAnswers": [
@@ -1717,7 +1721,7 @@
     "pdfPage": 119,
     "printedPage": 118,
     "relatedTheoryId": "4.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập kết quả:",
     "acceptedAnswers": [
@@ -1985,11 +1989,9 @@
     "printedPage": 122,
     "relatedTheoryId": "4.1.5",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số:",
-    "acceptedAnswers": [
-      "0.4"
-    ],
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
     "question": "Số thực dấu phẩy động chuẩn IEEE 754 <strong>không thể</strong> biểu diễn chính xác tuyệt đối được số nào dưới đây?",
     "codeBlock": null,
     "codeLang": null,
@@ -2020,11 +2022,9 @@
     "printedPage": 122,
     "relatedTheoryId": "4.1.5",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập số:",
-    "acceptedAnswers": [
-      "0.7"
-    ],
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
     "question": "Số thực dấu phẩy động chuẩn IEEE 754 <strong>không thể</strong> biểu diễn chính xác tuyệt đối được số nào dưới đây?",
     "codeBlock": null,
     "codeLang": null,
@@ -2159,7 +2159,7 @@
     "pdfPage": 125,
     "printedPage": 124,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thập phân:",
     "acceptedAnswers": [
@@ -2194,7 +2194,7 @@
     "pdfPage": 125,
     "printedPage": 124,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thập phân:",
     "acceptedAnswers": [
@@ -2229,7 +2229,7 @@
     "pdfPage": 126,
     "printedPage": 125,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thập phân:",
     "acceptedAnswers": [
@@ -2266,7 +2266,7 @@
     "pdfPage": 126,
     "printedPage": 125,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thập phân:",
     "acceptedAnswers": [
@@ -2302,7 +2302,7 @@
     "pdfPage": 126,
     "printedPage": 125,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số thập phân:",
     "acceptedAnswers": [
@@ -2338,7 +2338,7 @@
     "pdfPage": 126,
     "printedPage": 125,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã Hexa 32-bit:",
     "acceptedAnswers": [
@@ -2374,7 +2374,7 @@
     "pdfPage": 126,
     "printedPage": 125,
     "relatedTheoryId": "4.1.5",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã Hexa 32-bit:",
     "acceptedAnswers": [

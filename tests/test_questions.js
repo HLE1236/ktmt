@@ -34,7 +34,7 @@ const results = {
     ch4: rawCh4.length,
     sum: rawCh1Ch2.length + rawCh3.length + rawCh4.length
   },
-  distribution: { A: 0, B: 0, C: 0, D: 0, other: 0 },
+  distribution: { A: 0, B: 0, C: 0, D: 0, fill: 0, other: 0 },
   chapterDistribution: {},
   errors: [],
   warnings: []
@@ -42,7 +42,9 @@ const results = {
 
 // 1. Phân bố đáp án và chương
 questions.forEach(q => {
-  if (['A', 'B', 'C', 'D'].includes(q.correctAnswer)) {
+  if (q.questionType === 'fill') {
+    results.distribution.fill++;
+  } else if (['A', 'B', 'C', 'D'].includes(q.correctAnswer)) {
     results.distribution[q.correctAnswer]++;
   } else {
     results.distribution.other++;
@@ -76,7 +78,14 @@ questions.forEach((q, idx) => {
   }
 
   // Kiểm tra options
-  if (!Array.isArray(q.options)) {
+  if (q.questionType === 'fill') {
+    if (!Array.isArray(q.options) || q.options.length !== 0) {
+      results.errors.push(`${prefix} Câu hỏi dạng fill phải có options rỗng`);
+    }
+    if (!q.correctAnswer || String(q.correctAnswer).trim() === '') {
+      results.errors.push(`${prefix} Câu hỏi dạng fill thiếu correctAnswer`);
+    }
+  } else if (!Array.isArray(q.options)) {
     results.errors.push(`${prefix} options không phải là Array`);
   } else {
     if (q.options.length !== 4) {
@@ -115,7 +124,7 @@ questions.forEach((q, idx) => {
   // Kiểm tra acceptedAnswers cho chế độ tự điền
   if (!Array.isArray(q.acceptedAnswers) || q.acceptedAnswers.length === 0) {
     results.warnings.push(`${prefix} Thiếu acceptedAnswers cho chế độ tự điền`);
-  } else {
+  } else if (q.questionType !== 'fill') {
     if (!q.acceptedAnswers.includes(q.correctAnswer)) {
       results.errors.push(`${prefix} acceptedAnswers không chứa correctAnswer (${q.correctAnswer})`);
     }

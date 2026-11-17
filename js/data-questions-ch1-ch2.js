@@ -254,7 +254,7 @@
     "pdfPage": 11,
     "printedPage": 10,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị (theo ns):",
     "acceptedAnswers": [
@@ -404,7 +404,7 @@
     "pdfPage": 12,
     "printedPage": 11,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập đáp số (ms):",
     "acceptedAnswers": [
@@ -552,7 +552,7 @@
     "pdfPage": 14,
     "printedPage": 13,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập chỉ số CPI:",
     "acceptedAnswers": [
@@ -587,7 +587,7 @@
     "pdfPage": 14,
     "printedPage": 13,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập chỉ số CPI:",
     "acceptedAnswers": [
@@ -622,7 +622,7 @@
     "pdfPage": 14,
     "printedPage": 13,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập chỉ số CPI:",
     "acceptedAnswers": [
@@ -658,7 +658,7 @@
     "pdfPage": 15,
     "printedPage": 14,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số MIPS:",
     "acceptedAnswers": [
@@ -695,7 +695,7 @@
     "pdfPage": 15,
     "printedPage": 14,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
@@ -838,7 +838,7 @@
     "pdfPage": 15,
     "printedPage": 14,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
@@ -873,9 +873,9 @@
     "pdfPage": 15,
     "printedPage": 14,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị gần đúng (ví dụ 3.704 hoặc 100/27):",
+    "fillPrompt": "Nhập giá trị gần đúng (vd: 2.5 hoặc 10/3):",
     "acceptedAnswers": [
       "3.704",
       "3.7",
@@ -910,7 +910,7 @@
     "pdfPage": 16,
     "printedPage": 15,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI trung bình:",
     "acceptedAnswers": [
@@ -946,7 +946,7 @@
     "pdfPage": 17,
     "printedPage": 16,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
@@ -983,7 +983,7 @@
     "pdfPage": 17,
     "printedPage": 16,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
@@ -1051,7 +1051,7 @@
     "pdfPage": 17,
     "printedPage": 16,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI trung bình:",
     "acceptedAnswers": [
@@ -1087,7 +1087,7 @@
     "pdfPage": 17,
     "printedPage": 16,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI trung bình:",
     "acceptedAnswers": [
@@ -1122,9 +1122,9 @@
     "pdfPage": 18,
     "printedPage": 17,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập thời gian (vd: 2 ms hoặc 0.002 s):",
+    "fillPrompt": "Nhập thời gian (vd: 1.5 ms hoặc 0.0015 s):",
     "acceptedAnswers": [
       "2 ms",
       "2ms",
@@ -1199,7 +1199,7 @@
     "pdfPage": 19,
     "printedPage": 18,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI trung bình:",
     "acceptedAnswers": [
@@ -1235,7 +1235,7 @@
     "pdfPage": 19,
     "printedPage": 18,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số nguyên không dấu phân tách:",
     "acceptedAnswers": [
@@ -1272,7 +1272,7 @@
     "pdfPage": 20,
     "printedPage": 19,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập thời gian (theo µs):",
     "acceptedAnswers": [
@@ -1309,7 +1309,7 @@
     "pdfPage": 20,
     "printedPage": 19,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập CPI:",
     "acceptedAnswers": [
@@ -1348,7 +1348,7 @@
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Với dữ kiện Bài 1.17, nếu số lệnh load ($500$ lệnh, $CPI=5$) giảm đi $50\\%$, độ tăng tốc (Speedup) và $CPI_{\\text{mới}}$ lần lượt xấp xỉ bằng bao nhiêu?",
+    "question": "Với dữ kiện Bài 1.17 ($n_{\\text{cũ}} = 5500$ chu kỳ, tổng $IC_{\\text{cũ}} = 2000$ lệnh), nếu số lệnh load ($500$ lệnh, $CPI=5$) giảm đi $50\\%$, độ tăng tốc (Speedup) và $CPI_{\\text{mới}}$ lần lượt xấp xỉ bằng bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -1477,7 +1477,7 @@
     "pdfPage": 22,
     "printedPage": 21,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lần:",
     "acceptedAnswers": [
@@ -1512,7 +1512,7 @@
     "pdfPage": 22,
     "printedPage": 21,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lần:",
     "acceptedAnswers": [
@@ -1614,7 +1614,7 @@
     "pdfPage": 24,
     "printedPage": 23,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập tần số fB (GHz):",
     "acceptedAnswers": [
@@ -1651,7 +1651,7 @@
     "pdfPage": 24,
     "printedPage": 23,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lệnh ICB:",
     "acceptedAnswers": [
@@ -1687,7 +1687,7 @@
     "pdfPage": 24,
     "printedPage": 23,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lệnh ICB:",
     "acceptedAnswers": [
@@ -1723,7 +1723,7 @@
     "pdfPage": 25,
     "printedPage": 24,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lệnh ICB:",
     "acceptedAnswers": [
@@ -1759,7 +1759,7 @@
     "pdfPage": 25,
     "printedPage": 24,
     "relatedTheoryId": "1.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị gần đúng:",
     "acceptedAnswers": [
@@ -1866,7 +1866,7 @@
     "canFillBlank": false,
     "fillPrompt": "",
     "acceptedAnswers": [],
-    "question": "Với bảng số liệu Bài 1.23, người ta muốn giảm thời gian thực thi đi $30\\%$ ($t_{\\text{mới}} = 0.7 t_{\\text{cũ}}$) nhưng làm $CPI$ tăng lên $20\\%$ ($CPI_{\\text{mới}} = 1.2 CPI_{\\text{cũ}}$). Tần số xung nhịp mới của $(P_1, P_2, P_3)$ lần lượt xấp xỉ là:",
+    "question": "Với bảng số liệu Bài 1.23 ($P_1: 2\\text{ GHz}/1.5$; $P_2: 1.5\\text{ GHz}/1.0$; $P_3: 3\\text{ GHz}/2.5$), người ta muốn giảm thời gian thực thi đi $30\\%$ ($t_{\\text{mới}} = 0.7 t_{\\text{cũ}}$) nhưng làm $CPI$ tăng lên $20\\%$ ($CPI_{\\text{mới}} = 1.2 CPI_{\\text{cũ}}$). Tần số xung nhịp mới của $(P_1, P_2, P_3)$ lần lượt xấp xỉ là:",
     "codeBlock": null,
     "codeLang": null,
     "svgDiagram": null,
@@ -2730,9 +2730,9 @@
     "pdfPage": 40,
     "printedPage": 39,
     "relatedTheoryId": "2.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập kích thước (vd: 8 MiB):",
+    "fillPrompt": "Nhập kích thước (vd: 4 MiB):",
     "acceptedAnswers": [
       "8 MiB",
       "8MiB",
@@ -2769,7 +2769,7 @@
     "pdfPage": 40,
     "printedPage": 39,
     "relatedTheoryId": "2.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số bit:",
     "acceptedAnswers": [
@@ -2805,7 +2805,7 @@
     "pdfPage": 40,
     "printedPage": 39,
     "relatedTheoryId": "2.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số bit:",
     "acceptedAnswers": [
@@ -2874,7 +2874,7 @@
     "pdfPage": 40,
     "printedPage": 39,
     "relatedTheoryId": "2.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số bit:",
     "acceptedAnswers": [

@@ -34,9 +34,52 @@
   root.KTMT_QUESTIONS = rawList.map(function (q, qIdx) {
     var group = q.group || q.groupId || q.exerciseCode || 'General';
     var examTag = q.examTag || (q.examTags && q.examTags[0]) || 'LT';
-    var rawOptions = (q.options || []).slice(0, 4); // Always exactly 4 options
+    var isFixedFill = q.questionType === 'fill';
+    var rawOptions = (q.options || []).slice(0, 4); // Always exactly 4 options for MCQ
     var origCorrectIdx = q.correctIndex !== undefined ? q.correctIndex : 0;
     if (origCorrectIdx >= rawOptions.length) origCorrectIdx = 0;
+
+    if (isFixedFill) {
+      var origCorrectRaw = rawOptions[origCorrectIdx];
+      var origCorrectText = typeof origCorrectRaw === 'string' ? origCorrectRaw : (origCorrectRaw ? (origCorrectRaw.text || origCorrectRaw.value || '') : '');
+      var fillAccepted = [];
+      if (q.acceptedAnswers && q.acceptedAnswers.length > 0) {
+        q.acceptedAnswers.forEach(function (ans) {
+          if (ans !== undefined && ans !== null && String(ans).trim() !== '' && !fillAccepted.includes(ans)) {
+            fillAccepted.push(ans);
+          }
+        });
+      }
+      if (origCorrectText) {
+        var strippedFill = origCorrectText.replace(/<[^>]+>/g, '').trim();
+        if (strippedFill && !fillAccepted.includes(strippedFill)) {
+          fillAccepted.push(strippedFill);
+        }
+      }
+      var primaryFillAnswer = origCorrectText || fillAccepted[0] || '';
+      var fillExp = q.explanation || '';
+      if (fillExp) {
+        var fillDapanRegex = /<strong>\s*(?:Đáp án(?:\s*đúng|\s*chuẩn)?|Đáp số)\s*:[\s\S]*?<\/strong>/gi;
+        var newFillDapanHtml = '<strong>Đáp án đúng: ' + primaryFillAnswer + '.</strong>';
+        if (fillDapanRegex.test(fillExp)) {
+          fillExp = fillExp.replace(fillDapanRegex, newFillDapanHtml);
+        } else {
+          fillExp = fillExp + '<p>' + newFillDapanHtml + '</p>';
+        }
+      }
+
+      return Object.assign({}, q, {
+        group: group,
+        examTag: examTag,
+        questionType: 'fill',
+        canFillBlank: true,
+        correctIndex: 0,
+        correctAnswer: primaryFillAnswer,
+        options: [],
+        acceptedAnswers: fillAccepted,
+        explanation: fillExp
+      });
+    }
 
     // Gắn thẻ theo dõi đáp án đúng gốc
     var indexed = rawOptions.map(function (opt, idx) {

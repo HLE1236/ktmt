@@ -269,7 +269,7 @@
     "id": "c3-3.1",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.1",
     "source": "Đề CK 2023.1, 2023.2 & Ôn tập CK 2025.1, 2025.2 Câu 53",
     "examTags": [
@@ -303,7 +303,7 @@
     "id": "c3-3.2a",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.2a",
     "source": "Đề GK 2022.2 (Đề 0008 Câu 10 & Đề 0006 Câu 5)",
     "examTags": [
@@ -312,9 +312,9 @@
     "pdfPage": 52,
     "printedPage": 51,
     "relatedTheoryId": "3.1.1",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên thanh ghi (vd: zero hoặc x0)",
+    "fillPrompt": "Nhập tên thanh ghi (vd: t0 hoặc x5):",
     "acceptedAnswers": [
       "zero",
       "x0",
@@ -340,7 +340,7 @@
     "id": "c3-3.2b",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.2b",
     "source": "Đề GK 2022.2 (Đề 0008 Câu 10 & Đề 0006 Câu 5)",
     "examTags": [
@@ -373,7 +373,7 @@
     "id": "c3-3.3",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.3",
     "source": "Đề GK 2022.2 (Đề 0006 Câu 8)",
     "examTags": [
@@ -382,9 +382,9 @@
     "pdfPage": 53,
     "printedPage": 52,
     "relatedTheoryId": "3.1.1",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập số byte (vd: 600)",
+    "fillPrompt": "Nhập số byte (vd: 400):",
     "acceptedAnswers": [
       "600",
       "600 byte"
@@ -409,7 +409,7 @@
     "id": "c3-3.4a",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.4a",
     "source": "Đề GK 2019.2 (Mã đề 243 Câu 17)",
     "examTags": [
@@ -445,7 +445,7 @@
     "id": "c3-3.4b",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.4b",
     "source": "Đề GK 2019.2 (Mã đề 244 Câu 10)",
     "examTags": [
@@ -481,7 +481,7 @@
     "id": "c3-3.5a",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.5a",
     "source": "Đề GK 2019.2 (Mã đề 243 Câu 20)",
     "examTags": [
@@ -517,7 +517,7 @@
     "id": "c3-3.5b",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.5b",
     "source": "Đề GK 2019.2 (Mã đề 244 Câu 2)",
     "examTags": [
@@ -553,7 +553,7 @@
     "id": "c3-3.6",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.6",
     "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 34",
     "examTags": [
@@ -587,7 +587,7 @@
     "id": "c3-3.7",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.7",
     "source": "Đề GK 2018.2 (Mã đề 198, 199, 204)",
     "examTags": [
@@ -619,8 +619,8 @@
   {
     "id": "c3-3.8a",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.8a",
     "source": "Đề CK 2020.2 (Trang 5)",
     "examTags": [
@@ -652,8 +652,8 @@
   {
     "id": "c3-3.8b",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.8b",
     "source": "Đề CK 2022.2 & 2024.2 (#3ace1f)",
     "examTags": [
@@ -685,8 +685,8 @@
   {
     "id": "c3-3.8c",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.8c",
     "source": "Đề GK 2018.2 (Mã đề 198 Câu 9)",
     "examTags": [
@@ -718,8 +718,8 @@
   {
     "id": "c3-3.9",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.9",
     "source": "Đề CK 2023.1 & Ôn tập 2025.2 Câu 28",
     "examTags": [
@@ -752,8 +752,8 @@
   {
     "id": "c3-3.10a",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.10a-b",
     "source": "Đề CK 2020.2 (Trang 2, Trang 8)",
     "examTags": [
@@ -762,7 +762,7 @@
     "pdfPage": 55,
     "printedPage": 54,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lần truy nhập",
     "acceptedAnswers": [
@@ -788,8 +788,8 @@
   {
     "id": "c3-3.10c",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.10c",
     "source": "Đề GK 2018.2 (Mã đề 204 Câu 7)",
     "examTags": [
@@ -798,7 +798,7 @@
     "pdfPage": 56,
     "printedPage": 55,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập số lần",
     "acceptedAnswers": [
@@ -824,8 +824,8 @@
   {
     "id": "c3-3.11",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.4",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.11",
     "source": "Ôn tập CK 2025.2 (P1, Câu 18)",
     "examTags": [
@@ -857,8 +857,8 @@
   {
     "id": "c3-3.12a",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.12a",
     "source": "Đề CK 2025.1 (#9853fd)",
     "examTags": [
@@ -890,8 +890,8 @@
   {
     "id": "c3-3.12b",
     "chapter": 3,
-    "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupId": "3.2.2",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.12b",
     "source": "Ôn tập CK 2025.2 (P1, Câu 42)",
     "examTags": [
@@ -924,7 +924,7 @@
     "id": "c3-3.13",
     "chapter": 3,
     "groupId": "3.2.1",
-    "groupTitle": "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ",
+    "groupTitle": "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ",
     "exerciseCode": "Bài 3.13",
     "source": "Đề GK 2021.1 (IT3030E, Problem 6)",
     "examTags": [
@@ -957,7 +957,7 @@
     "id": "c3-3.14",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.14",
     "source": "Đề CK 2020.2 (Trang 4) & Đề CK 2021.1 (Trang 3)",
     "examTags": [
@@ -966,9 +966,9 @@
     "pdfPage": 57,
     "printedPage": 56,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị Hexa (vd: 0x000001AC)",
+    "fillPrompt": "Nhập giá trị Hexa (vd: 0x00000000):",
     "acceptedAnswers": [
       "0x000001AC",
       "0x1AC",
@@ -994,7 +994,7 @@
     "id": "c3-3.15",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.15",
     "source": "Đề CK 2022.2 & CK 2024.2 (#014753)",
     "examTags": [
@@ -1027,7 +1027,7 @@
     "id": "c3-3.16a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.16a",
     "source": "Đề GK 2024.1 (#4610c2) & Ôn tập 2025.2 Câu 75",
     "examTags": [
@@ -1061,7 +1061,7 @@
     "id": "c3-3.16b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.16b",
     "source": "Đề GK 2018.2 (Mã đề 198 Câu 18)",
     "examTags": [
@@ -1094,7 +1094,7 @@
     "id": "c3-3.17a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.17a",
     "source": "Đề GK 2024.1 (#99ef6) & Ôn tập 2025.2 Câu 6",
     "examTags": [
@@ -1128,7 +1128,7 @@
     "id": "c3-3.17b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.17b",
     "source": "Đề GK 2024.1 (#e10492)",
     "examTags": [
@@ -1161,7 +1161,7 @@
     "id": "c3-3.18a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.18a",
     "source": "Đề GK 2022.2 (Đề 0008 Câu 9)",
     "examTags": [
@@ -1194,7 +1194,7 @@
     "id": "c3-3.18b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.18b",
     "source": "Đề GK 2022.2 (Đề 0009 Câu 9)",
     "examTags": [
@@ -1227,7 +1227,7 @@
     "id": "c3-3.18c",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.18c",
     "source": "Đề GK 2022.2 (Đề 0006 Câu 9)",
     "examTags": [
@@ -1260,7 +1260,7 @@
     "id": "c3-3.19",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.19",
     "source": "Đề GK 2024.1 (#1b55cf) & Ôn tập CK 2025.2 Câu 24",
     "examTags": [
@@ -1270,9 +1270,9 @@
     "pdfPage": 60,
     "printedPage": 59,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị Hexa (vd: 0xFFFFF800)",
+    "fillPrompt": "Nhập giá trị Hexa (vd: 0x00000000):",
     "acceptedAnswers": [
       "0xFFFFF800",
       "FFFFF800"
@@ -1297,7 +1297,7 @@
     "id": "c3-3.20a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.20a",
     "source": "Đề GK 2024.1 (#5e7591) & Ôn tập 2025.2 Câu 64",
     "examTags": [
@@ -1307,7 +1307,7 @@
     "pdfPage": 61,
     "printedPage": 60,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị thập phân",
     "acceptedAnswers": [
@@ -1333,7 +1333,7 @@
     "id": "c3-3.20b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.20b",
     "source": "Đề CK 2025.1 (#48b64c)",
     "examTags": [
@@ -1342,7 +1342,7 @@
     "pdfPage": 61,
     "printedPage": 60,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị thập phân",
     "acceptedAnswers": [
@@ -1368,7 +1368,7 @@
     "id": "c3-3.21",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.21",
     "source": "Đề GK 2018.2 (Mã đề 204 Câu 9)",
     "examTags": [
@@ -1401,7 +1401,7 @@
     "id": "c3-3.22a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.22a",
     "source": "Đề CK 2024.1 (#d9f3db) & Ôn tập 2025.2 Câu 54",
     "examTags": [
@@ -1411,9 +1411,9 @@
     "pdfPage": 62,
     "printedPage": 61,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị Hexa (vd: 0x112234FF)",
+    "fillPrompt": "Nhập giá trị Hexa (vd: 0x00000000):",
     "acceptedAnswers": [
       "0x112234FF",
       "112234FF"
@@ -1438,7 +1438,7 @@
     "id": "c3-3.22b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.22b",
     "source": "Đề CK 2022.2 & 2024.2 (#585834)",
     "examTags": [
@@ -1447,9 +1447,9 @@
     "pdfPage": 62,
     "printedPage": 61,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị Hexa (vd: 0x000000CD)",
+    "fillPrompt": "Nhập giá trị Hexa (vd: 0x00000000):",
     "acceptedAnswers": [
       "0x000000CD",
       "0xCD",
@@ -1476,7 +1476,7 @@
     "id": "c3-3.23a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23a",
     "source": "Đề CK 2020.2 (Trang 3)",
     "examTags": [
@@ -1485,7 +1485,7 @@
     "pdfPage": 62,
     "printedPage": 61,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa",
     "acceptedAnswers": [
@@ -1512,7 +1512,7 @@
     "id": "c3-3.23b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23b",
     "source": "Đề CK 2020.2 (Trang 7)",
     "examTags": [
@@ -1521,7 +1521,7 @@
     "pdfPage": 62,
     "printedPage": 61,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa",
     "acceptedAnswers": [
@@ -1549,7 +1549,7 @@
     "id": "c3-3.23c",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23c",
     "source": "Đề CK 2022.2, 2024.2 (#5070f9) & Ôn tập 2025.2 Câu 64",
     "examTags": [
@@ -1583,7 +1583,7 @@
     "id": "c3-3.23d",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23d",
     "source": "Đề GK 2025.2 (Đề 0012 Câu 108)",
     "examTags": [
@@ -1592,7 +1592,7 @@
     "pdfPage": 63,
     "printedPage": 62,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa",
     "acceptedAnswers": [
@@ -1619,7 +1619,7 @@
     "id": "c3-3.23e",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.23e",
     "source": "Đề GK 2023.2 (Đề 2 Câu 4)",
     "examTags": [
@@ -1628,7 +1628,7 @@
     "pdfPage": 63,
     "printedPage": 62,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa của t1",
     "acceptedAnswers": [
@@ -1655,7 +1655,7 @@
     "id": "c3-3.24",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.24",
     "source": "Đề GK 2022.2 (Đề 0008 & 0007 Câu 5)",
     "examTags": [
@@ -1688,7 +1688,7 @@
     "id": "c3-3.25",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.25",
     "source": "Đề CK 2020.2 (Trang 6) & CK 2021.1 (Trang 5)",
     "examTags": [
@@ -1721,7 +1721,7 @@
     "id": "c3-3.26a",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.26a",
     "source": "Đề GK 2023.2 (Đề 1 Câu 4)",
     "examTags": [
@@ -1754,7 +1754,7 @@
     "id": "c3-3.26b",
     "chapter": 3,
     "groupId": "3.2.2",
-    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi",
+    "groupTitle": "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi",
     "exerciseCode": "Bài 3.26b",
     "source": "Đề CK 2021.2 (Mã đề B8 Câu 2.2)",
     "examTags": [
@@ -1763,7 +1763,7 @@
     "pdfPage": 64,
     "printedPage": 63,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa theo tài liệu KTMT_GK",
     "acceptedAnswers": [
@@ -1833,7 +1833,7 @@
     "pdfPage": 65,
     "printedPage": 64,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị thập phân của t1",
     "acceptedAnswers": [
@@ -1868,7 +1868,7 @@
     "pdfPage": 65,
     "printedPage": 64,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị cuối của x24",
     "acceptedAnswers": [
@@ -1903,7 +1903,7 @@
     "pdfPage": 65,
     "printedPage": 64,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị thập phân của x7",
     "acceptedAnswers": [
@@ -1938,7 +1938,7 @@
     "pdfPage": 65,
     "printedPage": 64,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị của a0",
     "acceptedAnswers": [
@@ -1973,7 +1973,7 @@
     "pdfPage": 65,
     "printedPage": 64,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị của a0",
     "acceptedAnswers": [
@@ -2033,7 +2033,7 @@
     "id": "c3-3.29",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.29",
     "source": "Đề CK 2022.2 & CK 2024.2 (#56e53f)",
     "examTags": [
@@ -2066,7 +2066,7 @@
     "id": "c3-3.30",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.30",
     "source": "Đề CK 2025.1 (#1f833e)",
     "examTags": [
@@ -2099,7 +2099,7 @@
     "id": "c3-3.31",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.31",
     "source": "Đề GK 2018.2 (Mã đề 198, 199, 204)",
     "examTags": [
@@ -2132,7 +2132,7 @@
     "id": "c3-3.32",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.32",
     "source": "Đề CK 2022.2, 2024.1, 2024.2 & Ôn tập 2025.2 Câu 20",
     "examTags": [
@@ -2166,7 +2166,7 @@
     "id": "c3-3.33a",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33a",
     "source": "Đề GK 2019.2 (Mã đề 243 Câu 19)",
     "examTags": [
@@ -2202,7 +2202,7 @@
     "id": "c3-3.33b",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33b",
     "source": "Đề GK 2019.2 (Mã đề 244 Câu 3)",
     "examTags": [
@@ -2238,7 +2238,7 @@
     "id": "c3-3.33c",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33c",
     "source": "Đề GK 2018.2 (Mã đề 204 Câu 12)",
     "examTags": [
@@ -2271,7 +2271,7 @@
     "id": "c3-3.33d",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.33d",
     "source": "Đề GK 2018.2 (Mã đề 198 Câu 11)",
     "examTags": [
@@ -2304,7 +2304,7 @@
     "id": "c3-3.34a",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.34a",
     "source": "Đề GK 2023.2 (Đề 1 Câu 3)",
     "examTags": [
@@ -2313,7 +2313,7 @@
     "pdfPage": 69,
     "printedPage": 68,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa của s1",
     "acceptedAnswers": [
@@ -2340,7 +2340,7 @@
     "id": "c3-3.34b",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.34b",
     "source": "Đề GK 2023.2 (Đề 2 Câu 1)",
     "examTags": [
@@ -2373,7 +2373,7 @@
     "id": "c3-3.34c",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.34c",
     "source": "Đề GK 2022.2 (Đề 0008 & 0007 Câu 2)",
     "examTags": [
@@ -2383,12 +2383,9 @@
     "printedPage": 68,
     "relatedTheoryId": "3.1.2",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị Hexa",
-    "acceptedAnswers": [
-      "0xEF0E525C",
-      "EF0E525C"
-    ],
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
     "question": "Từ địa chỉ <code>0x100110F8</code> đến <code>0x100110FB</code> lưu 4 byte theo thứ tự Little-Endian lần lượt là: <code>0x5C, 0x52, 0x0E, 0xEF</code>. Giá trị biến 32-bit này bằng bao nhiêu?",
     "codeBlock": null,
     "codeLang": null,
@@ -2409,7 +2406,7 @@
     "id": "c3-3.35",
     "chapter": 3,
     "groupId": "3.2.4",
-    "groupTitle": "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian",
+    "groupTitle": "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)",
     "exerciseCode": "Bài 3.35",
     "source": "Đề GK 2024.1 (#6a94a2) & Ôn tập CK 2025.2 Câu 49",
     "examTags": [
@@ -2419,9 +2416,9 @@
     "pdfPage": 70,
     "printedPage": 69,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập địa chỉ Hexa (vd: 0x1001C000)",
+    "fillPrompt": "Nhập địa chỉ Hexa (vd: 0x10010000):",
     "acceptedAnswers": [
       "0x1001C000",
       "1001C000"
@@ -2589,11 +2586,9 @@
     "printedPage": 71,
     "relatedTheoryId": "3.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập 1 lệnh RISC-V còn thiếu",
-    "acceptedAnswers": [
-      "slli t3, t2, 6"
-    ],
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
     "question": "(Đề 0012 Câu 107): Cho <code>a</code> ở <code>s3</code> và <code>b</code> là thành phần còn lại trong tổng ban đầu. Giữa 2 lệnh <code>add t2, s3, s4</code> và <code>sub s3, t3, s4</code>, hãy điền 1 lệnh hợp ngữ còn thiếu để thực hiện biểu thức <code>a = (a + b) * 64 - a</code>?",
     "codeBlock": null,
     "codeLang": null,
@@ -2624,11 +2619,9 @@
     "printedPage": 71,
     "relatedTheoryId": "3.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập 1 lệnh RISC-V thay thế",
-    "acceptedAnswers": [
-      "slli s0, t2, 4"
-    ],
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
     "question": "Hãy thay thế chuỗi 3 lệnh liên tiếp: <code>add s0, t2, t2</code> $\\to$ <code>slli s0, s0, 1</code> $\\to$ <code>slli s0, s0, 2</code> bằng <strong>1 lệnh hợp ngữ duy nhất</strong>.",
     "codeBlock": null,
     "codeLang": null,
@@ -2956,7 +2949,7 @@
     "pdfPage": 75,
     "printedPage": 74,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập địa chỉ Hexa của A[9]",
     "acceptedAnswers": [
@@ -2992,9 +2985,9 @@
     "pdfPage": 75,
     "printedPage": 74,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên phần tử (vd: A[1])",
+    "fillPrompt": "Nhập tên phần tử (vd: A[0]):",
     "acceptedAnswers": [
       "A[1]"
     ],
@@ -3061,9 +3054,9 @@
     "pdfPage": 75,
     "printedPage": 74,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên phần tử (vd: A[4])",
+    "fillPrompt": "Nhập tên phần tử (vd: A[0]):",
     "acceptedAnswers": [
       "A[4]"
     ],
@@ -3129,7 +3122,7 @@
     "pdfPage": 76,
     "printedPage": 75,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập địa chỉ Hexa của s6",
     "acceptedAnswers": [
@@ -3198,7 +3191,7 @@
     "pdfPage": 77,
     "printedPage": 76,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập địa chỉ Hexa của B[1,4]",
     "acceptedAnswers": [
@@ -3367,7 +3360,7 @@
     ],
     "pdfPage": 80,
     "printedPage": 79,
-    "relatedTheoryId": "3.1.4",
+    "relatedTheoryId": "3.1.3",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",
@@ -3503,7 +3496,7 @@
     "pdfPage": 83,
     "printedPage": 82,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị thập phân của s5",
     "acceptedAnswers": [
@@ -3573,7 +3566,7 @@
     "pdfPage": 84,
     "printedPage": 83,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập tổng số lệnh",
     "acceptedAnswers": [
@@ -3614,8 +3607,8 @@
     "fillPrompt": "",
     "acceptedAnswers": [],
     "question": "(Mã đề B1): Với <code>t1</code> chứa <code>i</code>, <code>s2</code> chứa <code>a</code>, <code>s0</code> giữ địa chỉ cơ sở mảng 32-bit <code>A</code>, đoạn lệnh ở Bài 3.54a tương ứng với đoạn mã C nào?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "addi t1, zero, 100\nLOOP:\nlw   s1, 0(s0)\nadd  s2, s2, s1\naddi s0, s0, 4\naddi t1, t1, -1\nbne  t1, x0, LOOP",
+    "codeLang": "riscv",
     "svgDiagram": null,
     "options": [
       "for (i = 0; i < 100; i++) a = a + A[i];",
@@ -3775,14 +3768,12 @@
     "printedPage": 86,
     "relatedTheoryId": "3.1.3",
     "questionType": "single",
-    "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị của s2",
-    "acceptedAnswers": [
-      "254"
-    ],
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
     "question": "(Mã đề B7): Dùng cùng đoạn mã vòng lặp ở Bài 3.56 với <code>K = 7, M = 1, L = 1</code>, giá trị cuối của thanh ghi <code>s2</code> và tổng số lệnh lần lượt là:",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "addi t1, zero, K\nadd  s2, x0, x0\nLOOP:\nslt  t2, x0, t1\nbeq  t2, x0, DONE\naddi s2, s2, M\nslli s2, s2, L\naddi t1, t1, -1\njal  x0, LOOP\nDONE:",
+    "codeLang": "riscv",
     "svgDiagram": null,
     "options": [
       "s2 = 254 và 46 lệnh",
@@ -3944,15 +3935,15 @@
     "pdfPage": 90,
     "printedPage": 89,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị thập phân trả về",
     "acceptedAnswers": [
       "18"
     ],
     "question": "Giả thiết trước khi gọi chương trình con <code>count</code> ở Bài 3.60, thanh ghi <code>a0 = 0x5678ABCD</code>. Kết quả trả về tại <code>a0</code> sau khi hàm thực hiện xong (viết theo số thập phân) là bao nhiêu?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "count: addi s0, zero, 0\nL1:    beq  a0, zero, done\n       andi t0, a0, 1\n       beq  t0, zero, L2\n       addi s0, s0, 1\nL2:    srli a0, a0, 1\n       j    L1\ndone:  add  a0, s0, zero\n       ret",
+    "codeLang": "riscv",
     "svgDiagram": null,
     "options": [
       "18",
@@ -3979,9 +3970,9 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập mã máy Hexa (vd: 0x406382B3)",
+    "fillPrompt": "Nhập mã máy Hexa (vd: 0x00000033):",
     "acceptedAnswers": [
       "0x406382B3",
       "406382B3"
@@ -4015,7 +4006,7 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã máy Hexa",
     "acceptedAnswers": [
@@ -4051,7 +4042,7 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã máy Hexa",
     "acceptedAnswers": [
@@ -4087,7 +4078,7 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã máy Hexa",
     "acceptedAnswers": [
@@ -4123,7 +4114,7 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã máy Hexa",
     "acceptedAnswers": [
@@ -4159,7 +4150,7 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã máy Hexa",
     "acceptedAnswers": [
@@ -4195,7 +4186,7 @@
     "pdfPage": 91,
     "printedPage": 90,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập mã máy Hexa",
     "acceptedAnswers": [
@@ -4607,8 +4598,8 @@
     ],
     "pdfPage": 96,
     "printedPage": 95,
-    "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "relatedTheoryId": "3.1.4",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa của PC",
     "acceptedAnswers": [
@@ -4645,7 +4636,7 @@
     "pdfPage": 97,
     "printedPage": 96,
     "relatedTheoryId": "3.1.2",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa",
     "acceptedAnswers": [
@@ -4715,9 +4706,9 @@
     "pdfPage": 97,
     "printedPage": 96,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên thanh ghi (vd: s3 hoặc x19)",
+    "fillPrompt": "Nhập tên thanh ghi (vd: t0 hoặc x5):",
     "acceptedAnswers": [
       "s3",
       "x19",
@@ -4752,7 +4743,7 @@
     "pdfPage": 97,
     "printedPage": 96,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập hằng số chia (thập phân)",
     "acceptedAnswers": [
@@ -4787,17 +4778,17 @@
     "pdfPage": 97,
     "printedPage": 96,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập giá trị Hexa (vd: 0x7)",
+    "fillPrompt": "Nhập giá trị Hexa (vd: 0x10):",
     "acceptedAnswers": [
       "0x7",
       "0x007",
       "7"
     ],
     "question": "Hằng số tức thì (<code>imm</code>) của lệnh ở địa chỉ <code>0x400008</code> (<code>0x0074DE93</code>) bằng mấy (viết ở hệ 16)?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "Địa chỉ  | 4 byte (+0..+3) | Mã máy 32-bit | Hợp ngữ RISC-V\n0x400000 | B3, 02, 73, 00  | 0x007302B3    | add  t0, t1, t2\n0x400004 | 13, 0E, 54, 00  | 0x00540E13    | addi t3, s0, 5\n0x400008 | 93, DE, 74, 00  | 0x0074DE93    | srli t4, s1, 7\n0x40000C | 23, 24, E9, 01  | 0x01E92423    | sw   t5, 8(s2)\n0x400010 | E3, 88, 0F, FE  | 0xFE0F88E3    | beq  t6, x0, -16\n0x400014 | B7, 59, 34, 12  | 0x123459B7    | lui  s3, 0x12345\n0x400018 | EF, F0, 9F, FE  | 0xFE9FF0EF    | jal  ra, -24",
+    "codeLang": "text",
     "svgDiagram": null,
     "options": [
       "0x7 (hoặc 0x007)",
@@ -4824,15 +4815,15 @@
     "pdfPage": 97,
     "printedPage": 96,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên lệnh (vd: beq)",
+    "fillPrompt": "Nhập tên lệnh (vd: add):",
     "acceptedAnswers": [
       "beq"
     ],
     "question": "Dựa vào Bản đồ bộ nhớ (Đề 0013 - Bản 1), hãy cho biết tên thao tác (mnemonic) của lệnh ở địa chỉ <code>0x400010</code> (<code>0xFE0F88E3</code>)?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "Địa chỉ  | 4 byte (+0..+3) | Mã máy 32-bit | Hợp ngữ RISC-V\n0x400000 | B3, 02, 73, 00  | 0x007302B3    | add  t0, t1, t2\n0x400004 | 13, 0E, 54, 00  | 0x00540E13    | addi t3, s0, 5\n0x400008 | 93, DE, 74, 00  | 0x0074DE93    | srli t4, s1, 7\n0x40000C | 23, 24, E9, 01  | 0x01E92423    | sw   t5, 8(s2)\n0x400010 | E3, 88, 0F, FE  | 0xFE0F88E3    | beq  t6, x0, -16\n0x400014 | B7, 59, 34, 12  | 0x123459B7    | lui  s3, 0x12345\n0x400018 | EF, F0, 9F, FE  | 0xFE9FF0EF    | jal  ra, -24",
+    "codeLang": "text",
     "svgDiagram": null,
     "options": [
       "beq",
@@ -4859,7 +4850,7 @@
     "pdfPage": 98,
     "printedPage": 97,
     "relatedTheoryId": "3.1.2",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập giá trị Hexa",
     "acceptedAnswers": [
@@ -4928,17 +4919,17 @@
     "pdfPage": 98,
     "printedPage": 97,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên thanh ghi (vd: t1 hoặc x6)",
+    "fillPrompt": "Nhập tên thanh ghi (vd: t0 hoặc x5):",
     "acceptedAnswers": [
       "t1",
       "x6",
       "t1 (x6)"
     ],
     "question": "Lệnh ở địa chỉ <code>0x400000</code> (<code>0x007302B3</code>) có thanh ghi nguồn <code>rs1</code> là gì?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "Địa chỉ  | 4 byte (+0..+3) | Mã máy 32-bit | Ghi chú Bản 2 (Đề 0013)\n0x400000 | B3, 02, 73, 00  | 0x007302B3    | add  t0, t1, t2\n0x400004 | 13, 0E, 54, 00  | 0x00540E13    | addi t3, s0, 5\n0x400008 | 93, DE, 34, 00  | 0x0034DE93    | (byte 0x40000A đổi thành 0x34)\n0x40000C | 23, 24, E9, 01  | 0x01E92423    | sw   t5, 8(s2)\n0x400010 | E3, 88, 0F, FE  | 0xFE0F88E3    | beq  t6, x0, -16\n0x400014 | B7, 59, 34, 12  | 0x123459B7    | lui  s3, 0x12345\n0x400018 | EF, F0, 9F, FE  | 0xFE9FF0EF    | jal  ra, -24",
+    "codeLang": "text",
     "svgDiagram": null,
     "options": [
       "t1 (x6)",
@@ -4965,15 +4956,15 @@
     "pdfPage": 98,
     "printedPage": 97,
     "relatedTheoryId": "3.1.3",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập hằng số chia",
     "acceptedAnswers": [
       "8"
     ],
     "question": "Trong Đề 0013 Bản 2, lệnh thứ 3 tại <code>0x400008</code> (<code>0x0034DE93</code>) tương đương với phép chia cho hằng số bằng mấy?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "Địa chỉ  | 4 byte (+0..+3) | Mã máy 32-bit | Ghi chú Bản 2 (Đề 0013)\n0x400000 | B3, 02, 73, 00  | 0x007302B3    | add  t0, t1, t2\n0x400004 | 13, 0E, 54, 00  | 0x00540E13    | addi t3, s0, 5\n0x400008 | 93, DE, 34, 00  | 0x0034DE93    | (byte 0x40000A đổi thành 0x34)\n0x40000C | 23, 24, E9, 01  | 0x01E92423    | sw   t5, 8(s2)\n0x400010 | E3, 88, 0F, FE  | 0xFE0F88E3    | beq  t6, x0, -16\n0x400014 | B7, 59, 34, 12  | 0x123459B7    | lui  s3, 0x12345\n0x400018 | EF, F0, 9F, FE  | 0xFE9FF0EF    | jal  ra, -24",
+    "codeLang": "text",
     "svgDiagram": null,
     "options": [
       "8",
@@ -5000,7 +4991,7 @@
     "pdfPage": 98,
     "printedPage": 97,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
     "fillPrompt": "Nhập địa chỉ Hexa",
     "acceptedAnswers": [
@@ -5037,15 +5028,15 @@
     "pdfPage": 98,
     "printedPage": 97,
     "relatedTheoryId": "3.1.4",
-    "questionType": "single",
+    "questionType": "fill",
     "canFillBlank": true,
-    "fillPrompt": "Nhập tên lệnh (vd: srli)",
+    "fillPrompt": "Nhập tên lệnh (vd: add):",
     "acceptedAnswers": [
       "srli"
     ],
     "question": "Hãy cho biết tên thao tác của lệnh ở địa chỉ <code>0x400008</code> (<code>0x0034DE93</code>)?",
-    "codeBlock": null,
-    "codeLang": null,
+    "codeBlock": "Địa chỉ  | 4 byte (+0..+3) | Mã máy 32-bit | Ghi chú Bản 2 (Đề 0013)\n0x400000 | B3, 02, 73, 00  | 0x007302B3    | add  t0, t1, t2\n0x400004 | 13, 0E, 54, 00  | 0x00540E13    | addi t3, s0, 5\n0x400008 | 93, DE, 34, 00  | 0x0034DE93    | (byte 0x40000A đổi thành 0x34)\n0x40000C | 23, 24, E9, 01  | 0x01E92423    | sw   t5, 8(s2)\n0x400010 | E3, 88, 0F, FE  | 0xFE0F88E3    | beq  t6, x0, -16\n0x400014 | B7, 59, 34, 12  | 0x123459B7    | lui  s3, 0x12345\n0x400018 | EF, F0, 9F, FE  | 0xFE9FF0EF    | jal  ra, -24",
+    "codeLang": "text",
     "svgDiagram": null,
     "options": [
       "srli",
@@ -5285,7 +5276,7 @@
     ],
     "pdfPage": 99,
     "printedPage": 98,
-    "relatedTheoryId": "3.1.3",
+    "relatedTheoryId": "3.1.4",
     "questionType": "single",
     "canFillBlank": false,
     "fillPrompt": "",

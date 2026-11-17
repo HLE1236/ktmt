@@ -108,6 +108,36 @@
     }, 2800);
   }
 
+  function isFixedFillQuestion(q) {
+    return Boolean(q && q.questionType === 'fill');
+  }
+
+  function normalizeFillAnswer(val) {
+    return String(val || '').toLowerCase().replace(/\s+/g, '');
+  }
+
+  function checkFillAnswer(q, userAns) {
+    const normalizedUser = normalizeFillAnswer(userAns);
+    if (!normalizedUser) return false;
+    const accepted = (q.acceptedAnswers && q.acceptedAnswers.length > 0 ? q.acceptedAnswers : [q.correctAnswer])
+      .map(normalizeFillAnswer)
+      .filter(Boolean);
+    return accepted.includes(normalizedUser);
+  }
+
+  function isQuestionAnswerCorrect(q, userAns) {
+    if (!q || userAns === undefined || userAns === null || String(userAns).trim() === '') return false;
+    if (isFixedFillQuestion(q)) return checkFillAnswer(q, userAns);
+    return userAns === q.correctAnswer;
+  }
+
+  function formatCorrectAnswerDisplay(q) {
+    if (!q) return '';
+    if (isFixedFillQuestion(q)) return String(q.correctAnswer || '');
+    const opt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
+    return opt ? `${q.correctAnswer}. ${opt}` : String(q.correctAnswer || '');
+  }
+
   function shuffleArray(array) {
     const arr = array.slice();
     for (let i = arr.length - 1; i > 0; i--) {
@@ -523,10 +553,23 @@
     if (miniCheckIndexMap[sec.id] === undefined) miniCheckIndexMap[sec.id] = 0;
     const idx = miniCheckIndexMap[sec.id] % secQuestions.length;
     const q = secQuestions[idx];
-    const optsHtml = (q.options || []).map((opt, i) => {
-      const key = opt.key || ['A', 'B', 'C', 'D'][i];
-      return `<button type="button" class="minicheck-opt" data-opt-key="${key}"><strong>${key}.</strong> ${enhanceRegisterTooltips(opt.text)}</button>`;
-    }).join('');
+    const isFill = isFixedFillQuestion(q);
+    const bodyHtml = isFill
+      ? `
+        <div class="fill-in-box" style="margin-top: 10px;">
+          <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;">
+            ${escapeHtml(q.fillPrompt || 'Nhập đáp án của bạn:')}
+          </label>
+          <div class="fill-in-input-wrap">
+            <input type="text" class="fill-in-input minicheck-fill-input" placeholder="Nhập đáp án..." autocomplete="off" />
+            <button type="button" class="btn btn-primary btn-sm minicheck-fill-submit">Kiểm tra</button>
+          </div>
+        </div>
+      `
+      : `<div class="minicheck-opts">${(q.options || []).map((opt, i) => {
+          const key = opt.key || ['A', 'B', 'C', 'D'][i];
+          return `<button type="button" class="minicheck-opt" data-opt-key="${key}"><strong>${key}.</strong> ${enhanceRegisterTooltips(opt.text)}</button>`;
+        }).join('')}</div>`;
 
     return `
       <div class="theory-minicheck-box" data-minicheck-box="${sec.id}">
@@ -539,7 +582,7 @@
         </div>
         <div class="minicheck-q-text">${enhanceRegisterTooltips(q.question)}</div>
         ${renderQuestionMedia(q)}
-        <div class="minicheck-opts">${optsHtml}</div>
+        ${bodyHtml}
         <div class="minicheck-feedback" style="display:none;"></div>
       </div>
     `;
@@ -562,6 +605,38 @@
         bindMiniCheckBox(newBox, sec);
       }
     });
+
+    if (isFixedFillQuestion(q)) {
+      const inputEl = box.querySelector('.minicheck-fill-input');
+      const submitBtn = box.querySelector('.minicheck-fill-submit');
+      const handleMiniFill = () => {
+        if (!inputEl || inputEl.disabled) return;
+        const val = inputEl.value.trim();
+        if (!val) {
+          showToast('Vui lòng nhập câu trả lời của bạn.', 'error');
+          return;
+        }
+        const isOk = checkFillAnswer(q, val);
+        inputEl.disabled = true;
+        if (submitBtn) submitBtn.disabled = true;
+        inputEl.style.borderColor = isOk ? 'var(--success)' : 'var(--error)';
+        inputEl.style.backgroundColor = isOk ? 'var(--success-light)' : 'var(--error-light)';
+        const fb = box.querySelector('.minicheck-feedback');
+        if (fb) {
+          fb.style.display = 'block';
+          fb.innerHTML = `<strong>${isOk ? '✓ Chính xác!' : `✗ Chưa đúng (Đáp án: ${formatCorrectAnswerDisplay(q)}).`}</strong> ${enhanceRegisterTooltips(q.explanation || '')}`;
+          renderMath(fb);
+        }
+        appState.history[q.id] = { answered: true, isCorrect: isOk, lastAnswer: val, timestamp: Date.now() };
+        if (!isOk && !appState.mistakes.includes(q.id)) appState.mistakes.push(q.id);
+        saveState();
+      };
+      submitBtn?.addEventListener('click', handleMiniFill);
+      inputEl?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleMiniFill();
+      });
+      return;
+    }
 
     box.querySelectorAll('.minicheck-opt').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1024,12 +1099,14 @@
     const itemsHtml = practiceQueue.map((q, idx) => {
       const grpInfo = getQuestionGroupInfo(q);
       const tagClass = getTagBadgeClass(q.examTag);
-      const correctOpt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
-      const optsHtml = (q.options || []).map((opt, oIdx) => {
-        const key = opt.key || ['A', 'B', 'C', 'D'][oIdx];
-        const isAns = workbookExpandAll && key === q.correctAnswer;
-        return `<div class="workbook-opt-pill ${isAns ? 'is-answer' : ''}" data-wb-key="${key}"><strong>${key}.</strong> ${enhanceRegisterTooltips(opt.text)}</div>`;
-      }).join('');
+      const isFill = isFixedFillQuestion(q);
+      const optsHtml = isFill
+        ? `<div class="workbook-fill-hint" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">✍️ Dạng tự điền đáp án</div>`
+        : (q.options || []).map((opt, oIdx) => {
+            const key = opt.key || ['A', 'B', 'C', 'D'][oIdx];
+            const isAns = workbookExpandAll && key === q.correctAnswer;
+            return `<div class="workbook-opt-pill ${isAns ? 'is-answer' : ''}" data-wb-key="${key}"><strong>${key}.</strong> ${enhanceRegisterTooltips(opt.text)}</div>`;
+          }).join('');
 
       return `
         <article class="workbook-item">
@@ -1054,7 +1131,7 @@
             </button>
           </div>
           <div class="workbook-solution-box ${workbookExpandAll ? 'open' : ''}">
-            <div style="margin-bottom: 6px;"><strong>Đáp án đúng: ${q.correctAnswer}${correctOpt ? '. ' + enhanceRegisterTooltips(correctOpt) : ''}</strong></div>
+            <div style="margin-bottom: 6px;"><strong>Đáp án đúng: ${enhanceRegisterTooltips(formatCorrectAnswerDisplay(q))}</strong></div>
             <div>${enhanceRegisterTooltips(q.explanation || 'Đang cập nhật lời giải.')}</div>
           </div>
         </article>
@@ -1287,8 +1364,9 @@
       ${renderQuestionMedia(q)}
     `;
 
-    // Question Body: MCQ vs Fill-in
-    if (practiceMode === 'mcq') {
+    // Question Body: Fixed Fill-in vs MCQ / Toggleable Fill-in
+    const isFill = isFixedFillQuestion(q) || practiceMode === 'fill';
+    if (!isFill) {
       html += `<div class="options-grid" id="practice-options-grid">`;
       q.options.forEach((opt, idx) => {
         const key = opt.key || ['A', 'B', 'C', 'D'][idx];
@@ -1301,10 +1379,13 @@
       });
       html += `</div>`;
     } else {
+      const fillLabel = isFixedFillQuestion(q)
+        ? escapeHtml(q.fillPrompt || 'Điền đáp án của bạn (câu hỏi tự điền):')
+        : 'Chế độ tự điền đáp án (daotao.ai style):';
       html += `
         <div class="fill-in-box">
           <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
-            Chế độ tự điền đáp án (daotao.ai style):
+            ${fillLabel}
           </label>
           <div class="fill-in-input-wrap">
             <input type="text" class="fill-in-input" id="practice-fill-input" placeholder="Nhập đáp án của bạn (ví dụ: 0x..., 1.25, -42, addi)..." autofocus autocomplete="off" />
@@ -1342,9 +1423,9 @@
               📖 Về lý thuyết (${appState.learningContext.secCode})
             </button>
           ` : ''}
-          <button class="btn btn-secondary" id="btn-toggle-input-mode">
+          ${isFixedFillQuestion(q) ? '' : `<button class="btn btn-secondary" id="btn-toggle-input-mode">
             ${practiceMode === 'mcq' ? 'Chuyển sang Tự điền ✍️' : 'Chuyển sang Trắc nghiệm 🔘'}
-          </button>
+          </button>`}
           <button class="btn btn-primary" id="btn-next-question">
             ${currentPracticeIndex === practiceQueue.length - 1 ? 'Hoàn thành 🎉' : 'Câu tiếp theo →'}
           </button>
@@ -1395,8 +1476,8 @@
       }
     });
 
-    // Handle MCQ Selection
-    if (practiceMode === 'mcq') {
+    // Handle MCQ Selection vs Fill-in
+    if (!isFill) {
       const optionButtons = container.querySelectorAll('.option-btn');
       optionButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1478,8 +1559,9 @@
   function submitPracticeAnswer(answer, q) {
     practiceAnswerSubmitted = true;
     let isCorrect = false;
+    const isFill = isFixedFillQuestion(q) || practiceMode === 'fill';
 
-    if (practiceMode === 'mcq') {
+    if (!isFill) {
       isCorrect = (answer === q.correctAnswer);
       const optionButtons = document.querySelectorAll('.option-btn');
       optionButtons.forEach(btn => {
@@ -1492,9 +1574,7 @@
         }
       });
     } else {
-      const normalizedUser = answer.toLowerCase().replace(/\s+/g, '');
-      const accepted = (q.acceptedAnswers || [q.correctAnswer]).map(a => String(a).toLowerCase().replace(/\s+/g, ''));
-      isCorrect = accepted.includes(normalizedUser);
+      isCorrect = checkFillAnswer(q, answer);
 
       const inputEl = document.getElementById('practice-fill-input');
       if (inputEl) {
@@ -1524,8 +1604,7 @@
     const expContainer = document.getElementById('practice-explanation-container');
     const expHeader = document.getElementById('practice-explanation-header');
     if (expContainer && expHeader) {
-      const correctOptText = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
-      const ansDisplay = correctOptText ? `${q.correctAnswer}: ${correctOptText}` : q.correctAnswer;
+      const ansDisplay = formatCorrectAnswerDisplay(q);
       expHeader.className = `explanation-header ${isCorrect ? 'correct' : 'incorrect'}`;
       expHeader.innerHTML = isCorrect 
         ? `<span>🎉 Chính xác! Đáp án đúng là <strong>${ansDisplay}</strong></span>` 
@@ -1741,22 +1820,32 @@
       </div>
       ${renderQuestionMedia(q)}
 
-      <div class="options-grid">
-    `;
-
-    q.options.forEach((opt, idx) => {
-      const key = opt.key || ['A', 'B', 'C', 'D'][idx];
-      const isSelected = selectedAnswer === key;
-      html += `
-        <button class="option-btn ${isSelected ? 'correct' : ''}" data-key="${key}">
-          <div class="option-key">${key}</div>
-          <div class="option-content">${enhanceRegisterTooltips(opt.text)}</div>
-        </button>
-      `;
-    });
-
-    html += `
-      </div>
+      ${isFixedFillQuestion(q) ? `
+        <div class="fill-in-box" style="margin-top: 16px;">
+          <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">
+            ${escapeHtml(q.fillPrompt || 'Nhập đáp án của bạn:')}
+          </label>
+          <div class="fill-in-input-wrap">
+            <input type="text" class="fill-in-input" id="exam-fill-input" value="${escapeHtml(selectedAnswer || '')}" placeholder="Nhập đáp án của bạn..." autofocus autocomplete="off" />
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">
+            Đáp án tự động được lưu khi bạn nhập. Nhấn Enter để chuyển câu tiếp theo.
+          </div>
+        </div>
+      ` : `
+        <div class="options-grid">
+          ${q.options.map((opt, idx) => {
+            const key = opt.key || ['A', 'B', 'C', 'D'][idx];
+            const isSelected = selectedAnswer === key;
+            return `
+              <button class="option-btn ${isSelected ? 'correct' : ''}" data-key="${key}">
+                <div class="option-key">${key}</div>
+                <div class="option-content">${enhanceRegisterTooltips(opt.text)}</div>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `}
       <div class="quiz-nav-bottom">
         <button class="btn btn-secondary" id="btn-exam-prev" ${currentExamIndex === 0 ? 'disabled' : ''}>← Câu trước</button>
         <button class="btn btn-primary" id="btn-exam-next">
@@ -1773,6 +1862,24 @@
       renderExamQuestion();
       renderExamPalette();
     });
+
+    const examFillInput = document.getElementById('exam-fill-input');
+    if (examFillInput) {
+      examFillInput.addEventListener('input', () => {
+        const val = examFillInput.value.trim();
+        if (val) {
+          examAnswers[currentExamIndex] = examFillInput.value;
+        } else {
+          delete examAnswers[currentExamIndex];
+        }
+        renderExamPalette();
+      });
+      examFillInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          document.getElementById('btn-exam-next')?.click();
+        }
+      });
+    }
 
     container.querySelectorAll('.option-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1835,7 +1942,7 @@
         };
       }
       groupMap[gid].total++;
-      if (answers[idx] === q.correctAnswer) groupMap[gid].correct++;
+      if (isQuestionAnswerCorrect(q, answers[idx])) groupMap[gid].correct++;
     });
 
     const rows = Object.values(groupMap).map(r => ({
@@ -1877,7 +1984,7 @@
 
     examQuestions.forEach((q, idx) => {
       const userAns = examAnswers[idx];
-      const isCorrect = userAns === q.correctAnswer;
+      const isCorrect = isQuestionAnswerCorrect(q, userAns);
       if (isCorrect) {
         correctCount++;
       } else {
@@ -1961,11 +2068,17 @@
 
     examQuestions.forEach((q, idx) => {
       const userAns = examAnswers[idx];
-      const isCorrect = userAns === q.correctAnswer;
-      const userOpt = (userAns && q.options) ? q.options.find(o => o.key === userAns) : null;
-      const userDisplay = userAns ? `${userAns}${userOpt && userOpt.text ? '. ' + userOpt.text : ''}` : '(Chưa điền)';
-      const correctOpt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
-      const correctDisplay = `${q.correctAnswer}${correctOpt ? '. ' + correctOpt : ''}`;
+      const isCorrect = isQuestionAnswerCorrect(q, userAns);
+      let userDisplay = '(Chưa điền)';
+      if (userAns !== undefined && userAns !== null && String(userAns).trim() !== '') {
+        if (isFixedFillQuestion(q)) {
+          userDisplay = escapeHtml(String(userAns));
+        } else {
+          const userOpt = q.options ? q.options.find(o => o.key === userAns) : null;
+          userDisplay = `${userAns}${userOpt && userOpt.text ? '. ' + userOpt.text : ''}`;
+        }
+      }
+      const correctDisplay = formatCorrectAnswerDisplay(q);
       html += `
         <div style="background-color: var(--bg-surface); border: 1px solid ${isCorrect ? 'var(--success-border)' : 'var(--error-border)'}; border-radius: var(--radius-md); padding: 18px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
@@ -2049,8 +2162,7 @@
     const counterEl = document.getElementById('flashcard-counter');
     if (counterEl) counterEl.textContent = `Thẻ ${currentFlashcardIndex + 1} / ${flashcardQueue.length}`;
 
-    const flashCorrectOpt = (q.options && q.options[q.correctIndex]) ? q.options[q.correctIndex].text : '';
-    const flashAnsDisplay = flashCorrectOpt ? `${q.correctAnswer}. ${flashCorrectOpt}` : q.correctAnswer;
+    const flashAnsDisplay = formatCorrectAnswerDisplay(q);
     cardContainer.innerHTML = `
       <div class="flashcard-inner" id="flashcard-inner-box">
         <div class="flashcard-front">
@@ -2134,7 +2246,7 @@
             ${enhanceRegisterTooltips(q.question)}
           </div>
           <div style="background-color: var(--bg-muted); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;">
-            <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">Đáp án đúng: ${q.correctAnswer}${q.options && q.options[q.correctIndex] ? '. ' + q.options[q.correctIndex].text : ''}</div>
+            <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">Đáp án đúng: ${enhanceRegisterTooltips(formatCorrectAnswerDisplay(q))}</div>
             <div style="color: var(--text-secondary);">${enhanceRegisterTooltips(q.explanation)}</div>
           </div>
         </div>

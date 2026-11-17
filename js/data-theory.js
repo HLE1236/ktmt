@@ -92,13 +92,13 @@
       subtitle: "Tập 32 thanh ghi, quy tắc Little-Endian, hợp ngữ RISC-V, dịch C ↔ RISC-V, Vòng lặp, Ngăn xếp, Mã máy 32-bit, Lệnh nén 16-bit và Bản đồ bộ nhớ.",
       pdfPageStart: 43,
       printedPageStart: 42,
-      theorySections: ["3.1.1", "3.1.2", "3.1.3", "3.1.4"],
+      theorySections: ["3.1.1", "3.1.2", "3.1.3", "3.1.4", "3.1.5"],
       groups: [
         { id: "3.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 3 (RISC-V)", type: "theory", pdfPage: 43, exercises: "Lý thuyết 3.1 - 3.8", count: 8, summary: "Nguyên lý RISC, 32 thanh ghi RV32I, quy tắc Little-Endian, 6 khuôn dạng lệnh 32-bit, lệnh nén 16-bit và 4 định địa chỉ." },
-        { id: "3.2.1", title: "Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ", type: "exercise", pdfPage: 52, exercises: "Bài tập 3.1 - 3.13", count: 20, summary: "Phân biệt 4 phương thức định địa chỉ, kiểm tra lệnh hợp lệ/không hợp lệ, khuôn dạng R/I/S/B/U/J và hạn chế lệnh nén 16-bit." },
-        { id: "3.2.2", title: "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi", type: "exercise", pdfPage: 57, exercises: "Bài tập 3.14 - 3.26", count: 24, summary: "add, sub, addi, and, or, xor, sll, srl, sra, lui. Quy tắc lui + addi nạp hằng số 32-bit (cộng 1 khi bit 11 bằng 1)." },
+        { id: "3.2.1", title: "Nhóm 1: Tập Thanh ghi, Kích thước lệnh (32-bit / RVC 16-bit), Khuôn dạng và Phương thức định địa chỉ", type: "exercise", pdfPage: 52, exercises: "Bài tập 3.1 - 3.7, 3.13", count: 11, summary: "32 thanh ghi RV32I (t0-t6, s0-s11, zero), kích thước mã máy 32-bit vs RVC 16-bit, khuôn dạng lệnh R/I/S/B/U/J và 4 phương thức định địa chỉ." },
+        { id: "3.2.2", title: "Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit, Phạm vi 12-bit và Khởi tạo thanh ghi", type: "exercise", pdfPage: 57, exercises: "Bài tập 3.12, 3.14 - 3.26", count: 26, summary: "add, sub, addi (phạm vi hằng 12-bit [-2048, +2047]), and, or, xor, sll, srl, sra, lui. Quy tắc lui + addi nạp hằng số 32-bit (cộng 1 khi bit 11 bằng 1)." },
         { id: "3.2.3", title: "Nhóm 3: Lệnh So sánh (slt, slti, sltu, blt, bltu) và Rẽ nhánh", type: "exercise", pdfPage: 64, exercises: "Bài tập 3.27 - 3.28, 3.72", count: 7, summary: "So sánh có dấu (slt, slti, blt, bge) vs không dấu (sltu, sltiu, bltu) với hằng số âm/Hexa có bit dấu bằng 1 và cơ chế ALU trừ (beq/bne)." },
-        { id: "3.2.4", title: "Nhóm 4: Truy cập bộ nhớ (lw, lh, lb, lbu, sw) và Thứ tự Little-Endian", type: "exercise", pdfPage: 66, exercises: "Bài tập 3.29 - 3.35", count: 12, summary: "Quy tắc LSB nằm ở địa chỉ nhỏ nhất; mở rộng dấu (lb, lh) vs mở rộng 0 (lbu, lhu) và lưu trữ mảng trong bộ nhớ." },
+        { id: "3.2.4", title: "Nhóm 4: Căn chỉnh biên (Alignment), Thứ tự Little-Endian và Truy cập bộ nhớ (lw, lh, lb, lbu, sw)", type: "exercise", pdfPage: 66, exercises: "Bài tập 3.8 - 3.11, 3.29 - 3.35", count: 19, summary: "Căn chỉnh biên word/halfword (chia hết cho 4/2), quy tắc Little-Endian (LSB ở địa chỉ nhỏ nhất), đếm số lần truy cập Data Memory và lw/lh/lb/lbu/sw." },
         { id: "3.2.5", title: "Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V", type: "exercise", pdfPage: 70, exercises: "Bài tập 3.36 - 3.50", count: 30, summary: "Địa chỉ phần tử mảng &A[i] = Base + 4*i, cấu trúc if-else, vòng lặp while/for và xử lý xâu ký tự/mảng char." },
         { id: "3.2.6", title: "Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi", type: "exercise", pdfPage: 82, exercises: "Bài tập 3.51 - 3.56", count: 10, summary: "Tính kết quả vòng lặp và công thức đếm tổng số lệnh thực thi: Khởi tạo + N*(Thân + Branch) + Thoát." },
         { id: "3.2.7", title: "Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh jal / jalr", type: "exercise", pdfPage: 88, exercises: "Bài tập 3.57 - 3.60", count: 5, summary: "Quy ước Caller-saved vs Callee-saved, thao tác Push/Pop trên đỉnh ngăn xếp sp và gọi đệ quy/hàm lồng nhau." },
@@ -115,9 +115,9 @@
       theorySections: ["4.1.1", "4.1.2", "4.1.3", "4.1.4", "4.1.5"],
       groups: [
         { id: "4.1", title: "Phần 1: Câu hỏi Ôn tập Lý thuyết Chương 4 (Số học máy tính)", type: "theory", pdfPage: 100, exercises: "Lý thuyết 4.1 - 4.8", count: 8, summary: "Hệ đếm, cổng logic, mã bù 2, quy tắc tràn số học, phép nhân/chia RV32M và chuẩn dấu phẩy động IEEE 754." },
-        { id: "4.2.1", title: "Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn", type: "exercise", pdfPage: 108, exercises: "Bài tập 4.1 - 4.2", count: 8, summary: "Tìm số bit tối thiểu mã hóa M giá trị (2^n >= M), chuyển đổi thập phân có phần lẻ (0.1, 0.25...) sang nhị phân và Hexa." },
+        { id: "4.2.1", title: "Nhóm 1: Hệ đếm và Chuyển đổi cơ số (Nhị phân, Thập phân, Thập lục phân)", type: "exercise", pdfPage: 108, exercises: "Bài tập 4.1", count: 1, summary: "Chuyển đổi số có phần nguyên và phần lẻ giữa các hệ cơ số (nhị phân, thập phân, thập lục phân)." },
         { id: "4.2.2", title: "Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit", type: "exercise", pdfPage: 109, exercises: "Bài tập 4.3 - 4.5", count: 5, summary: "Nhận dạng 6 cổng logic (AND, OR, NOT, NAND, NOR, XOR), phân tích mạch tổ hợp SOP và công thức S, C_out bộ Full Adder." },
-        { id: "4.2.3", title: "Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)", type: "exercise", pdfPage: 111, exercises: "Bài tập 4.6 - 4.14", count: 21, summary: "Dải giá trị n-bit bù 2 [-2^{n-1}, 2^{n-1}-1], tính bù 2, chuyển đổi 8/16/32-bit và sắp xếp dãy số nguyên có/không dấu." },
+        { id: "4.2.3", title: "Nhóm 3: Biểu diễn Số nguyên không dấu, có dấu (Dải giá trị, Mã bù 2) và So sánh", type: "exercise", pdfPage: 111, exercises: "Bài tập 4.2, 4.6 - 4.14", count: 28, summary: "Xác định số bit tối thiểu (2^n >= M), dải giá trị không dấu/có dấu n-bit bù 2 [-2^{n-1}, 2^{n-1}-1], tính bù 2 và sắp xếp dãy số nguyên." },
         { id: "4.2.4", title: "Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)", type: "exercise", pdfPage: 116, exercises: "Bài tập 4.15 - 4.22", count: 15, summary: "Cộng cùng dấu ra trái dấu -> tràn số; char (8-bit) tràn +-256; dải giá trị thanh ghi gây tràn 32-bit [0x80000000 - K, 0x7FFFFFFF]." },
         { id: "4.2.5", title: "Nhóm 5: Lệnh Chia và Lấy phần dư số nguyên (div, rem)", type: "exercise", pdfPage: 122, exercises: "Bài tập 4.23", count: 1, summary: "Mở rộng RV32M: div rd, rs1, rs2 và rem rd, rs1, rs2. Số dư luôn cùng dấu với số bị chia rs1." },
         { id: "4.2.6", title: "Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)", type: "exercise", pdfPage: 123, exercises: "Bài tập 4.24 - 4.30", count: 14, summary: "Cấu trúc 1-8-23 (Bias = 127), đổi thập phân <-> Hexa 32-bit, nhận diện +-Infinity, số cách biểu diễn NaN (2^24 - 2)." }
@@ -787,7 +787,7 @@
       title: "Tổng quan về Kiến trúc tập lệnh và Tập 32 thanh ghi",
       pdfPage: 43,
       printedPage: 42,
-      linkedGroups: ["3.1", "3.2.1", "3.2.7"],
+      linkedGroups: ["3.1", "3.2.1"],
       summary: "Phân biệt CISC vs RISC, 3 đặc trưng RV32I và Bảng tra cứu 32 thanh ghi kèm quy ước bảo toàn Caller-saved / Callee-saved.",
       content: `
         <h4>1. Đặc trưng của kiến trúc tập lệnh thu gọn RISC và RISC-V</h4>
@@ -853,7 +853,7 @@
       title: "Tổ chức dữ liệu trong bộ nhớ và Quy tắc Đầu nhỏ (Little-Endian)",
       pdfPage: 45,
       printedPage: 44,
-      linkedGroups: ["3.1", "3.2.4", "3.2.8"],
+      linkedGroups: ["3.1", "3.2.4"],
       summary: "Các đơn vị dữ liệu Byte / Halfword / Word, quy tắc căn chỉnh biên địa chỉ (Alignment) và sơ đồ đối chiếu Little-Endian vs. Big-Endian.",
       content: `
         <h4>1. Các đơn vị dữ liệu và Quy tắc căn chỉnh biên địa chỉ (Alignment)</h4>
@@ -1210,6 +1210,290 @@
         </ol>
       `
     },
+    {
+      id: "3.1.5",
+      chapter: 3,
+      code: "3.1.5",
+      title: "Phương pháp dịch ngược Hợp ngữ RISC-V sang C/C++ & Giải 5 dạng bài tập",
+      pdfPage: 70,
+      printedPage: 69,
+      linkedGroups: ["3.2.5", "3.2.6", "3.2.7"],
+      summary: "Quy trình 4 bước đọc hiểu code RISC-V không bị lú, Bảng mẫu đối chiếu nhanh Assembly ↔ C/C++, hướng dẫn giải chi tiết 5 dạng bài kèm Trace Table và các bẫy hay gặp.",
+      content: `
+        <div class="callout callout-tip">
+          <div class="callout-title">🧭 Quy trình 4 bước đọc hiểu &amp; dịch ngược RISC-V sang C/C++ (Không bị lú)</div>
+          <p>Thay vì cố đọc từng dòng rời rạc rồi đoán ý đồ, hãy làm đúng 4 bước sau trước mọi đoạn code Assembly:</p>
+          <ol>
+            <li><strong>Bước 1 – Lập bảng ánh xạ (Ghi chú biến $\\leftrightarrow$ thanh ghi):</strong>
+              <br/>Đề bài thường cho sẵn (ví dụ <code>s0 = f, s1 = g, s2 = A</code>). Nếu không cho sẵn, hãy tự đặt tên ngắn gọn ngay bên cạnh (<code>s0 = sum</code>, <code>s1 = i</code>, <code>t0 = temp</code>). Gặp <code>zero</code> / <code>x0</code> thay luôn bằng số <code>0</code>.</li>
+            <li><strong>Bước 2 – Khoanh vùng khung chương trình qua các nhãn (<code>label:</code>) và lệnh nhảy:</strong>
+              <br/>Liếc nhanh các nhãn (<code>loop:</code>, <code>else:</code>, <code>exit:</code>) và lệnh nhảy (<code>beq, bne, blt, bge, j, jalr</code>) <strong>trước khi</strong> đọc chi tiết phép tính:
+              <ul>
+                <li>Lệnh rẽ nhánh nhảy <strong>xuống dưới</strong> $\\rightarrow$ cấu trúc <code>if / else</code> hoặc <strong>điều kiện thoát vòng lặp</strong>.</li>
+                <li>Lệnh <code>j loop</code> (hoặc <code>beq/bne ... loop</code>) nhảy <strong>ngược lên trên</strong> $\\rightarrow$ chắc chắn là <strong>vòng lặp (<code>while / for</code>)</strong>.</li>
+                <li>Thấy <code>jal ra, func</code> hoặc <code>addi sp, sp, -...</code> $\\rightarrow$ <strong>gọi hàm con / đệ quy</strong>.</li>
+              </ul>
+            </li>
+            <li><strong>Bước 3 – Dịch từng khối lệnh &amp; Kẻ bảng theo dõi (Trace Table):</strong>
+              <br/>Dịch các lệnh tính toán thành biểu thức C, thay dần biến tạm <code>t0, t1, t2</code>. Nếu đề hỏi <em>"giá trị thanh ghi sau khi chạy xong"</em>, tuyệt đối không nhẩm miệng — hãy kẻ bảng theo dõi từng vòng lặp.</li>
+            <li><strong>Bước 4 – Soi lại "Bẫy điều kiện ngược":</strong>
+              <br/>Lệnh rẽ nhánh nhảy tới <code>else</code> hoặc <code>exit</code> luôn mang <strong>điều kiện phủ định</strong> so với câu lệnh <code>if</code> / <code>while</code> viết trong C!</li>
+          </ol>
+        </div>
+
+        <h4>1. Bảng mẫu đối chiếu nhanh (RISC-V Assembly $\\leftrightarrow$ C/C++)</h4>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr>
+                <th>Mẫu lệnh RISC-V</th>
+                <th>Ý nghĩa tương đương trong C/C++</th>
+                <th>Ghi chú nhanh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>addi rd, zero, C</code> / <code>li rd, C</code></td>
+                <td><code>rd = C;</code></td>
+                <td>Khởi tạo biến bằng hằng số</td>
+              </tr>
+              <tr>
+                <td><code>add rd, rs1, zero</code> / <code>mv rd, rs1</code></td>
+                <td><code>rd = rs1;</code></td>
+                <td>Gán giá trị biến (<code>rs1 + 0</code>)</td>
+              </tr>
+              <tr>
+                <td><code>slli rd, rs1, k</code></td>
+                <td><code>rd = rs1 * 2^k;</code></td>
+                <td>Hay gặp <code>k=2</code> ($\\times 4$ tính offset mảng <code>int</code>)</td>
+              </tr>
+              <tr>
+                <td><code>srli rd, rs1, k</code> / <code>srai rd, rs1, k</code></td>
+                <td><code>rd = rs1 / 2^k;</code></td>
+                <td>Chia nguyên cho $2^k$ (không dấu / có dấu)</td>
+              </tr>
+              <tr>
+                <td><code>slli t0, i, 2</code> $\\to$ <code>add t0, t0, Base</code> $\\to$ <code>lw x, 0(t0)</code></td>
+                <td><code>x = A[i];</code></td>
+                <td>Mảng <code>int</code> (mỗi phần tử 4 byte)</td>
+              </tr>
+              <tr>
+                <td><code>add t0, Base, i</code> $\\to$ <code>lbu x, 0(t0)</code></td>
+                <td><code>x = str[i];</code></td>
+                <td>Mảng <code>char</code> (1 byte, <strong>không nhân 4</strong>)</td>
+              </tr>
+              <tr>
+                <td><code>slt t0, a, b</code> $\\to$ <code>bne t0, zero, Exit</code></td>
+                <td>Nếu <code>a &lt; b</code> thì thoát (lặp khi <code>a &gt;= b</code>)</td>
+                <td><code>slt = 1</code> khi <code>a &lt; b</code>; <code>bne zero</code> = nhảy nếu đúng</td>
+              </tr>
+              <tr>
+                <td><code>slt t0, a, b</code> $\\to$ <code>beq t0, zero, Exit</code></td>
+                <td>Nếu <code>a &gt;= b</code> thì thoát (lặp khi <code>a &lt; b</code>)</td>
+                <td><code>beq zero</code> = nhảy nếu <code>slt</code> sai (<code>a &gt;= b</code>)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>2. Phương pháp làm bài cho 5 dạng thường gặp (kèm Ví dụ cụ thể)</h4>
+
+        <h5>Dạng 1: Biểu thức số học &amp; Dịch bit (Nhóm 3.2.5)</h5>
+        <p><strong>Cách làm:</strong> Viết nghĩa C ngay bên phải từng dòng lệnh, sau đó thế ngược các thanh ghi tạm (<code>t0, t1, t2</code>) vào thanh ghi kết quả cuối cùng.</p>
+        <div class="theory-code-compare">
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">RISC-V (s0=f, s1=g, s2=h, s3=i)</div>
+            <pre>slli t0, s1, 2     # t0 = g * 4
+sub  s3, s0, s2    # i  = f - h
+add  s3, s3, t0    # i  = (f - h) + 4*g
+addi s3, s3, 5     # i  = f - h + 4*g + 5</pre>
+          </div>
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">Kết quả C/C++ tương ứng</div>
+            <pre>// Thế t0 = 4 * g vào s3:
+i = f - h + 4 * g + 5;</pre>
+          </div>
+        </div>
+
+        <h5>Dạng 2: Truy cập Mảng &amp; Con trỏ (<code>lw, sw, lbu, sb</code>)</h5>
+        <p><strong>Cách làm:</strong> Nhớ công thức địa chỉ phần tử mảng <code>int A[]</code> là <code>&amp;A[i] = Base_A + 4 * i</code>. Nếu gặp hằng số offset dạng <code>8(s2)</code> hay <code>12(s2)</code> thì lấy số đó <strong>chia cho 4</strong> để ra chỉ số phần tử: <code>8(s2)</code> chính là <code>A[2]</code>, <code>12(s2)</code> chính là <code>A[3]</code>!</p>
+        <div class="theory-code-compare">
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">RISC-V (s0=i, s1=j, s2=&amp;A[0], s3=&amp;B[0])</div>
+            <pre>slli t0, s0, 2     # t0 = 4 * i
+add  t0, t0, s2    # t0 = &amp;A[i]
+lw   t1, 0(t0)     # t1 = A[i]
+lw   t2, 8(s2)     # t2 = A[2] (vì 8 / 4 = 2)
+add  t1, t1, t2    # t1 = A[i] + A[2]
+slli t3, s1, 2     # t3 = 4 * j
+add  t3, t3, s3    # t3 = &amp;B[j]
+sw   t1, 0(t3)     # B[j] = A[i] + A[2]</pre>
+          </div>
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">Kết quả C/C++ tương ứng</div>
+            <pre>// Đọc A[i] và A[2], cộng lại rồi ghi vào B[j]:
+B[j] = A[i] + A[2];</pre>
+          </div>
+        </div>
+
+        <h5>Dạng 3: Cấu trúc rẽ nhánh <code>if / else</code></h5>
+        <p><strong>Cách làm:</strong> Trong Assembly, khối lệnh <code>if</code> nằm ngay phía dưới lệnh rẽ nhánh. Vì vậy lệnh rẽ nhánh ở đầu luôn kiểm tra <strong>điều kiện ngược (phủ định)</strong> để nhảy sang <code>else</code> hoặc <code>exit</code>:</p>
+        <ul>
+          <li><code>bne a, b, Else</code> $\\Rightarrow$ vào nhánh <code>if</code> khi <code>a == b</code>.</li>
+          <li><code>beq a, b, Else</code> $\\Rightarrow$ vào nhánh <code>if</code> khi <code>a != b</code>.</li>
+          <li><code>bge a, b, Else</code> $\\Rightarrow$ vào nhánh <code>if</code> khi <code>a &lt; b</code>.</li>
+          <li><code>blt a, b, Else</code> $\\Rightarrow$ vào nhánh <code>if</code> khi <code>a &gt;= b</code>.</li>
+        </ul>
+        <div class="theory-code-compare">
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">RISC-V (s0=f, s1=g, s2=h, s3=i, s4=j)</div>
+            <pre>    bne s3, s4, Else   # Nếu i != j thì nhảy Else
+    add s0, s1, s2     # Nhánh đúng: f = g + h
+    j   Exit           # Nhảy qua Else!
+Else:
+    sub s0, s1, s2     # Nhánh sai: f = g - h
+Exit:</pre>
+          </div>
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">Kết quả C/C++ tương ứng</div>
+            <pre>if (i == j) {
+    f = g + h;
+} else {
+    f = g - h;
+}</pre>
+          </div>
+        </div>
+
+        <h5>Dạng 4: Vòng lặp (<code>while / for</code>) &amp; Đếm tổng số lệnh thực thi (Nhóm 3.2.6)</h5>
+        <p><strong>Cách làm:</strong> Tách đoạn mã thành 3 phần: <strong>(1) Khởi tạo</strong> trước <code>loop:</code> $\\rightarrow$ <strong>(2) Kiểm tra thoát</strong> ở đầu <code>loop:</code> (lấy phủ định để ra điều kiện lặp) $\\rightarrow$ <strong>(3) Thân vòng + Bước tăng + <code>j loop</code></strong>.</p>
+        <p><em>Ví dụ thực chiến (Dạng đề thi CK):</em> Cho đoạn mã sau, tìm giá trị thập phân của <code>a0</code> và đếm tổng số lệnh đã thực thi.</p>
+        <div class="theory-code-compare">
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">RISC-V</div>
+            <pre>    addi a1, zero, 14   # max = 14
+    addi s0, zero, 0    # sum = 0
+    add  s1, zero, zero # i = 0
+loop:
+    slt  t0, a1, s1     # t0 = (14 &lt; i) ? 1 : 0
+    bne  t0, zero, finish # Nếu i &gt; 14 thì thoát
+    add  s0, s0, s1     # sum = sum + i
+    addi s1, s1, 2      # i = i + 2
+    j    loop
+finish:
+    add  a0, s0, zero   # return sum</pre>
+          </div>
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">Dịch sang C/C++</div>
+            <pre>int max = 14, sum = 0;
+for (int i = 0; i &lt;= max; i += 2) {
+    sum += i;
+}
+return sum;</pre>
+          </div>
+        </div>
+
+        <p><strong>Kẻ bảng theo dõi thanh ghi (Trace Table)</strong> để chắc chắn không nhầm biên:</p>
+        <div class="table-scroll">
+          <table class="theory-table">
+            <thead>
+              <tr>
+                <th>Lượt lặp</th>
+                <th><code>i (s1)</code> đầu vòng</th>
+                <th><code>slt t0, 14, s1</code> (<code>14 &lt; i</code>?)</th>
+                <th><code>sum (s0)</code> sau cộng</th>
+                <th><code>i (s1)</code> sau tăng <code>+2</code></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Vòng 1</td><td>0</td><td><code>0</code> (tiếp tục)</td><td>$0 + 0 = 0$</td><td>2</td></tr>
+              <tr><td>Vòng 2</td><td>2</td><td><code>0</code> (tiếp tục)</td><td>$0 + 2 = 2$</td><td>4</td></tr>
+              <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+              <tr><td>Vòng 8</td><td>14</td><td><code>0</code> (tiếp tục)</td><td>$0+2+4+6+8+10+12+14 = \\mathbf{56}$</td><td>16</td></tr>
+              <tr><td>Lần kiểm tra cuối</td><td>16</td><td><code>1</code> (thoát $\\rightarrow$ <code>finish</code>)</td><td>Giữ nguyên <strong>56</strong></td><td>–</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-formula">
+          <div class="callout-title">📐 Công thức đếm tổng số lệnh thực thi của vòng lặp</div>
+          <p>$$\\text{Tổng lệnh} = \\text{Lệnh khởi tạo} + N \\times (\\text{Số lệnh trong 1 vòng lặp}) + \\text{Lệnh kiểm tra lần cuối để thoát} + \\text{Lệnh sau vòng lặp}$$</p>
+          <p>Áp dụng ngay cho ví dụ trên: Khởi tạo (3 lệnh) + $N = 8$ vòng $\\times$ 5 lệnh/vòng (<code>slt, bne, add, addi, j</code>) + Lần kiểm tra thứ 9 để thoát (2 lệnh: <code>slt, bne</code>) + Lệnh ở <code>finish</code> (1 lệnh) $= 3 + 8 \\times 5 + 2 + 1 = \\mathbf{46}$ lệnh.</p>
+        </div>
+
+        <h5>Dạng 5: Chương trình con (Thủ tục), Đệ quy &amp; Ngăn xếp (Nhóm 3.2.7)</h5>
+        <p><strong>Cách làm:</strong> Một hàm RISC-V chuẩn luôn gồm 3 khúc rõ ràng:</p>
+        <ol>
+          <li><strong>Khúc mở đầu (Prologue):</strong> Thấy <code>addi sp, sp, -4*k</code> và <code>sw</code> $\\rightarrow$ chỉ là bước "cất đồ" (<code>ra</code>, <code>s0...</code>, tham số <code>a0</code>) vào Stack để lát gọi hàm khác không bị mất. <em>Không cần dịch khúc này thành logic C!</em></li>
+          <li><strong>Khúc thân hàm:</strong> Đọc tham số từ <code>a0, a1...</code>; nếu thấy <code>jal ra, func</code> là đang gọi hàm (hoặc gọi đệ quy chính nó); kết quả trả về của hàm con nằm trong <code>a0</code>.</li>
+          <li><strong>Khúc kết thúc (Epilogue):</strong> Thấy <code>lw</code> khôi phục lại thanh ghi, <code>addi sp, sp, 4*k</code> rồi <code>jalr x0, ra, 0</code> (<code>ret</code>) $\\rightarrow$ tương đương <code>return a0;</code>.</li>
+        </ol>
+        <div class="theory-code-compare">
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">RISC-V (Hàm đệ quy sum(n), a0 = n)</div>
+            <pre>sum:
+    addi sp, sp, -8      # Cất ra và a0
+    sw   ra, 4(sp)
+    sw   a0, 0(sp)
+    slti t0, a0, 1       # n &lt; 1 ?
+    beq  t0, zero, L1    # Nếu n &gt;= 1 nhảy L1
+    addi a0, zero, 0     # Base case: trả về 0
+    addi sp, sp, 8
+    jalr x0, ra, 0
+L1:
+    addi a0, a0, -1      # Tham số mới: n - 1
+    jal  ra, sum         # Gọi sum(n - 1) -&gt; kq ở a0
+    lw   t0, 0(sp)       # Lấy lại n ban đầu
+    lw   ra, 4(sp)       # Lấy lại ra
+    addi sp, sp, 8
+    add  a0, t0, a0      # a0 = n + sum(n - 1)
+    jalr x0, ra, 0       # return a0</pre>
+          </div>
+          <div class="quiz-code-block">
+            <div class="quiz-code-block-header">Kết quả C/C++ tương ứng</div>
+            <pre>int sum(int n) {
+    if (n &lt; 1) {
+        return 0;
+    }
+    return n + sum(n - 1);
+}</pre>
+          </div>
+        </div>
+
+        <div class="callout callout-trap">
+          <div class="callout-title">⚠️ 4 "Bẫy" kinh điển khiến sinh viên hay dịch sai</div>
+          <ol>
+            <li><strong>Bẫy điều kiện ngược của <code>if / while</code>:</strong> Thấy <code>bne s0, s1, Exit</code> mà lại dịch thành <code>if (s0 != s1)</code> là sai ngược! Phải hỏi: <em>"Khi nào nó KHÔNG nhảy tới Exit để chạy phần code bên dưới?"</em> $\\rightarrow$ Khi <code>s0 == s1</code>.</li>
+            <li><strong>Bẫy <code>slt</code> đi kèm <code>beq/bne</code> với <code>zero</code>:</strong> <code>slt t0, a, b</code> trả về <code>1</code> nếu $a &lt; b$. Sau đó <code>bne t0, zero, L</code> nghĩa là nhảy khi $t0 \\neq 0$ (tức là $a &lt; b$ đúng); còn <code>beq t0, zero, L</code> nghĩa là nhảy khi $t0 = 0$ (tức là $a \\ge b$).</li>
+            <li><strong>Bẫy mảng <code>int</code> vs mảng <code>char</code>:</strong> Mảng <code>int</code> (4 byte) dùng <code>slli ..., 2</code> ($\\times 4$) + <code>lw/sw</code>. Mảng <code>char</code> / xâu ký tự (1 byte) <strong>không nhân 4</strong> và dùng <code>lb/lbu/sb</code>.</li>
+            <li><strong>Bẫy quên lần kiểm tra thoát vòng lặp khi đếm lệnh:</strong> Vòng lặp chạy $N$ lần thì thân vòng lặp chạy $N$ lần, nhưng phần kiểm tra điều kiện đầu vòng lặp luôn chạy <strong>$N + 1$ lần</strong> (thêm 1 lần cuối cùng khi điều kiện sai để nhảy thoát).</li>
+          </ol>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="3.2.5">
+          <span>📝 <strong>Nhóm 3.2.5: Thực hành Chuyển đổi C $\\leftrightarrow$ RISC-V (<span class="group-q-count">30 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.5', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.5', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="3.2.6">
+          <span>📝 <strong>Nhóm 3.2.6: Phân tích Vòng lặp &amp; Đếm tổng số lệnh (<span class="group-q-count">10 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.6', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.6', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+
+        <div class="formula-practice-inline" data-group-link="3.2.7">
+          <span>📝 <strong>Nhóm 3.2.7: Chương trình con, Ngăn xếp &amp; jal/jalr (<span class="group-q-count">5 câu</span>)</strong></span>
+          <div class="inline-actions">
+            <button class="btn btn-secondary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.7', 'exam')">⏱️ Test</button>
+            <button class="btn btn-primary btn-xs" onclick="window.KTMT_APP &amp;&amp; window.KTMT_APP.startGroupTest('3.2.7', 'practice')">🎯 Luyện tập</button>
+          </div>
+        </div>
+      `
+    },
 
     // ==================== CHƯƠNG 4 ====================
     {
@@ -1381,7 +1665,7 @@
       title: "Biểu diễn Số nguyên không dấu và Số nguyên có dấu (Mã bù 2)",
       pdfPage: 102,
       printedPage: 101,
-      linkedGroups: ["4.1", "4.2.1", "4.2.3"],
+      linkedGroups: ["4.1", "4.2.3"],
       summary: "Dải không dấu [0, 2^n - 1], Mã bù 2 [-2^{n-1}, 2^{n-1} - 1], tìm bù 2, Sign/Zero-extension, bảng dải biểu diễn 6–32 bit và 3 mẹo tính nhẩm Hexa.",
       content: `
         <h4>1. Biểu diễn số nguyên không dấu (Unsigned Integer) với $n$ bit</h4>
