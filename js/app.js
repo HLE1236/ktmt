@@ -1824,43 +1824,117 @@
     return chosen.slice(0, totalCount);
   }
 
+  const MIDTERM_CHAPTER_WEIGHTS = [
+    { ch: 1, weight: 0.10 }, // 10% -> 2 câu (với đề 20 câu)
+    { ch: 2, weight: 0.10 }, // 10% -> 2 câu
+    { ch: 3, weight: 0.50 }, // 50% -> 10 câu
+    { ch: 4, weight: 0.30 }  // 30% -> 6 câu
+  ];
+
+  // Ma trận các dạng bài quan trọng, xuất hiện nhiều theo từng chương
+  const MIDTERM_GROUP_SLOTS = {
+    1: [
+      ['1.2.2', '1.2.3'], // T0, CPI, t_CPU hoặc chỉ số MIPS
+      ['1.2.4', '1.2.5']  // CPI trung bình nhiều lớp lệnh hoặc So sánh hiệu năng
+    ],
+    2: [
+      ['2.2.3'],          // Liên kết hệ thống, Bus & Tính không gian địa chỉ
+      ['2.2.1', '2.2.2']  // Cấu trúc CPU/IO hoặc Chu trình lệnh, PC/IR, Ngắt
+    ],
+    3: [
+      ['3.2.1'],          // Tập thanh ghi, kích thước lệnh, khuôn dạng, định địa chỉ
+      ['3.2.2'],          // Lệnh số học, logic, dịch bit, hằng số 12-bit, lui/li
+      ['3.2.3'],          // Lệnh so sánh (slt/sltu/blt/bltu) & rẽ nhánh
+      ['3.2.4'],          // Alignment, Little-Endian & truy cập bộ nhớ (lw/lh/lb/sw)
+      ['3.2.5'],          // Chuyển đổi giữa C và Hợp ngữ RISC-V
+      ['3.2.6'],          // Phân tích vòng lặp & đếm tổng số lệnh thực thi
+      ['3.2.7'],          // Chương trình con, Stack, jal/jalr
+      ['3.2.8'],          // Dịch mã máy <-> hợp ngữ, địa chỉ đích, bản đồ bộ nhớ
+      ['3.2.8'],          // Câu thứ 2 từ nhóm trọng tâm 3.2.8 (60 câu)
+      ['3.2.2', '3.2.4', '3.2.5'] // Câu bổ sung từ các nhóm cốt lõi hay gặp
+    ],
+    4: [
+      ['4.2.3'],          // Số nguyên không dấu / có dấu / mã bù 2 / dải giá trị
+      ['4.2.3'],          // Câu thứ 2 từ nhóm trọng tâm 4.2.3
+      ['4.2.4'],          // Cộng/trừ số nguyên & Tràn số học (Overflow)
+      ['4.2.6'],          // Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)
+      ['4.2.4', '4.2.6'], // Câu bổ sung Overflow hoặc IEEE 754
+      ['4.2.1', '4.2.2', '4.2.5'] // Hệ đếm / Cổng logic & mạch cộng / div-rem
+    ]
+  };
+
+  function computeMidtermChapterQuotas(totalCount) {
+    const raw = MIDTERM_CHAPTER_WEIGHTS.map(({ ch, weight }) => {
+      const exact = totalCount * weight;
+      const floor = Math.floor(exact);
+      return { ch, target: floor, rem: exact - floor };
+    });
+    let remaining = totalCount - raw.reduce((s, r) => s + r.target, 0);
+    const byRem = raw.slice().sort((a, b) => b.rem - a.rem);
+    for (let i = 0; i < remaining; i++) {
+      byRem[i % byRem.length].target++;
+    }
+    return raw;
+  }
+
+  function isGkQuestion(q) {
+    return q.examTag === 'GK' || (Array.isArray(q.examTags) && q.examTags.includes('GK'));
+  }
+
   function sampleMidtermQuestions(basePool, totalCount = 20) {
-    const gkPool = basePool.filter(q => q.examTag === 'GK' || (Array.isArray(q.examTags) && q.examTags.includes('GK')));
     const chosen = [];
     const chosenIds = new Set();
-    const chapters = [1, 2, 3, 4];
+    const quotas = computeMidtermChapterQuotas(totalCount);
 
-    chapters.forEach((ch, idx) => {
-      const target = Math.floor(totalCount / 4) + (idx < (totalCount % 4) ? 1 : 0);
-      const chGk = gkPool.filter(q => q.chapter === ch);
+    const pickOneFrom = (candidates, preferFill) => {
+      const available = candidates.filter(q => !chosenIds.has(q.id));
+      if (available.length === 0) return null;
+
+      const gkMatches = available.filter(isGkQuestion);
+      const tiers = gkMatches.length > 0 ? [gkMatches, available] : [available];
+
+      for (const tier of tiers) {
+        const typeFiltered = tier.filter(q => preferFill ? isFixedFillQuestion(q) : !isFixedFillQuestion(q));
+        const poolToPick = typeFiltered.length > 0 ? typeFiltered : tier;
+        if (poolToPick.length > 0) {
+          const picked = shuffleArray(poolToPick)[0];
+          chosenIds.add(picked.id);
+          return picked;
+        }
+      }
+      return null;
+    };
+
+    quotas.forEach(({ ch, target }) => {
+      if (target <= 0) return;
       const chAll = basePool.filter(q => q.chapter === ch);
-
-      const pickFrom = (arr, predicate, limit) => {
-        const picked = [];
-        shuffleArray(arr.filter(predicate)).forEach(q => {
-          if (picked.length < limit && !chosenIds.has(q.id)) {
-            picked.push(q);
-            chosenIds.add(q.id);
-          }
-        });
-        return picked;
-      };
-
-      // Mix both fill-in-the-blank and MCQ per chapter (prioritize GK-tagged, fallback to all in chapter)
-      const fillTarget = Math.min(2, Math.floor(target / 2));
+      const slots = MIDTERM_GROUP_SLOTS[ch] || [];
+      const fillTarget = Math.round(target * 0.3);
+      let fillCount = 0;
       const chPicked = [];
-      chPicked.push(...pickFrom(chGk, q => isFixedFillQuestion(q), fillTarget));
-      if (chPicked.length < fillTarget) {
-        chPicked.push(...pickFrom(chAll, q => isFixedFillQuestion(q), fillTarget - chPicked.length));
+
+      // 1. Ưu tiên phủ đầy đủ các dạng bài trọng tâm theo slot
+      for (let i = 0; i < slots.length && chPicked.length < target; i++) {
+        const groupOptions = shuffleArray(slots[i].slice());
+        const slotCandidates = chAll.filter(q => groupOptions.includes(q.groupId || q.group));
+        const preferFill = fillCount < fillTarget;
+        const picked = pickOneFrom(slotCandidates, preferFill);
+        if (picked) {
+          chPicked.push(picked);
+          if (isFixedFillQuestion(picked)) fillCount++;
+        }
       }
 
-      const mcqNeeded = target - chPicked.length;
-      chPicked.push(...pickFrom(chGk, q => !isFixedFillQuestion(q), mcqNeeded));
-      if (chPicked.length < target) {
-        chPicked.push(...pickFrom(chAll, () => true, target - chPicked.length));
+      // 2. Bổ sung nếu còn thiếu chỉ tiêu chương
+      while (chPicked.length < target) {
+        const preferFill = fillCount < fillTarget;
+        const picked = pickOneFrom(chAll, preferFill);
+        if (!picked) break;
+        chPicked.push(picked);
+        if (isFixedFillQuestion(picked)) fillCount++;
       }
 
-      chosen.push(...chPicked);
+      chosen.push(...shuffleArray(chPicked));
     });
 
     if (chosen.length < totalCount) {
@@ -3587,6 +3661,7 @@
     jumpToTheory,
     jumpToGroup,
     startExam,
+    sampleMidtermQuestions,
     getSectionQuestions,
     getGroupQuestions,
     enhanceRegisterTooltips

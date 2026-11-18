@@ -58,6 +58,7 @@ function createMockElement(id, tagName = 'div') {
 
 const documentMock = {
   elements: {},
+  body: createMockElement('body', 'body'),
   getElementById: function (id) {
     if (!this.elements[id]) {
       this.elements[id] = createMockElement(id);
@@ -262,6 +263,44 @@ console.log('Testing Exam Workflow & Scoring Logic...');
   const passCustom = ch3Pool.length === 259 && customCount === 15;
 
   record(results.examWorkflow, 'Exam Presets filtering (GK=25q from Ch1-2, CK=40q, Custom)', passGK && passCK && passCustom, { gkPool: gkPool.length, ckPool: ckPool.length });
+}
+
+// Test 3.1b Midterm 45-min 20-question Blueprint (C1 10%, C2 10%, C3 50%, C4 30% + important groups)
+{
+  vm.runInContext(fs.readFileSync('js/app.js', 'utf8'), context);
+  let allRunsOk = true;
+  let lastSummary = null;
+  const requiredCh3 = ['3.2.1', '3.2.2', '3.2.3', '3.2.4', '3.2.5', '3.2.6', '3.2.7', '3.2.8'];
+  const requiredCh4 = ['4.2.3', '4.2.4', '4.2.6'];
+
+  for (let run = 0; run < 10; run++) {
+    const picked = windowMock.KTMT_APP.sampleMidtermQuestions(allQuestions, 20);
+    const ids = new Set(picked.map(q => q.id));
+    const chCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    const groups = new Set();
+    let fillCount = 0;
+
+    picked.forEach(q => {
+      chCounts[q.chapter] = (chCounts[q.chapter] || 0) + 1;
+      groups.add(q.groupId || q.group);
+      if (q.type === 'fill' || !Array.isArray(q.options) || q.options.length === 0) fillCount++;
+    });
+
+    const distOk = picked.length === 20 && ids.size === 20 &&
+                   chCounts[1] === 2 && chCounts[2] === 2 && chCounts[3] === 10 && chCounts[4] === 6;
+    const groupsOk = groups.has('2.2.3') &&
+                     requiredCh3.every(g => groups.has(g)) &&
+                     requiredCh4.every(g => groups.has(g));
+    const mixOk = fillCount >= 3 && fillCount <= 10;
+
+    lastSummary = { chCounts, groupsCount: groups.size, fillCount };
+    if (!distOk || !groupsOk || !mixOk) {
+      allRunsOk = false;
+      break;
+    }
+  }
+
+  record(results.examWorkflow, 'Midterm 20q blueprint (C1:10%, C2:10%, C3:50%, C4:30% & all important groups)', allRunsOk, lastSummary);
 }
 
 // Test 3.2 Exam Timer & Countdown
