@@ -1,0 +1,441 @@
+\chapter{HỆ THỐNG MÁY TÍNH}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Các thành phần cơ bản của máy tính}
+
+Mọi hệ thống máy tính đều hoạt động dựa trên sự phối hợp của các mô-đun phần cứng chính: Bộ xử lý trung tâm (CPU), Bộ nhớ máy tính và Hệ thống vào-ra, được kết nối với nhau thông qua Liên kết hệ thống (Bus).
+
+\textbf{1. Bộ xử lý trung tâm (CPU -- Central Processing Unit)}
+\begin{itemize}
+    \item \textbf{Chức năng:} Điều khiển hoạt động của toàn bộ máy tính và trực tiếp xử lý dữ liệu.
+    \item \textbf{Nguyên tắc hoạt động:} CPU hoạt động theo chương trình nằm trong bộ nhớ chính và là thành phần có tốc độ xử lý nhanh nhất trong hệ thống.
+    \item \textbf{Ba thành phần cơ bản bên trong CPU:}
+    \begin{enumerate}
+        \item \textbf{Đơn vị điều khiển (CU -- Control Unit):} Giải mã lệnh và phát các tín hiệu điều khiển hoạt động của máy tính theo chương trình đã định sẵn.
+        \item \textbf{Đơn vị số học và logic (ALU -- Arithmetic and Logic Unit):} Thực hiện các phép toán số học (cộng, trừ, nhân, chia, so sánh) và các phép toán logic (AND, OR, XOR, NOT, dịch bit).
+        \item \textbf{Tập thanh ghi (RF -- Register File):} Gồm các thanh ghi nằm ngay bên trong CPU, có tốc độ truy cập nhanh nhất, chịu trách nhiệm lưu giữ các thông tin tạm thời phục vụ cho hoạt động tức thời của CPU.
+    \end{enumerate}
+\end{itemize}
+
+\textbf{2. Bộ nhớ máy tính (Memory System)}
+\begin{itemize}
+    \item \textbf{Chức năng và thao tác:} Lưu trữ chương trình và dữ liệu dưới dạng nhị phân. Có hai thao tác cơ bản với bộ nhớ là thao tác \textbf{Ghi (Write)} và thao tác \textbf{Đọc (Read)}.
+    \item \textbf{Phân biệt Bộ nhớ trong và Bộ nhớ ngoài:}
+    \begin{itemize}
+        \item \textit{Bộ nhớ trong:} Gồm \textbf{Bộ nhớ chính} (RAM, ROM) và \textbf{Bộ nhớ đệm} (Cache).
+        \item \textit{Bộ nhớ ngoài (Thiết bị lưu trữ -- Storage):} Gồm ổ đĩa cứng từ tính (HDD), ổ thể rắn bán dẫn (SSD), ổ nhớ Flash, thẻ nhớ, đĩa quang (CD, DVD).
+    \end{itemize}
+    \item \textbf{Đặc điểm của 3 thành phần bộ nhớ chính:}
+    \begin{enumerate}
+        \item \textbf{Bộ nhớ chính (Main Memory):} Tồn tại trên mọi máy tính, chứa các lệnh và dữ liệu của chương trình đang được thực hiện. Bộ nhớ chính sử dụng bộ nhớ bán dẫn, được tổ chức thành các \textbf{ngăn nhớ} được đánh địa chỉ (thường đánh địa chỉ theo từng byte).
+        \begin{itemize}
+            \item \textit{Tính chất quan trọng của ngăn nhớ:} Mỗi ngăn nhớ trong máy tính có \textbf{nội dung} (giá trị dữ liệu) có thể thay đổi, nhưng \textbf{địa chỉ vật lý} của ngăn nhớ đó luôn cố định. CPU muốn đọc hoặc ghi một ngăn nhớ thì bắt buộc phải biết địa chỉ của ngăn nhớ đó.
+        \end{itemize}
+        \item \textbf{Bộ nhớ đệm (Cache Memory):} Là bộ nhớ bán dẫn có tốc độ nhanh được đặt đệm giữa CPU và bộ nhớ chính nhằm \textbf{tăng tốc độ CPU truy cập bộ nhớ}. Cache có dung lượng nhỏ hơn bộ nhớ chính, thường được chia thành các mức (L1, L2, L3) và tích hợp trên cùng chip bộ xử lý.
+        \item \textbf{Thiết bị lưu trữ (Storage / Bộ nhớ ngoài):} Dùng để lưu giữ lâu dài tài nguyên phần mềm và dữ liệu; có dung lượng rất lớn nhưng tốc độ chậm. Về mặt liên kết hệ thống, thiết bị lưu trữ được kết nối với máy tính dưới dạng các \textbf{thiết bị vào-ra}.
+    \end{enumerate}
+\end{itemize}
+
+\textbf{3. Hệ thống vào-ra (Input/Output System)}
+\begin{itemize}
+    \item \textbf{Chức năng và thao tác:} Trao đổi thông tin giữa máy tính với thế giới bên ngoài thông qua hai thao tác cơ bản là \textbf{Vào dữ liệu (Input)} và \textbf{Ra dữ liệu (Output)}.
+    \item \textbf{Hai thành phần chính của hệ thống vào-ra:}
+    \begin{enumerate}
+        \item \textbf{Các thiết bị vào-ra (I/O Devices / Thiết bị ngoại vi -- Peripherals):} Làm nhiệm vụ chuyển đổi dữ liệu giữa bên trong và bên ngoài máy tính. Gồm 4 nhóm: Thiết bị vào (bàn phím, chuột), Thiết bị ra (màn hình, máy in), Thiết bị lưu trữ (HDD, SSD), và Thiết bị truyền thông (card mạng, modem). \textit{Lưu ý:} Các thiết bị ngoại vi (như bàn phím, màn hình) \textbf{không nối trực tiếp} với CPU hay Bus hệ thống mà phải kết nối thông qua Mô-đun vào-ra.
+        \item \textbf{Các mô-đun vào-ra (I/O Modules):} Làm nhiệm vụ nối ghép các thiết bị vào-ra với máy tính (qua Bus hệ thống). Mỗi mô-đun vào-ra có một hoặc một vài \textbf{cổng vào-ra (I/O Ports)}, mỗi cổng được đánh một địa chỉ xác định. CPU muốn trao đổi dữ liệu với thiết bị ngoại vi nào thì phải thông qua địa chỉ của cổng vào-ra tương ứng.
+    \end{enumerate}
+\end{itemize}
+
+\begin{center}
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={draw=black, thick, minimum width=3.4cm, minimum height=1.3cm, align=center},
+    smallbox/.style={draw=black, thick, minimum width=2.8cm, minimum height=0.85cm, align=center},
+    arrow/.style={<->, >=Stealth, thick}
+]
+    % Khối CPU bên trái (cao trải đều từ Bộ nhớ chính xuống Mô-đun vào-ra)
+    \node[box, minimum width=3.8cm, minimum height=3.2cm] (cpu) at (0, 0) {\textbf{CPU}\\[4pt]\footnotesize (PC, IR, CU, ALU, RF)};
+    
+    % Khối Bộ nhớ chính (ở trên) và Mô-đun vào-ra (ở dưới)
+    \node[box] (mem) at (5.6, 0.95) {\textbf{Bộ nhớ chính}\\[2pt]\footnotesize (Các ngăn nhớ)};
+    \node[box] (iom) at (5.6, -0.95) {\textbf{Mô-đun vào-ra}\\[2pt]\footnotesize (Các cổng vào-ra)};
+    
+    % Các thiết bị ngoại vi bên phải Mô-đun vào-ra
+    \node[smallbox] (dev1) at (9.8, -0.45) {Thiết bị ngoại vi 1};
+    \node[smallbox] (dev2) at (9.8, -1.45) {Thiết bị ngoại vi 2};
+
+    % Thanh Bus hệ thống nằm chính giữa CPU và (Bộ nhớ / Mô-đun vào-ra)
+    \coordinate (bus_top) at (2.8, 1.85);
+    \coordinate (bus_bot) at (2.8, -1.85);
+    \draw[thick, double distance=3.5pt] (bus_top) -- (bus_bot);
+    \node[above=3pt, font=\footnotesize\bfseries] at (bus_top) {Bus hệ thống};
+    
+    % Các mũi tên kết nối nằm ngang hoàn toàn (dùng phép chiếu vuông góc |-)
+    \draw[arrow] (cpu.east) -- ($(bus_top |- cpu.east) + (-0.08, 0)$);
+    \draw[arrow] ($(bus_top |- mem.west) + (0.08, 0)$) -- (mem.west);
+    \draw[arrow] ($(bus_top |- iom.west) + (0.08, 0)$) -- (iom.west);
+    
+    % Mũi tên nối Mô-đun vào-ra với Thiết bị ngoại vi
+    \draw[arrow] (iom.east |- dev1.west) -- (dev1.west);
+    \draw[arrow] (iom.east |- dev2.west) -- (dev2.west);
+\end{tikzpicture}
+\end{center}
+\end{center}
+
+\subsection{Ba hoạt động cơ bản của máy tính}
+
+\textbf{1. Hoạt động thực hiện chương trình (Chu trình lệnh)}
+\begin{itemize}
+    \item Máy tính thực hiện chương trình bằng cách lặp đi lặp lại \textbf{chu trình lệnh} gồm hai bước chính: \textbf{Tìm nạp lệnh (Fetch instruction)} và \textbf{Thực hiện lệnh (Execute instruction)}. Hoạt động này chỉ dừng lại khi gặp lệnh thực hiện bị lỗi, gặp lệnh dừng hoặc tắt máy.
+    \item \textbf{Quá trình Tìm nạp lệnh (Fetch):}
+    \begin{itemize}
+        \item \textbf{Bộ đếm chương trình PC (Program Counter):} Là thanh ghi của CPU luôn chứa \textbf{địa chỉ của lệnh tiếp theo} sẽ được nạp vào để thực hiện (trên kiến trúc Intel x86, thanh ghi này được gọi là \textbf{IP -- Instruction Pointer}).
+        \item Bắt đầu mỗi chu trình lệnh, CPU phát địa chỉ từ thanh ghi \textbf{PC} ra bộ nhớ chính để tìm ngăn nhớ chứa lệnh.
+        \item Lệnh đọc từ bộ nhớ chính được nạp vào \textbf{Thanh ghi lệnh IR (Instruction Register)} của CPU.
+        \item Sau khi lệnh được nạp vào IR, nếu chương trình thực hiện tuần tự, CPU sẽ \textbf{tự động tăng nội dung thanh ghi PC} để trỏ sang lệnh kế tiếp (với tập lệnh 32-bit cố định của RISC-V, mỗi lệnh chiếm $4\text{ byte}$ nên $PC \leftarrow PC + 4$).
+    \end{itemize}
+    \item \textbf{Quá trình Giải mã và Thực hiện lệnh (Decode \& Execute):}
+    \begin{itemize}
+        \item Ngay sau khi lấy lệnh vào thanh ghi \textbf{IR}, CPU tiến hành \textbf{giải mã lệnh} đang nằm trong thanh ghi \textbf{IR} và phát các tín hiệu điều khiển thực hiện thao tác mà lệnh yêu cầu.
+        \item \textbf{Ba kiểu thao tác cơ bản của lệnh:}
+        \begin{enumerate}
+            \item Trao đổi dữ liệu giữa CPU với bộ nhớ chính hoặc với mô-đun vào-ra.
+            \item Thực hiện các phép toán số học hoặc phép toán logic với các dữ liệu (trên ALU).
+            \item Chuyển điều khiển trong chương trình (rẽ nhánh hoặc nhảy đến vị trí khác, bản chất là thay đổi giá trị của thanh ghi PC bằng địa chỉ đích).
+        \end{enumerate}
+    \end{itemize}
+\end{itemize}
+
+\textbf{2. Hoạt động Ngắt (Interrupt)}
+\begin{itemize}
+    \item \textbf{Định nghĩa:} Ngắt là cơ chế cho phép CPU \textbf{tạm dừng chương trình đang thực hiện} để chuyển sang thực hiện một chương trình con có sẵn trong bộ nhớ gọi là \textbf{chương trình con xử lý ngắt (Interrupt Handler)}.
+    \item \textbf{Các loại nguyên nhân gây ngắt:}
+    \begin{itemize}
+        \item Ngắt do lỗi khi thực hiện lệnh (ví dụ: tràn số học, chia cho 0, mã lệnh sai).
+        \item Ngắt do lỗi phần cứng.
+        \item Ngắt do bộ định thời (Timer).
+        \item Ngắt do bộ điều khiển vào-ra gửi tín hiệu ngắt đến CPU để yêu cầu trao đổi dữ liệu.
+    \end{itemize}
+    \item \textbf{Quy trình CPU xử lý ngắt từ mô-đun vào-ra:}
+    \begin{enumerate}
+        \item Sau khi hoàn thành mỗi một lệnh máy, CPU kiểm tra tín hiệu ngắt. Nếu không có ngắt, CPU tìm nạp lệnh tiếp theo.
+        \item Nếu có tín hiệu ngắt, CPU \textbf{tạm dừng (suspend)} chương trình đang thực hiện.
+        \item \textbf{Cất ngữ cảnh} (lưu địa chỉ trở về trên PC và các thông tin liên quan đến chương trình bị ngắt vào ngăn xếp).
+        \item Thiết lập bộ đếm chương trình \textbf{PC} trỏ đến địa chỉ bắt đầu của chương trình con xử lý ngắt tương ứng.
+        \item Thực hiện chương trình con xử lý ngắt, sau đó \textbf{khôi phục ngữ cảnh} và trở về tiếp tục thực hiện chương trình đang bị tạm dừng.
+    \end{enumerate}
+    \item \textbf{Xử lý khi có nhiều yêu cầu ngắt:} Gồm hai phương pháp là \textbf{Xử lý ngắt tuần tự} (thực hiện lần lượt hết chương trình xử lý ngắt X rồi mới thực hiện chương trình xử lý ngắt Y) và \textbf{Xử lý ngắt ưu tiên} (chương trình xử lý ngắt Y có mức ưu tiên cao hơn được phép ngắt tạm thời chương trình xử lý ngắt X đang chạy).
+\end{itemize}
+
+\textbf{3. Hoạt động Vào-Ra (Input/Output Operations)}
+\begin{itemize}
+    \item Là hoạt động trao đổi dữ liệu giữa mô-đun vào-ra với bên trong máy tính.
+    \item \textbf{Hai kiểu hoạt động vào-ra cơ bản:}
+    \begin{enumerate}
+        \item CPU trực tiếp trao đổi dữ liệu với mô-đun vào-ra thông qua các lệnh vào-ra trong chương trình (Vào-ra bằng chương trình hoặc Vào-ra điều khiển bằng ngắt).
+        \item CPU trao quyền điều khiển hệ thống bus cho phép mô-đun vào-ra trao đổi dữ liệu trực tiếp với bộ nhớ chính mà không đi qua CPU (\textbf{DMA -- Direct Memory Access}).
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Liên kết trong máy tính (Hệ thống Bus và Liên kết điểm-điểm)}
+
+\textbf{1. Luồng thông tin kết nối tới từng mô-đun}
+\begin{itemize}
+    \item \textbf{Mô-đun nhớ:} Nhận địa chỉ để xác định ngăn nhớ; nhận dữ liệu khi ghi; đưa dữ liệu hoặc lệnh ra khi đọc (bộ nhớ không phân biệt lệnh và dữ liệu); nhận tín hiệu điều khiển Đọc (Read) và Ghi (Write).
+    \item \textbf{Mô-đun vào-ra:} Nhận địa chỉ để xác định cổng vào-ra; chuyển dữ liệu hai chiều giữa bên trong và bên ngoài; nhận tín hiệu điều khiển Đọc/Ghi từ CPU; phát tín hiệu điều khiển đến thiết bị ngoại vi và phát tín hiệu yêu cầu ngắt đến CPU.
+    \item \textbf{CPU:} Phát địa chỉ đến mô-đun nhớ hoặc mô-đun vào-ra; đọc lệnh từ bộ nhớ; đọc/ghi dữ liệu với bộ nhớ hoặc mô-đun vào-ra; phát tín hiệu điều khiển đọc/ghi và nhận tín hiệu yêu cầu ngắt.
+\end{itemize}
+
+\textbf{2. Liên kết Bus trong máy tính}\\
+\textbf{Bus} là tập hợp các đường dây kết nối dùng để vận chuyển thông tin giữa các mô-đun của máy tính với nhau. \textbf{Độ rộng bus} là số đường dây của bus có thể truyền các bit thông tin đồng thời (khái niệm độ rộng bus \textbf{chỉ dùng cho Bus địa chỉ và Bus dữ liệu}, không cố định cho Bus điều khiển).
+
+\begin{tcolorbox}[bwbox, title=Bảng tổng hợp 3 loại Bus chức năng trong Bus hệ thống]
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|L{3.2cm}|L{2.8cm}|Y|}
+\hline
+\textbf{Loại Bus} & \textbf{Hướng truyền} & \textbf{Chức năng và Công thức tính toán} \\ \hline
+\textbf{Bus địa chỉ} \newline (Address Bus) & \textbf{Một chiều} \newline (Từ CPU/DMA đến Bộ nhớ và I/O) & Vận chuyển địa chỉ để xác định vị trí ngăn nhớ hay cổng vào-ra. \newline Nếu có độ rộng $N\text{ bit}$ ($A_{N-1} \dots A_0$), số địa chỉ tối đa (không gian địa chỉ) là: \textbf{$2^N\text{ địa chỉ}$} (từ $00\dots0_{(2)}$ đến $11\dots1_{(2)}$). \\ \hline
+\textbf{Bus dữ liệu} \newline (Data Bus) & \textbf{Hai chiều} \newline (Giữa CPU, Bộ nhớ và I/O) & Vận chuyển \textbf{lệnh} từ bộ nhớ đến CPU và vận chuyển \textbf{dữ liệu} giữa các thành phần. \newline Nếu có độ rộng $M\text{ bit}$ ($D_{M-1} \dots D_0$, thường là $8, 16, 32, 64\text{ bit}$), mỗi thời điểm truyền đồng thời được $M\text{ bit}$ ($= M/8\text{ byte}$). \\ \hline
+\textbf{Bus điều khiển} \newline (Control Bus) & \textbf{Tùy từng đường tín hiệu} & Vận chuyển các tín hiệu điều khiển đọc/ghi, điều khiển ngắt và điều khiển xin nhượng bus. Độ rộng phụ thuộc vào thiết kế cụ thể của từng bộ xử lý (không xác định cố định theo bus dữ liệu). \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\textbf{3. Các tín hiệu điều khiển điển hình trên Bus điều khiển}
+\begin{itemize}
+    \item \textbf{Nhóm tín hiệu điều khiển đọc/ghi (do CPU phát ra):}
+    \begin{itemize}
+        \item \texttt{MEMR} (Memory Read): Điều khiển đọc dữ liệu/lệnh từ ngăn nhớ có địa chỉ xác định đưa lên bus dữ liệu chuyển vào CPU.
+        \item \texttt{MEMW} (Memory Write): Điều khiển ghi dữ liệu trên bus dữ liệu (từ CPU) vào ngăn nhớ có địa chỉ xác định.
+        \item \texttt{IOR} (I/O Read): Điều khiển đọc dữ liệu từ cổng vào-ra có địa chỉ xác định đưa lên bus dữ liệu chuyển vào CPU.
+        \item \texttt{IOW} (I/O Write): Điều khiển ghi dữ liệu trên bus dữ liệu (từ CPU) ra cổng vào-ra có địa chỉ xác định.
+    \end{itemize}
+    \item \textbf{Nhóm tín hiệu điều khiển ngắt:}
+    \begin{itemize}
+        \item \texttt{INTR} (Interrupt Request): Từ bộ điều khiển vào-ra gửi đến yêu cầu ngắt CPU để trao đổi vào-ra (tín hiệu này có thể bị che/cấm).
+        \item \texttt{INTA} (Interrupt Acknowledge): Từ CPU phát ra báo cho bộ điều khiển vào-ra biết CPU chấp nhận ngắt.
+        \item \texttt{NMI} (Non-Maskable Interrupt): Tín hiệu ngắt không thể che gửi đến CPU.
+        \item \texttt{Reset}: Tín hiệu từ bên ngoài gửi đến để khởi động lại máy tính.
+    \end{itemize}
+    \item \textbf{Nhóm tín hiệu điều khiển bus (phục vụ DMA):}
+    \begin{itemize}
+        \item \texttt{BRQ} (Bus Request): Từ mô-đun vào-ra (DMAC) gửi đến yêu cầu CPU chuyển nhượng quyền sử dụng bus.
+        \item \texttt{BGT} (Bus Grant): Từ CPU phát ra chấp nhận chuyển nhượng quyền sử dụng bus.
+        \item \texttt{Lock/Unlock}: Tín hiệu cấm hoặc cho phép xin chuyển nhượng bus.
+    \end{itemize}
+\end{itemize}
+
+\textbf{4. Hạn chế của Bus dùng chung (Shared Bus) và Liên kết điểm-điểm}
+\begin{itemize}
+    \item \textbf{Hạn chế của Bus dùng chung:} Cần có bộ phân xử bus; tại một thời điểm chỉ phục vụ được một yêu cầu trao đổi dữ liệu nên độ trễ lớn; khó đồng bộ hóa khi tốc độ truyền cao.
+    \item \textbf{Giải pháp khắc phục:} Sử dụng cấu trúc \textbf{Đa bus (Multiple bus)} hoặc \textbf{Liên kết điểm-điểm (Point-to-point interconnection)}.
+    \item \textbf{Các liên kết điểm-điểm và bus ngoại vi phổ biến:}
+    \begin{itemize}
+        \item \textbf{QPI (Quick Path Interconnect):} Đa kết nối trực tiếp từng cặp giữa các lõi xử lý (Cores) và Chipset, không cần phân xử bus, truyền dữ liệu dạng gói theo kiến trúc phân lớp.
+        \item \textbf{PCI Express (PCIe):} Liên kết điểm-điểm tốc độ cao thay thế cho bus dùng chung PCI truyền thống để nối ghép các thiết bị vào-ra băng thông lớn (card đồ họa, ổ SSD NVMe).
+        \item \textbf{SATA:} Chuẩn kết nối chuyên dụng chỉ dùng để kết nối với các ổ lưu trữ vật lý (HDD, SSD SATA).
+        \item \textbf{USB (Universal Serial Bus):} Chuẩn bus ngoại vi nối tiếp đa dụng kết nối giữa mô-đun vào-ra và các thiết bị ngoại vi.
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 2 và Hướng dẫn giải}
+
+\subsection{Nhóm 1: Cấu trúc CPU, Bộ nhớ và Hệ thống vào-ra}
+
+\textbf{Bài tập 2.1 (Đề Giữa kỳ 2018.2 -- Mã đề 204, Câu 5, Câu 6 \& Câu 13)}\\
+Hãy chọn phương án đúng cho 3 câu hỏi lý thuyết cơ bản sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu 5):} Đơn vị nào bên trong CPU chịu trách nhiệm lưu giữ các thông tin tạm thời phục vụ cho hoạt động của CPU?\\
+    A. Cache \quad B. Bộ nhớ chính \quad C. Tập thanh ghi (RF) \quad D. Biến nhớ
+    \item \textbf{(Câu 6):} Loại bộ nhớ nào sau đây \textbf{không} thuộc về bộ nhớ trong?\\
+    A. Bộ nhớ ROM \quad B. Bộ nhớ ổ cứng HDD \quad C. Bộ nhớ chính \quad D. Bộ nhớ cache
+    \item \textbf{(Câu 13):} Ngăn nhớ nằm ở chỗ nào trong hệ thống máy tính?\\
+    A. CPU \quad B. Thiết bị ngoại vi \quad C. Module vào-ra \quad D. Bộ nhớ chính
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Theo Slide Chương 2 (trang 7), bên trong CPU có 3 thành phần là CU, ALU và Tập thanh ghi (RF). Trong đó, \textbf{Tập thanh ghi (RF)} chứa các thông tin tạm thời phục vụ trực tiếp cho hoạt động của CPU $\rightarrow$ Chọn \textbf{C}.
+    \item \textbf{Giải câu b:} ROM, RAM (bộ nhớ chính) và Cache đều là bộ nhớ bán dẫn thuộc bộ nhớ trong. \textbf{Ổ cứng HDD} là thiết bị lưu trữ từ tính thuộc \textbf{bộ nhớ ngoài} $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Giải câu c:} Theo Slide Chương 2 (trang 9), \textbf{Bộ nhớ chính} được tổ chức thành các ngăn nhớ được đánh địa chỉ $\rightarrow$ Chọn \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 2.2 (Đề Giữa kỳ 2022.2 -- Đề 0009 Câu 11, Đề 0008 Câu 11 \& Ôn tập Cuối kỳ 2025.2 -- Câu 41)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề 0009 -- Câu 11):} Điền từ còn thiếu vào 2 chỗ trống trong phát biểu sau: ``Mỗi ngăn nhớ trong máy tính có \dots\dots\dots thay đổi được, nhưng \dots\dots\dots của nó luôn cố định.''
+    \item \textbf{(Đề 0008 -- Câu 11 \& Ôn tập 2025.2 -- Câu 41):} Loại bộ nhớ giúp CPU tăng tốc độ truy cập bộ nhớ chính có tên là gì? (Hoặc: Tác dụng chính của bộ nhớ Cache là gì?)\\
+    A. Giảm chi phí cho hệ thống máy tính \quad B. Tăng dung lượng bộ nhớ chính\\
+    C. Tăng tốc độ truy cập đến bộ nhớ chính \quad D. Tăng tốc độ truy cập đến ổ đĩa cứng
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Theo Slide Chương 2 (trang 9), mỗi ngăn nhớ có \textbf{nội dung} (hoặc giá trị) có thể thay đổi khi ghi dữ liệu mới, nhưng \textbf{địa chỉ} (hoặc địa chỉ vật lý) của ngăn nhớ đó luôn cố định.
+    \item \textbf{Giải câu b:} Bộ nhớ đặt đệm giữa CPU và bộ nhớ chính để tăng tốc độ CPU truy cập bộ nhớ chính là \textbf{Bộ nhớ đệm (Cache)} $\rightarrow$ Điền \textbf{Cache} (hoặc chọn đáp án \textbf{C}).
+\end{itemize}
+
+\textbf{Bài tập 2.3 (Đề Giữa kỳ 2018.2 -- Mã đề 199, Câu 20)}\\
+Bàn phím được kết nối trực tiếp với bộ phận chức năng nào trong hệ thống máy tính?
+\begin{enumerate}[label=\Alph*.]
+    \item Với bộ nhớ chính
+    \item Với mô-đun vào-ra
+    \item Với CPU
+    \item Với bus hệ thống
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Kiến thức áp dụng:} Theo sơ đồ Hệ thống vào-ra (Slide Chương 2, trang 12--14), bàn phím là một thiết bị vào-ra (thiết bị ngoại vi). Các thiết bị ngoại vi không thể nối trực tiếp vào CPU hay Bus hệ thống mà bắt buộc phải kết nối thông qua các cổng của \textbf{mô-đun vào-ra}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B (Với mô-đun vào-ra)}.
+\end{itemize}
+
+\subsection{Nhóm 2: Chu trình lệnh, các thanh ghi PC / IR và Hoạt động Ngắt}
+
+\textbf{Bài tập 2.4 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 17, Mã đề 204 Câu 4 \& Câu 18, Giữa kỳ 2022.2 -- Đề 0008 Câu 10 \& Ôn tập 2025.2 -- Câu 56, 76)}\\
+Hãy trả lời chuỗi câu hỏi về các thanh ghi hệ thống trong quá trình Tìm nạp và Giải mã lệnh:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2022.2 -- Đề 0008 \& Mã đề 204 Câu 4):} Trong chu trình hoạt động cơ bản của máy tính, ở giai đoạn tìm nạp lệnh (nhận lệnh từ bộ nhớ chính), CPU sẽ tác động tới 2 thanh ghi hệ thống nào? Viết tên đầy đủ hoặc viết tắt.
+    \item \textbf{(Ôn tập 2025.2 Câu 76 \& Mã đề 198 Câu 17):} Thanh ghi nào trong CPU luôn giữ địa chỉ của lệnh tiếp theo sẽ được lấy từ bộ nhớ và được tự động tăng mỗi khi CPU nhận xong một lệnh?\\
+    A. Thanh ghi Stack Pointer (SP) \quad B. Thanh ghi Program Counter (PC)\\
+    C. Thanh ghi Instruction Register (IR) \quad D. Thanh ghi Memory Address Register (MAR)
+    \item \textbf{(Mã đề 204 -- Câu 18):} Trong quá trình giải mã lệnh, CPU sẽ tiến hành giải mã lệnh đang nằm trên thanh ghi nào?\\
+    A. Thanh ghi lệnh IR \quad B. Thanh ghi con trỏ lệnh PC/IP \quad C. Thanh ghi dữ liệu \quad D. Thanh ghi trạng thái
+    \item \textbf{(Ôn tập 2025.2 -- Câu 56):} Trong chu trình thực hiện lệnh cơ bản (Instruction Cycle), giai đoạn nào diễn ra ngay sau khi CPU lấy lệnh (Fetch) từ bộ nhớ?\\
+    A. Giai đoạn Ghi lại kết quả (Write Back) \quad B. Giai đoạn Thực thi (Execute)\\
+    C. Giai đoạn Giải mã (Decode), nơi CPU xác định loại lệnh và các toán hạng \quad D. Giai đoạn Điều khiển ngắt
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Hai thanh ghi phục vụ quá trình tìm nạp lệnh là \textbf{PC (Program Counter -- Bộ đếm chương trình)} và \textbf{IR (Instruction Register -- Thanh ghi lệnh)}.
+    \item \textbf{Giải câu b:} Thanh ghi giữ địa chỉ của lệnh tiếp theo và tự động tăng sau mỗi lần nạp lệnh là \textbf{Thanh ghi Bộ đếm chương trình (Program Counter -- PC)} $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Giải câu c:} Lệnh sau khi đọc từ bộ nhớ lên được chứa trong thanh ghi lệnh \textbf{IR}, do đó Đơn vị điều khiển (CU) sẽ giải mã lệnh đang nằm trên \textbf{thanh ghi lệnh IR} $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Giải câu d:} Ngay sau khi tìm nạp lệnh (Fetch), CPU phải tiến hành \textbf{Giai đoạn Giải mã (Decode)} để biết lệnh đó yêu cầu thực hiện thao tác gì và lấy toán hạng ở đâu $\rightarrow$ Chọn \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 2.5 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 14, Mã đề 199 Câu 8 \& Ôn tập 2025.2 -- Câu 15)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 198 Câu 14):} Đáp án nào mô tả đúng về cơ chế ngắt (Interrupt)?\\
+    A. Tạm dừng chương trình đang thực hiện để chuyển đến thực hiện chương trình con khác (chương trình con xử lý ngắt).\\
+    B. Kết thúc phần mềm đang chạy.\\
+    C. Tạm dừng phần mềm đang hoạt động vĩnh viễn.\\
+    D. Hủy bỏ lệnh máy đang thực hiện dở mà không quay lại.
+    \item \textbf{(Ôn tập 2025.2 -- Câu 15):} Với phương pháp vào-ra bằng chương trình, thành phần nào của máy tính trực tiếp điều khiển vào-ra?\\
+    A. DMAC \quad B. Thiết bị vào-ra \quad C. CPU \quad D. RAM
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Theo định nghĩa tại Slide Chương 2 (trang 22), ngắt là cơ chế cho phép CPU tạm dừng chương trình đang thực hiện để chuyển sang thực hiện chương trình con xử lý ngắt có sẵn trong bộ nhớ, sau đó quay trở về chương trình cũ $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Giải câu b:} Theo Slide Chương 2 (trang 26), khi vào-ra bằng chương trình, \textbf{CPU} trực tiếp điều khiển trao đổi dữ liệu với mô-đun vào-ra bằng các lệnh trong chương trình $\rightarrow$ Chọn \textbf{C (CPU)}.
+\end{itemize}
+
+\subsection{Nhóm 3: Liên kết hệ thống, Các loại Bus và Tính toán không gian địa chỉ}
+
+\begin{tcolorbox}[bwbox, title=Quy trình giải các bài toán về Độ rộng Bus địa chỉ và Dung lượng RAM]
+\begin{enumerate}
+    \item \textbf{Công thức cơ bản:} Nếu Bus địa chỉ có độ rộng $N\text{ bit}$ và bộ nhớ đánh địa chỉ theo từng byte:
+    $$\text{Dung lượng không gian địa chỉ tối đa} = 2^N\text{ byte}$$
+    \item \textbf{Đổi nhanh giữa đơn vị dung lượng và lũy thừa của 2:}
+    \begin{itemize}
+        \item $1\text{ KiB} = 2^{10}\text{ byte} \implies x\text{ KiB} = 2^k \times 2^{10} = 2^{10+k}\text{ byte}$.
+        \item $1\text{ MiB} = 2^{20}\text{ byte} \implies x\text{ MiB} = 2^k \times 2^{20} = 2^{20+k}\text{ byte}$.
+        \item $1\text{ GiB} = 2^{30}\text{ byte} \implies x\text{ GiB} = 2^k \times 2^{30} = 2^{30+k}\text{ byte}$.
+    \end{itemize}
+    (Với $2 = 2^1$; $4 = 2^2$; $8 = 2^3$; $16 = 2^4$; $32 = 2^5$; $64 = 2^6$; $128 = 2^7$; $256 = 2^8$; $512 = 2^9$).
+    \item \textbf{Bài toán ``Lắp thêm 1 thanh RAM lớn nhất và không thừa'':}
+    \begin{itemize}
+        \item Bước 1: Tính tổng không gian địa chỉ tối đa mà CPU quản lý được: $S_{\max} = 2^N\text{ (MiB hoặc GiB)}$.
+        \item Bước 2: Tính phần dung lượng còn trống: $S_{\text{trống}} = S_{\max} - S_{\text{đã cắm}}$.
+        \item Bước 3: Vì dung lượng của \textbf{1 thanh RAM vật lý} luôn phải là một lũy thừa của $2$ ($1, 2, 4, 8, 16, 32, 64\text{ MiB}...$), ta chọn thanh RAM có dung lượng là \textbf{lũy thừa của 2 lớn nhất mà nhỏ hơn hoặc bằng $S_{\text{trống}}$}.
+    \end{itemize}
+\end{enumerate}
+\end{tcolorbox}
+
+\textbf{Bài tập 2.6 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 1 \& Câu 10, Ôn tập 2025.2 -- Câu 13 \& Câu 26)}\\
+Hãy chọn phương án đúng cho 4 câu hỏi về đặc điểm của Bus hệ thống:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 198 -- Câu 1):} Một CPU có bus dữ liệu và bus địa chỉ có độ rộng đều bằng $32\text{ bit}$. Hỏi độ rộng của bus điều khiển bằng bao nhiêu?\\
+    A. $64\text{ bit}$ \quad B. $2^{32}\text{ bit}$ \quad C. Không xác định \quad D. $32\text{ bit}$
+    \item \textbf{(Mã đề 198 -- Câu 10):} Loại bus nào vận chuyển nội dung lệnh từ bộ nhớ tới CPU?\\
+    A. Bus điều khiển \quad B. Bus vào-ra \quad C. Bus dữ liệu \quad D. Bus địa chỉ
+    \item \textbf{(Ôn tập 2025.2 -- Câu 13):} Bus dữ liệu (Data Bus) trong kiến trúc máy tính chịu trách nhiệm truyền tải loại thông tin nào?\\
+    A. Chỉ các dữ liệu giữa các thành phần trong hệ thống máy tính.\\
+    B. Các lệnh và dữ liệu giữa các thành phần trong hệ thống máy tính.\\
+    C. Địa chỉ bộ nhớ của dữ liệu cần truy cập.\\
+    D. Tín hiệu điều khiển để đồng bộ hóa hoạt động.
+    \item \textbf{(Ôn tập 2025.2 -- Câu 26):} Bus Địa chỉ (Address Bus) có đặc điểm nào sau đây, đặc biệt là về hướng truyền?\\
+    A. Là bus một chiều (unidirectional), truyền địa chỉ từ CPU/DMA đến bộ nhớ/I/O.\\
+    B. Là bus hai chiều (bidirectional), truyền cả địa chỉ và dữ liệu.\\
+    C. Là bus hai chiều, truyền tín hiệu điều khiển và dữ liệu.\\
+    D. Là bus một chiều, truyền tín hiệu điều khiển từ bộ nhớ đến CPU.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Theo Slide Chương 2 (trang 31), khái niệm độ rộng bus chỉ áp dụng cho bus địa chỉ và bus dữ liệu. Số lượng đường dây điều khiển phụ thuộc vào thiết kế riêng của từng hệ thống chứ không phụ thuộc vào độ rộng bus dữ liệu hay địa chỉ $\rightarrow$ Chọn \textbf{C (Không xác định)}.
+    \item \textbf{Giải câu b và câu c:} Theo Slide Chương 2 (trang 34), Bus dữ liệu có 2 chức năng: (1) Vận chuyển lệnh từ bộ nhớ đến CPU, và (2) Vận chuyển dữ liệu giữa các thành phần của máy tính với nhau $\rightarrow$ Câu b chọn \textbf{C (Bus dữ liệu)}; Câu c chọn \textbf{B (Các lệnh và dữ liệu)}.
+    \item \textbf{Giải câu d:} Chỉ có CPU (hoặc DMAC) phát địa chỉ ra để định vị ngăn nhớ hoặc cổng vào-ra, do đó Bus địa chỉ là bus một chiều $\rightarrow$ Chọn \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 2.7 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 5, 6, 13 \& Mã đề 244 Câu 7, 9, 13)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243 Câu 6 \& Mã đề 244 Câu 9):} Với lệnh hợp ngữ ghi bộ nhớ \texttt{sw t2, 4(t4)} (hoặc \texttt{sw s2, 8(s4)}), giá trị tổng \texttt{4 + t4} (hoặc \texttt{8 + s4}) sẽ được truyền đi từ CPU tới bộ nhớ chính trên đường bus nào?\\
+    A. Bus dữ liệu \quad B. Bus địa chỉ \quad C. Bus điều khiển \quad D. Bus ngoại vi
+    \item \textbf{(Mã đề 243 Câu 5 \& Mã đề 244 Câu 7):} Loại bus ngoại vi nào dưới đây \textbf{chỉ dùng} để kết nối với ổ lưu trữ vật lý (HDD, SSD)?\\
+    A. HDMI \quad B. PCIe \quad C. SATA \quad D. USB
+    \item \textbf{(Mã đề 243 Câu 13 \& Mã đề 244 Câu 13):} Trong kiến trúc máy tính, khái niệm USB nói về điều gì?\\
+    A. Ổ lưu trữ \quad B. Bus ngoại vi giữa mô-đun I/O và thiết bị \quad C. Khe cắm mở rộng RAM \quad D. Nhà sản xuất linh kiện
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Trong lệnh \texttt{sw t2, 4(t4)}, giá trị \texttt{4 + t4} là \textbf{địa chỉ hiệu dụng} của ngăn nhớ cần ghi dữ liệu, nên giá trị này được CPU phát ra trên \textbf{Bus địa chỉ} (còn nội dung của thanh ghi \texttt{t2} mới truyền trên Bus dữ liệu) $\rightarrow$ Chọn \textbf{B (Bus địa chỉ)}.
+    \item \textbf{Giải câu b:} Chuẩn \textbf{SATA} (Serial ATA) là chuẩn kết nối chuyên dụng chỉ dùng cho các ổ đĩa lưu trữ (ổ cứng HDD, SSD SATA, ổ đĩa quang) $\rightarrow$ Chọn \textbf{C (SATA)}.
+    \item \textbf{Giải câu c:} USB (Universal Serial Bus) là chuẩn \textbf{bus ngoại vi giữa mô-đun vào-ra và thiết bị} $\rightarrow$ Chọn \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 2.8 (Tổng hợp các câu tính độ rộng Bus địa chỉ từ Đề Giữa kỳ 2019.2, 2022.2 \& Cuối kỳ 2020.2, 2022.2, 2025.2)}\\
+Biết bộ nhớ chính được đánh địa chỉ theo từng byte. Hãy thực hiện các tính toán sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2022.2 -- Đề 0008, Câu 3):} Máy tính có bus dữ liệu $32\text{ bit}$ và bus địa chỉ $23\text{ bit}$. Hỏi không gian địa chỉ bộ nhớ có kích thước bao nhiêu byte (hoặc MiB)?
+    \item \textbf{(Đề GK 2022.2 -- Đề 0006, Câu 3):} Nếu \texttt{0x3FF} là địa chỉ bộ nhớ lớn nhất mà CPU có thể quản lý được, thì bus địa chỉ có độ rộng bằng bao nhiêu bit?
+    \item \textbf{(Đề CK 2020.2 \& Ôn tập 2025.2 Câu 11):} Không gian địa chỉ bộ nhớ là $2\text{ GiB}$, độ rộng bus địa chỉ là bao nhiêu bit?
+    \item \textbf{(Đề GK 2019.2 -- Mã đề 243 Câu 16 \& Mã đề 244 Câu 4):} Không gian địa chỉ bộ nhớ là $64\text{ GiB}$ (Mã đề 243) hoặc $128\text{ GiB}$ (Mã đề 244), độ rộng bus địa chỉ là bao nhiêu bit?
+    \item \textbf{(Đề CK 2022.2 -- \#bb55ef \& CK 2024.2):} Một hệ thống máy tính gồm có $4\text{ MiB}$ bộ nhớ cache, $8\text{ GiB}$ bộ nhớ chính, $1\text{ TiB}$ bộ nhớ thể rắn SSD. Hỏi bus địa chỉ của hệ thống cần có độ rộng tối thiểu bao nhiêu bit?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Không gian địa chỉ chỉ phụ thuộc vào độ rộng bus địa chỉ ($N = 23\text{ bit}$):
+    $$\text{Kích thước} = 2^{23}\text{ byte} = 2^3 \times 2^{20}\text{ byte} = \mathbf{8\text{ MiB}}\text{ (hoặc } 8\,388\,608\text{ byte)}$$
+    \item \textbf{Giải câu b:} Đổi địa chỉ lớn nhất \texttt{0x3FF} từ hệ Hexa sang hệ nhị phân:
+    $$\texttt{0x3FF} = 0011\,1111\,1111_{(2)} \rightarrow \text{gồm } 10\text{ bit } 1\text{ liên tiếp } (= 2^{10} - 1)$$
+    Địa chỉ chạy từ \texttt{0x000} đến \texttt{0x3FF} gồm $2^{10} = 1024$ địa chỉ $\implies$ Độ rộng bus địa chỉ là \textbf{10 bit}.
+    \item \textbf{Giải câu c:} Ta có $2\text{ GiB} = 2^1 \times 2^{30}\text{ byte} = 2^{31}\text{ byte} \implies$ Độ rộng bus địa chỉ là \textbf{31 bit}.
+    \item \textbf{Giải câu d:}
+    \begin{itemize}
+        \item Với $64\text{ GiB} = 2^6 \times 2^{30}\text{ byte} = 2^{36}\text{ byte} \implies$ Độ rộng bus địa chỉ là \textbf{36 bit}.
+        \item Với $128\text{ GiB} = 2^7 \times 2^{30}\text{ byte} = 2^{37}\text{ byte} \implies$ Độ rộng bus địa chỉ là \textbf{37 bit}.
+    \end{itemize}
+    \item \textbf{Giải câu e:}
+    \begin{itemize}
+        \item Bộ nhớ Cache tự động ánh xạ từ bộ nhớ chính; ổ cứng SSD là thiết bị lưu trữ ngoài giao tiếp qua mô-đun vào-ra theo khối chứ không đánh địa chỉ từng byte trên bus địa chỉ CPU.
+        \item Bus địa chỉ hệ thống chỉ cần định vị trực tiếp cho $8\text{ GiB}$ bộ nhớ chính (RAM):
+        $$8\text{ GiB} = 2^3 \times 2^{30}\text{ byte} = 2^{33}\text{ byte} \implies \text{Độ rộng tối thiểu là }\mathbf{33\text{ bit}}$$
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 2.9 (Đề Giữa kỳ 2018.2 -- Mã đề 204 Câu 16 \& Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 14, Mã đề 244 Câu 6)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 204 -- Câu 16):} Một hệ thống máy tính cần sử dụng lượng bộ nhớ chính lên tới $128\text{ KiB}$, cổng vào-ra $64\text{ KiB}$ (dùng chung không gian địa chỉ), và ổ cứng SSD $256\text{ KiB}$. Hỏi bus địa chỉ phải có độ rộng tối thiểu bằng bao nhiêu bit?\\
+    A. $17\text{ bit}$ \quad B. $18\text{ bit}$ \quad C. $19\text{ bit}$ \quad D. $20\text{ bit}$
+    \item \textbf{(Mã đề 243 -- Câu 14):} Bus hệ thống của một máy tính có đường bus địa chỉ $24\text{ bit}$. Biết rằng máy tính đã cắm 1 thanh RAM $8\text{ MiB}$. Hỏi máy tính có thể lắp thêm \textbf{1 thanh RAM} kích thước \textbf{lớn nhất} là bao nhiêu và \textbf{không thừa}? (Giả định máy tính không có cổng vào-ra).\\
+    A. $2\text{ MiB}$ \quad B. $4\text{ MiB}$ \quad C. $16\text{ MiB}$ \quad D. $8\text{ MiB}$
+    \item \textbf{(Mã đề 244 -- Câu 6):} Tương tự câu b, nhưng máy tính có đường bus địa chỉ $26\text{ bit}$ và đã cắm 1 thanh RAM $8\text{ MiB}$. Hỏi có thể lắp thêm \textbf{1 thanh RAM} kích thước lớn nhất là bao nhiêu và không thừa?\\
+    A. $8\text{ MiB}$ \quad B. $64\text{ MiB}$ \quad C. $32\text{ MiB}$ \quad D. $16\text{ MiB}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Ổ cứng SSD là bộ nhớ ngoài nên không tính vào không gian địa chỉ trực tiếp của CPU.
+        \item Tổng không gian địa chỉ cần đánh cho Bộ nhớ chính và Cổng vào-ra là: $128\text{ KiB} + 64\text{ KiB} = 192\text{ KiB}$.
+        \item Với $17\text{ bit}$ chỉ đánh địa chỉ được $2^{17} = 128\text{ KiB}$ (thiếu). Để đánh địa chỉ cho $192\text{ KiB}$ (nằm giữa $128\text{ KiB}$ và $256\text{ KiB} = 2^{18}$), độ rộng bus địa chỉ tối thiểu phải là \textbf{18 bit} $\rightarrow$ Chọn \textbf{B (18 bit)}.
+    \end{itemize}
+    \item \textbf{Giải câu b (Bus địa chỉ 24 bit):}
+    \begin{itemize}
+        \item Bước 1: Tổng không gian bộ nhớ tối đa mà $24\text{ bit}$ quản lý được là: $2^{24}\text{ byte} = 2^4 \times 2^{20}\text{ byte} = 16\text{ MiB}$.
+        \item Bước 2: Máy đã cắm $8\text{ MiB}$, vậy dung lượng địa chỉ còn trống là: $16\text{ MiB} - 8\text{ MiB} = 8\text{ MiB}$.
+        \item Bước 3: Lắp thêm 1 thanh RAM có kích thước \textbf{8 MiB} là vừa khít và không thừa $\rightarrow$ Chọn \textbf{D (8 MiB)}.
+    \end{itemize}
+    \item \textbf{Giải câu c (Bus địa chỉ 26 bit):}
+    \begin{itemize}
+        \item Bước 1: Tổng không gian bộ nhớ tối đa mà $26\text{ bit}$ quản lý được là: $2^{26}\text{ byte} = 2^6 \times 2^{20}\text{ byte} = 64\text{ MiB}$.
+        \item Bước 2: Máy đã cắm $8\text{ MiB}$, vậy phần không gian địa chỉ còn trống là: $64\text{ MiB} - 8\text{ MiB} = 56\text{ MiB}$.
+        \item Bước 3: Vì dung lượng của \textbf{1 thanh RAM} thương mại phải là lũy thừa của $2$ ($8, 16, 32, 64\text{ MiB}$): nếu lắp thanh $64\text{ MiB}$ thì tổng là $8 + 64 = 72\text{ MiB} > 64\text{ MiB}$ (bị thừa $8\text{ MiB}$ không nhận diện được). Do đó thanh RAM đơn lẻ lớn nhất lắp vào mà không bị thừa là thanh \textbf{32 MiB} (tổng $8 + 32 = 40\text{ MiB} \le 64\text{ MiB}$) $\rightarrow$ Chọn \textbf{C (32 MiB)}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 2.10 (Đề Cuối kỳ 2021.2 -- Mã đề B3, Câu 4.1 \& 4.2)}\\
+Máy tính dùng $36\text{ bit}$ địa chỉ để đánh địa chỉ cho bộ nhớ theo byte, $16\text{ bit}$ để đánh địa chỉ cho cổng vào-ra riêng biệt. Hãy cho biết:
+\begin{enumerate}[label=4.\arabic*.]
+    \item Số byte nhớ tối đa được đánh địa chỉ? Địa chỉ đầu và địa chỉ cuối dưới dạng Hexa?
+    \item Số cổng vào-ra tối đa được đánh địa chỉ vào-ra riêng biệt? Địa chỉ đầu và địa chỉ cuối dưới dạng Hexa?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải ý 4.1 (Không gian địa chỉ bộ nhớ $36\text{ bit}$):}
+    \begin{itemize}
+        \item Số byte nhớ tối đa được đánh địa chỉ: $2^{36}\text{ byte} = 2^6 \times 2^{30}\text{ byte} = \mathbf{64\text{ GiB}}$.
+        \item Vì mỗi chữ số Hexa biểu diễn cho $4\text{ bit}$ nhị phân nên $36\text{ bit}$ ứng với $36 \div 4 = 9\text{ chữ số Hexa}$:
+        \begin{itemize}
+            \item Địa chỉ đầu (tất cả $36\text{ bit}$ bằng 0): \texttt{0x000000000} (9 chữ số 0).
+            \item Địa chỉ cuối (tất cả $36\text{ bit}$ bằng 1): \texttt{0xFFFFFFFFF} (9 chữ số F).
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Giải ý 4.2 (Không gian địa chỉ cổng vào-ra $16\text{ bit}$):}
+    \begin{itemize}
+        \item Số cổng vào-ra tối đa: $2^{16} = \mathbf{65\,536\text{ cổng}}$ (hay $64\text{K cổng}$).
+        \item Vì $16\text{ bit}$ ứng với $16 \div 4 = 4\text{ chữ số Hexa}$:
+        \begin{itemize}
+            \item Địa chỉ cổng đầu: \texttt{0x0000}.
+            \item Địa chỉ cổng cuối: \texttt{0xFFFF}.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}

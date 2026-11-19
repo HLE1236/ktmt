@@ -1,0 +1,714 @@
+\chapter{GIỚI THIỆU CHUNG VÀ HIỆU NĂNG MÁY TÍNH}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Máy tính, chương trình và phân loại máy tính}
+
+\textbf{1. Khái niệm cơ bản}
+\begin{itemize}
+    \item \textbf{Máy tính (Computer):} Là thiết bị điện tử hoạt động theo chương trình, có khả năng nhập dữ liệu (input data), lưu trữ dữ liệu, xử lý dữ liệu và xuất ra thông tin (output information).
+    \item \textbf{Chương trình (Program):} Là dãy các lệnh được lập trình sẵn và được lưu trong bộ nhớ để điều khiển máy tính thực hiện theo.
+\end{itemize}
+
+\textbf{2. Bốn thành phần cơ bản của mọi máy tính}\\
+Mọi máy tính đều được cấu thành từ 4 bộ phận cơ bản:
+\begin{enumerate}
+    \item \textbf{Bộ xử lý trung tâm (CPU -- Central Processing Unit):} Điều khiển hoạt động của máy tính và xử lý dữ liệu.
+    \item \textbf{Bộ nhớ chính (Main Memory):} Chứa các lệnh và dữ liệu của chương trình hiện đang được thực hiện. (Các thiết bị lưu trữ như ổ cứng HDD, SSD thuộc bộ nhớ ngoài, dùng để lưu trữ phần mềm và dữ liệu lâu dài khi chương trình chưa chạy).
+    \item \textbf{Hệ thống vào-ra (Input/Output -- I/O):} Trao đổi thông tin giữa máy tính với môi trường bên ngoài.
+    \item \textbf{Liên kết hệ thống (System Interconnection):} Kết nối và vận chuyển thông tin giữa CPU, bộ nhớ chính và hệ thống vào-ra.
+\end{enumerate}
+
+\textbf{3. Phân loại máy tính}\\
+Dựa theo quy mô, công dụng và giá thành, máy tính được chia thành 5 nhóm:
+\begin{itemize}
+    \item \textbf{Máy tính cá nhân (PC -- Personal Computers):} Gồm máy tính để bàn (Desktop) và máy tính xách tay (Laptop), phục vụ mục đích đa dụng cho cá nhân.
+    \item \textbf{Thiết bị di động cá nhân (PMD -- Personal Mobile Devices):} Điện thoại thông minh (Smartphones), máy tính bảng (Tablets).
+    \item \textbf{Máy tính nhúng / IoT (Embedded Computers / Internet of Things):} Máy tính được đặt ẩn bên trong một thiết bị khác và được thiết kế chuyên dụng cho một chức năng cụ thể. Máy tính nhúng có kết nối Internet được gọi là thiết bị IoT.
+    \item \textbf{Máy chủ (Servers):} Dùng trong mạng máy tính để quản lý tài nguyên và cung cấp dịch vụ cho nhiều người dùng; có hiệu năng và độ tin cậy cao, giá thành từ hàng nghìn đến hàng triệu USD.
+    \item \textbf{Máy tính quy mô kho / Siêu máy tính (WSC -- Warehouse-Scale Computers / Supercomputers):} Kết nối hàng nghìn máy chủ với nhau (Clusters). Siêu máy tính là một dạng WSC dùng cho các bài toán tính toán lớn trong khoa học và kỹ thuật, giá thành từ hàng triệu đến hàng trăm triệu USD.
+\end{itemize}
+
+\subsection{Kiến trúc máy tính, phân lớp và các mức ngôn ngữ}
+
+\textbf{1. Ba khía cạnh của Kiến trúc máy tính}
+\begin{itemize}
+    \item \textbf{Kiến trúc tập lệnh (ISA -- Instruction Set Architecture):} Nghiên cứu máy tính theo cách nhìn của người lập trình hợp ngữ; là giao diện giữa phần mềm và phần cứng. Các kiến trúc tập lệnh thông dụng hiện nay gồm:
+    \begin{itemize}
+        \item \textit{Intel x86:} Ra đời từ năm 1978, dùng phổ biến trong Laptop, Desktop, Servers.
+        \item \textit{ARM:} Ra đời từ năm 1985, dùng phổ biến trong Smartphones, Tablets.
+        \item \textit{RISC-V:} Kiến trúc tập lệnh mở (miễn phí bản quyền), phát triển từ năm 2010 tại Đại học UC Berkeley.
+    \end{itemize}
+    \item \textbf{Tổ chức máy tính (Computer Organization) hay Vi kiến trúc (Microarchitecture):} Nghiên cứu việc thiết kế máy tính ở mức cao để thực thi kiến trúc tập lệnh (thiết kế CPU, hệ thống nhớ, cấu trúc bus).
+    \item \textbf{Phần cứng (Hardware):} Nghiên cứu thiết kế mạch chi tiết và công nghệ đóng gói vật lý của máy tính. Cùng một kiến trúc tập lệnh có thể có nhiều sản phẩm phần cứng và tổ chức khác nhau.
+\end{itemize}
+
+\textbf{2. Bảy ý tưởng lớn trong thiết kế Kiến trúc máy tính}
+\begin{enumerate}
+    \item Sử dụng trừu tượng hóa để đơn giản hóa thiết kế (Use abstraction to simplify design).
+    \item Tối ưu hóa cho trường hợp thường gặp (Make the common case fast).
+    \item Tăng hiệu năng nhờ xử lý song song (Performance via parallelism).
+    \item Tăng hiệu năng nhờ kỹ thuật đường ống lệnh (Performance via pipelining).
+    \item Tăng hiệu năng nhờ dự đoán (Performance via prediction).
+    \item Phân cấp bộ nhớ (Hierarchy of memories).
+    \item Đảm bảo độ tin cậy nhờ dự phòng (Dependability via redundancy).
+\end{enumerate}
+
+\textbf{3. Các yếu tố quyết định hiệu năng của chương trình}
+\begin{itemize}
+    \item \textbf{Thuật toán:} Quyết định số phép toán cần thực hiện.
+    \item \textbf{Ngôn ngữ lập trình, trình biên dịch và kiến trúc tập lệnh:} Quyết định số lệnh máy (Instruction Count -- $IC$) được tạo ra để thực hiện chương trình.
+    \item \textbf{Bộ xử lý và hệ thống bộ nhớ:} Quyết định tốc độ thực hiện các lệnh máy.
+    \item \textbf{Hệ thống vào-ra và hệ điều hành:} Quyết định tốc độ thực hiện các thao tác vào-ra dữ liệu.
+\end{itemize}
+
+\textbf{4. Phân lớp máy tính và các mức chuyển đổi mã chương trình}
+\begin{itemize}
+    \item \textbf{Ba lớp của hệ thống máy tính:} Từ trong ra ngoài gồm Phần cứng (Bộ xử lý, bộ nhớ, mô-đun vào-ra) $\rightarrow$ Phần mềm hệ thống (Hệ điều hành quản lý tài nguyên và Chương trình dịch) $\rightarrow$ Phần mềm ứng dụng.
+    \item \textbf{Quá trình dịch chương trình qua 3 mức ngôn ngữ:}
+    \begin{enumerate}
+        \item \textbf{Ngôn ngữ bậc cao (High-Level Language -- HLL):} Như ngôn ngữ C, gần với bài toán cần giải quyết, độc lập với phần cứng.
+        \item \textbf{Trình biên dịch (Compiler):} Dịch chương trình từ Ngôn ngữ bậc cao sang Hợp ngữ (Assembly Language -- mô tả lệnh dưới dạng văn bản gợi nhớ, phụ thuộc vào từng kiến trúc tập lệnh cụ thể).
+        \item \textbf{Trình hợp dịch (Assembler):} Dịch từ Hợp ngữ sang Ngôn ngữ máy (Machine Language / Mã máy -- được mã hóa hoàn toàn bằng các bit nhị phân 0 và 1 để phần cứng trực tiếp thực thi).
+    \end{enumerate}
+\end{itemize}
+
+\textbf{5. Sự tiến hóa của công nghệ máy tính}
+\begin{itemize}
+    \item \textbf{Thế hệ đèn điện tử chân không (1950s):} Máy tính ENIAC (1946 -- xử lý theo số thập phân) và máy tính IAS (1952 -- do John von Neumann thiết kế theo nguyên lý chương trình lưu trữ trong bộ nhớ ``stored program'', xử lý theo số nhị phân).
+    \item \textbf{Thế hệ Transistors (1960s)} $\rightarrow$ \textbf{Vi mạch SSI, MSI, LSI (1970s)} $\rightarrow$ \textbf{Vi mạch VLSI (1980s)} $\rightarrow$ \textbf{Vi mạch ULSI (1990s -- nay)}.
+    \item \textbf{Sự phát triển độ rộng bit của vi xử lý:} 4-bit (Intel 4004 năm 1971) $\rightarrow$ 8-bit (1972) $\rightarrow$ 16-bit (1978, máy tính IBM-PC ra đời năm 1981) $\rightarrow$ 32-bit (1985) $\rightarrow$ 64-bit (2001) $\rightarrow$ Đa lõi (Multicores -- từ năm 2006, tích hợp nhiều nhân CPU trên cùng một chip).
+\end{itemize}
+
+\subsection{Đánh giá hiệu năng máy tính (Trọng tâm tính toán)}
+
+\begin{tcolorbox}[bwbox, title=Bảng quy đổi đơn vị chuẩn khi giải bài tập Hiệu năng]
+Khi thay số vào công thức, luôn đổi tất cả đại lượng về đơn vị chuẩn: \textbf{giây (s)} đối với thời gian, \textbf{Hertz (Hz)} đối với tần số, và \textbf{số lệnh} đối với khối lượng lệnh.
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|L{4.2cm}|L{4.3cm}|Y|}
+\hline
+\textbf{Đại lượng} & \textbf{Đơn vị trong đề bài} & \textbf{Quy đổi về đơn vị chuẩn} \\ \hline
+\multirow{2}{4.2cm}{Tần số xung nhịp ($f_0$)} & $1\text{ MHz}$ (MegaHertz) & $= 10^6\text{ Hz}$ ($1$ triệu chu kỳ/giây) \\ \cline{2-3}
+ & $1\text{ GHz}$ (GigaHertz) & $= 10^9\text{ Hz}$ ($1$ tỷ chu kỳ/giây) \\ \hline
+\multirow{4}{4.2cm}{Thời gian ($T_0, t_{CPU}$)} & $1\text{ ms}$ (mili-giây) & $= 10^{-3}\text{ s}$ \\ \cline{2-3}
+ & $1\text{ }\mu\text{s}$ (micro-giây) & $= 10^{-6}\text{ s}$ \\ \cline{2-3}
+ & $1\text{ ns}$ (nano-giây) & $= 10^{-9}\text{ s}$ \\ \cline{2-3}
+ & $1\text{ ps}$ (pico-giây) & $= 10^{-12}\text{ s}$ \\ \cline{2-3}
+\multirow{2}{4.2cm}{Số lượng lệnh ($IC$)} & $1\text{ triệu lệnh}$ & $= 10^6\text{ lệnh}$ \\ \cline{2-3}
+ & $1\text{ tỷ lệnh}$ (hoặc $1.0\text{E}9$) & $= 10^9\text{ lệnh}$ ($x\text{E}y = x \times 10^y$) \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Quan hệ rút gọn giữa GHz và ns:} Vì $1\text{ GHz} = 10^9\text{ Hz}$ và $1\text{ ns} = 10^{-9}\text{ s}$ nên:
+$$T_0\text{ (tính bằng ns)} = \frac{1}{f_0\text{ (tính bằng GHz)}}$$
+\end{tcolorbox}
+
+\textbf{1. Chu kỳ xung nhịp ($T_0$) và Tần số xung nhịp ($f_0$)}
+\begin{itemize}
+    \item \textbf{Chu kỳ xung nhịp ($T_0$ -- Clock period):} Là thời gian kéo dài của một chu kỳ xung nhịp (đơn vị: s, ms, ns, ps).
+    \item \textbf{Tần số xung nhịp ($f_0$ -- Clock rate / Clock speed):} Là số chu kỳ xung nhịp diễn ra trong $1$ giây (đơn vị: Hz, MHz, GHz).
+    \item \textbf{Công thức liên hệ:}
+    $$T_0 = \frac{1}{f_0} \quad \text{và} \quad f_0 = \frac{1}{T_0}$$
+\end{itemize}
+
+\textbf{2. Tổng số chu kỳ xung nhịp ($n$) và Thời gian thực thi của CPU ($t_{CPU}$)}
+\begin{itemize}
+    \item Gọi $IC$ (Instruction Count) là tổng số lệnh máy được thực hiện của chương trình; $CPI$ (Cycles Per Instruction) là số chu kỳ xung nhịp trung bình để thực hiện một lệnh.
+    \item \textbf{Tổng số chu kỳ xung nhịp ($n$) cần thiết để chạy xong chương trình:}
+    $$n = IC \times CPI$$
+    \item \textbf{Thời gian CPU thực hiện chương trình ($t_{CPU}$):}
+    $$t_{CPU} = n \times T_0 = \frac{n}{f_0} = IC \times CPI \times T_0 = \frac{IC \times CPI}{f_0}$$
+    \item \textbf{Các công thức suy diễn ngược (khi đề bài cho trước $t_{CPU}$):}
+    $$n = t_{CPU} \times f_0 \quad ; \quad CPI = \frac{t_{CPU} \times f_0}{IC} \quad ; \quad IC = \frac{t_{CPU} \times f_0}{CPI}$$
+\end{itemize}
+
+\textbf{3. Công thức tính CPI trung bình ($CPI_{TB}$) khi có nhiều lớp lệnh}\\
+Nếu chương trình gồm $K$ loại lệnh khác nhau, mỗi loại lệnh $i$ có số chu kỳ riêng là $CPI_i$:
+\begin{itemize}
+    \item \textbf{Trường hợp 1:} Đề bài cho số lượng lệnh cụ thể $IC_1, IC_2, \dots, IC_K$ của từng loại:
+    $$IC = \sum_{i=1}^{K} IC_i \quad ; \quad n = \sum_{i=1}^{K} (CPI_i \times IC_i) \quad ; \quad CPI_{TB} = \frac{n}{IC} = \frac{\sum_{i=1}^{K} (CPI_i \times IC_i)}{\sum_{i=1}^{K} IC_i}$$
+    \item \textbf{Trường hợp 2:} Đề bài cho tỷ lệ phần trăm $p_1\%, p_2\%, \dots, p_K\%$ của từng loại lệnh (với $\sum p_i\% = 100\% = 1$):
+    $$CPI_{TB} = \sum_{i=1}^{K} (p_i\% \times CPI_i)$$
+\end{itemize}
+
+\textbf{4. Định nghĩa Hiệu năng ($P$) và So sánh tốc độ giữa hai máy tính}
+\begin{itemize}
+    \item Hiệu năng ($P$ -- Performance) là nghịch đảo của thời gian thực hiện chương trình:
+    $$P = \frac{1}{t_{CPU}}$$
+    Máy tính nào có thời gian thực hiện chương trình \textbf{nhỏ hơn} thì máy tính đó \textbf{nhanh hơn} (có hiệu năng cao hơn).
+    \item Khi đề bài hỏi \textbf{``Máy A nhanh hơn máy B bao nhiêu lần?''}, ta lấy hiệu năng của máy A chia cho hiệu năng của máy B (tức là lấy \textbf{thời gian của máy B chia cho thời gian của máy A}):
+    $$k = \frac{P_A}{P_B} = \frac{t_B}{t_A}$$
+    \item Nếu hai máy A và B có \textbf{cùng kiến trúc tập lệnh (ISA)} và chạy cùng một chương trình thì số lệnh thực thi trên hai máy là bằng nhau ($IC_A = IC_B = IC$). Khi đó $IC$ tự triệt tiêu:
+    $$\frac{P_A}{P_B} = \frac{t_B}{t_A} = \frac{CPI_B \times T_B}{CPI_A \times T_A} = \frac{CPI_B / f_B}{CPI_A / f_A}$$
+\end{itemize}
+
+\textbf{5. Chỉ số tốc độ thực thi MIPS và MFLOPS}
+\begin{itemize}
+    \item \textbf{MIPS (Millions of Instructions Per Second):} Số triệu lệnh máy thực hiện được trong $1$ giây:
+    $$MIPS = \frac{IC}{t_{CPU} \times 10^6} = \frac{f_0}{CPI \times 10^6}$$
+    \begin{itemize}
+        \item Nếu thay $f_0$ theo đơn vị \textbf{MHz} ($10^6\text{ Hz}$): $MIPS = \dfrac{f_0\text{ (MHz)}}{CPI}$.
+        \item Nếu thay $f_0$ theo đơn vị \textbf{GHz} ($10^9\text{ Hz}$): $MIPS = \dfrac{f_0\text{ (GHz)} \times 1000}{CPI}$.
+        \item Suy ngược ra $CPI$ khi biết $MIPS$: $CPI = \dfrac{f_0}{MIPS \times 10^6} = \dfrac{f_0\text{ (GHz)} \times 1000}{MIPS}$.
+    \end{itemize}
+    \item \textbf{Hạn chế của chỉ số MIPS:} Chỉ đo tốc độ thực thi lệnh mà không phản ánh khả năng của từng lệnh; không dùng để so sánh hai máy khác kiến trúc tập lệnh (khác ISA); thay đổi theo từng chương trình trên cùng một máy; đôi khi một chương trình có nhiều lệnh đơn giản hơn lại cho chỉ số MIPS cao hơn nhưng tổng thời gian chạy thực tế lại lâu hơn.
+    \item \textbf{MFLOPS (Millions of Floating-Point Operations Per Second):} Số triệu phép toán dấu phẩy động thực hiện được trong $1$ giây:
+    $$MFLOPS = \frac{\text{Số phép toán dấu phẩy động thực thi}}{t_{CPU} \times 10^6}$$
+    Các bội số lớn hơn: GFLOPS ($10^9$), TFLOPS ($10^{12}$), PFLOPS ($10^{15}$).
+\end{itemize}
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 1 và Hướng dẫn giải}
+
+\subsection{Nhóm 1: Khái niệm cơ bản và Các thành phần của máy tính}
+
+\textbf{Bài tập 1.1 (Đề Cuối kỳ 2020.2, 2021.1, 2024.2 \& Ôn tập Cuối kỳ 2025.1, 2025.2)}\\
+Hãy chỉ ra tên của thành phần phần cứng trong cấu trúc máy tính thực hiện chức năng chính: ``Chứa toàn bộ các lệnh và dữ liệu của chương trình hiện đang được thực hiện''?
+\begin{enumerate}[label=\Alph*.]
+    \item Bộ nhớ chính (RAM)
+    \item Tập thanh ghi (Register File)
+    \item Bộ nhớ đệm nhanh (Cache memory)
+    \item Bộ nhớ ngoài (Ổ đĩa SSD/HDD)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Kiến thức áp dụng:} Theo mô hình máy tính von Neumann (Slide Chương 1, trang 6 và trang 16), mọi chương trình khi đang được thực hiện đều phải nằm trong Bộ nhớ chính (Main Memory / RAM). Bộ nhớ ngoài (SSD/HDD) chỉ lưu trữ phần mềm và dữ liệu khi chưa chạy.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (Bộ nhớ chính)}.
+\end{itemize}
+
+\subsection{Nhóm 2: Tính chu kỳ xung nhịp ($T_0$), CPI và Thời gian thực thi ($t_{CPU}$)}
+
+\begin{tcolorbox}[bwbox, title=Quy trình 3 bước giải bài toán tính thời gian thực thi của CPU]
+\begin{enumerate}
+    \item \textbf{Bước 1 (Đổi đơn vị):} Đổi số lệnh $IC$ ra đơn vị lệnh ($1\text{ triệu} = 10^6$, $1\text{ tỷ} = 10^9$); đổi tần số $f_0$ ra Hz ($1\text{ MHz} = 10^6\text{ Hz}$, $1\text{ GHz} = 10^9\text{ Hz}$).Lưu ý: Chỉ lấy số lượng \textbf{lệnh mã máy} sau khi biên dịch, không lấy số dòng lệnh ngôn ngữ bậc cao.
+    \item \textbf{Bước 2 (Áp dụng công thức):} Tính thời gian theo đơn vị giây (s):
+    $$t_{CPU} = \frac{IC \times CPI}{f_0}$$
+    \item \textbf{Bước 3 (Đổi về đơn vị của đáp án):}
+    \begin{itemize}
+        \item Đổi từ giây (s) sang mili-giây (ms): Nhân kết quả với $10^3$ (vì $10^{-3}\text{ s} = 1\text{ ms}$).
+        \item Đổi từ giây (s) sang nano-giây (ns): Nhân kết quả với $10^9$ (vì $10^{-9}\text{ s} = 1\text{ ns}$).
+    \end{itemize}
+\end{enumerate}
+\end{tcolorbox}
+
+\textbf{Bài tập 1.2 (Slide Chương 1 -- Trang 24)}\\
+Một bộ xử lý có tần số xung nhịp $f_0 = 4\text{ GHz}$. Hãy tính chu kỳ xung nhịp $T_0$ của bộ xử lý đó theo đơn vị nano-giây (ns).
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Đổi tần số về đơn vị Hz: $f_0 = 4\text{ GHz} = 4 \times 10^9\text{ Hz}$.
+    \item \textbf{Bước 2:} Áp dụng công thức tính chu kỳ xung nhịp:
+    $$T_0 = \frac{1}{f_0} = \frac{1}{4 \times 10^9} = 0.25 \times 10^{-9}\text{ s}$$
+    \item \textbf{Bước 3:} Đổi sang đơn vị nano-giây ($1\text{ ns} = 10^{-9}\text{ s}$): $T_0 = 0.25\text{ ns}$.
+    \item \textbf{Kết luận:} Đáp số là \textbf{0.25 ns}.
+\end{itemize}
+
+\textbf{Bài tập 1.3 (Đề Cuối kỳ 2020.2 \& Đề Cuối kỳ 2021.1)}\\
+\textit{Biến thể 1 (Đề 2020.2):} Bộ xử lý trung tâm có tốc độ xung nhịp cố định là $2.9\text{ GHz}$. Hãy cho biết chu kỳ xung nhịp tương ứng của bộ xử lý đó là bao nhiêu?\\
+A. $7.9\text{ ns}$ \quad B. $0.13\text{ ps}$ \quad C. $0.13\text{ ms}$ \quad D. $0.345\text{ ns}$\\[4pt]
+\textit{Biến thể 2 (Ôn tập Cuối kỳ 2025.1 \& 2025.2 -- Câu 1):} Bộ xử lý có tốc độ xung nhịp là $7.9\text{ GHz}$. Cho biết chu kỳ xung nhịp tương ứng là bao nhiêu?\\
+A. $7.9\text{ ns}$ \quad B. $0.13\text{ ps}$ \quad C. $0.13\text{ ms}$ \quad D. $0.13\text{ ns}$
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Xét Biến thể 1 ($f_0 = 2.9\text{ GHz} = 2.9 \times 10^9\text{ Hz}$):}
+    $$T_0 = \frac{1}{f_0} = \frac{1}{2.9 \times 10^9}\text{ s} \approx 0.3448 \times 10^{-9}\text{ s} \approx 0.345\text{ ns}$$
+    \item \textbf{Xét Biến thể 2 ($f_0 = 7.9\text{ GHz} = 7.9 \times 10^9\text{ Hz}$):}
+    $$T_0 = \frac{1}{f_0} = \frac{1}{7.9 \times 10^9}\text{ s} \approx 0.1266 \times 10^{-9}\text{ s} \approx 0.13\text{ ns}$$
+    \item \textbf{Kết luận:} Biến thể 1 chọn \textbf{D (0.345 ns)}; Biến thể 2 chọn \textbf{D (0.13 ns)}.
+\end{itemize}
+
+\textbf{Bài tập 1.4 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 2 \& Mã đề 199 Câu 17)}\\
+Một phần mềm viết bằng ngôn ngữ hợp ngữ với $30$ lệnh, được biên dịch thành $40$ lệnh mã máy. Biết rằng $CPI$ trung bình là $2$, và CPU có tốc độ xung nhịp $4\text{ GHz}$. Hỏi thời gian thực hiện phần mềm là bao lâu?
+\begin{enumerate}[label=\Alph*.]
+    \item $60\text{ ns}$
+    \item $80\text{ ns}$
+    \item $20\text{ ns}$
+    \item $15\text{ ns}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Xác định các thông số chuẩn. CPU trực tiếp thực thi các \textbf{lệnh mã máy}, do đó tổng số lệnh thực thi là $IC = 40\text{ lệnh}$ (con số $30$ lệnh hợp ngữ trước khi dịch là dữ kiện gây nhiễu). Ta có $CPI = 2$ và tần số $f_0 = 4\text{ GHz} = 4 \times 10^9\text{ Hz}$.
+    \item \textbf{Bước 2:} Tính thời gian thực thi của CPU:
+    $$t_{CPU} = \frac{IC \times CPI}{f_0} = \frac{40 \times 2}{4 \times 10^9} = \frac{80}{4} \times 10^{-9}\text{ s} = 20 \times 10^{-9}\text{ s}$$
+    \item \textbf{Bước 3:} Đổi sang đơn vị nano-giây: $t_{CPU} = 20\text{ ns}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C (20 ns)}.
+\end{itemize}
+
+\textbf{Bài tập 1.5 (Đề Giữa kỳ 2023.2 -- Đề 1, Câu 1)}\\
+Máy tính có bộ xử lý với tốc độ xung nhịp là $f = 4\text{ GHz}$. Giả sử có chương trình được thực hiện trên máy tính đó với số lệnh $n = 5\text{ triệu lệnh}$ và $CPI$ trung bình bằng $2$. Hãy cho biết thời gian của CPU ($t_{CPU}$) để hoàn thành chương trình đó (tính theo ms)?
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Đổi đơn vị:
+    \begin{itemize}
+        \item Số lượng lệnh: $IC = 5\text{ triệu lệnh} = 5 \times 10^6\text{ lệnh}$.
+        \item Chỉ số $CPI = 2$.
+        \item Tần số xung nhịp: $f_0 = 4\text{ GHz} = 4 \times 10^9\text{ Hz}$.
+    \end{itemize}
+    \item \textbf{Bước 2:} Tính thời gian thực thi của CPU:
+    $$t_{CPU} = \frac{IC \times CPI}{f_0} = \frac{5 \times 10^6 \times 2}{4 \times 10^9} = \frac{10}{4} \times 10^{-3}\text{ s} = 2.5 \times 10^{-3}\text{ s}$$
+    \item \textbf{Bước 3:} Vì $10^{-3}\text{ s} = 1\text{ ms}$, nên $t_{CPU} = 2.5\text{ ms}$.
+    \item \textbf{Kết luận:} Đáp số là \textbf{2.5 ms}.
+\end{itemize}
+
+\textbf{Bài tập 1.6 (Đề Cuối kỳ 2024.1 -- \#54583d \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 4)}\\
+Máy tính có bộ xử lý với tần số xung nhịp $5\text{ GHz}$ và $CPI$ trung bình bằng $2$. Giả sử có chương trình được thực hiện trên máy tính đó với $6\text{ triệu lệnh}$. Hãy cho biết thời gian của bộ xử lý để hoàn thành chương trình đó?
+\begin{enumerate}[label=\Alph*.]
+    \item $24\text{ ms}$
+    \item $60\text{ ms}$
+    \item $2.4\text{ ms}$
+    \item $240\text{ ms}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Đổi đơn vị: $IC = 6 \times 10^6\text{ lệnh}$; $CPI = 2$; $f_0 = 5\text{ GHz} = 5 \times 10^9\text{ Hz}$.
+    \item \textbf{Bước 2:} Tính thời gian thực thi của CPU:
+    $$t_{CPU} = \frac{IC \times CPI}{f_0} = \frac{6 \times 10^6 \times 2}{5 \times 10^9} = \frac{12}{5} \times 10^{-3}\text{ s} = 2.4 \times 10^{-3}\text{ s} = 2.4\text{ ms}$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C (2.4 ms)}.
+\end{itemize}
+
+\textbf{Bài tập 1.7 (Đề Cuối kỳ 2020.2 \& 2021.1)}\\
+Một hệ thống máy tính tích hợp lõi vi xử lý hoạt động ở tần số xung nhịp cố định là $1.8\text{ GHz}$ và sở hữu số chu kỳ lệnh trung bình trên mỗi câu lệnh là $CPI = 2.1$. Giả sử có một chương trình ứng dụng bao gồm tổng cộng $3\text{ triệu lệnh}$ cần thực thi trọn vẹn trên hệ thống này. Hãy tính tổng thời gian xử lý cần thiết để CPU hoàn thành chương trình trên?
+\begin{enumerate}[label=\Alph*.]
+    \item $3.5\text{ ms}$
+    \item $11.3\text{ ms}$
+    \item $35.0\text{ ms}$
+    \item $3500.0\text{ ms}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Đổi đơn vị: $IC = 3 \times 10^6\text{ lệnh}$; $CPI = 2.1$; $f_0 = 1.8\text{ GHz} = 1.8 \times 10^9\text{ Hz}$.
+    \item \textbf{Bước 2:} Tính thời gian thực thi:
+    $$t_{CPU} = \frac{IC \times CPI}{f_0} = \frac{3 \times 10^6 \times 2.1}{1.8 \times 10^9} = \frac{6.3}{1.8} \times 10^{-3}\text{ s} = 3.5 \times 10^{-3}\text{ s} = 3.5\text{ ms}$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (3.5 ms)}.
+\end{itemize}
+
+\textbf{Bài tập 1.8 (Đề Cuối kỳ 2022.2 \& Cuối kỳ 2024.2 -- Trang 12)}\\
+Cho một chương trình có $6\text{ triệu lệnh}$ được thực hiện trên máy tính có bộ xử lý với tốc độ xung nhịp $2\text{ GHz}$ và $CPI$ trung bình là $1.5$. Hãy cho biết thời gian của bộ xử lý để hoàn thành chương trình đó?
+\begin{enumerate}[label=\Alph*.]
+    \item $72\text{ ms}$
+    \item $450\text{ ms}$
+    \item $4.5\text{ ms}$
+    \item $45\text{ ms}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Đổi đơn vị: $IC = 6 \times 10^6\text{ lệnh}$; $CPI = 1.5$; $f_0 = 2\text{ GHz} = 2 \times 10^9\text{ Hz}$.
+    \item \textbf{Bước 2:} Tính thời gian thực thi:
+    $$t_{CPU} = \frac{IC \times CPI}{f_0} = \frac{6 \times 10^6 \times 1.5}{2 \times 10^9} = \frac{9}{2} \times 10^{-3}\text{ s} = 4.5 \times 10^{-3}\text{ s} = 4.5\text{ ms}$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C (4.5 ms)}.
+\end{itemize}
+
+\textbf{Bài tập 1.9 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 11, Mã đề 244 Câu 8 \& Giữa kỳ 2022.2 -- Đề 0008 Câu 1)}\\
+Hãy tính chỉ số $CPI$ trung bình của phần mềm trong 3 đề thi dưới đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243 -- Câu 11):} Bộ xử lý có tần số xung nhịp $2\text{ GHz}$ thực hiện phần mềm gồm $400\,000\text{ lệnh máy}$ trong $0.0003\text{ giây}$.
+    \item \textbf{(Mã đề 244 -- Câu 8):} Bộ xử lý có tần số xung nhịp $300\text{ MHz}$ thực hiện phần mềm gồm $1\,000\,000\text{ lệnh máy}$ trong $0.004\text{ giây}$.
+    \item \textbf{(Giữa kỳ 2022.2 -- Đề 0008, Câu 1):} Bộ xử lý có tần số xung nhịp $50\text{ MHz}$ thực hiện phần mềm gồm $800\,000\text{ lệnh máy}$ trong $0.04\text{ giây}$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}\\
+Từ công thức gốc $t_{CPU} = \dfrac{IC \times CPI}{f_0}$, ta rút ra công thức tính $CPI$:
+$$CPI = \frac{t_{CPU} \times f_0}{IC}$$
+\begin{itemize}
+    \item \textbf{Giải câu a:} Với $f_0 = 2\text{ GHz} = 2 \times 10^9\text{ Hz}$, $IC = 400\,000 = 4 \times 10^5\text{ lệnh}$, $t_{CPU} = 0.0003\text{ s} = 3 \times 10^{-4}\text{ s}$:
+    $$CPI = \frac{3 \times 10^{-4} \times 2 \times 10^9}{4 \times 10^5} = \frac{6 \times 10^5}{4 \times 10^5} = 1.5$$
+    \item \textbf{Giải câu b:} Với $f_0 = 300\text{ MHz} = 300 \times 10^6\text{ Hz}$, $IC = 1\,000\,000 = 10^6\text{ lệnh}$, $t_{CPU} = 0.004\text{ s}$:
+    $$CPI = \frac{0.004 \times 300 \times 10^6}{10^6} = 0.004 \times 300 = 1.2$$
+    \item \textbf{Giải câu c:} Với $f_0 = 50\text{ MHz} = 50 \times 10^6\text{ Hz}$, $IC = 800\,000 = 0.8 \times 10^6\text{ lệnh}$, $t_{CPU} = 0.04\text{ s}$:
+    $$CPI = \frac{0.04 \times 50 \times 10^6}{0.8 \times 10^6} = \frac{2}{0.8} = 2.5$$
+    \item \textbf{Kết luận:} Câu a: $CPI = 1.5$; Câu b: $CPI = 1.2$; Câu c: $CPI = 2.5$.
+\end{itemize}
+
+\subsection{Nhóm 3: Bài tập về chỉ số tốc độ thực thi lệnh MIPS}
+
+\textbf{Bài tập 1.10 (Slide Chương 1 -- Trang 35 \& Trang 36)}
+\begin{enumerate}[label=\alph*)]
+    \item Tính chỉ số $MIPS$ của bộ xử lý với $f_0 = 2\text{ GHz}$ và $CPI = 4$.
+    \item Tính chỉ số $CPI$ của bộ xử lý với $f_0 = 1\text{ GHz}$ và tốc độ đạt $400\text{ MIPS}$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Đổi $f_0 = 2\text{ GHz} = 2 \times 10^9\text{ Hz}$. Áp dụng công thức:
+    $$MIPS = \frac{f_0}{CPI \times 10^6} = \frac{2 \times 10^9}{4 \times 10^6} = \frac{2000}{4} = 500\text{ MIPS}$$
+    \item \textbf{Giải câu b:} Đổi $f_0 = 1\text{ GHz} = 10^9\text{ Hz}$. Áp dụng công thức suy ra $CPI$:
+    $$CPI = \frac{f_0}{MIPS \times 10^6} = \frac{10^9}{400 \times 10^6} = \frac{1000}{400} = 2.5$$
+    \item \textbf{Kết luận:} Câu a: \textbf{500 MIPS}; Câu b: \textbf{CPI = 2.5}.
+\end{itemize}
+
+\textbf{Bài tập 1.11 (Đề Cuối kỳ 2020.2, 2022.2 -- \#1fd28d, 2024.1 -- \#3e5442, 2024.2 \& Ôn tập 2025.2)}\\
+Hãy tính số triệu lệnh thực hiện được trong một giây (đơn vị MIPS) cho 3 câu hỏi trắc nghiệm sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2020.2):} Tần số xung nhịp $f_0 = 1.2\text{ GHz}$ và $CPI = 1.5$.\\
+    A. $1\text{ MIPS}$ \quad B. $1800\text{ MIPS}$ \quad C. $800\text{ MIPS}$ \quad D. $1250\text{ MIPS}$
+    \item \textbf{(Đề CK 2022.2 \& 2024.2 -- \#1fd28d):} Tần số xung nhịp $f_0 = 2.5\text{ GHz}$ và $CPI = 2$.\\
+    A. $1250\text{ MIPS}$ \quad B. $1.25\text{ MIPS}$ \quad C. $5\text{ MIPS}$ \quad D. $500\text{ MIPS}$
+    \item \textbf{(Đề CK 2024.1 -- \#3e5442 \& Ôn tập 2025.2 Câu 21):} Tần số xung nhịp $f_0 = 3\text{ GHz}$ và $CPI = 1.5$.\\
+    A. $2\text{ MIPS}$ \quad B. $4.5\text{ MIPS}$ \quad C. $2000\text{ MIPS}$ \quad D. $500\text{ MIPS}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}\\
+Áp dụng công thức $MIPS = \dfrac{f_0}{CPI \times 10^6} = \dfrac{f_0\text{ (GHz)} \times 1000}{CPI}$:
+\begin{itemize}
+    \item \textbf{Câu a:} $MIPS = \dfrac{1.2 \times 1000}{1.5} = \dfrac{1200}{1.5} = 800\text{ MIPS}$ $\rightarrow$ Chọn \textbf{C}.
+    \item \textbf{Câu b:} $MIPS = \dfrac{2.5 \times 1000}{2} = \dfrac{2500}{2} = 1250\text{ MIPS}$ $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Câu c:} $MIPS = \dfrac{3 \times 1000}{1.5} = \dfrac{3000}{1.5} = 2000\text{ MIPS}$ $\rightarrow$ Chọn \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 1.12 (Đề Cuối kỳ 2021.2 -- Mã đề B1 Câu 1.1 \& Mã đề B5 Câu 1.2)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B1 -- Câu 1.1):} Máy tính A có bộ xử lý với tần số xung nhịp $1.5\text{ GHz}$, có khả năng thực hiện $600\text{ triệu lệnh}$ trên một giây. Tính $CPI$ của nó?
+    \item \textbf{(Mã đề B5 -- Câu 1.2):} Cho máy tính A với bộ xử lý có $MIPS = 900$. Hãy tính $CPI$ của máy tính đó nếu biết chu kỳ xung nhịp của bộ xử lý là $T_A = 300\text{ ps}$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Thực hiện $600\text{ triệu lệnh/giây}$ tức là $MIPS = 600$. Với $f_0 = 1.5\text{ GHz} = 1.5 \times 10^9\text{ Hz}$:
+    $$CPI = \frac{f_0}{MIPS \times 10^6} = \frac{1.5 \times 10^9}{600 \times 10^6} = \frac{1500}{600} = 2.5$$
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Bước 1: Đổi chu kỳ xung nhịp sang giây: $T_A = 300\text{ ps} = 300 \times 10^{-12}\text{ s}$.
+        \item Bước 2: Tìm tần số xung nhịp $f_A = \dfrac{1}{T_A} = \dfrac{1}{300 \times 10^{-12}}\text{ Hz} = \dfrac{10^{12}}{300}\text{ Hz}$.
+        \item Bước 3: Thay vào công thức tính $CPI$:
+        $$CPI = \frac{f_A}{MIPS \times 10^6} = \frac{10^{12}}{300 \times 900 \times 10^6} = \frac{10^6}{270\,000} = \frac{100}{27} \approx 3.704$$
+    \end{itemize}
+    \item \textbf{Kết luận:} Câu a: \textbf{CPI = 2.5}; Câu b: $\mathbf{CPI = \frac{100}{27} \approx 3.704}$.
+\end{itemize}
+
+\subsection{Nhóm 4: Tính CPI trung bình và Thời gian thực thi với nhiều lớp lệnh}
+
+\begin{tcolorbox}[bwbox, title=Quy trình giải bài toán có nhiều nhóm lệnh (Class A, B, C...)]
+\begin{itemize}
+    \item \textbf{Dạng 1 (Cho số lượng lệnh $IC_i$ của từng nhóm):}
+    \begin{enumerate}
+        \item Tính tổng số chu kỳ: $n = (IC_1 \times CPI_1) + (IC_2 \times CPI_2) + \dots$
+        \item Tính tổng số lệnh: $IC = IC_1 + IC_2 + \dots$
+        \item Lấy $CPI_{TB} = \dfrac{n}{IC}$ và thời gian $t_{CPU} = \dfrac{n}{f_0}$.
+    \end{enumerate}
+    \item \textbf{Dạng 2 (Cho tỷ lệ phần trăm $p_i\%$ của từng nhóm):}
+    \begin{enumerate}
+        \item Nếu đề bài ẩn tỷ lệ của một nhóm (ghi là ``còn lại''), lấy $100\%$ trừ đi các nhóm đã biết để tìm tỷ lệ phần trăm của nhóm đó.
+        \item Tính $CPI_{TB} = (p_1\% \times CPI_1) + (p_2\% \times CPI_2) + \dots$ (nhớ đổi $p\%$ ra số thập phân, ví dụ $35\% = 0.35$).
+    \end{enumerate}
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Bài tập 1.13 (Slide Chương 1 -- Trang 32, Đề Giữa kỳ 2018.2 -- Mã đề 204 Câu 19 \& Cuối kỳ 2021.2 -- Mã đề B4 Câu 1)}\\
+Tính chỉ số $CPI$ trung bình cho các dãy lệnh được cho theo bảng số lượng lệnh dưới đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề Giữa kỳ 2018.2 -- Mã đề 204, Câu 19):} Phần mềm X có 3 nhóm lệnh A, B, C với $CPI$ tương ứng là $1, 2, 3$ và số lệnh tương ứng là $4, 1, 1$.
+    \item \textbf{(Slide Chương 1 -- Trang 32):} Ba loại lệnh A, B, C có $CPI$ lần lượt là $1, 2, 3$. Dãy lệnh 1 có số lệnh $(A, B, C) = (20, 10, 20)$; Dãy lệnh 2 có số lệnh $(A, B, C) = (40, 10, 10)$.
+    \item \textbf{(Đề Cuối kỳ 2021.2 -- Mã đề B4, Câu 1):} Ba loại lệnh A, B, C có $CPI$ lần lượt là $1, 2, 4$.
+    \begin{itemize}
+        \item Dãy lệnh 1 có số lệnh $(A, B, C) = (1, 2, 2)$.
+        \item Dãy lệnh 2 có số lệnh $(A, B, C) = (5, 2, 1)$.
+        \item Dãy lệnh 3 có số lệnh $(A, B, C) = (4, 1, 1)$.
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}\\
+Áp dụng công thức $CPI_{TB} = \dfrac{\sum (CPI_i \times IC_i)}{\sum IC_i}$:
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    $$CPI_{TB} = \frac{(1 \times 4) + (2 \times 1) + (3 \times 1)}{4 + 1 + 1} = \frac{4 + 2 + 3}{6} = \frac{9}{6} = 1.5$$
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Dãy lệnh 1: $CPI_{TB1} = \dfrac{(1 \times 20) + (2 \times 10) + (3 \times 20)}{20 + 10 + 20} = \dfrac{20 + 20 + 60}{50} = \dfrac{100}{50} = 2.0$.
+        \item Dãy lệnh 2: $CPI_{TB2} = \dfrac{(1 \times 40) + (2 \times 10) + (3 \times 10)}{40 + 10 + 10} = \dfrac{40 + 20 + 30}{60} = \dfrac{90}{60} = 1.5$.
+    \end{itemize}
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item Dãy lệnh 1: $CPI_{TB1} = \dfrac{(1 \times 1) + (2 \times 2) + (4 \times 2)}{1 + 2 + 2} = \dfrac{1 + 4 + 8}{5} = \dfrac{13}{5} = 2.6$.
+        \item Dãy lệnh 2: $CPI_{TB2} = \dfrac{(1 \times 5) + (2 \times 2) + (4 \times 1)}{5 + 2 + 1} = \dfrac{5 + 4 + 4}{8} = \dfrac{13}{8} = 1.625$.
+        \item Dãy lệnh 3: $CPI_{TB3} = \dfrac{(1 \times 4) + (2 \times 1) + (4 \times 1)}{4 + 1 + 1} = \dfrac{4 + 2 + 4}{6} = \dfrac{10}{6} \approx 1.67$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 1.14 (Đề Giữa kỳ 2025.2 -- Đề 0013 Câu 75, Câu 944 \& Đề 0012 Câu 110)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề 0013 -- Câu 75):} Một phần mềm gồm: $15\%$ lệnh tốn $3$ chu kỳ, còn lại là lệnh $4$ chu kỳ, $35\%$ lệnh $5$ chu kỳ và $10\%$ lệnh $2$ chu kỳ. $CPI$ trung bình của phần mềm là bao nhiêu?
+    \item \textbf{(Đề 0013 -- Câu 944):} Một phần mềm gồm: $10\%$ lệnh tốn $4$ chu kỳ, $40\%$ lệnh $6$ chu kỳ, $30\%$ lệnh $8$ chu kỳ, còn lại là lệnh $10$ chu kỳ. $CPI$ trung bình của phần mềm là bao nhiêu?
+    \item \textbf{(Đề 0012 -- Câu 110):} Bộ xử lý RISC-V có tần số xung nhịp $1\text{ GHz}$ thực hiện phần mềm gồm $200\,000$ lệnh máy với $CPI = 3$, $200\,000$ lệnh máy với $CPI = 4$ và $300\,000$ lệnh máy với $CPI = 2$. Hỏi phần mềm đó chạy trong bao lâu?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Bước 1: Tính tỷ lệ phần trăm của nhóm lệnh ``còn lại'' (nhóm $4$ chu kỳ):
+        $$p_{\text{còn lại}} = 100\% - (15\% + 35\% + 10\%) = 100\% - 60\% = 40\% = 0.40$$
+        \item Bước 2: Tính $CPI$ trung bình:
+        $$CPI_{TB} = (0.15 \times 3) + (0.40 \times 4) + (0.35 \times 5) + (0.10 \times 2) = 0.45 + 1.60 + 1.75 + 0.20 = 4.0$$
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Bước 1: Tỷ lệ phần trăm của nhóm lệnh ``còn lại'' ($10$ chu kỳ):
+        $$p_{\text{còn lại}} = 100\% - (10\% + 40\% + 30\%) = 20\% = 0.20$$
+        \item Bước 2: Tính $CPI$ trung bình:
+        $$CPI_{TB} = (0.10 \times 4) + (0.40 \times 6) + (0.30 \times 8) + (0.20 \times 10) = 0.4 + 2.4 + 2.4 + 2.0 = 7.2$$
+    \end{itemize}
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item Bước 1: Tính tổng số chu kỳ xung nhịp ($n$) của cả phần mềm:
+        $$n = (200\,000 \times 3) + (200\,000 \times 4) + (300\,000 \times 2) = 600\,000 + 800\,000 + 600\,000 = 2\,000\,000 = 2 \times 10^6\text{ chu kỳ}$$
+        \item Bước 2: Với tần số $f_0 = 1\text{ GHz} = 10^9\text{ Hz}$, thời gian chạy phần mềm là:
+        $$t_{CPU} = \frac{n}{f_0} = \frac{2 \times 10^6}{10^9} = 2 \times 10^{-3}\text{ s} = 0.002\text{ s} = 2\text{ ms}$$
+    \end{itemize}
+    \item \textbf{Kết luận:} Câu a: \textbf{4} (hoặc \textbf{4.0}); Câu b: \textbf{7.2}; Câu c: \textbf{2 ms} (hoặc \textbf{0.002 s}).
+\end{itemize}
+
+\textbf{Bài tập 1.15 (Đề Giữa kỳ 2024.1 -- \#a6b720 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 10)}\\
+Một bộ xử lý chạy một chương trình với tần số xung nhịp $4\text{ GHz}$. Chương trình gồm ba loại lệnh với các đặc điểm sau:
+\begin{itemize}
+    \item Loại A: chiếm $40\%$ tổng số lệnh với $CPI$ là $1$
+    \item Loại B: chiếm $35\%$ tổng số lệnh với $CPI$ là $3$
+    \item Loại C: chiếm $25\%$ tổng số lệnh với $CPI$ là $5$
+\end{itemize}
+Tổng số lệnh cho chương trình là $2\text{ tỷ lệnh}$. Tổng thời gian thực thi là bao nhiêu?
+\begin{enumerate}[label=\Alph*.]
+    \item $1.1\text{ giây}$
+    \item $1.25\text{ giây}$
+    \item $1.35\text{ giây}$
+    \item $1.4\text{ giây}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Tính $CPI$ trung bình của chương trình:
+    $$CPI_{TB} = (0.40 \times 1) + (0.35 \times 3) + (0.25 \times 5) = 0.40 + 1.05 + 1.25 = 2.7$$
+    \item \textbf{Bước 2:} Đổi đơn vị: Tổng số lệnh $IC = 2\text{ tỷ} = 2 \times 10^9\text{ lệnh}$; tần số $f_0 = 4\text{ GHz} = 4 \times 10^9\text{ Hz}$.
+    \item \textbf{Bước 3:} Tính tổng thời gian thực thi:
+    $$t_{CPU} = \frac{IC \times CPI_{TB}}{f_0} = \frac{2 \times 10^9 \times 2.7}{4 \times 10^9} = \frac{5.4}{4} = 1.35\text{ giây}$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C (1.35 giây)}.
+\end{itemize}
+
+\textbf{Bài tập 1.16 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 55 \& Câu 70)}\\
+Cho một bộ xử lý $2\text{ GHz}$ thực thi tập lệnh gồm năm lớp lệnh A, B, C, D, E với $CPI$ lần lượt là $2, 3, 4, 6$ và $10$. Máy tính đang thực hiện một chương trình trong đó các lớp lệnh A, B, C, D, E chiếm lần lượt $30\%, 30\%, 15\%, 15\%$ và $10\%$ tổng số lệnh.
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu 70):} Tìm $CPI$ trung bình của bộ xử lý này.
+    \item \textbf{(Câu 55):} Nếu thời gian thực thi của chương trình này là $20\text{ giây}$, hãy tìm tổng số lệnh ($IC$). (Viết đáp án không chứa dấu phân tách chữ số).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Tính $CPI$ trung bình:
+    $$CPI_{TB} = (0.30 \times 2) + (0.30 \times 3) + (0.15 \times 4) + (0.15 \times 6) + (0.10 \times 10)$$
+    $$CPI_{TB} = 0.6 + 0.9 + 0.6 + 0.9 + 1.0 = 4.0$$
+    \item \textbf{Giải câu b:} Ta có $t_{CPU} = 20\text{ s}$ và $f_0 = 2\text{ GHz} = 2 \times 10^9\text{ Hz}$. Từ công thức $t_{CPU} = \dfrac{IC \times CPI_{TB}}{f_0}$, rút ra tổng số lệnh $IC$:
+    $$IC = \frac{t_{CPU} \times f_0}{CPI_{TB}} = \frac{20 \times 2 \times 10^9}{4} = 10 \times 10^9 = 10\,000\,000\,000\text{ lệnh}$$
+    \item \textbf{Kết luận:} Câu a điền \textbf{4}; Câu b điền \textbf{10000000000}.
+\end{itemize}
+
+\textbf{Bài tập 1.17 (Đề Giữa kỳ 2021.1 -- IT3030E, Problem 3)}\\
+Cho một chương trình gồm $2000\text{ lệnh}$ thuộc 4 lớp lệnh: $750$ lệnh số học (arithmetics), $250$ lệnh ghi bộ nhớ (stores), $500$ lệnh đọc bộ nhớ (loads) và $500$ lệnh rẽ nhánh (branches). Giả sử số chu kỳ xung nhịp ($CPI$) cho các lệnh số học, load, store và branch lần lượt là $1, 5, 5$ và $2$.
+\begin{enumerate}[label=\alph*)]
+    \item Tính thời gian thực thi của chương trình trên bộ xử lý có tốc độ $2\text{ GHz}$.
+    \item Tìm $CPI$ trung bình của chương trình này.
+    \item Nếu số lượng lệnh load trong chương trình giảm đi $50\%$, hãy tính độ tăng tốc (speedup) và $CPI$ mới.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Bước 1: Tính tổng số chu kỳ xung nhịp ban đầu ($n_{\text{cũ}}$):
+        $$n_{\text{cũ}} = (750 \times 1) + (250 \times 5) + (500 \times 5) + (500 \times 2) = 750 + 1250 + 2500 + 1000 = 5500\text{ chu kỳ}$$
+        \item Bước 2: Thời gian thực thi trên bộ xử lý $f_0 = 2\text{ GHz} = 2 \times 10^9\text{ Hz}$:
+        $$t_{\text{cũ}} = \frac{n_{\text{cũ}}}{f_0} = \frac{5500}{2 \times 10^9} = 2750 \times 10^{-9}\text{ s} = 2.75 \times 10^{-6}\text{ s} = 2.75\text{ }\mu\text{s}$$
+    \end{itemize}
+    \item \textbf{Giải câu b:} Chỉ số $CPI$ trung bình ban đầu:
+    $$CPI_{\text{cũ}} = \frac{n_{\text{cũ}}}{IC_{\text{cũ}}} = \frac{5500}{2000} = 2.75$$
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item Khi số lệnh load giảm $50\%$, số lệnh load chỉ còn: $500 \times 50\% = 250\text{ lệnh}$ (giảm đi $250$ lệnh).
+        \item Tổng số lệnh mới: $IC_{\text{mới}} = 2000 - 250 = 1750\text{ lệnh}$.
+        \item Tổng số chu kỳ mới (giảm đi $250 \times 5 = 1250\text{ chu kỳ}$):
+        $$n_{\text{mới}} = 5500 - 1250 = 4250\text{ chu kỳ}$$
+        \item Chỉ số $CPI$ trung bình mới:
+        $$CPI_{\text{mới}} = \frac{n_{\text{mới}}}{IC_{\text{mới}}} = \frac{4250}{1750} = \frac{17}{7} \approx 2.43$$
+        \item Độ tăng tốc (Speedup) do tần số $f_0$ không đổi nên bằng tỷ số chu kỳ cũ chia cho chu kỳ mới:
+        $$\text{Speedup} = \frac{t_{\text{cũ}}}{t_{\text{mới}}} = \frac{n_{\text{cũ}}}{n_{\text{mới}}} = \frac{5500}{4250} = \frac{22}{17} \approx 1.294\text{ lần}$$
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 5: So sánh hiệu năng và cân bằng thời gian giữa các bộ xử lý}
+
+\textbf{Bài tập 1.18 (Slide Chương 1 -- Trang 29, Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 12 \& Đề Cuối kỳ 2021.2 -- Mã đề B1 Câu 1.2)}\\
+Hai máy tính A và B có cùng kiến trúc tập lệnh (ISA). Hãy xác định máy nào nhanh hơn và nhanh hơn bao nhiêu lần trong 3 trường hợp thông số dưới đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Slide Chương 1 -- Trang 29):} Máy A có $T_A = 250\text{ ps}, CPI_A = 2.0$; Máy B có $T_B = 500\text{ ps}, CPI_B = 1.2$.
+    \item \textbf{(Đề Cuối kỳ 2021.2 -- Mã đề B1, Câu 1.2):} Máy A có $T_A = 250\text{ ps}, CPI_A = 2.0$; Máy B có $T_B = 750\text{ ps}, CPI_B = 1.2$.
+    \item \textbf{(Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 12 \& Mã đề 199 Câu 4):} Máy A có $T_A = 300\text{ ps}, CPI_A = 2.0$; Máy B có $T_B = 500\text{ ps}, CPI_B = 1.1$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}\\
+Vì hai máy A và B có cùng kiến trúc tập lệnh (ISA), nên khi chạy cùng một chương trình thì số lệnh thực thi là như nhau: $IC_A = IC_B = IC$. Thời gian thực thi trên mỗi máy là $t = IC \times CPI \times T_0$:
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item $t_A = IC \times 2.0 \times 250\text{ ps} = 500 \times IC\text{ (ps)}$.
+        \item $t_B = IC \times 1.2 \times 500\text{ ps} = 600 \times IC\text{ (ps)}$.
+        \item Vì $t_A < t_B$ ($500 < 600$) nên \textbf{máy A nhanh hơn máy B}, và nhanh hơn số lần là: $\dfrac{t_B}{t_A} = \dfrac{600}{500} = \mathbf{1.2\text{ lần}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item $t_A = IC \times 2.0 \times 250\text{ ps} = 500 \times IC\text{ (ps)}$.
+        \item $t_B = IC \times 1.2 \times 750\text{ ps} = 900 \times IC\text{ (ps)}$.
+        \item Vì $t_A < t_B$ ($500 < 900$) nên \textbf{máy A nhanh hơn máy B}, và nhanh hơn số lần là: $\dfrac{t_B}{t_A} = \dfrac{900}{500} = \mathbf{1.8\text{ lần}}$.
+    \end{itemize}
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item $t_A = IC \times 2.0 \times 300\text{ ps} = 600 \times IC\text{ (ps)}$.
+        \item $t_B = IC \times 1.1 \times 500\text{ ps} = 550 \times IC\text{ (ps)}$.
+        \item Vì $t_B < t_A$ ($550 < 600$) nên \textbf{máy B nhanh hơn máy A} (chọn đáp án ``B nhanh hơn A'').
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 1.19 (Đề Cuối kỳ 2023.1, 2023.2 -- \#2262f, Giữa kỳ 2024.1 -- \#8cf496 \& Ôn tập 2025.2 -- Câu 12)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2023.1 -- \#2262f \& Ôn tập 2025.2 Câu 12):} Xét hai bộ xử lý cùng thực hiện một công việc. P1 có tốc độ xung nhịp $4\text{ GHz}$, $CPI$ trung bình là $0.9$ và yêu cầu thực thi $5.0\text{E}9$ lệnh. P2 có tốc độ xung nhịp $3\text{ GHz}$, $CPI$ trung bình là $0.75$ và yêu cầu thực thi $1.0\text{E}9$ lệnh. Hỏi P2 nhanh hơn P1 bao nhiêu lần khi thực hiện công việc này?
+    \item \textbf{(Đề GK 2024.1 -- \#8cf496):} Xét hai bộ xử lý cùng thực hiện một công việc. P1 có tốc độ xung nhịp $1.5\text{ GHz}$, $CPI$ trung bình là $1.8$ và yêu cầu thực thi $3.0\text{E}9$ lệnh. P2 có tốc độ xung nhịp $2\text{ GHz}$, $CPI$ trung bình là $1.2$ và yêu cầu thực thi $4.0\text{E}9$ lệnh. Hỏi P2 nhanh hơn P1 bao nhiêu lần?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Bước 1: Tính thời gian thực thi của P1 ($t_1$):
+        $$t_1 = \frac{IC_1 \times CPI_1}{f_1} = \frac{5.0 \times 10^9 \times 0.9}{4 \times 10^9} = \frac{4.5}{4} = 1.125\text{ giây}$$
+        \item Bước 2: Tính thời gian thực thi của P2 ($t_2$):
+        $$t_2 = \frac{IC_2 \times CPI_2}{f_2} = \frac{1.0 \times 10^9 \times 0.75}{3 \times 10^9} = \frac{0.75}{3} = 0.25\text{ giây}$$
+        \item Bước 3: Đề hỏi ``P2 nhanh hơn P1 bao nhiêu lần'', ta lấy thời gian của P1 chia cho thời gian của P2:
+        $$\frac{P_2}{P_1} = \frac{t_1}{t_2} = \frac{1.125}{0.25} = 4.5\text{ lần}$$
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Bước 1: Tính thời gian thực thi của P1 ($t_1$):
+        $$t_1 = \frac{IC_1 \times CPI_1}{f_1} = \frac{3.0 \times 10^9 \times 1.8}{1.5 \times 10^9} = \frac{5.4}{1.5} = 3.6\text{ giây}$$
+        \item Bước 2: Tính thời gian thực thi của P2 ($t_2$):
+        $$t_2 = \frac{IC_2 \times CPI_2}{f_2} = \frac{4.0 \times 10^9 \times 1.2}{2 \times 10^9} = \frac{4.8}{2} = 2.4\text{ giây}$$
+        \item Bước 3: Tỷ số tốc độ của P2 so với P1:
+        $$\frac{P_2}{P_1} = \frac{t_1}{t_2} = \frac{3.6}{2.4} = 1.5\text{ lần}$$
+    \end{itemize}
+    \item \textbf{Kết luận:} Câu a điền \textbf{4.5}; Câu b điền \textbf{1.5}.
+\end{itemize}
+
+\textbf{Bài tập 1.20 (Đề Giữa kỳ 2021.1 -- IT3030E, Problem 2)}\\
+Giả sử có hai bộ xử lý P1 và P2 cùng thực hiện một kiến trúc tập lệnh (ISA) gồm 4 lớp lệnh A, B, C, D. Tốc độ xung nhịp và $CPI$ của từng lớp lệnh được cho trong bảng sau:
+\begin{center}
+\begin{tabularx}{0.85\textwidth}{|C{2cm}|C{2.5cm}|Z|Z|Z|Z|}
+\hline
+\textbf{Bộ xử lý} & \textbf{Clock Rate} & \textbf{Class A} & \textbf{Class B} & \textbf{Class C} & \textbf{Class D} \\ \hline
+P1 & $2.5\text{ GHz}$ & $2$ & $1.5$ & $2$ & $1$ \\ \hline
+P2 & $3\text{ GHz}$ & $1$ & $2$ & $1$ & $1$ \\ \hline
+\end{tabularx}
+\end{center}
+Cho một chương trình có $1\,000\,000\text{ lệnh}$ được chia thành các lớp như sau: $10\%$ lớp A, $20\%$ lớp B, $50\%$ lớp C và $20\%$ lớp D.
+\begin{enumerate}[label=\alph*)]
+    \item Tính $CPI$ trung bình (global CPI) cho mỗi bộ xử lý.
+    \item Tìm tổng số chu kỳ xung nhịp yêu cầu trong cả hai trường hợp.
+    \item Bộ xử lý nào nhanh hơn?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Tính $CPI$ trung bình):}
+    \begin{itemize}
+        \item Đối với P1:
+        $$CPI_1 = (0.10 \times 2) + (0.20 \times 1.5) + (0.50 \times 2) + (0.20 \times 1) = 0.2 + 0.3 + 1.0 + 0.2 = 1.7$$
+        \item Đối với P2:
+        $$CPI_2 = (0.10 \times 1) + (0.20 \times 2) + (0.50 \times 1) + (0.20 \times 1) = 0.1 + 0.4 + 0.5 + 0.2 = 1.2$$
+    \end{itemize}
+    \item \textbf{Giải câu b (Tính tổng số chu kỳ $n = IC \times CPI$ với $IC = 10^6\text{ lệnh}$):}
+    \begin{itemize}
+        \item Số chu kỳ của P1: $n_1 = 10^6 \times 1.7 = 1.7 \times 10^6\text{ chu kỳ}$.
+        \item Số chu kỳ của P2: $n_2 = 10^6 \times 1.2 = 1.2 \times 10^6\text{ chu kỳ}$.
+    \end{itemize}
+    \item \textbf{Giải câu c (So sánh thời gian thực thi):}
+    \begin{itemize}
+        \item Thời gian thực thi trên P1: $t_1 = \dfrac{n_1}{f_1} = \dfrac{1.7 \times 10^6}{2.5 \times 10^9} = 0.68 \times 10^{-3}\text{ s} = 0.68\text{ ms}$.
+        \item Thời gian thực thi trên P2: $t_2 = \dfrac{n_2}{f_2} = \dfrac{1.2 \times 10^6}{3 \times 10^9} = 0.40 \times 10^{-3}\text{ s} = 0.40\text{ ms}$.
+        \item Vì $t_2 < t_1$ ($0.40\text{ ms} < 0.68\text{ ms}$) nên \textbf{bộ xử lý P2 nhanh hơn P1} (nhanh hơn $\dfrac{0.68}{0.40} = 1.7\text{ lần}$).
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 1.21 (Slide Chương 1 -- Trang 26)}\\
+Hai máy tính A và B cùng chạy một chương trình:
+\begin{itemize}
+    \item Máy tính A có tần số xung nhịp $f_A = 2\text{ GHz}$, thời gian CPU thực hiện chương trình là $t_A = 10\text{ s}$.
+    \item Máy tính B cần đạt thời gian thực hiện chương trình là $t_B = 6\text{ s}$. Biết rằng số chu kỳ xung nhịp khi chạy chương trình trên máy B ($n_B$) bằng $1.2\text{ lần}$ số chu kỳ xung nhịp khi chạy chương trình trên máy A ($n_A$).
+\end{itemize}
+Hãy xác định tần số xung nhịp cần thiết cho máy B ($f_B$)?
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Tính tổng số chu kỳ xung nhịp khi chạy chương trình trên máy A:
+    $$n_A = t_A \times f_A = 10\text{ s} \times (2 \times 10^9\text{ Hz}) = 20 \times 10^9\text{ chu kỳ}$$
+    \item \textbf{Bước 2:} Tính tổng số chu kỳ xung nhịp khi chạy chương trình trên máy B:
+    $$n_B = 1.2 \times n_A = 1.2 \times 20 \times 10^9 = 24 \times 10^9\text{ chu kỳ}$$
+    \item \textbf{Bước 3:} Tính tần số xung nhịp $f_B$ cần thiết để máy B hoàn thành trong $t_B = 6\text{ s}$:
+    $$f_B = \frac{n_B}{t_B} = \frac{24 \times 10^9}{6} = 4 \times 10^9\text{ Hz} = 4\text{ GHz}$$
+    \item \textbf{Kết luận:} Đáp số là $\mathbf{f_B = 4\text{ GHz}}$.
+\end{itemize}
+
+\textbf{Bài tập 1.22 (Tổng hợp 4 mã đề tự luận Đề Cuối kỳ 2021.2 -- Mã đề B2, B3, B6, B7 Câu 1)}\\
+Giả sử có một chương trình chạy trên hai máy tính A và B. Hãy xác định khi dịch trên máy B thì chương trình đó được dịch thành bao nhiêu lệnh ($IC_B$) để cả hai máy có cùng thời gian thực hiện của CPU ($t_A = t_B$) trong 4 mã đề sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B2):} Máy A có $CPI_A = 1.3, f_A = 600\text{ MHz}, IC_A = 100\,000\text{ lệnh}$. Máy B có $CPI_B = 2.5, f_B = 750\text{ MHz}$.
+    \item \textbf{(Mã đề B3):} Máy A có $CPI_A = 1.2, f_A = 500\text{ MHz}, IC_A = 90\,000\text{ lệnh}$. Máy B có $CPI_B = 2.4, f_B = 600\text{ MHz}$.
+    \item \textbf{(Mã đề B6):} Máy A có $CPI_A = 1.4, f_A = 750\text{ MHz}, IC_A = 80\,000\text{ lệnh}$. Máy B có $CPI_B = 2.8, f_B = 1.5\text{ GHz}$.
+    \item \textbf{(Mã đề B7):} Máy A có $CPI_A = 2.4, f_A = 800\text{ MHz}, IC_A = 70\,000\text{ lệnh}$. Máy B có $CPI_B = 3.6, f_B = 1\text{ GHz}$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}\\
+Phương trình cân bằng thời gian thực thi giữa hai máy ($t_A = t_B$):
+$$\frac{IC_A \times CPI_A}{f_A} = \frac{IC_B \times CPI_B}{f_B} \iff IC_B = \frac{IC_A \times CPI_A \times f_B}{f_A \times CPI_B}$$
+(Lưu ý: Phải đưa $f_A$ và $f_B$ về cùng một đơn vị là MHz trước khi thay số; với $1\text{ GHz} = 1000\text{ MHz}$ và $1.5\text{ GHz} = 1500\text{ MHz}$):
+\begin{itemize}
+    \item \textbf{Giải câu a (Đề B2):}
+    $$IC_B = \frac{100\,000 \times 1.3 \times 750}{600 \times 2.5} = \frac{97\,500\,000}{1500} = 65\,000\text{ lệnh}$$
+    \item \textbf{Giải câu b (Đề B3):}
+    $$IC_B = \frac{90\,000 \times 1.2 \times 600}{500 \times 2.4} = \frac{64\,800\,000}{1200} = 54\,000\text{ lệnh}$$
+    \item \textbf{Giải câu c (Đề B6 -- đổi $f_B = 1.5\text{ GHz} = 1500\text{ MHz}$):}
+    $$IC_B = \frac{80\,000 \times 1.4 \times 1500}{750 \times 2.8} = \frac{168\,000\,000}{2100} = 80\,000\text{ lệnh}$$
+    \item \textbf{Giải câu d (Đề B7 -- đổi $f_B = 1\text{ GHz} = 1000\text{ MHz}$):}
+    $$IC_B = \frac{70\,000 \times 2.4 \times 1000}{800 \times 3.6} = \frac{168\,000\,000}{2880} = \frac{175\,000}{3} \approx 58\,333\text{ lệnh}$$
+\end{itemize}
+
+\textbf{Bài tập 1.23 (Đề Cuối kỳ 2021.2 -- Mã đề B8, Câu 1)}\\
+Giả sử có 3 bộ xử lý P1, P2, P3 có cùng kiến trúc tập lệnh (ISA). Tần số xung nhịp và $CPI$ của mỗi bộ xử lý được cho trong bảng sau:
+\begin{center}
+\begin{tabularx}{0.65\textwidth}{|C{2.5cm}|Z|Z|}
+\hline
+\textbf{Bộ xử lý} & \textbf{Tần số xung nhịp ($f_0$)} & \textbf{CPI} \\ \hline
+P1 & $2\text{ GHz}$ & $1.5$ \\ \hline
+P2 & $1.5\text{ GHz}$ & $1.0$ \\ \hline
+P3 & $3\text{ GHz}$ & $2.5$ \\ \hline
+\end{tabularx}
+\end{center}
+\begin{enumerate}[label=1.\arabic*.]
+    \item Bộ xử lý nào có hiệu suất cao nhất?
+    \item Mỗi bộ xử lý thực thi một chương trình trong $10\text{ s}$. Tính số chu kỳ và số lệnh của mỗi bộ xử lý.
+    \item Người ta muốn giảm thời gian thực thi đi $30\%$, nhưng điều này lại làm tăng $CPI$ lên $20\%$. Tính tần số xung nhịp mới của mỗi bộ xử lý lúc này.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải ý 1.1 (Tìm bộ xử lý có hiệu suất cao nhất):}\\
+    Vì cả 3 bộ xử lý có cùng kiến trúc tập lệnh (ISA), bộ xử lý nào thực hiện được nhiều lệnh nhất trong $1\text{ giây}$ (tức tỷ số $\dfrac{f_0}{CPI}$ lớn nhất) sẽ có hiệu suất cao nhất:
+    \begin{itemize}
+        \item P1: $\dfrac{f_1}{CPI_1} = \dfrac{2\text{ GHz}}{1.5} \approx 1.33 \times 10^9\text{ lệnh/giây}$ ($1333\text{ MIPS}$).
+        \item P2: $\dfrac{f_2}{CPI_2} = \dfrac{1.5\text{ GHz}}{1.0} = 1.50 \times 10^9\text{ lệnh/giây}$ ($1500\text{ MIPS}$).
+        \item P3: $\dfrac{f_3}{CPI_3} = \dfrac{3\text{ GHz}}{2.5} = 1.20 \times 10^9\text{ lệnh/giây}$ ($1200\text{ MIPS}$).
+    \end{itemize}
+    Vậy \textbf{bộ xử lý P2 có hiệu suất cao nhất}.
+
+    \item \textbf{Giải ý 1.2 (Tính số chu kỳ $n = t \times f_0$ và số lệnh $IC = \dfrac{n}{CPI}$ trong $t = 10\text{ s}$):}
+    \begin{itemize}
+        \item Bộ xử lý P1: $n_1 = 10 \times 2 \times 10^9 = 20 \times 10^9\text{ chu kỳ}$; \quad $IC_1 = \dfrac{20 \times 10^9}{1.5} \approx 1.33 \times 10^{10}\text{ lệnh}$.
+        \item Bộ xử lý P2: $n_2 = 10 \times 1.5 \times 10^9 = 15 \times 10^9\text{ chu kỳ}$; \quad $IC_2 = \dfrac{15 \times 10^9}{1.0} = 1.50 \times 10^{10}\text{ lệnh}$.
+        \item Bộ xử lý P3: $n_3 = 10 \times 3 \times 10^9 = 30 \times 10^9\text{ chu kỳ}$; \quad $IC_3 = \dfrac{30 \times 10^9}{2.5} = 1.20 \times 10^{10}\text{ lệnh}$.
+    \end{itemize}
+
+    \item \textbf{Giải ý 1.3 (Tính tần số xung nhịp mới $f_{\text{mới}}$):}
+    \begin{itemize}
+        \item Giảm thời gian đi $30\%$ nghĩa là thời gian mới bằng $70\%$ thời gian cũ: $t_{\text{mới}} = (1 - 0.30) \times t_{\text{cũ}} = 0.7 \times 10\text{ s} = 7\text{ s}$.
+        \item Tăng $CPI$ lên $20\%$ nghĩa là $CPI$ mới bằng $120\%$ $CPI$ cũ: $CPI_{\text{mới}} = (1 + 0.20) \times CPI_{\text{cũ}} = 1.2 \times CPI_{\text{cũ}}$.
+        \item Do số lệnh $IC$ không đổi, tần số xung nhịp mới liên hệ với tần số cũ theo công thức:
+        $$f_{\text{mới}} = \frac{IC \times CPI_{\text{mới}}}{t_{\text{mới}}} = \frac{IC \times 1.2 \times CPI_{\text{cũ}}}{0.7 \times t_{\text{cũ}}} = \frac{1.2}{0.7} \times f_{\text{cũ}} = \frac{12}{7} \times f_{\text{cũ}}$$
+        \item Thay số cho từng bộ xử lý:
+        \begin{itemize}
+            \item $f_{1\text{ mới}} = \dfrac{12}{7} \times 2\text{ GHz} = \dfrac{24}{7} \approx \mathbf{3.43\text{ GHz}}$.
+            \item $f_{2\text{ mới}} = \dfrac{12}{7} \times 1.5\text{ GHz} = \dfrac{18}{7} \approx \mathbf{2.57\text{ GHz}}$.
+            \item $f_{3\text{ mới}} = \dfrac{12}{7} \times 3\text{ GHz} = \dfrac{36}{7} \approx \mathbf{5.14\text{ GHz}}$.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}

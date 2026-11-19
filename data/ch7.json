@@ -1,0 +1,778 @@
+[
+  {
+    "id": "c7-001",
+    "chapter": 7,
+    "groupId": "7.1",
+    "groupTitle": "Nhóm 1: Tổng quan Hệ thống Vào-Ra, Mô-đun Vào-Ra & Định địa chỉ I/O (MMIO / Isolated)",
+    "exerciseCode": "Bài tập 7.1",
+    "source": "Đề Cuối kỳ 2021.2 - Mã đề B3, Câu 4.2 | cuối kì 20212 (B3-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": 42,
+    "printedPage": 41,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Máy tính dùng $16$ bit để đánh địa chỉ cho cổng vào-ra riêng biệt. Số cổng vào-ra tối đa và dải địa chỉ Hexa của chúng là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "65 536 cổng (2^16) ; từ 0x0000 đến 0xFFFF",
+      "32 768 cổng (2^15) ; từ 0x0000 đến 0x7FFF",
+      "16 384 cổng (2^14) ; từ 0x0000 đến 0x3FFF",
+      "65 536 cổng (2^16) ; từ 0x00000 đến 0xFFFFF"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$2^{16} = 65\\,536$ cổng (64K cổng). Vì $16 / 4 = 4$ chữ số Hexa nên địa chỉ chạy từ <code>0x0000</code> đến <code>0xFFFF</code>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-002",
+    "chapter": 7,
+    "groupId": "7.1",
+    "groupTitle": "Nhóm 1: Tổng quan Hệ thống Vào-Ra, Mô-đun Vào-Ra & Định địa chỉ I/O (MMIO / Isolated)",
+    "exerciseCode": "Bài tập 7.2",
+    "source": "ôn tập cuối kì 20251 (Câu 67); ôn tập cuối kì 20252 (P2-32)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Không gian địa chỉ bộ nhớ dùng chung dùng để đánh địa chỉ cho các đối tượng nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Các ngăn nhớ và cổng vào-ra",
+      "Chỉ các ngăn nhớ bộ nhớ chính",
+      "Chỉ các thanh ghi bên trong CPU",
+      "Chỉ các khối dữ liệu trong ổ cứng ngoài"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong phương pháp <strong>Memory-Mapped I/O</strong> (không gian địa chỉ bộ nhớ dùng chung), các ngăn nhớ chính và cổng vào-ra (mô-đun I/O) chia sẻ chung một không gian địa chỉ hệ thống.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-003",
+    "chapter": 7,
+    "groupId": "7.1",
+    "groupTitle": "Nhóm 1: Tổng quan Hệ thống Vào-Ra, Mô-đun Vào-Ra & Định địa chỉ I/O (MMIO / Isolated)",
+    "exerciseCode": "Bài tập 7.3",
+    "source": "ôn tập cuối kì 20252 (P1-9)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cổng truy cập (Port) của thiết bị Vào/Ra (I/O) được ánh xạ vào không gian địa chỉ bộ nhớ (Memory-Mapped I/O) có ý nghĩa gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Thiết bị I/O chỉ có thể được truy cập thông qua các lệnh LOAD/STORE, giống như truy cập bộ nhớ.",
+      "CPU cần một tập lệnh I/O đặc biệt (ví dụ: IN/OUT) để giao tiếp với thiết bị.",
+      "Thiết bị I/O có bus địa chỉ hoàn toàn tách biệt với bộ nhớ chính.",
+      "Thiết bị I/O có thể tự xử lý lệnh mà không cần bus hệ thống."
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Với Memory-Mapped I/O (như trên RISC-V), thanh ghi cổng I/O mang địa chỉ nằm trong không gian địa chỉ bộ nhớ nên CPU dùng chính các lệnh <code>lw/lb/sw/sb</code> để đọc/ghi dữ liệu ngoại vi.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-004",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.4",
+    "source": "Ôn tập 2025.2 - Câu 15 | cuối kì 20222 (#169b6e); cuối kì 20242 (#169b6e); ôn tập cuối kì 20252 (P1-15)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": 37,
+    "printedPage": 36,
+    "relatedTheoryId": "2.1.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Với phương pháp vào-ra bằng chương trình, thành phần nào của máy tính trực tiếp điều khiển vào-ra?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "CPU",
+      "DMAC",
+      "Thiết bị vào-ra",
+      "RAM"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong phương pháp vào-ra bằng chương trình (hoặc bằng ngắt), <strong>CPU</strong> trực tiếp điều khiển trao đổi dữ liệu với mô-đun vào-ra (không qua DMAC).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-005",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.5",
+    "source": "cuối kì 20231 (#90c4ff); cuối kì 20232 (#90c4ff); cuối kì 20251 (#1ee23b); thi thử kì 20251 (Câu 7); ôn tập cuối kì 20251 (Câu 10); ôn tập cuối kì 20252 (P2-75)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho chương trình con xử lý vào-ra dữ liệu RISC-V dưới đây, trong đó CPU đang cố gắng đọc một từ dữ liệu từ một thiết bị ngoại vi. Phương pháp lập trình Vào-Ra (I/O programming method) nào đang được áp dụng?",
+    "codeBlock": ".text\n    li s0, 0xFFFF0004   # Thanh ghi Dữ liệu (Data register)\n    li s1, 0xFFFF0000   # Thanh ghi Trạng thái (Status register)\nCheck:\n    lw   t1, 0(s1)      # Đọc thanh ghi trạng thái\n    andi t1, t1, 0x1\n    beq  t1, zero, Check\n    lw   t0, 0(s0)      # Đọc dữ liệu từ thiết bị",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Thăm dò trạng thái (Polling / Programmed I/O)",
+      "Vào-ra bằng cơ chế ngắt (Interrupt-driven I/O)",
+      "Truy cập bộ nhớ trực tiếp (DMA)",
+      "Vào-ra chồng lấn (Overlapping I/O)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Vòng lặp <code>Check</code> liên tục đọc thanh ghi trạng thái <code>0xFFFF0000</code> và kiểm tra bit 0 cho tới khi bằng $1$ chính là cơ chế <strong>Thăm dò trạng thái (Polling)</strong>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-006",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.6",
+    "source": "ôn tập cuối kì 20251 (Câu 75); ôn tập cuối kì 20252 (P2-42)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Những khẳng định nào sau đây là đúng về bộ điều khiển ngắt <code>PIC</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "PIC là viết tắt của Programmable Interrupt Controller và các đường vào yêu cầu ngắt (IRQ) có quy định mức ưu tiên",
+      "PIC là viết tắt của Peripheral I/O Cache dùng tăng tốc truyền dữ liệu qua DMA",
+      "Yêu cầu ngắt có mức ưu tiên cao nhất trong PIC tuyệt đối không bao giờ bị cấm/che bởi thanh ghi mặt nạ (IMR)",
+      "PIC chỉ phục vụ duy nhất 1 nguồn ngắt cố định tại một thời điểm, không có thanh ghi mặt nạ"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>PIC (Programmable Interrupt Controller)</strong> quản lý nhiều đường yêu cầu ngắt <code>IRQ</code> theo thứ tự ưu tiên lập trình được (vẫn có thanh ghi mặt nạ IMR để che từng đường ngắt maskable khi cần).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-007",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.7",
+    "source": "cuối kì 20251 (#11f8e9); thi thử kì 20251 (Câu 13)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "What is the main disadvantage of polling when CPU reads from or writes to I/O devices?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "The CPU wastes time constantly checking device status.",
+      "It has higher throughput than DMA for bulk transfer.",
+      "Polling requires complex hardware interrupt controllers.",
+      "Polling cannot be used with memory-mapped I/O."
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Nhược điểm lớn nhất của Polling là CPU phải lãng phí nhiều chu kỳ trong vòng lặp chờ đợi (busy-waiting) để kiểm tra liên tục thanh ghi trạng thái thiết bị.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-008",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.8",
+    "source": "cuối kì 20251 (#614c78); thi thử kì 20251 (Câu 18)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "What is polling in the context of I/O programming?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "A method where the CPU checks the status of a device continuously",
+      "A method where a device interrupts the CPU when data is ready",
+      "A method where the DMA Controller manages direct memory transfer",
+      "A method where I/O bypasses system buses completely"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Polling (Thăm dò) là kỹ thuật CPU chủ động kiểm tra liên tục thanh ghi trạng thái của thiết bị ngoại vi xem đã sẵn sàng trao đổi dữ liệu hay chưa.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-009",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.9",
+    "source": "ôn tập cuối kì 20251 (Câu 12); ôn tập cuối kì 20252 (P2-10)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Tại sao phương pháp DMA (Direct Memory Access) lại hiệu quả hơn khi truyền các khối dữ liệu lớn?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Vì dữ liệu được truyền trực tiếp giữa thiết bị I/O và bộ nhớ chính thông qua DMAC mà không cần đi qua CPU.",
+      "Vì DMA dùng một tập lệnh phần mềm đặc biệt chạy nhanh hơn gấp 10 lần trên thanh ghi CPU.",
+      "Vì DMA không cần dùng đến bộ nhớ chính (RAM) khi truyền dữ liệu.",
+      "Vì DMA chuyển toàn bộ dữ liệu trực tiếp qua thanh ghi L1 Cache của CPU."
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Khi truyền khối dữ liệu lớn, bộ điều khiển DMA (DMAC) mượn quyền bus để truyền thẳng dữ liệu giữa I/O và RAM mà không qua CPU từng byte/word một, giải phóng CPU làm việc khác.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-010",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.10",
+    "source": "ôn tập cuối kì 20251 (Câu 18); ôn tập cuối kì 20252 (P2-20)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Thứ tự nào sau đây phản ánh đúng sự phát triển về hiệu suất (từ thấp đến cao) đối với việc sử dụng CPU trong I/O?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Programmed I/O -> Interrupt-driven -> DMA",
+      "DMA -> Interrupt-driven -> Programmed I/O",
+      "Interrupt-driven -> Programmed I/O -> DMA",
+      "Programmed I/O -> DMA -> Interrupt-driven"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Thứ tự phát triển nâng dần hiệu suất sử dụng CPU: <strong>Programmed I/O (Polling) &rarr; Interrupt-driven I/O (Ngắt) &rarr; DMA</strong> (giảm dần sự bận rộn không cần thiết của CPU).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-011",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.11",
+    "source": "ôn tập cuối kì 20251 (Câu 21); ôn tập cuối kì 20252 (P2-74)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong phương pháp vào/ra bằng chương trình (Programmed I/O), CPU dành phần lớn thời gian để làm gì khi đợi thiết bị ngoại vi sẵn sàng?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Kiểm tra trạng thái thiết bị trong một vòng lặp (Polling).",
+      "Tự động chuyển sang chế độ ngủ (Sleep mode).",
+      "Thực hiện các tiến trình khác của hệ điều hành.",
+      "Nhượng quyền bus hoàn toàn cho DMAC xử lý."
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong Programmed I/O, CPU tốn phần lớn thời gian chờ đợi bằng cách kiểm tra lặp đi lặp lại cờ trạng thái (Polling).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-012",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.12",
+    "source": "ôn tập cuối kì 20251 (Câu 39); ôn tập cuối kì 20252 (P2-26)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bộ điều khiển truy cập bộ nhớ trực tiếp (<code>DMAC</code>) bao gồm đầy đủ những thành phần nào sau đây?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Logic điều khiển, Thanh ghi dữ liệu, Thanh ghi địa chỉ, Bộ đếm dữ liệu (Data Counter)",
+      "Logic điều khiển, Thanh ghi con trỏ lệnh (PC), Thanh ghi dữ liệu, ALU",
+      "Thanh ghi lệnh (IR), Bộ đếm dữ liệu, Bộ nhớ Cache L1, Thanh ghi địa chỉ",
+      "Logic điều khiển, Bộ giải mã lệnh (Decoder), Thanh ghi PC, Thanh ghi địa chỉ"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>DMAC gồm 4 phần chính: <strong>Thanh ghi địa chỉ</strong> (Address Reg), <strong>Bộ đếm dữ liệu</strong> (Data Count), <strong>Thanh ghi dữ liệu</strong> (Data Reg) và <strong>Logic điều khiển</strong> (xin bus <code>BRQ/BGT</code>, phát tín hiệu đọc/ghi). DMAC không có PC hay ALU.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-013",
+    "chapter": 7,
+    "groupId": "7.2",
+    "groupTitle": "Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA & DMAC)",
+    "exerciseCode": "Bài tập 7.13",
+    "source": "ôn tập cuối kì 20251 (Câu 40); ôn tập cuối kì 20252 (P2-72)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "2.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cách thực hiện DMA nào dưới đây là tối ưu và khó thực hiện hơn cả?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "DMA trong suốt (Transparent DMA)",
+      "DMA truyền theo khối (Burst-mode DMA)",
+      "DMA lấy chu kỳ (Cycle-stealing DMA)",
+      "Ba phương pháp đều có độ phức tạp phần cứng như nhau"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>DMA trong suốt (Transparent DMA)</strong> chỉ tranh thủ sử dụng bus trong những pha CPU không truy cập bộ nhớ (không làm chậm tiến độ CPU chút nào) nên tối ưu hiệu năng nhưng mạch phát hiện khe thời gian rất phức tạp.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-014",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.14",
+    "source": "cuối kì 20222 (#a1e199); cuối kì 20241 (#e); cuối kì 20242 (#ale199); ôn tập cuối kì 20252 (P1-38)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính dùng bộ xử lý RISC-V (RV32I) có 4 cổng vào-ra MMIO 32-bit gán tại các địa chỉ: <code>P1: 0xF000000C</code>, <code>P2: 0xF0000010</code>, <code>P3: 0xF0000014</code>, <code>P4: 0xF0000018</code>. Đoạn chương trình hợp ngữ sau thực hiện nhiệm vụ gì?",
+    "codeBlock": "lui s0, 0xF0000\nlw  t0, 0x10(s0)\nsw  t0, 0x18(s0)\nlw  t1, 0x0C(s0)\nsw  t1, 0x14(s0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Nhận dữ liệu từ cổng P2 đưa ra cổng P4, nhận dữ liệu từ cổng P1 đưa ra cổng P3",
+      "Nhận dữ liệu từ cổng P1 đưa ra cổng P2, nhận dữ liệu từ cổng P3 đưa ra cổng P4",
+      "Nhận dữ liệu từ cổng P4 đưa ra cổng P2, nhận dữ liệu từ cổng P3 đưa ra cổng P1",
+      "Nhận dữ liệu từ cổng P1 đưa ra cổng P4, nhận dữ liệu từ cổng P2 đưa ra cổng P3"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>lui s0, 0xF0000</code> đặt địa chỉ nền <code>s0 = 0xF0000000</code>.<br>&bull; <code>lw t0, 0x10(s0)</code> đọc từ <strong>P2</strong> (<code>0xF0000010</code>) rồi <code>sw t0, 0x18(s0)</code> ghi ra <strong>P4</strong> (<code>0xF0000018</code>).<br>&bull; <code>lw t1, 0x0C(s0)</code> đọc từ <strong>P1</strong> (<code>0xF000000C</code>) rồi <code>sw t1, 0x14(s0)</code> ghi ra <strong>P3</strong> (<code>0xF0000014</code>).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-015",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.15",
+    "source": "Lab - cuối kì 20232 (Câu 15)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đoạn mã RISC-V dưới đây điều khiển thiết bị Bot MMIO di chuyển liên tục thành hình vuông (biết cổng điều khiển góc hướng <code>HEADING</code> tại <code>0xFFFF8010</code> và cổng kích hoạt chuyển động <code>MOVING</code> tại <code>0xFFFF8050</code>; <code>a7 = 32</code> là dịch vụ sleep theo ms). Cặp lệnh thích hợp điền vào <code>[[1]]</code> và <code>[[2]]</code> là gì?",
+    "codeBlock": ".text\n    li  s0, 0xFFFF8010\n    li  s1, 0xFFFF8050\n    li  t0, 0\n    li  t1, 1\n    [[1]]\nl1:\n    addi t0, t0, 90\n    [[2]]\n    li  a7, 32\n    li  a0, 2000\n    ecall\n    j   l1",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "[[1]]: sw t1, 0(s1) | [[2]]: sw t0, 0(s0)",
+      "[[1]]: sw t0, 0(s0) | [[2]]: sw t1, 0(s1)",
+      "[[1]]: sw t1, 0(s0) | [[2]]: sw t0, 0(s1)",
+      "[[1]]: sw t0, 0(s1) | [[2]]: sw t1, 0(s0)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Thanh ghi $t_1 = 1$ dùng để bật trạng thái chạy cho cổng <code>MOVING</code> (trỏ bởi $s_1 = \\text{0xFFFF8050}$), nên <code>[[1]] = sw t1, 0(s1)</code>. Trong vòng lặp, mỗi lần tăng góc $t_0$ thêm $90^\\circ$ cần cập nhật ra cổng <code>HEADING</code> (trỏ bởi $s_0 = \\text{0xFFFF8010}$), nên <code>[[2]] = sw t0, 0(s0)</code>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-016",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.16",
+    "source": "cuối kì 20251 (#ff3a2b); thi thử kì 20251 (Câu 3); ôn tập cuối kì 20252 (P2-2)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trên thiết bị mô phỏng Digital Lab Sim (RARS), thanh ghi byte điều khiển LED 7 thanh được ánh xạ tại địa chỉ <code>0xFFFF0010</code> (bit 0=a [trên], bit 1=b [phải trên], bit 2=c [phải dưới], bit 3=d [đáy], bit 4=e [trái dưới], bit 5=f [trái trên], bit 6=g [giữa], bit 7=dấu chấm). Đoạn mã nào hiển thị chữ số <strong>1</strong>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 560 130\" width=\"540\" height=\"125\" role=\"img\" aria-label=\"Sơ đồ LED 7 thanh RARS\"><rect x=\"44\" y=\"14\" width=\"56\" height=\"8\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"72\" y=\"10\" text-anchor=\"middle\" class=\"svg-sub\">a(b0)</text><rect x=\"102\" y=\"22\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"128\" y=\"45\" text-anchor=\"middle\" class=\"svg-sub\">b(b1)</text><rect x=\"102\" y=\"70\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"128\" y=\"93\" text-anchor=\"middle\" class=\"svg-sub\">c(b2)</text><rect x=\"44\" y=\"110\" width=\"56\" height=\"8\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"72\" y=\"128\" text-anchor=\"middle\" class=\"svg-sub\">d(b3)</text><rect x=\"34\" y=\"70\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-accent\"/><text x=\"16\" y=\"93\" text-anchor=\"middle\" class=\"svg-sub\">e(b4)</text><rect x=\"34\" y=\"22\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-accent\"/><text x=\"16\" y=\"45\" text-anchor=\"middle\" class=\"svg-sub\">f(b5)</text><rect x=\"44\" y=\"62\" width=\"56\" height=\"8\" rx=\"3\" class=\"svg-box-accent\"/><text x=\"72\" y=\"58\" text-anchor=\"middle\" class=\"svg-sub\">g(b6)</text><circle cx=\"122\" cy=\"114\" r=\"5\" class=\"svg-box\"/><text x=\"152\" y=\"118\" text-anchor=\"middle\" class=\"svg-sub\">dp(b7)</text><rect x=\"194\" y=\"16\" width=\"350\" height=\"98\" rx=\"6\" class=\"svg-box\"/><text x=\"369\" y=\"38\" text-anchor=\"middle\" class=\"svg-title\">Quy ước bit &amp; địa chỉ LED 7 thanh RARS</text><text x=\"210\" y=\"62\" class=\"svg-sub\">• Thứ tự 8 bit (MSB→LSB): [dp | g | f | e | d | c | b | a]</text><text x=\"210\" y=\"84\" class=\"svg-sub\">• LED TRÁI: 0xFFFF0011  |  LED PHẢI: 0xFFFF0010</text><text x=\"210\" y=\"104\" class=\"svg-sub\">• Ghi 1 byte bằng lệnh sb (bit=1: sáng, bit=0: tắt)</text></svg>",
+    "options": [
+      "li t0, 0xFFFF0010 ; li t1, 6 ; sb t1, 0(t0)",
+      "li t0, 0xFFFF0010 ; li t1, 1 ; sb t1, 0(t0)",
+      "li t0, 0xFFFF0010 ; li t1, 0x02 ; sb t1, 0(t0)",
+      "li t0, 0xFFFF0010 ; li t1, 0x3F ; sb t1, 0(t0)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chữ số <strong>1</strong> làm sáng 2 đoạn bên phải là <code>b</code> (bit 1) và <code>c</code> (bit 2). Giá trị byte tương ứng là $0000\\;0110_2 = 2^1 + 2^2 = \\mathbf{6}$ ghi ra địa chỉ <code>0xFFFF0010</code>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-017",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.17",
+    "source": "Lab - cuối kì 20232 (Câu 28)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Lựa chọn phát biểu mô tả đúng nhất chức năng của đoạn mã RISC-V dưới đây (giao tiếp bàn phím MMIO):",
+    "codeBlock": ".eqv KEY_CODE  0xFFFF0004\n.eqv KEY_READY 0xFFFF0000\n.text\n    li  t5, KEY_CODE\n    li  t6, KEY_READY\nloop:\nWait:\n    lw  t1, 0(t6)\n    beq t1, zero, Wait\n    lw  t0, 0(t5)\n    j   loop",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Chờ có 1 phím sẵn sàng rồi đọc mã phím đó lưu vào thanh ghi t0",
+      "Chờ có 1 phím sẵn sàng rồi xuất mã phím đó ra màn hình",
+      "Đọc mã phím lưu vào thanh ghi t1, đọc trạng thái bàn phím lưu vào thanh ghi t0",
+      "Chờ có 1 phím sẵn sàng rồi đọc mã phím đó lưu vào thanh ghi t1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Vòng lặp <code>Wait</code> liên tục đọc cờ <code>KEY_READY</code> (tại <code>t6 = 0xFFFF0000</code>) vào thanh ghi <code>t1</code>; khi <code>t1 &ne; 0</code> (có phím mới được nhấn), lệnh <code>lw t0, 0(t5)</code> đọc mã phím từ <code>KEY_CODE</code> lưu vào thanh ghi <strong><code>t0</code></strong>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-018",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.18",
+    "source": "Lab - cuối kì 20232 (Câu 32)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trên RARS Digital Lab Sim, 2 LED 7 thanh có địa chỉ byte ánh xạ như dưới đây. Để hiển thị chữ số <strong>9</strong> trên <strong>LED TRÁI</strong> (quy ước bit $0..6 = a..g$), đoạn lệnh nào đúng?",
+    "codeBlock": ".eqv SEVENSEG_LEFT  0xFFFF0011\n.eqv SEVENSEG_RIGHT 0xFFFF0010",
+    "codeLang": "riscv",
+    "svgDiagram": "<svg viewBox=\"0 0 560 130\" width=\"540\" height=\"125\" role=\"img\" aria-label=\"Sơ đồ LED 7 thanh RARS\"><rect x=\"44\" y=\"14\" width=\"56\" height=\"8\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"72\" y=\"10\" text-anchor=\"middle\" class=\"svg-sub\">a(b0)</text><rect x=\"102\" y=\"22\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"128\" y=\"45\" text-anchor=\"middle\" class=\"svg-sub\">b(b1)</text><rect x=\"102\" y=\"70\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"128\" y=\"93\" text-anchor=\"middle\" class=\"svg-sub\">c(b2)</text><rect x=\"44\" y=\"110\" width=\"56\" height=\"8\" rx=\"3\" class=\"svg-box-primary\"/><text x=\"72\" y=\"128\" text-anchor=\"middle\" class=\"svg-sub\">d(b3)</text><rect x=\"34\" y=\"70\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-accent\"/><text x=\"16\" y=\"93\" text-anchor=\"middle\" class=\"svg-sub\">e(b4)</text><rect x=\"34\" y=\"22\" width=\"8\" height=\"40\" rx=\"3\" class=\"svg-box-accent\"/><text x=\"16\" y=\"45\" text-anchor=\"middle\" class=\"svg-sub\">f(b5)</text><rect x=\"44\" y=\"62\" width=\"56\" height=\"8\" rx=\"3\" class=\"svg-box-accent\"/><text x=\"72\" y=\"58\" text-anchor=\"middle\" class=\"svg-sub\">g(b6)</text><circle cx=\"122\" cy=\"114\" r=\"5\" class=\"svg-box\"/><text x=\"152\" y=\"118\" text-anchor=\"middle\" class=\"svg-sub\">dp(b7)</text><rect x=\"194\" y=\"16\" width=\"350\" height=\"98\" rx=\"6\" class=\"svg-box\"/><text x=\"369\" y=\"38\" text-anchor=\"middle\" class=\"svg-title\">Quy ước bit &amp; địa chỉ LED 7 thanh RARS</text><text x=\"210\" y=\"62\" class=\"svg-sub\">• Thứ tự 8 bit (MSB→LSB): [dp | g | f | e | d | c | b | a]</text><text x=\"210\" y=\"84\" class=\"svg-sub\">• LED TRÁI: 0xFFFF0011  |  LED PHẢI: 0xFFFF0010</text><text x=\"210\" y=\"104\" class=\"svg-sub\">• Ghi 1 byte bằng lệnh sb (bit=1: sáng, bit=0: tắt)</text></svg>",
+    "options": [
+      "li t0, 0xFFFF0011 ; li a0, 0x6F ; sb a0, 0(t0)",
+      "li t0, 0xFFFF0011 ; li a0, 0x7D ; sb a0, 0(t0)",
+      "li t0, 0xFFFF0010 ; li a0, 0x6F ; sb a0, 0(t0)",
+      "li t0, 0xFFFF0010 ; li a0, 0x7D ; sb a0, 0(t0)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>&bull; Địa chỉ LED TRÁI là <code>0xFFFF0011</code>.<br>&bull; Số <strong>9</strong> bật các đoạn <code>a, b, c, d, f, g</code> (chỉ tắt <code>e</code> ở bit 4 và dấu chấm ở bit 7): $0110\\;1111_2 = \\mathbf{\\text{0x6F}}$ (còn <code>0x7D</code> là số 6).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-019",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.19",
+    "source": "cuối kì 20251 (#13a85a); thi thử kì 20251 (Câu 27); ôn tập cuối kì 20251 (Câu 5); ôn tập cuối kì 20252 (P2-29)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập ký tự hiển thị ra Display MMIO:",
+    "acceptedAnswers": [
+      "C",
+      "'C'"
+    ],
+    "question": "Xét chương trình MMIO trên RARS dưới đây. Nếu người dùng nhấn phím <code>'A'</code> trong Keyboard Simulator, ký tự nào sẽ được hiển thị trên Display Simulator? (chỉ ghi ký tự, không viết dấu ngoặc kép):",
+    "codeBlock": ".eqv KEY_CODE      0xFFFF0004\n.eqv KEY_READY     0xFFFF0000\n.eqv DISPLAY_CODE  0xFFFF000C\n.eqv DISPLAY_READY 0xFFFF0008\n.text\n    li a0, KEY_CODE\n    li a1, KEY_READY\n    li s0, DISPLAY_CODE\n    li s1, DISPLAY_READY\nloop:\nWaitForKey:\n    lw  t1, 0(a1)\n    beq t1, zero, WaitForKey\nReadKey:\n    lw  t0, 0(a0)\nWaitForDis:\n    lw  t2, 0(s1)\n    beq t2, zero, WaitForDis\nEncrypt:\n    addi t0, t0, 2\nShowKey:\n    sw  t0, 0(s0)\n    j   loop",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mã ASCII của phím <code>'A'</code> là $65$. Lệnh <code>addi t0, t0, 2</code> cộng thêm 2 thành $67$ — chính là mã ASCII của ký tự <strong><code>C</code></strong> được xuất ra <code>DISPLAY_CODE</code>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-020",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.20",
+    "source": "cuối kì 20251 (#75b); thi thử kì 20251 (Câu 32)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính RISC-V có 4 cổng vào-ra ánh xạ bộ nhớ (MMIO) ở các địa chỉ: <code>P1: 0xFFFF000C</code>, <code>P2: 0xFFFF0010</code>, <code>P3: 0xFFFF0014</code>, <code>P4: 0xFFFF0018</code>. Đoạn mã hợp ngữ sau thực hiện thao tác gì?",
+    "codeBlock": "lui s0, 0xFFFF0\nlw  t0, 0x0C(s0)\nsw  t0, 0x18(s0)\nlw  t1, 0x10(s0)\nsw  t1, 0x14(s0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Nhận dữ liệu từ P1 xuất ra P4; nhận dữ liệu từ P2 xuất ra P3",
+      "Nhận dữ liệu từ P1 xuất ra P3; nhận dữ liệu từ P2 xuất ra P4",
+      "Nhận dữ liệu từ P4 xuất ra P1; nhận dữ liệu từ P3 xuất ra P2",
+      "Nhận dữ liệu từ P1 xuất ra P2; nhận dữ liệu từ P3 xuất ra P4"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>lui s0, 0xFFFF0</code> đặt $s_0 = \\text{0xFFFF0000}$. Offset <code>0x0C</code> (P1) được đọc vào $t_0$ rồi ghi ra <code>0x18</code> (P4); offset <code>0x10</code> (P2) được đọc vào $t_1$ rồi ghi ra <code>0x14</code> (P3).</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-021",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.21",
+    "source": "Lab - cuối kì 20222 (Câu 1); Lab - cuối kì 20232 (Câu 9)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Chọn phát biểu đúng về chương trình xử lý bàn phím ma trận dưới đây viết cho trình mô phỏng RARS (User-level Trap CSRs: <code>utvec</code>, <code>ustatus</code>, <code>uie</code>, <code>uepc</code>, <code>uret</code>):",
+    "codeBlock": ".eqv IN_ADDRESS_HEXA_KEYBOARD 0xFFFF0012\n.data\n    Message: .asciz \"Key is pressed\\n\"\n.text\nmain:\n    la   t0, IntSR\n    csrw utvec, t0           # Dang ky dia chi trinh phuc vu ngat\n    li   t0, 0x100\n    csrs uie, t0             # Bat ngat ngoai vi (UEIE)\n    csrsi ustatus, 1         # Bat co ngat toan cuc UIE\n    li   t1, IN_ADDRESS_HEXA_KEYBOARD\n    li   t3, 0x80\n    sb   t3, 0(t1)           # Cho phep ban phim ma tran phat ngat\nLoop:\n    nop\n    j    Loop\nIntSR:\n    li   a7, 4\n    la   a0, Message\n    ecall\n    csrr t0, uepc\n    addi t0, t0, 4\n    csrw uepc, t0\n    uret",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Chương trình cài đặt cơ chế ngắt (Interrupt): khi có phím bấm trên keyboard matrix, CPU tự động chuyển sang trình phục vụ ngắt IntSR (đăng ký qua utvec) rồi kết thúc bằng uret",
+      "Chương trình cài đặt cơ chế thăm dò (Polling): vòng lặp chính liên tục đọc cổng 0xFFFF0012 để kiểm tra phím rồi in thông báo",
+      "Chương trình cài đặt cơ chế ngắt trong đó vòng Loop chủ động gọi trực tiếp jal IntSR để kiểm tra phím",
+      "Chương trình cài đặt cơ chế Polling trong đó chương trình chính liên tục gọi hàm ecall trong Loop"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Chương trình đăng ký vector ngắt <code>IntSR</code> vào thanh ghi <code>utvec</code>, bật ngắt trong <code>uie/ustatus</code> và ghi <code>0x80</code> ra cổng <code>0xFFFF0012</code> để bàn phím phát tín hiệu ngắt phần cứng (<strong>Interrupt</strong>), hoàn toàn không tự thăm dò trong <code>Loop</code>.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c7-022",
+    "chapter": 7,
+    "groupId": "7.3",
+    "groupTitle": "Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) & Ngắt ngoại vi",
+    "exerciseCode": "Bài tập 7.22",
+    "source": "Lab - cuối kì 20222 (Câu 6); Lab - cuối kì 20232 (Câu 11)",
+    "examTags": [
+      "Lab"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "3.1.6",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Chương trình RISC-V sau thực hiện quét bàn phím ma trận 4x4 trong công cụ RARS Digital Lab Sim (với <code>t1 = 0xFFFF0012 [IN_ADDRESS]</code>, <code>t2 = 0xFFFF0014 [OUT_ADDRESS]</code>). Phát biểu nào sau đây mô tả ĐÚNG hoạt động của chương trình?",
+    "codeBlock": "polling:\n    li   t3, 0x08\n    sb   t3, 0(t1)\n    lb   a0, 0(t2)\nprint:\n    li   a7, 34\n    ecall\nsleep:\n    li   a0, 100\n    li   a7, 32\n    ecall\n    j    polling",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "Chương trình chỉ quét hàng 4 (bit 3 = 0x08) của bàn phím ma trận bằng phương pháp thăm dò (polling) thông qua ghi mã hàng vào 0xFFFF0012",
+      "Chương trình quét 1 hàng của bàn phím bằng cách ghi chỉ số hàng trong t3 vào địa chỉ 0xFFFF0014",
+      "Chương trình tự động quét luân phiên cả 4 hàng của bàn phím ma trận bằng phương pháp thăm dò",
+      "Chương trình hoạt động dựa trên cơ chế ngắt phần cứng (Interrupt) kích hoạt hàng 4 mỗi 100 ms"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Giá trị <code>0x08</code> ($0000\\;1000_2$) chỉ bật bit 3 (chọn duy nhất <strong>hàng 4</strong>), ghi vào địa chỉ chọn hàng <code>0xFFFF0012</code> rồi đọc mã phím từ <code>0xFFFF0014</code> và in ra dạng Hexa (<code>a7 = 34</code>) trong vòng lặp thăm dò (polling) vô hạn.</p>",
+    "archivedChapter": 7,
+    "archivedReason": "CA.RISCV.2025 Chương 7 (đã chuẩn hóa & khử trùng lặp)"
+  }
+]

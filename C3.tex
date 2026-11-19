@@ -1,0 +1,2004 @@
+\chapter{KIẾN TRÚC TẬP LỆNH RISC-V}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Tổng quan về Kiến trúc tập lệnh và Tập 32 thanh ghi}
+
+\textbf{1. Đặc trưng của kiến trúc tập lệnh thu gọn RISC và RISC-V}
+\begin{itemize}
+    \item \textbf{Phân biệt CISC và RISC:}
+    \begin{itemize}
+        \item \textit{CISC (Complex Instruction Set Computer):} Máy tính với tập lệnh phức tạp (điển hình là Intel x86, Motorola 680x0). Độ dài lệnh thay đổi từ $1$ đến $15\text{ byte}$, cho phép lệnh tính toán trực tiếp với toán hạng nằm trong bộ nhớ.
+        \item \textit{RISC (Reduced Instruction Set Computer):} Máy tính với tập lệnh thu gọn (điển hình là RISC-V, MIPS, ARM).
+    \end{itemize}
+    \item \textbf{Các đặc trưng cốt lõi của kiến trúc RISC (và RISC-V 32-bit):}
+    \begin{enumerate}
+        \item Các lệnh chuẩn có độ dài cố định bằng $32\text{ bit}$ ($= 4\text{ byte}$). Do đó, địa chỉ của mọi lệnh máy chuẩn trong bộ nhớ luôn là \textbf{bội số của 4} (chữ số Hexa tận cùng là \texttt{0, 4, 8, C}).
+        \item Các lệnh số học và logic chỉ thao tác với các toán hạng nằm trong \textbf{thanh ghi} (hoặc hằng số nằm ngay trong lệnh).
+        \item Chỉ truy cập bộ nhớ dữ liệu thông qua các lệnh chuyên biệt là \textbf{Load} (đọc từ bộ nhớ vào thanh ghi) và \textbf{Store} (ghi từ thanh ghi ra bộ nhớ).
+    \end{enumerate}
+\end{itemize}
+
+\textbf{2. Tập 32 thanh ghi đa dụng của RISC-V 32-bit (RV32I)}\\
+Bộ xử lý RISC-V 32-bit có $32$ thanh ghi số nguyên, mỗi thanh ghi rộng $32\text{ bit}$, đánh số từ \texttt{x0} đến \texttt{x31}. Vì $32 = 2^5$, mỗi thanh ghi được mã hóa trong lệnh máy bằng đúng \textbf{5 bit} (từ \texttt{00000} đến \texttt{11111}).
+
+\begin{tcolorbox}[bwbox, title={Bảng tra cứu 32 thanh ghi của RISC-V và Quy ước bảo toàn khi gọi hàm}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|L{2.0cm}|C{1.8cm}|Y|L{2.8cm}|}
+\hline
+\textbf{Tên gọi} & \textbf{Số hiệu} & \textbf{Chức năng sử dụng trong chương trình} & \textbf{Quy ước bảo toàn} \\ \hline
+\texttt{zero} & \texttt{x0} & Luôn chứa hằng số $0$ (thanh ghi chỉ đọc, mọi thao tác ghi vào \texttt{x0} đều bị bỏ qua) & Không áp dụng \\ \hline
+\texttt{ra} & \texttt{x1} & Return Address: Chứa địa chỉ trở về khi gọi chương trình con & Caller-saved \\ \hline
+\texttt{sp} & \texttt{x2} & Stack Pointer: Con trỏ ngăn xếp (luôn trỏ vào đỉnh ngăn xếp) & Callee-saved \\ \hline
+\texttt{gp} & \texttt{x3} & Global Pointer: Con trỏ vùng dữ liệu tĩnh toàn cục & Không áp dụng \\ \hline
+\texttt{tp} & \texttt{x4} & Thread Pointer: Con trỏ luồng thực thi & Không áp dụng \\ \hline
+\texttt{t0 -- t2} & \texttt{x5 -- x7} & Temporaries: Các thanh ghi chứa giá trị trung gian tạm thời & Caller-saved \\ \hline
+\texttt{s0 / fp} & \texttt{x8} & Saved register / Frame pointer: Lưu biến hoặc làm con trỏ khung & Callee-saved \\ \hline
+\texttt{s1} & \texttt{x9} & Saved register: Thanh ghi lưu biến của chương trình & Callee-saved \\ \hline
+\texttt{a0 -- a1} & \texttt{x10 -- x11} & Arguments / Return values: Truyền tham số đầu vào và nhận kết quả trả về của hàm & Caller-saved \\ \hline
+\texttt{a2 -- a7} & \texttt{x12 -- x17} & Arguments: Truyền các tham số đầu vào thứ 3 đến thứ 8 của hàm & Caller-saved \\ \hline
+\texttt{s2 -- s11} & \texttt{x18 -- x27} & Saved registers: Các thanh ghi lưu biến bền vững của chương trình & Callee-saved \\ \hline
+\texttt{t3 -- t6} & \texttt{x28 -- x31} & Temporaries: Các thanh ghi chứa giá trị trung gian tạm thời & Caller-saved \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Quy tắc bảo toàn thanh ghi khi gọi chương trình con:}
+\begin{itemize}
+    \item \textbf{Nhóm tạm thời (\texttt{t0 -- t6}, \texttt{a0 -- a7}, \texttt{ra}):} Thuộc nhóm \textbf{Caller-saved} (hàm gọi tự bảo vệ trên ngăn xếp nếu muốn dùng lại sau lời gọi hàm; hàm được gọi có quyền thay đổi tự do).
+    \item \textbf{Nhóm lưu trữ (\texttt{s0 -- s11}, \texttt{sp}):} Thuộc nhóm \textbf{Callee-saved} (hàm được gọi bắt buộc phải cất giá trị cũ vào ngăn xếp trước khi sử dụng và khôi phục lại nguyên trạng trước khi thoát hàm).
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Tổ chức dữ liệu trong bộ nhớ và Quy tắc Đầu nhỏ (Little-Endian)}
+
+\textbf{1. Các đơn vị dữ liệu và Quy tắc căn chỉnh biên địa chỉ (Alignment)}
+\begin{itemize}
+    \item \textbf{Byte ($8\text{ bit}$):} Chiếm $1$ ngăn nhớ. Địa chỉ có thể là số chẵn hoặc số lẻ bất kỳ.
+    \item \textbf{Halfword -- Nửa từ ($16\text{ bit} = 2\text{ byte}$):} Chiếm $2$ ngăn nhớ liên tiếp. Địa chỉ hiệu dụng bắt buộc phải là \textbf{số chẵn} (chia hết cho $2$, chữ số Hexa cuối là \texttt{0, 2, 4, 6, 8, A, C, E}).
+    \item \textbf{Word -- Từ nhớ ($32\text{ bit} = 4\text{ byte}$):} Chiếm $4$ ngăn nhớ liên tiếp. Địa chỉ của một Word là địa chỉ của byte đầu tiên (byte có địa chỉ nhỏ nhất) thuộc Word đó và bắt buộc phải \textbf{chia hết cho 4} (chữ số Hexa cuối cùng chỉ có thể là \texttt{0, 4, 8} hoặc \texttt{C}).
+\end{itemize}
+
+\textbf{2. Thứ tự lưu trữ các byte trong bộ nhớ: Đầu nhỏ (Little-Endian) vs. Đầu to (Big-Endian)}
+\begin{itemize}
+    \item \textbf{Đầu nhỏ (Little-Endian):} Byte có ý nghĩa thấp nhất (LSB -- 2 chữ số Hexa ngoài cùng bên phải) được lưu ở ngăn nhớ có \textbf{địa chỉ nhỏ nhất}; byte có ý nghĩa cao nhất (MSB -- 2 chữ số Hexa ngoài cùng bên trái) được lưu ở ngăn nhớ có \textbf{địa chỉ lớn nhất}.
+    \begin{itemize}
+        \item \textit{Các kiến trúc sử dụng:} \textbf{RISC-V} và \textbf{Intel x86} sử dụng Little-Endian.
+    \end{itemize}
+    \item \textbf{Đầu to (Big-Endian):} Byte có ý nghĩa cao nhất (MSB) được lưu ở ngăn nhớ có địa chỉ nhỏ nhất; byte có ý nghĩa thấp nhất (LSB) được lưu ở ngăn nhớ có địa chỉ lớn nhất.
+    \begin{itemize}
+        \item \textit{Các kiến trúc sử dụng:} Motorola 680x0, SunSPARC dùng Big-Endian. Riêng kiến trúc \textbf{ARM} hỗ trợ cả Little-Endian hoặc Big-Endian tùy phiên bản cấu hình.
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    \node[font=\bfseries] at (0, 2.6) {Word 32-bit = \texttt{0x1A2B3C4D} lưu tại địa chỉ \texttt{0x10010008}};
+    
+    % Little-Endian
+    \node[font=\bfseries\small] at (-3.5, 1.9) {Thứ tự Đầu nhỏ (Little-Endian -- RISC-V)};
+    \draw[thick] (-5.5, -0.5) rectangle (-3.5, 1.5);
+    \foreach \y/\byte/\addr in {1.0/0x4D (LSB)/0x10010008, 0.5/0x3C/0x10010009, 0.0/0x2B/0x1001000A, -0.5/0x1A (MSB)/0x1001000B} {
+        \draw (-5.5, \y) -- (-3.5, \y);
+        \node[font=\footnotesize\ttfamily] at (-4.5, \y+0.25) {\byte};
+        \node[right, font=\footnotesize\ttfamily] at (-3.4, \y+0.25) {\addr};
+    }
+
+    % Big-Endian
+    \node[font=\bfseries\small] at (3.5, 1.9) {Thứ tự Đầu to (Big-Endian)};
+    \draw[thick] (1.5, -0.5) rectangle (3.5, 1.5);
+    \foreach \y/\byte/\addr in {1.0/0x1A (MSB)/0x10010008, 0.5/0x2B/0x10010009, 0.0/0x3C/0x1001000A, -0.5/0x4D (LSB)/0x1001000B} {
+        \draw (1.5, \y) -- (3.5, \y);
+        \node[font=\footnotesize\ttfamily] at (2.5, \y+0.25) {\byte};
+        \node[right, font=\footnotesize\ttfamily] at (3.6, \y+0.25) {\addr};
+    }
+\end{tikzpicture}
+\end{center}
+
+\subsection{Các nhóm lệnh hợp ngữ RISC-V cốt lõi}
+
+\textbf{1. Nhóm lệnh số học và Nạp hằng số vào thanh ghi}
+\begin{itemize}
+    \item \texttt{add rd, rs1, rs2}: Cộng hai thanh ghi ($rd = rs1 + rs2$).
+    \item \texttt{sub rd, rs1, rs2}: Trừ hai thanh ghi ($rd = rs1 - rs2$).
+    \item \texttt{addi rd, rs1, imm}: Cộng thanh ghi với hằng số 12-bit có dấu ($rd = rs1 + \text{SignExt}(imm)$).
+    \begin{itemize}
+        \item \textit{Giới hạn của hằng số \texttt{imm}:} Vì \texttt{imm} là số nguyên có dấu $12\text{ bit}$, giá trị hợp lệ bắt buộc phải nằm trong đoạn $[\mathbf{-2048, +2047}]$ (viết ở hệ Hexa 12-bit là từ \texttt{0x800} đến \texttt{0x7FF}, hoặc mở rộng dấu 32-bit là từ \texttt{0xFFFFF800} đến \texttt{0x000007FF}). Nếu truyền số $\ge 2048$ (như \texttt{0x800}) vào lệnh \texttt{addi}, trình dịch sẽ báo lỗi.
+        \item RISC-V \textbf{không có lệnh \texttt{subi}}; để trừ một hằng số, ta dùng lệnh \texttt{addi} với hằng số âm.
+    \end{itemize}
+    \item \texttt{lui rd, upimm} (Load Upper Immediate): Đưa hằng số 20-bit (\texttt{upimm}) vào $20\text{ bit}$ cao của thanh ghi đích \texttt{rd} (từ bit 31 đến bit 12) và xóa $12\text{ bit}$ thấp (bit 11 đến bit 0) về $0$.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Quy tắc nạp hằng số 32-bit bất kỳ vào thanh ghi (Bản chất của lệnh giả \texttt{li})}]
+Để nạp hằng số 32-bit dạng \texttt{0xABCDE123} vào thanh ghi \texttt{rd} mà không dùng lệnh giả \texttt{li}, ta tách thành $20\text{ bit}$ cao (5 chữ số Hexa đầu \texttt{0xABCDE}) và $12\text{ bit}$ thấp (3 chữ số Hexa cuối \texttt{0x123}), rồi kết hợp \texttt{lui} với \texttt{addi}:
+\begin{enumerate}
+    \item \textbf{Trường hợp 1 (Chữ số Hexa thứ 3 từ phải sang nhỏ hơn 8 -- từ \texttt{0} đến \texttt{7}):} Bit số 11 bằng $0$ nên phần 12-bit thấp là số dương. Giữ nguyên 5 chữ số Hexa đầu cho lệnh \texttt{lui}:
+    \begin{itemize}
+        \item Ví dụ nạp \texttt{0x20241120}: \texttt{lui t0, 0x20241} $\rightarrow$ \texttt{addi t0, t0, 0x120}.
+    \end{itemize}
+    \item \textbf{Trường hợp 2 (Chữ số Hexa thứ 3 từ phải sang từ \texttt{8} đến \texttt{F}):} Bit số 11 bằng $1$ nên lệnh \texttt{addi} sẽ mở rộng dấu và hiểu 12-bit thấp là một \textbf{số âm} (bị trừ lùi đi $2^{12} = \texttt{0x1000}$). Để bù lại, ta bắt buộc phải \textbf{cộng thêm 1 vào 5 chữ số Hexa đầu} trong lệnh \texttt{lui}:
+    \begin{itemize}
+        \item Ví dụ nạp \texttt{0x12345EDC} (chữ thứ 3 từ phải sang là \texttt{E} $\ge 8$, với \texttt{0xEDC} $= -292$):\\
+        Dùng \texttt{lui s1, 0x12346} (tăng \texttt{12345} lên \texttt{12346}), sau đó \texttt{addi s1, s1, -292}.
+    \end{itemize}
+\end{enumerate}
+\end{tcolorbox}
+
+\textbf{2. Nhóm lệnh Đọc và Ghi bộ nhớ (Load / Store)}
+\begin{itemize}
+    \item \textbf{Thao tác với Word ($32\text{ bit} = 4\text{ byte}$):}
+    \begin{itemize}
+        \item \texttt{lw rd, imm(rs1)}: Đọc 1 word (4 byte) tại địa chỉ $\texttt{rs1} + \text{SignExt}(\texttt{imm})$ nạp vào thanh ghi \texttt{rd}.
+        \item \texttt{sw rs2, imm(rs1)}: Ghi 1 word (4 byte) từ thanh ghi nguồn \texttt{rs2} ra bộ nhớ tại địa chỉ $\texttt{rs1} + \text{SignExt}(\texttt{imm})$.
+    \end{itemize}
+    \item \textbf{Thao tác với Halfword ($16\text{ bit} = 2\text{ byte}$):}
+    \begin{itemize}
+        \item \texttt{lh rd, imm(rs1)}: Đọc 2 byte từ bộ nhớ vào 16 bit thấp của \texttt{rd}, mở rộng \textbf{có dấu} (Sign-extend: lấy bit số 15 điền vào toàn bộ 16 bit cao của \texttt{rd}).
+        \item \texttt{lhu rd, imm(rs1)}: Đọc 2 byte từ bộ nhớ vào 16 bit thấp của \texttt{rd}, mở rộng \textbf{không dấu} (Zero-extend: luôn điền \texttt{0x0000} vào 16 bit cao của \texttt{rd}).
+        \item \texttt{sh rs2, imm(rs1)}: Ghi 2 byte bên phải (16 bit thấp) của thanh ghi \texttt{rs2} ra bộ nhớ.
+    \end{itemize}
+    \item \textbf{Thao tác với Byte ($8\text{ bit} = 1\text{ byte}$):}
+    \begin{itemize}
+        \item \texttt{lb rd, imm(rs1)}: Đọc 1 byte từ bộ nhớ vào 8 bit thấp của \texttt{rd}, mở rộng \textbf{có dấu} (Sign-extend: nếu byte đọc lên có chữ số Hexa đầu từ \texttt{8} đến \texttt{F} thì 24 bit cao của \texttt{rd} điền toàn \texttt{0xFFFFFF}; nếu từ \texttt{0} đến \texttt{7} thì điền \texttt{0x000000}).
+        \item \texttt{lbu rd, imm(rs1)}: Đọc 1 byte từ bộ nhớ vào 8 bit thấp của \texttt{rd}, mở rộng \textbf{không dấu} (Zero-extend: luôn điền \texttt{0x000000} vào 24 bit cao của \texttt{rd}).
+        \item \texttt{sb rs2, imm(rs1)}: Chỉ ghi 1 byte bên phải (8 bit thấp) của thanh ghi \texttt{rs2} ra bộ nhớ.
+    \end{itemize}
+\end{itemize}
+
+\textbf{3. Nhóm lệnh Logic và Dịch bit}
+\begin{itemize}
+    \item \textbf{Các phép toán logic từng bit (Bitwise):}
+    \begin{itemize}
+        \item \texttt{and rd, rs1, rs2} và \texttt{andi rd, rs1, imm}: Phép AND ($1\text{ AND }1 = 1$, còn lại bằng $0$). Dùng để xóa một số bit về $0$ và trích xuất các bit cần giữ.
+        \item \texttt{or rd, rs1, rs2} và \texttt{ori rd, rs1, imm}: Phép OR ($0\text{ OR }0 = 0$, còn lại bằng $1$). Dùng để thiết lập một số bit lên $1$.
+        \item \texttt{xor rd, rs1, rs2} và \texttt{xori rd, rs1, imm}: Phép XOR (hai bit khác nhau thì bằng $1$, giống nhau thì bằng $0$). Dùng để đảo giá trị các bit (thay thế cho lệnh \texttt{not rd, rs1} bằng \texttt{xori rd, rs1, -1}) hoặc xóa thanh ghi về $0$ (\texttt{xor s0, s0, s0}).
+        \item \textit{Lưu ý đặc biệt của RISC-V:} Hằng số 12-bit \texttt{imm} trong các lệnh \texttt{andi, ori, xori} của RISC-V luôn được \textbf{mở rộng có dấu (Sign-extended)} thành 32-bit trước khi thực hiện phép toán.
+    \end{itemize}
+    \item \textbf{Các phép dịch bit (Shift):} Với \texttt{uimm} là hằng số không dấu $5\text{ bit}$ (từ $0$ đến $31$), hoặc dịch theo 5 bit thấp của thanh ghi \texttt{rs2}:
+    \begin{itemize}
+        \item \textit{Dịch trái logic (\texttt{sll, slli}):} Đẩy các bit sang trái $k$ vị trí, chèn $k$ bit \texttt{0} vào bên phải. Tương đương \textbf{nhân với $2^k$}.
+        \item \textit{Dịch phải logic (\texttt{srl, srli}):} Đẩy các bit sang phải $k$ vị trí, luôn chèn $k$ bit \texttt{0} vào bên trái. Tương đương \textbf{chia số không dấu cho $2^k$} lấy phần nguyên.
+        \item \textit{Dịch phải số học (\texttt{sra, srai}):} Đẩy các bit sang phải $k$ vị trí, nhưng \textbf{giữ nguyên bit dấu} (nếu bit 31 đang là \texttt{1} thì chèn toàn bit \texttt{1} vào bên trái; nếu bit 31 là \texttt{0} thì chèn bit \texttt{0}). Tương đương \textbf{chia số có dấu cho $2^k$} lấy phần nguyên.
+        \item \textit{Quy đổi nhanh khi dịch theo bội số của 4 bit:} Vì $1\text{ chữ số Hexa} = 4\text{ bit}$, nên dịch trái/phải $4\text{ bit}$ là dịch $1$ chữ số Hexa; dịch $8\text{ bit}$ là dịch $2$ chữ số Hexa; dịch $20\text{ bit}$ là dịch $5$ chữ số Hexa; dịch $24\text{ bit}$ là dịch $6$ chữ số Hexa.
+    \end{itemize}
+\end{itemize}
+
+\textbf{4. Nhóm lệnh So sánh, Rẽ nhánh, Nhảy và Quản lý Ngăn xếp (Stack)}
+\begin{itemize}
+    \item \textbf{Lệnh thiết lập nếu nhỏ hơn (Set Less Than):}
+    \begin{itemize}
+        \item \texttt{slt rd, rs1, rs2} và \texttt{slti rd, rs1, imm}: So sánh hai số nguyên \textbf{có dấu}. Nếu $\texttt{rs1} < \texttt{rs2}$ (hoặc $\text{SignExt}(\texttt{imm})$) thì $\texttt{rd} = 1$, ngược lại $\texttt{rd} = 0$.
+        \item \texttt{sltu rd, rs1, rs2} và \texttt{sltiu rd, rs1, imm}: So sánh hai số nguyên \textbf{không dấu}.
+    \end{itemize}
+    \item \textbf{Các lệnh rẽ nhánh có điều kiện (Branch):}
+    \begin{itemize}
+        \item \texttt{beq rs1, rs2, L1} (rẽ nhánh nếu $\texttt{rs1} == \texttt{rs2}$); \quad \texttt{bne rs1, rs2, L1} (rẽ nhánh nếu $\texttt{rs1} \neq \texttt{rs2}$).
+        \item \texttt{blt rs1, rs2, L1} (rẽ nhánh nếu $\texttt{rs1} < \texttt{rs2}$ theo số có dấu); \quad \texttt{bge rs1, rs2, L1} (nếu $\texttt{rs1} \ge \texttt{rs2}$ có dấu).
+        \item \texttt{bltu rs1, rs2, L1} (rẽ nhánh nếu $\texttt{rs1} < \texttt{rs2}$ không dấu); \quad \texttt{bgeu rs1, rs2, L1} (nếu $\texttt{rs1} \ge \texttt{rs2}$ không dấu).
+        \item \textit{Lưu ý khi dịch câu lệnh \texttt{if / while} từ C sang hợp ngữ:} Điều kiện kiểm tra trong lệnh rẽ nhánh nhảy tới nhãn thoát (\texttt{done} hoặc \texttt{else}) thường là \textbf{điều kiện ngược} với điều kiện viết trong câu lệnh C (ví dụ: trong C viết \texttt{if (i == j)} thì hợp ngữ dùng \texttt{bne} để nhảy qua khối lệnh nếu $i \neq j$).
+    \end{itemize}
+    \item \textbf{Các lệnh gọi và trở về từ chương trình con (Thủ tục):}
+    \begin{itemize}
+        \item \texttt{jal rd, Label} (Jump and Link): Thực hiện đồng thời 2 việc: (1) Lưu địa chỉ của lệnh kế tiếp vào thanh ghi đích $\texttt{rd} = PC + 4$, và (2) Nhảy tới nhãn đích $PC = PC + \text{imm}$.
+        \begin{itemize}
+            \item Khi gọi chương trình con: Dùng \texttt{jal ra, ProcLabel} (lưu địa chỉ trở về vào \texttt{ra}).
+            \item Khi nhảy không điều kiện (tương đương lệnh giả \texttt{j Label}): Dùng \texttt{jal x0, Label} (hủy địa chỉ trở về vào \texttt{x0}).
+        \end{itemize}
+        \item \texttt{jalr rd, rs1, imm} (Jump and Link Register): Lưu $\texttt{rd} = PC + 4$ và nhảy tới địa chỉ $PC = \texttt{rs1} + \text{SignExt}(\texttt{imm})$.
+        \begin{itemize}
+            \item Khi trở về từ chương trình con (tương đương lệnh giả \texttt{ret} hoặc \texttt{jr ra}): Dùng \texttt{jalr x0, ra, 0} (hoặc viết dạng \texttt{jalr x0, 0(ra)}).
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Thao tác với Ngăn xếp (Stack):}
+    \begin{itemize}
+        \item Ngăn xếp là vùng nhớ hoạt động theo cơ chế \textbf{LIFO (Last In -- First Out: Vào sau -- Ra trước)} nằm trong bộ nhớ chính (RAM). Thanh ghi \texttt{sp} (\texttt{x2}) luôn chứa địa chỉ của \textbf{đỉnh ngăn xếp}.
+        \item Trong RISC-V, ngăn xếp phát triển theo chiều \textbf{giảm địa chỉ bộ nhớ}:
+        \begin{enumerate}
+            \item \textbf{Khi cất (Push) $k$ thanh ghi (mỗi thanh ghi $4\text{ byte}$) vào ngăn xếp:} Phải giảm \texttt{sp} trước bằng lệnh \texttt{addi sp, sp, -4*k}, sau đó dùng lệnh \texttt{sw} lưu các thanh ghi vào \texttt{0(sp)}, \texttt{4(sp)}, \dots
+            \item \textbf{Khi lấy (Pop / Khôi phục) $k$ thanh ghi ra khỏi ngăn xếp:} Phải dùng lệnh \texttt{lw} đọc các thanh ghi từ \texttt{0(sp)}, \texttt{4(sp)}, \dots ra đúng vị trí cũ trước, sau đó mới tăng \texttt{sp} trả lại bằng lệnh \texttt{addi sp, sp, 4*k}.
+        \end{enumerate}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Mã máy 32-bit của RISC-V, Lệnh nén 16-bit và 4 Phương thức định địa chỉ}
+
+\textbf{1. Sáu khuôn dạng lệnh máy 32-bit của RISC-V (RV32I)}\\
+Mọi câu lệnh chuẩn 32-bit của RISC-V đều thuộc 1 trong 6 khuôn dạng: \textbf{R, I, S, B, U, J}. Trường \texttt{opcode} luôn cố định ở 7 bit cuối cùng (\texttt{bit 6:0}).
+
+\begin{tcolorbox}[bwbox, title={Bảng cấu trúc 6 khuôn dạng lệnh máy 32-bit của RISC-V}]
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\footnotesize
+\begin{tabularx}{\linewidth}{|C{1.4cm}|C{2.4cm}|C{2.0cm}|C{2.0cm}|C{1.8cm}|C{2.2cm}|Z|}
+\hline
+\textbf{Kiểu} & \textbf{Bit 31:25 (7b)} & \textbf{Bit 24:20 (5b)} & \textbf{Bit 19:15 (5b)} & \textbf{Bit 14:12 (3b)} & \textbf{Bit 11:7 (5b)} & \textbf{Bit 6:0 (7b)} \\ \hline
+\textbf{R-type} & \texttt{funct7} & \texttt{rs2} & \texttt{rs1} & \texttt{funct3} & \texttt{rd} & \texttt{opcode} \\ \hline
+\textbf{I-type} & \multicolumn{2}{c|}{\texttt{imm[11:0]} (12 bit)} & \texttt{rs1} & \texttt{funct3} & \texttt{rd} & \texttt{opcode} \\ \hline
+\textbf{S-type} & \texttt{imm[11:5]} & \texttt{rs2} & \texttt{rs1} & \texttt{funct3} & \texttt{imm[4:0]} & \texttt{opcode} \\ \hline
+\textbf{B-type} & \texttt{imm[12,10:5]} & \texttt{rs2} & \texttt{rs1} & \texttt{funct3} & \texttt{imm[4:1,11]} & \texttt{opcode} \\ \hline
+\textbf{U-type} & \multicolumn{4}{c|}{\texttt{imm[31:12]} (20 bit)} & \texttt{rd} & \texttt{opcode} \\ \hline
+\textbf{J-type} & \multicolumn{4}{c|}{\texttt{imm[20,10:1,11,19:12]} (20 bit)} & \texttt{rd} & \texttt{opcode} \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Các đặc điểm nhận dạng nhanh trong đề thi:}
+\begin{itemize}
+    \item Khuôn dạng duy nhất \textbf{không chứa hằng số (\texttt{imm})} là kiểu \textbf{R-type} (chỉ dùng cho các phép toán thanh ghi -- thanh ghi).
+    \item Khuôn dạng bắt buộc sử dụng đầy đủ cả hai trường \textbf{\texttt{funct3} và \texttt{funct7}} là kiểu \textbf{R-type} (ngoài ra các lệnh dịch bit tức thì \texttt{slli, srli, srai} thuộc kiểu I nhưng dùng 7 bit đầu \texttt{imm[11:5]} đóng vai trò như \texttt{funct7} và 5 bit \texttt{imm[4:0]} làm số lượng bit cần dịch \texttt{uimm}).
+    \item Hai khuôn dạng có trường hằng số dài \textbf{20 bit} là kiểu \textbf{U-type} (\texttt{lui, auipc}) và kiểu \textbf{J-type} (\texttt{jal}). Lưu ý: Lệnh \texttt{jalr} thuộc kiểu \textbf{I-type} (12-bit \texttt{imm}), không phải J-type.
+    \item Hai khuôn dạng \textbf{không có thanh ghi đích \texttt{rd}} là kiểu \textbf{S-type} (Store) và kiểu \textbf{B-type} (Branch).
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[bwbox, title={Bảng tra cứu nhanh Opcode, Funct3 và Funct7 của tập lệnh RV32I}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|L{2.5cm}|C{2.5cm}|C{2.1cm}|C{1.9cm}|Y|}
+\hline
+\textbf{Nhóm / Kiểu} & \textbf{Opcode (6:0)} & \textbf{funct3} & \textbf{funct7} & \textbf{Tên lệnh hợp ngữ tương ứng} \\ \hline
+\multirow{4}{2.5cm}{\textbf{R-type} \newline (Số học / Logic)} & \multirow{4}{2.5cm}{\centering\texttt{0110011} (51)} & \texttt{000} & \texttt{0000000} & \texttt{add rd, rs1, rs2} \\ \cline{3-5}
+ & & \texttt{000} & \texttt{0100000} & \texttt{sub rd, rs1, rs2} \\ \cline{3-5}
+ & & \texttt{001 / 010} & \texttt{0000000} & \texttt{sll} (\texttt{001}), \texttt{slt} (\texttt{010}), \texttt{sltu} (\texttt{011}) \\ \cline{3-5}
+ & & \texttt{100 / 101} & \texttt{000/010..} & \texttt{xor} (\texttt{100}), \texttt{srl/sra} (\texttt{101}), \texttt{or} (\texttt{110}), \texttt{and} (\texttt{111}) \\ \hline
+\multirow{2}{2.5cm}{\textbf{I-type} \newline (Tính toán)} & \multirow{2}{2.5cm}{\centering\texttt{0010011} (19)} & \texttt{000 / 010} & -- & \texttt{addi} (\texttt{000}), \texttt{slti} (\texttt{010}), \texttt{sltiu} (\texttt{011}) \\ \cline{3-5}
+ & & \texttt{100 / 110} & -- & \texttt{xori} (\texttt{100}), \texttt{ori} (\texttt{110}), \texttt{andi} (\texttt{111}), \texttt{slli} (\texttt{001}), \texttt{srli/srai} (\texttt{101}) \\ \hline
+\textbf{I-type} (Load) & \texttt{0000011} (3) & \texttt{000..101} & -- & \texttt{lb} (\texttt{000}), \texttt{lh} (\texttt{001}), \texttt{lw} (\texttt{010}), \texttt{lbu} (\texttt{100}), \texttt{lhu} (\texttt{101}) \\ \hline
+\textbf{S-type} (Store) & \texttt{0100011} (35) & \texttt{000..010} & -- & \texttt{sb} (\texttt{000}), \texttt{sh} (\texttt{001}), \texttt{sw} (\texttt{010}) \\ \hline
+\textbf{B-type} (Branch) & \texttt{1100011} (99) & \texttt{000..111} & -- & \texttt{beq} (\texttt{000}), \texttt{bne} (\texttt{001}), \texttt{blt} (\texttt{100}), \texttt{bge} (\texttt{101}), \texttt{bltu} (\texttt{110}), \texttt{bgeu} (\texttt{111}) \\ \hline
+\textbf{U-type} & \texttt{0110111} (55) & -- & -- & \texttt{lui rd, upimm} (\texttt{auipc} có opcode \texttt{0010111}) \\ \hline
+\textbf{J-type} \& \textbf{I-jalr} & \texttt{1101111} (111) & -- & -- & \texttt{jal rd, label} (Riêng \texttt{jalr} là kiểu I, opcode \texttt{1100111}, \texttt{funct3=000}) \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\textbf{2. Tập lệnh nén 16-bit (Compressed Instructions -- RVC):}
+\begin{itemize}
+    \item Để giảm dung lượng bộ nhớ lưu trữ mã chương trình, RISC-V (cũng như ARM Thumb) cung cấp tập lệnh nén có độ dài \textbf{16 bit} ($2\text{ byte}$) cho các thao tác thường gặp, ký hiệu bằng tiền tố \texttt{c.} (ví dụ: \texttt{c.add, c.addi, c.lw}).
+    \item \textbf{Các hạn chế của lệnh nén 16-bit so với lệnh 32-bit:}
+    \begin{enumerate}
+        \item Giảm số lượng thanh ghi có thể truy cập trực tiếp (nhiều lệnh nén chỉ dùng 3 bit để định danh 8 thanh ghi phổ biến từ \texttt{x8} đến \texttt{x15}).
+        \item Giảm số lượng toán hạng trong lệnh (thường gộp thanh ghi đích trùng với thanh ghi nguồn thứ nhất: $\texttt{rd} = \texttt{rd} + \texttt{rs2}$).
+        \item Phạm vi biểu diễn của hằng số tức thời (\texttt{imm}) và khoảng cách nhảy rẽ nhánh bị thu hẹp đáng kể.
+    \end{enumerate}
+\end{itemize}
+
+\textbf{3. Bốn phương thức định địa chỉ của RISC-V}
+\begin{enumerate}
+    \item \textbf{Định địa chỉ thanh ghi (Register Addressing):} Toán hạng nằm hoàn toàn trong các thanh ghi (áp dụng cho các lệnh kiểu R).
+    \item \textbf{Định địa chỉ tức thì (Immediate Addressing):} Toán hạng là hằng số nằm ngay bên trong lệnh máy (áp dụng cho toán hạng hằng số của \texttt{addi, andi, ori, lui...}).
+    \item \textbf{Định địa chỉ cơ sở (Base Addressing):} Toán hạng nằm trong bộ nhớ, địa chỉ được tính bằng tổng nội dung thanh ghi cơ sở và hằng số độ lệch: $\text{Address} = \texttt{rs1} + \text{SignExt}(\texttt{imm})$ (áp dụng cho các lệnh Load và Store).
+    \item \textbf{Định địa chỉ tương đối với PC (PC-relative Addressing):} Địa chỉ của lệnh đích cần nhảy tới bằng tổng giá trị thanh ghi \texttt{PC} (địa chỉ của chính lệnh rẽ nhánh/nhảy hiện tại) cộng với hằng số độ lệch:
+    $$\text{Địa chỉ đích (BTA hoặc JTA)} = PC_{\text{hiện tại}} + \text{imm} \iff \text{imm} = \text{Địa chỉ đích} - PC_{\text{hiện tại}}$$
+\end{enumerate}
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 3 và Hướng dẫn giải}
+
+\subsection{Nhóm 1: Thanh ghi, Khuôn dạng lệnh, Phương thức định địa chỉ và Kiểm tra hợp lệ}
+
+\textbf{Bài tập 3.1 (Đề Cuối kỳ 2023.1 -- \#08de08, 2023.2 \& Ôn tập Cuối kỳ 2025.1, 2025.2 -- Câu 53)}\\
+Phát biểu nào sau đây là đúng về các thanh ghi tạm thời (\texttt{t0 -- t6}) và các thanh ghi lưu trữ (\texttt{s0 -- s11}) trong RISC-V?
+\begin{enumerate}[label=\Alph*.]
+    \item Giá trị của các thanh ghi lưu trữ luôn phải được lưu bởi bên được gọi (callee).
+    \item Giá trị của các thanh ghi tạm thời luôn phải được lưu bởi bên gọi (caller).
+    \item Trong một số quy ước gọi hàm, thanh ghi tạm thời là ``caller-saved'', còn thanh ghi lưu trữ là ``callee-saved''.
+    \item Trong một số quy ước gọi hàm, thanh ghi tạm thời là ``callee-saved'', còn thanh ghi lưu trữ là ``caller-saved''.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Kiến thức áp dụng:} Theo quy ước gọi hàm của RISC-V, các thanh ghi tạm thời (\texttt{t0 -- t6}) thuộc nhóm \textbf{caller-saved} (bên gọi chỉ cất vào ngăn xếp nếu cần dùng lại sau lời gọi hàm, không phải ``luôn luôn'' phải cất), còn các thanh ghi lưu trữ (\texttt{s0 -- s11}) thuộc nhóm \textbf{callee-saved} (bên được gọi chỉ cất vào ngăn xếp nếu nó làm thay đổi các thanh ghi này).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.2 (Đề Giữa kỳ 2022.2 -- Đề 0008 Câu 10 \& Đề 0006 Câu 5)}
+\begin{enumerate}[label=\alph*)]
+    \item Trong 32 thanh ghi được đánh địa chỉ của bộ xử lý 32-bit, tên của 1 thanh ghi chỉ đọc (read-only) luôn chứa hằng số 0 là gì?
+    \item Trong khuôn dạng lệnh R của bộ xử lý 32-bit, tại sao độ rộng của vùng thông tin thanh ghi đích \texttt{rd} phải là 5 bit?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Thanh ghi chỉ đọc luôn có giá trị bằng 0 là thanh ghi \textbf{\texttt{zero}} (hoặc \textbf{\texttt{x0}}).
+    \item \textbf{Giải câu b:} Vì bộ xử lý có tất cả $32$ thanh ghi đa dụng. Để mã hóa phân biệt $32$ thanh ghi khác nhau cần số bit là $\log_2(32) = \mathbf{5\text{ bit}}$ (vì $2^5 = 32$).
+\end{itemize}
+
+\textbf{Bài tập 3.3 (Đề Giữa kỳ 2022.2 -- Đề 0006, Câu 8)}\\
+Một phần mềm viết cho bộ xử lý RISC-V 32-bit có $150$ lệnh hợp ngữ chuẩn (không dùng lệnh giả và không dùng lệnh nén) thì chiếm bao nhiêu byte lệnh mã máy trong bộ nhớ?
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mỗi lệnh mã máy chuẩn của RISC-V 32-bit có độ dài cố định là $32\text{ bit} = 4\text{ byte}$.
+    \item Vậy $150$ lệnh chiếm dung lượng là: $150 \times 4\text{ byte} = \mathbf{600\text{ byte}}$.
+\end{itemize}
+
+\textbf{Bài tập 3.4 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 17 \& Mã đề 244 Câu 10)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243):} Một chương trình hợp ngữ có $8$ lệnh \texttt{addi}, $5$ lệnh \texttt{sub}, $1$ lệnh \texttt{lui}, $3$ lệnh \texttt{xori}. Hỏi mã máy của phần mềm trên chiếm bao nhiêu byte dung lượng?\\
+    A. $18$ \quad B. $72$ \quad C. $17$ \quad D. $68$
+    \item \textbf{(Mã đề 244):} Một chương trình hợp ngữ có $5$ lệnh \texttt{addi}, $2$ lệnh \texttt{sub}, $3$ lệnh \texttt{lui}, $8$ lệnh \texttt{xori}. Hỏi mã máy của phần mềm trên chiếm bao nhiêu byte dung lượng?\\
+    A. $72$ \quad B. $68$ \quad C. $18$ \quad D. $17$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Tổng số lệnh máy $= 8 + 5 + 1 + 3 = 17\text{ lệnh}$. Mỗi lệnh dài $4\text{ byte}$ nên dung lượng mã máy là: $17 \times 4 = 68\text{ byte}$ $\rightarrow$ Chọn \textbf{D (68)}.
+    \item \textbf{Giải câu b:} Tổng số lệnh máy $= 5 + 2 + 3 + 8 = 18\text{ lệnh}$. Dung lượng mã máy là: $18 \times 4 = 72\text{ byte}$ $\rightarrow$ Chọn \textbf{A (72)}.
+\end{itemize}
+
+\textbf{Bài tập 3.5 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 20 \& Mã đề 244 Câu 2)}\\
+Đoạn hợp ngữ gồm 3 lệnh chuẩn liên tiếp (\texttt{lui s0, ...} $\rightarrow$ \texttt{addi s0, s0, ...} $\rightarrow$ \texttt{lw t0, 4(s0)}).
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243):} Nếu lệnh đầu tiên ở địa chỉ \texttt{0xBCDE8004}, hỏi lệnh cuối cùng (lệnh thứ 3) ở địa chỉ nào?\\
+    A. Không xác định \quad B. \texttt{0xBCDE8006} \quad C. \texttt{0x20201238} \quad D. \texttt{0xBCDE800C}
+    \item \textbf{(Mã đề 244):} Nếu lệnh đầu tiên ở địa chỉ \texttt{0x8004FEDC}, hỏi lệnh cuối cùng (lệnh thứ 3) ở địa chỉ nào?\\
+    A. Không xác định \quad B. \texttt{0x8004FEE4} \quad C. \texttt{0x8004FEDA} \quad D. \texttt{0x80004000}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mỗi lệnh dài $4\text{ byte}$. Lệnh 1 ở địa chỉ $A$, lệnh 2 ở $A + 4$, lệnh 3 ở địa chỉ $A + 8$:
+    \item \textbf{Câu a:} $\texttt{0xBCDE8004} + 8 = \texttt{0xBCDE800C}$ $\rightarrow$ Chọn \textbf{D}.
+    \item \textbf{Câu b:} $\texttt{0x8004FEDC} + 8 = \texttt{0x8004FEE4}$ (vì $\texttt{0xDC} + 8 = 220 + 8 = 228 = \texttt{0xE4}$) $\rightarrow$ Chọn \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 3.6 (Đề Cuối kỳ 2022.2 -- \#17e1a7, 2024.1 -- \#366b03, 2024.2 \& Ôn tập 2025.2 -- Câu 34)}\\
+Phương pháp định địa chỉ nào được sử dụng mã hóa cho toán hạng hằng số của lệnh hợp ngữ RISC-V sau: \texttt{addi s0, s3, -5} (hoặc \texttt{addi x18, x19, -5})?
+\begin{enumerate}[label=\Alph*.]
+    \item Định địa chỉ cơ sở
+    \item Định địa chỉ tương đối với PC
+    \item Định địa chỉ tức thì
+    \item Định địa chỉ thanh ghi
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Toán hạng hằng số \texttt{-5} nằm trực tiếp ngay trong mã máy của câu lệnh \texttt{addi}, do đó sử dụng phương pháp \textbf{Định địa chỉ tức thì (Immediate Addressing)}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.7 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 19, Mã đề 199 Câu 13 \& Mã đề 204 Câu 15)}\\
+Trong các phương pháp định địa chỉ toán hạng dưới đây, phương pháp nào có tốc độ thực thi lệnh chậm hơn?
+\begin{enumerate}[label=\Alph*.]
+    \item Định địa chỉ thanh ghi
+    \item Định địa chỉ trực tiếp / Định địa chỉ cơ sở (truy cập bộ nhớ)
+    \item Định địa chỉ tức thì
+    \item Định địa chỉ trực tiếp và định địa chỉ tức thì
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Định địa chỉ tức thì (lấy hằng số có sẵn trong lệnh tại IR) và định địa chỉ thanh ghi (đọc thanh ghi trong CPU) không cần truy cập ra ngoài CPU nên tốc độ rất nhanh.
+    \item Định địa chỉ trực tiếp / cơ sở phải truy xuất toán hạng nằm trong bộ nhớ chính (RAM) qua Bus hệ thống nên có tốc độ thực thi chậm hơn.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 3.8 (Đề Cuối kỳ 2020.2 -- Trang 5 \& Cuối kỳ 2022.2, 2024.2 -- \#3ace1f)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2020.2):} Trong các giá trị địa chỉ bộ nhớ hệ thống dưới đây, giá trị nào là địa chỉ hợp lệ và căn chỉnh đúng biên (aligned address) của một từ nhớ (word) dữ liệu 32-bit?\\
+    A. \texttt{0x1001A00C} \quad B. \texttt{0x10800016} \quad C. \texttt{0x100020CE} \quad D. \texttt{0x1050009A}
+    \item \textbf{(Đề CK 2022.2 \& 2024.2 -- \#3ace1f):} Trong các giá trị địa chỉ dưới đây, giá trị nào có thể là địa chỉ của word nhớ trong bộ nhớ chính của máy tính RISC-V?\\
+    A. \texttt{0x00404508} \quad B. \texttt{0x0050601A} \quad C. \texttt{0x00601002} \quad D. \texttt{0x00402346}
+    \item \textbf{(Đề GK 2018.2 -- Mã đề 198 Câu 9):} Địa chỉ nào sau đây \textbf{không phải} là địa chỉ hợp lệ của một lệnh máy 32-bit?\\
+    A. \texttt{0x188A} \quad B. \texttt{0xFB019AC} \quad C. \texttt{0x18D88} \quad D. \texttt{0x198C124}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Quy tắc:} Địa chỉ của một word 32-bit hoặc một lệnh máy 32-bit bắt buộc phải \textbf{chia hết cho 4}, nghĩa là chữ số Hexa cuối cùng bên phải chỉ được phép là \textbf{\texttt{0, 4, 8} hoặc \texttt{C} ($=12$)}. Các số tận cùng bằng \texttt{2, 6, A} ($=10$), \texttt{E} ($=14$) là số chẵn nhưng không chia hết cho 4.
+    \item \textbf{Câu a:} Chỉ có \texttt{0x1001A00C} tận cùng bằng \texttt{C} chia hết cho 4 $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Câu b:} Chỉ có \texttt{0x00404508} tận cùng bằng \texttt{8} chia hết cho 4 $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Câu c:} Chỉ có \texttt{0x188A} tận cùng bằng \texttt{A} ($10$) không chia hết cho 4 $\rightarrow$ Chọn \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 3.9 (Đề Cuối kỳ 2023.1 -- Trang 6 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 28)}\\
+Toán hạng địa chỉ đích trong câu lệnh lưu trữ từ nhớ \texttt{sw} dưới đây của hệ RISC-V có hợp lệ để thực thi hay không?
+\begin{lstlisting}
+    lui  s0, 0x10010
+    addi t0, zero, 100
+    sw   t0, 2(s0)
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Có, hoàn toàn hợp lệ.
+    \item Có, nhưng đoạn mã này yêu cầu quyền đặc biệt để thực thi.
+    \item Không, nó không có một địa chỉ hợp lệ (do vi phạm căn lề ranh giới word nhớ -- alignment error).
+    \item Không, nó không nằm trong phân đoạn dữ liệu hợp lệ.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{lui s0, 0x10010} nạp địa chỉ \texttt{0x10010000} vào \texttt{s0}.
+    \item Lệnh \texttt{sw t0, 2(s0)} ghi một word 32-bit (4 byte) vào địa chỉ $\texttt{0x10010000} + 2 = \texttt{0x10010002}$.
+    \item Địa chỉ \texttt{0x10010002} không chia hết cho 4, vi phạm quy tắc căn chỉnh biên word nhớ.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.10 (Đề Cuối kỳ 2020.2 -- Trang 2, Trang 8 \& Đề Giữa kỳ 2018.2 -- Mã đề 204 Câu 7)}\\
+Hãy xác định tổng số lần CPU trực tiếp truy nhập bộ nhớ dữ liệu (Data Memory) trong mỗi đoạn chương trình sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2020.2 -- Trang 2):} \texttt{lw t0, 0(s0)} $\rightarrow$ \texttt{addi t1, t0, 1} $\rightarrow$ \texttt{sw t1, 4(s0)} $\rightarrow$ \texttt{add t2, t1, t0}.
+    \item \textbf{(Đề CK 2020.2 -- Trang 8):} \texttt{lw a1, 0(a2)} $\rightarrow$ \texttt{addi a1, a1, -4} $\rightarrow$ \texttt{slli a1, a1, 0} $\rightarrow$ \texttt{sw zero, 8(a1)}.
+    \item \textbf{(Đề GK 2018.2 -- Mã đề 204, Câu 7):} \texttt{lui t0, 0x2019} $\rightarrow$ \texttt{addi t0, t0, 0x104} $\rightarrow$ \texttt{slli t1, t0, 3} $\rightarrow$ \texttt{sub t2, t1, t3}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Chỉ có các lệnh Load (\texttt{lw, lh, lb...}) và Store (\texttt{sw, sh, sb}) mới truy nhập vào bộ nhớ dữ liệu (Data Memory).
+    \item \textbf{Câu a:} Có 1 lệnh \texttt{lw} và 1 lệnh \texttt{sw} $\implies$ Truy nhập bộ nhớ dữ liệu \textbf{2 lần}.
+    \item \textbf{Câu b:} Có 1 lệnh \texttt{lw} và 1 lệnh \texttt{sw} $\implies$ Truy nhập bộ nhớ dữ liệu \textbf{2 lần}.
+    \item \textbf{Câu c:} Không có lệnh Load/Store nào $\implies$ Truy nhập bộ nhớ dữ liệu \textbf{0 lần}.
+\end{itemize}
+
+\textbf{Bài tập 3.11 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 18)}\\
+Phát biểu nào sau đây là đúng về thứ tự lưu trữ các byte trong bộ nhớ chính?
+\begin{enumerate}[label=\Alph*.]
+    \item Intel x86 dùng big-endian
+    \item SunSPARC dùng middle-endian
+    \item ARM dùng little-endian hoặc big-endian tùy phiên bản
+    \item RISC-V dùng big-endian
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide Chương 3 (trang 16): Intel x86 và RISC-V dùng little-endian; Motorola 680x0 và SunSPARC dùng big-endian; còn kiến trúc \textbf{ARM} dùng little-endian hoặc big-endian tùy phiên bản.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.12 (Đề Cuối kỳ 2025.1 -- \#9853fd \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 42)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2025.1 -- \#9853fd):} Phạm vi giá trị của toán hạng hằng số (immediate) trong lệnh \texttt{addi} của RISC-V là gì?\\
+    A. $[-4095, +4095]$ \quad B. $[-2^{31}, +2^{31}-1]$ \quad C. $[-2048, +2048]$ \quad D. $[-2048, +2047]$
+    \item \textbf{(Ôn tập 2025.2 -- P1, Câu 42):} Những câu lệnh nào sau đây bị lỗi biên dịch trong phần mềm RARS?\\
+    1. \texttt{lui x1, 0x1} $\rightarrow$ \texttt{addi x1, x0, -2048} \qquad 2. \texttt{lui x1, 0x1} $\rightarrow$ \texttt{addi x1, x0, 0x800}\\
+    3. \texttt{lui x1, 0x1} $\rightarrow$ \texttt{addi x1, x0, 0xFFFF800} \quad 4. \texttt{addi x1, x0, 0x801}\\
+    5. \texttt{li x1, 0x800} \qquad 6. \texttt{lui x1, 0x1} $\rightarrow$ \texttt{addi x1, x0, 2048}\\
+    7. \texttt{lui x1, 0x1} $\rightarrow$ \texttt{addi x1, x0, 0xFFFFF800}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Trường immediate của lệnh \texttt{addi} là số nguyên có dấu $12\text{ bit}$, có dải biểu diễn từ $-2^{11}$ đến $+2^{11}-1$, tức là $[\mathbf{-2048, +2047}]$ $\rightarrow$ Chọn \textbf{D}.
+    \item \textbf{Giải câu b:} Mọi giá trị truyền vào \texttt{addi} nằm ngoài đoạn $[-2048, +2047]$ (tức ngoài đoạn \texttt{0xFFFFF800} đến \texttt{0x7FF}) đều báo lỗi biên dịch:
+    \begin{itemize}
+        \item Mục \textbf{2} (\texttt{0x800} $= 2048$), mục \textbf{3} (\texttt{0xFFFF800} chỉ có 4 chữ \texttt{F} nên là số dương lớn), mục \textbf{4} (\texttt{0x801} $= 2049$) và mục \textbf{6} ($2048$) đều vượt quá $+2047$ $\implies$ \textbf{Bị lỗi biên dịch (Chọn 2, 3, 4, 6)}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.13 (Đề Giữa kỳ 2021.1 -- IT3030E, Problem 6)}\\
+Các lệnh chuẩn của RISC-V/MIPS dài 32 bit. Một cách để tiết kiệm bộ nhớ chương trình là giảm độ dài lệnh xuống 16 bit như tập lệnh nén (RISC-V Compressed RVC hoặc ARM Thumb). Hãy nêu ngắn gọn những hạn chế (limitations) tất yếu của các lệnh 16-bit này?
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Khi thu gọn độ dài mã lệnh từ $32\text{ bit}$ xuống còn $16\text{ bit}$, số bit dành cho các trường bị cắt giảm mạnh dẫn đến 4 hạn chế chính:
+    \begin{enumerate}
+        \item \textbf{Hạn chế số lượng thanh ghi truy cập được:} Thay vì dùng 5 bit để truy cập cả 32 thanh ghi, nhiều lệnh 16-bit chỉ dùng 3 bit nên chỉ truy cập được 8 thanh ghi thông dụng (\texttt{x8 -- x15}).
+        \item \textbf{Giảm số địa chỉ toán hạng trong lệnh:} Chuyển từ cấu trúc 3 toán hạng (\texttt{add rd, rs1, rs2}) sang 2 toán hạng (\texttt{c.add rd, rs2}, trong đó \texttt{rd} vừa là nguồn vừa là đích), làm tăng số lệnh cần viết nếu muốn giữ nguyên giá trị thanh ghi nguồn.
+        \item \textbf{Thu hẹp phạm vi hằng số tức thời (Immediate):} Hằng số chỉ còn từ 5 đến 6 bit thay vì 12 bit hay 20 bit.
+        \item \textbf{Thu hẹp khoảng cách nhảy và rẽ nhánh:} Độ lệch nhảy tương đối với PC ngắn hơn nhiều so với lệnh 32-bit.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Nhóm 2: Thực thi lệnh Số học, Logic, Dịch bit và Khởi tạo thanh ghi}
+
+\textbf{Bài tập 3.14 (Đề Cuối kỳ 2020.2 -- Trang 4 \& Đề Cuối kỳ 2021.1 -- Trang 3)}\\
+Xác định nội dung giá trị số Hexa lưu trữ tại thanh ghi \texttt{t1} sau khi thực hiện đoạn lệnh hợp ngữ tính toán cơ bản dưới đây:
+\begin{lstlisting}
+    addi s5, zero, 199    # 0xC7 tuong ung gia tri thap phan 199
+    addi s6, zero, 229
+    add  t1, s6, s5
+\end{lstlisting}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Thực hiện phép cộng trong hệ thập phân: $\texttt{t1} = 229 + 199 = 428_{(10)}$.
+    \item Đổi $428_{(10)}$ sang hệ Hexa:
+    $$428 = 256 + 172 = 1 \times 16^2 + 10 \times 16^1 + 12 \times 16^0 = \texttt{0x1AC}$$
+    \item Viết đầy đủ 8 chữ số Hexa (32-bit): \textbf{\texttt{0x000001AC}} (hoặc \textbf{\texttt{0x1AC}}).
+\end{itemize}
+
+\textbf{Bài tập 3.15 (Đề Cuối kỳ 2022.2 \& Cuối kỳ 2024.2 -- \#014753)}\\
+Cho đoạn chương trình hợp ngữ RISC-V sau (giả sử ban đầu $\texttt{s0} = 5$ và $\texttt{s1} = 4$, hoặc $\texttt{s0} = 7, \texttt{s1} = 2$):
+\begin{lstlisting}
+    add  t0, s0, s1
+    sub  t1, s0, s1
+    addi t2, t0, 10
+    addi t3, t1, -5
+\end{lstlisting}
+Hãy xác định giá trị của \texttt{t2} và \texttt{t3} sau khi thực hiện đoạn chương trình:
+\begin{enumerate}[label=\Alph*.]
+    \item $\texttt{t2} = 19, \texttt{t3} = -3$ (khi $\texttt{s0} = 5.5$? Không, ứng với $\texttt{s0} + \texttt{s1} = 9$ và $\texttt{s0} - \texttt{s1} = 2$: không nguyên) $\rightarrow$ Kiểm tra với $\texttt{s0} = 7, \texttt{s1} = 2$: $\texttt{t0} = 9 \implies \texttt{t2} = 19$; $\texttt{t1} = 5 \implies \texttt{t3} = 0$.
+    \item $\texttt{t2} = 19, \texttt{t3} = 0$
+    \item $\texttt{t2} = 15, \texttt{t3} = -5$
+    \item $\texttt{t2} = 24, \texttt{t3} = -8$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Ta có hệ phương trình giữa \texttt{t2} và \texttt{t3}:
+    $$\begin{cases} \texttt{t2} = (\texttt{s0} + \texttt{s1}) + 10 \\ \texttt{t3} = (\texttt{s0} - \texttt{s1}) - 5 \end{cases} \implies \texttt{t2} + \texttt{t3} = 2 \times \texttt{s0} + 5$$
+    \item Vì \texttt{s0} là số nguyên nên $2 \times \texttt{s0} + 5$ bắt buộc phải là một \textbf{số lẻ} (tức tổng $\texttt{t2} + \texttt{t3}$ phải là số lẻ).
+    \item Kiểm tra 4 đáp án:
+    \begin{itemize}
+        \item Đáp án A: $19 + (-3) = 16$ (chẵn -- loại).
+        \item Đáp án C: $15 + (-5) = 10$ (chẵn -- loại).
+        \item Đáp án D: $24 + (-8) = 16$ (chẵn -- loại).
+        \item Đáp án B: $19 + 0 = 19$ (lẻ, ứng với $\texttt{s0} = 7, \texttt{s1} = 2$: $\texttt{t0} = 7 + 2 = 9 \implies \texttt{t2} = 19$; $\texttt{t1} = 7 - 2 = 5 \implies \texttt{t3} = 5 - 5 = 0$).
+    \end{itemize}
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B ($\texttt{t2} = 19, \texttt{t3} = 0$)}.
+\end{itemize}
+
+\textbf{Bài tập 3.16 (Đề Giữa kỳ 2024.1 -- \#4610c2, Ôn tập 2025.2 -- Câu 75 \& Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 18)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2024.1 -- \#4610c2 \& Ôn tập 2025.2 Câu 75):} Những lệnh nào sau đây có thể dùng để xóa nội dung của thanh ghi \texttt{s0} về 0?\\
+    1. \texttt{and s0, s0, zero} \quad 2. \texttt{xor s0, s0, s0} \quad 3. \texttt{xor s0, s0, zero} \quad 4. \texttt{and s0, s0, s0}
+    \item \textbf{(Đề GK 2018.2 -- Mã đề 198, Câu 18):} Trong hai lệnh \texttt{add s4, s4, s4} và \texttt{slli s4, s4, 1}, chúng cùng thực hiện phép toán nào? Hai lệnh \texttt{mul s4, s4, s4} và \texttt{srl s4, s4, s4} có tương đương với hai lệnh trên không?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item \texttt{and s0, s0, zero}: $\texttt{s0} \ \& \ 0 = 0$ (Đúng).
+        \item \texttt{xor s0, s0, s0}: Hai số giống nhau XOR với nhau luôn bằng $0$ (Đúng).
+        \item \texttt{xor s0, s0, zero} và \texttt{and s0, s0, s0} đều giữ nguyên giá trị \texttt{s0}. Vậy chọn \textbf{1 và 2}.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Lệnh \texttt{add s4, s4, s4} ($\texttt{s4} + \texttt{s4} = 2 \times \texttt{s4}$) và lệnh \texttt{slli s4, s4, 1} (dịch trái 1 bit $= 2 \times \texttt{s4}$) tương đương nhau; còn lệnh nhân bình phương \texttt{mul s4, s4, s4} và dịch phải \texttt{srl} không tương đương.
+\end{itemize}
+
+\textbf{Bài tập 3.17 (Đề Giữa kỳ 2024.1 -- \#99ef6, \#e10492 \& Ôn tập 2025.2 -- Câu 6)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu \#99ef6 \& Câu 6):} Đoạn chương trình nào tương đương với lệnh giả \texttt{li t0, 0x20241120}?\\
+    A. \texttt{lui t0, 0x202411} $\rightarrow$ \texttt{ori t0, t0, 0x20} \quad B. \texttt{lui t0, 0x2024} $\rightarrow$ \texttt{addi t0, t0, 0x1120}\\
+    C. \texttt{lui t0, 0x2024} $\rightarrow$ \texttt{ori t0, t0, 0x1120} \quad D. \texttt{lui t0, 0x20241} $\rightarrow$ \texttt{addi t0, t0, 0x120}
+    \item \textbf{(Câu \#e10492):} Chọn đoạn lệnh RISC-V thực hiện câu lệnh C: \texttt{a += 0x12345678;} (với biến \texttt{a} nằm trong thanh ghi \texttt{s0}).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Số 32-bit \texttt{0x20241120} có 20 bit cao (5 chữ Hexa đầu) là \texttt{0x20241} và 12 bit thấp (3 chữ Hexa cuối) là \texttt{0x120} (dương). Do đó dùng: \texttt{lui t0, 0x20241} $\rightarrow$ \texttt{addi t0, t0, 0x120} $\rightarrow$ Chọn \textbf{D}.
+    \item \textbf{Giải câu b:} Đầu tiên nạp hằng số \texttt{0x12345678} vào thanh ghi tạm \texttt{t0} bằng 2 lệnh \texttt{lui t0, 0x12345} và \texttt{addi t0, t0, 0x678}, sau đó cộng dồn vào \texttt{s0} bằng lệnh \texttt{add s0, s0, t0}.
+\end{itemize}
+
+\textbf{Bài tập 3.18 (Đề Giữa kỳ 2022.2 -- Đề 0009, 0008, 0007, 0006 Câu 9)}\\
+Hãy lập trình hợp ngữ chuẩn RISC-V (không dùng lệnh giả \texttt{li}) để thực hiện các phép gán hằng số vào thanh ghi dưới đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề 0008):} $\texttt{t1} = \texttt{0x234}$ và $\texttt{t2} = \texttt{0x56789}$.
+    \item \textbf{(Đề 0009):} $\texttt{t1} = \texttt{0xE7F}$ và $\texttt{t2} = \texttt{0x11062023}$.
+    \item \textbf{(Đề 0006):} $\texttt{s5} = \texttt{0xCA03CA06}$ và $\texttt{s6} = \texttt{0x2B1A}$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Với $\texttt{t1} = \texttt{0x234}$ (nhỏ hơn \texttt{0x800}, nằm gọn trong 12-bit dương): \texttt{ori t1, x0, 0x234} (hoặc \texttt{addi t1, x0, 0x234}).
+        \item Với $\texttt{t2} = \texttt{0x00056789}$ (5 chữ đầu là \texttt{0x56}, 3 chữ cuối là $\texttt{0x789} < \texttt{0x800}$):
+        \texttt{lui t2, 0x56} $\rightarrow$ \texttt{addi t2, t2, 0x789}.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Với $\texttt{t1} = \texttt{0x00000E7F}$: Vì chữ Hexa thứ 3 là $\texttt{E} \ge 8$ (nếu dùng trực tiếp \texttt{addi/ori 0xE7F} sẽ bị mở rộng dấu âm thành \texttt{0xFFFFFE7F}), nên ta phải nạp \texttt{lui t1, 1} (\texttt{0x00001000}) rồi cộng số âm $\texttt{0xE7F} - \texttt{0x1000} = -385$: \texttt{lui t1, 1} $\rightarrow$ \texttt{addi t1, t1, -385}.
+        \item Với $\texttt{t2} = \texttt{0x11062023}$ (3 chữ cuối là $\texttt{0x023} < \texttt{0x800}$):
+        \texttt{lui t2, 0x11062} $\rightarrow$ \texttt{addi t2, t2, 0x023}.
+    \end{itemize}
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item Với $\texttt{s5} = \texttt{0xCA03CA06}$: Chữ số thứ 3 từ phải sang là $\texttt{A} \ge 8$ ($\texttt{0xA06} = 2566 - 4096 = -1530$). Phải tăng 5 chữ đầu từ \texttt{0xCA03C} lên \texttt{0xCA03D}:
+        \texttt{lui s5, 0xCA03D} $\rightarrow$ \texttt{addi s5, s5, -1530}.
+        \item Với $\texttt{s6} = \texttt{0x00002B1A}$: Chữ thứ 3 từ phải sang là $\texttt{B} \ge 8$ ($\texttt{0xB1A} = 2842 - 4096 = -1254$). Tăng 5 chữ đầu từ \texttt{0x2} lên \texttt{0x3}:
+        \texttt{lui s6, 0x3} $\rightarrow$ \texttt{addi s6, s6, -1254}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.19 (Đề Giữa kỳ 2024.1 -- \#1b55cf \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 24)}\\
+Cho đoạn mã hợp ngữ RISC-V dưới đây. Hãy xác định giá trị của thanh ghi \texttt{s2} ở dạng số Hexa sau khi thực thi:
+\begin{lstlisting}
+    li   s0, 1
+    lui  s1, 0xFFFFF
+    ori  s1, s1, 2047
+    add  s2, s0, s1
+\end{lstlisting}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh 1: $\texttt{s0} = \texttt{0x00000001}$.
+    \item Lệnh 2: $\texttt{s1} = \texttt{0xFFFFF000}$.
+    \item Lệnh 3: Vì $2047 = \texttt{0x7FF}$ (bit 11 bằng 0, mở rộng 32-bit là \texttt{0x000007FF}), nên sau phép OR ta có $\texttt{s1} = \texttt{0xFFFFF7FF}$.
+    \item Lệnh 4: $\texttt{s2} = \texttt{0xFFFFF7FF} + 1 = \mathbf{\texttt{0xFFFFF800}}$ (Nếu đề bài viết \texttt{lui s1, 0xFFFF} gồm 4 chữ \texttt{F} thì kết quả là \textbf{\texttt{0x0FFFF800}}).
+\end{itemize}
+
+\textbf{Bài tập 3.20 (Đề Giữa kỳ 2024.1 -- \#5e7591, Cuối kỳ 2025.1 -- \#48b64c \& Ôn tập 2025.2 -- Câu 64)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2024.1 -- \#5e7591 \& Ôn tập 2025.2 Câu 64):} Tính giá trị thập phân của \texttt{s4} sau đoạn lệnh: \texttt{addi s1, zero, 87} $\rightarrow$ \texttt{addi s2, zero, 53} $\rightarrow$ \texttt{xor s3, s2, zero} $\rightarrow$ \texttt{addi s3, s3, 1} $\rightarrow$ \texttt{add s4, s1, s3}.
+    \item \textbf{(Đề CK 2025.1 -- \#48b64c):} Tính giá trị thập phân của \texttt{s4} sau đoạn lệnh: \texttt{addi s1, zero, 80} $\rightarrow$ \texttt{addi s2, zero, 56} $\rightarrow$ \texttt{xor s3, s2, zero} $\rightarrow$ \texttt{addi s3, s3, 1} $\rightarrow$ \texttt{add s4, s1, s3}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Phép toán \texttt{xor s3, s2, zero} giữ nguyên giá trị của \texttt{s2} ($\texttt{s3} = \texttt{s2}$).
+    \item \textbf{Câu a:} $\texttt{s3} = 53 + 1 = 54 \implies \texttt{s4} = 87 + 54 = \mathbf{141}$.
+    \item \textbf{Câu b:} $\texttt{s3} = 56 + 1 = 57 \implies \texttt{s4} = 80 + 57 = \mathbf{137}$.
+\end{itemize}
+
+\textbf{Bài tập 3.21 (Đề Giữa kỳ 2018.2 -- Mã đề 204, Câu 9)}\\
+Cho biết giá trị của thanh ghi \texttt{s1} sau khi thực hiện xong đoạn lệnh sau:
+\begin{lstlisting}
+    addi t1, x0, -1
+    addi t2, zero, 5
+    or   s1, t1, t2
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item $5$
+    \item \texttt{0xFFFFFFFF}
+    \item $-5$
+    \item $1$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số nguyên âm $-1$ trong biểu diễn bù 2 32-bit gồm toàn bộ 32 bit bằng $1$: $\texttt{t1} = \texttt{0xFFFFFFFF}$.
+    \item Khi thực hiện phép OR với \texttt{0xFFFFFFFF}, tất cả các bit của kết quả đều bằng $1$: $\texttt{s1} = \texttt{0xFFFFFFFF}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B (\texttt{0xFFFFFFFF})}.
+\end{itemize}
+
+\textbf{Bài tập 3.22 (Đề Cuối kỳ 2022.2 -- \#585834, 2024.1 -- \#d9f3db, 2024.2 \& Ôn tập 2025.2 -- Câu 54)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2024.1 -- \#d9f3db \& Ôn tập 2025.2 Câu 54):} Cho biết nội dung thanh ghi \texttt{s1} theo số Hexa sau đoạn lệnh: \texttt{lui s0, 0x11223} $\rightarrow$ \texttt{ori s0, s0, 0x4AB} $\rightarrow$ \texttt{ori s1, s0, 0xFF}.
+    \item \textbf{(Đề CK 2022.2 \& 2024.2 -- \#585834):} Nếu sau hai lệnh đầu thanh ghi $\texttt{s0} = \texttt{0x223389CD}$, thực hiện lệnh thứ ba là \texttt{andi s1, s0, 0xFF} thì nội dung thanh ghi \texttt{s1} bằng bao nhiêu?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item \texttt{lui s0, 0x11223} $\implies \texttt{s0} = \texttt{0x11223000}$.
+        \item \texttt{ori s0, s0, 0x4AB} $\implies \texttt{s0} = \texttt{0x112234AB}$.
+        \item \texttt{ori s1, s0, 0xFF}: Phép OR với \texttt{0x000000FF} giữ nguyên 6 chữ Hexa đầu và bật 2 chữ cuối thành \texttt{FF} $\implies \mathbf{\texttt{s1 = 0x112234FF}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Lệnh \texttt{andi s1, s0, 0xFF} thực hiện phép AND với \texttt{0x000000FF}, xóa 6 chữ số Hexa đầu về \texttt{0} và giữ lại 2 chữ số cuối: $\mathbf{\texttt{s1 = 0x000000CD}}$.
+\end{itemize}
+
+\textbf{Bài tập 3.23 (Đề Cuối kỳ 2020.2, 2022.2 -- \#5070f9, 2024.2, Giữa kỳ 2023.2 \& Giữa kỳ 2025.2 -- Đề 0012 Câu 108)}\\
+Hãy xác định kết quả dạng Hexa cho các bài tập phép toán logic dưới đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2020.2 -- Trang 3):} Cho $\texttt{s0} = \texttt{0x1234ABCD}$ và $\texttt{s1} = \texttt{0xFFFF0000}$. Tìm \texttt{s2} sau lệnh \texttt{xor s2, s0, s1}.
+    \item \textbf{(Đề CK 2020.2 -- Trang 7):} Cho $\texttt{t0} = \texttt{0xAAAAAAAA}$ và $\texttt{t1} = \texttt{0x0000FFC0}$. Tìm \texttt{t3} sau lệnh \texttt{and t3, t0, t1}.
+    \item \textbf{(Đề CK 2022.2, 2024.2 -- \#5070f9 \& Ôn tập 2025.2 Câu 64):} Cho $\texttt{t0} = \texttt{0x5A6B7C8D}$ và $\texttt{t1} = \texttt{0x000FFF00}$. Tìm \texttt{t2, t3} sau 2 lệnh: \texttt{xor t2, t0, t1} và \texttt{xor t3, t2, t1}.
+    \item \textbf{(Đề GK 2025.2 -- Đề 0012, Câu 108):} Cho $\texttt{t0} = \texttt{0x35B9D2E4}$ và $\texttt{t1} = \texttt{0x0F0F0F0F}$. Tìm \texttt{t2} sau lệnh \texttt{xor t2, t0, t1}.
+    \item \textbf{(Đề GK 2023.2 -- Đề 2, Câu 4):} Cho $\texttt{t0} = \texttt{0xA1B2C3D4}$. Viết một lệnh logic để biến đổi \texttt{t0} thành \texttt{0x286CB0F5} (giả sử thanh ghi mặt nạ \texttt{t1} đã được nạp sẵn hằng số cần thiết).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} XOR với \texttt{0xFFFF0000} sẽ đảo 4 chữ số đầu \texttt{1234} (lấy $15$ trừ từng chữ số: $15-1=\texttt{E}, 15-2=\texttt{D}, 15-3=\texttt{C}, 15-4=\texttt{B}$) và giữ nguyên 4 chữ cuối \texttt{ABCD} $\implies \mathbf{\texttt{s2 = 0xEDCBABCD}}$.
+    \item \textbf{Giải câu b:} Trong $\texttt{t0} = \texttt{0xAAAAAAAA}$ ($\texttt{A} = 1010_2$) và $\texttt{t1} = \texttt{0x0000FFC0}$ ($\texttt{C} = 1100_2$), lấy từng chữ số AND với nhau: $1010_2 \ \& \ 1100_2 = 1000_2 = \texttt{8}$ $\implies \mathbf{\texttt{t3 = 0x0000AA80}}$.
+    \item \textbf{Giải câu c:} Đảo 3 chữ giữa \texttt{B7C} của \texttt{0x5A6B7C8D} được $\mathbf{\texttt{t2 = 0x5A64838D}}$. Khi lấy \texttt{t2} XOR tiếp với \texttt{t1} sẽ hoàn nguyên về giá trị của \texttt{t0}: $\mathbf{\texttt{t3 = 0x5A6B7C8D}}$.
+    \item \textbf{Giải câu d:} Đảo các chữ số ở vị trí chẵn (\texttt{5, 9, 2, 4} $\rightarrow \texttt{A, 6, D, B}$) và giữ nguyên các chữ số ở vị trí lẻ (\texttt{3, B, D, E}) $\implies \mathbf{\texttt{t2 = 0x3AB6DDEB}}$.
+    \item \textbf{Giải câu e:} Lấy $\texttt{0xA1B2C3D4} \oplus \texttt{0x286CB0F5} = \texttt{0x89DE7321}$. Với $\texttt{t1} = \texttt{0x89DE7321}$, lệnh cần viết là: \textbf{\texttt{xor t0, t0, t1}}.
+\end{itemize}
+
+\textbf{Bài tập 3.24 (Đề Giữa kỳ 2022.2 -- Đề 0008 Câu 5 \& Đề 0007 Câu 5)}\\
+Thực hiện các phép toán logic 32-bit sau và biểu diễn kết quả ở hệ 16 (Hexa):
+\begin{enumerate}[label=\alph*)]
+    \item \texttt{0xB8C32AC9 and 0x00FFFF00} \quad và \quad \texttt{0xCF072D76 or 0xF0F0F0F0}.
+    \item \texttt{0x0000FFFF and 0x079CC0D1} \quad và \quad \texttt{0xAC4F0130 or 0xFFFF0000}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item \texttt{0xB8C32AC9 and 0x00FFFF00} $= \mathbf{\texttt{0x00C32A00}}$.
+        \item \texttt{0xCF072D76 or 0xF0F0F0F0} $= \mathbf{\texttt{0xFFF7FDF6}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item \texttt{0x0000FFFF and 0x079CC0D1} $= \mathbf{\texttt{0x0000C0D1}}$.
+        \item \texttt{0xAC4F0130 or 0xFFFF0000} $= \mathbf{\texttt{0xFFFF0130}}$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.25 (Đề Cuối kỳ 2020.2 -- Trang 6 \& Đề Cuối kỳ 2021.1 -- Trang 5)}\\
+Cho đoạn mã nguồn C thực hiện thao tác xử lý trên bit: \texttt{X = (Y \& 0x0F) << 4;}. Giả thiết hai biến số nguyên \texttt{X} và \texttt{Y} lần lượt được phân bổ tại các thanh ghi \texttt{s2} và \texttt{s1}. Hãy chỉ ra chuỗi lệnh hợp ngữ RISC-V dịch chính xác câu lệnh C trên?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{and t1, s1, 0xF} $\rightarrow$ \texttt{slli s2, t1, 16}
+    \item \texttt{andi t1, s1, 15} $\rightarrow$ \texttt{slli s2, t1, 4}
+    \item \texttt{andi t1, s1, 0xFFFF} $\rightarrow$ \texttt{slli s2, t1, 2}
+    \item \texttt{slli t1, s1, 15} $\rightarrow$ \texttt{andi s2, t1, 4}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Bước 1: Tính biểu thức trong ngoặc \texttt{Y \& 0x0F}. Vì $\texttt{0x0F} = 15_{(10)}$ là hằng số tức thời nên phải dùng lệnh \texttt{andi}: \texttt{andi t1, s1, 15}.
+    \item Bước 2: Dịch trái kết quả đi $4\text{ bit}$ (\texttt{<< 4}) và lưu vào \texttt{s2} (\texttt{X}) bằng lệnh \texttt{slli}: \texttt{slli s2, t1, 4}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 3.26 (Đề Giữa kỳ 2023.2 -- Đề 1 Câu 4 \& Đề Cuối kỳ 2021.2 -- Mã đề B8 Câu 2.2)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2023.2):} Cho $\texttt{t0} = \texttt{0xAAAAAAAA}, \texttt{t1} = \texttt{0x00FF0000}$. Tìm giá trị Hexa của \texttt{t2} và \texttt{t3} sau hai lệnh: \texttt{srli t2, t0, 3} và \texttt{or t3, t2, t1}.
+    \item \textbf{(Đề CK 2021.2 -- Mã đề B8):} Cho $\texttt{t0} = \texttt{0xBEADFEED}, \texttt{t1} = \texttt{0xDEADFADE}$. Tìm giá trị Hexa của \texttt{t2} sau hai lệnh: \texttt{slli t2, t0, 4} và \texttt{or t2, t2, t1}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Đổi $\texttt{t0} = \texttt{0xAAAAAAAA} = 1010\,1010\,\dots\,1010_{(2)}$.
+        \item Khi dịch phải logic $3\text{ bit}$ (\texttt{srli t2, t0, 3}), 3 bit \texttt{000} chèn vào bên trái ghép với bit \texttt{1} đầu tiên thành \texttt{0001} (\texttt{1}), các nhóm 4 bit tiếp theo đều trở thành \texttt{0101} (\texttt{5}) $\implies \mathbf{\texttt{t2 = 0x15555555}}$.
+        \item Thực hiện \texttt{or t3, t2, t1} với $\texttt{t1} = \texttt{0x00FF0000}$: $\mathbf{\texttt{t3 = 0x15FF5555}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item \texttt{slli t2, t0, 4} (dịch trái 1 chữ số Hexa): $\texttt{t2} = \texttt{0xEADFEED0}$.
+        \item \texttt{or t2, t2, t1}: Lấy \texttt{0xEADFEED0} OR từng chữ số với \texttt{0xDEADFADE} được: $\mathbf{\texttt{t2 = 0xFEFFFEFE}}$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 3: Lệnh So sánh (\texttt{slt, slti, sltu, blt, bltu}) và Rẽ nhánh}
+
+\textbf{Bài tập 3.27 (Đề Cuối kỳ 2021.2 -- Mã đề B8, Câu 2.1)}\\
+Cho câu lệnh hợp ngữ: \texttt{slti t2, t0, X}. Giả sử thanh ghi \texttt{t0} có giá trị \texttt{0xAD100002}. Với những giá trị nào của hằng số \texttt{X} (viết dưới dạng thập phân) thì thanh ghi \texttt{t2} sẽ có giá trị bằng $1$?
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{slti} thực hiện so sánh số nguyên \textbf{có dấu} giữa thanh ghi \texttt{t0} (32-bit) và hằng số tức thời \texttt{X} (12-bit có dấu trong RISC-V, có dải giá trị hợp lệ là $[-2048, +2047]$).
+    \item Xét $\texttt{t0} = \texttt{0xAD100002}$: Chữ số Hexa đầu tiên là $\texttt{A} = 1010_{(2)}$ có bit dấu bằng $1$, nên \texttt{t0} là một số nguyên âm rất nhỏ ($\approx -1.39 \times 10^9$), luôn nhỏ hơn $-2048$.
+    \item Do đó, với \textbf{mọi giá trị hợp lệ của hằng số \texttt{X} thuộc đoạn $[-2048, +2047]$} (hoặc $[-32768, +32767]$ nếu xét chuẩn 16-bit), điều kiện $\texttt{t0} < \texttt{X}$ luôn luôn đúng và làm cho $\texttt{t2} = 1$.
+\end{itemize}
+
+\textbf{Bài tập 3.28 (Đề Cuối kỳ 2025.1 -- \#a91b41, Giữa kỳ 2024.1 -- \#8d33e2, \#484325 \& Ôn tập 2025.2 -- Câu 23, 61)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2025.1 -- \#a91b41):} Tìm giá trị thập phân của \texttt{t1} sau khi chạy đoạn mã:
+\begin{lstlisting}
+    li   s1, -15
+    li   s2, 17
+    slt  t0, s1, s2
+    bne  t0, zero, else
+    addi t1, s1, 14
+    j    endif
+else:
+    addi t1, s2, -1
+endif: nop
+\end{lstlisting}
+    \item \textbf{(Ôn tập 2025.2 -- Câu 23):} Cho $\texttt{x22} = 10, \texttt{x23} = 5, \texttt{x24} = 0$. Chạy: \texttt{slt x24, x22, x23} $\rightarrow$ \texttt{bne x24, x0, L1} $\rightarrow$ \texttt{addi x24, x24, 10} $\rightarrow$ \texttt{L1: addi x24, x24, 1}. Tìm giá trị cuối của \texttt{x24}?
+    \item \textbf{(Ôn tập 2025.2 -- Câu 61):} Cho $\texttt{x5} = \texttt{0x0000000A}$ ($10$) và $\texttt{x6} = \texttt{0x0000000A}$. Chạy: \texttt{addi x7, x0, 100} $\rightarrow$ \texttt{bne x5, x6, Skip} $\rightarrow$ \texttt{addi x7, x7, 50} $\rightarrow$ \texttt{Skip: addi x7, x7, 1}. Tìm \texttt{x7}?
+    \item \textbf{(Đề GK 2024.1 -- \#8d33e2 \& \#484325):}
+    \begin{itemize}
+        \item \textit{Bài 1:} $\texttt{t0} = -2, \texttt{t1} = 2$. Chạy \texttt{blt t0, t1, else}. Nhánh không nhảy tính $\texttt{a0} = 1 + 5$; nhánh \texttt{else} tính $\texttt{a0} = 2 + 7$. Tìm \texttt{a0}?
+        \item \textit{Bài 2:} $\texttt{t0} = 10, \texttt{t1} = 10$. Chạy \texttt{bltu t0, t1, else}. Nhánh không nhảy tính $\texttt{a0} = 10 + 5$; nhánh \texttt{else} tính $\texttt{a0} = 20 + 7$. Tìm \texttt{a0}?
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Vì $-15 < 17$ là Đúng nên $\texttt{t0} = 1$. Lệnh \texttt{bne t0, zero, else} thỏa mãn ($\texttt{t0} \neq 0$) nên nhảy tới nhãn \texttt{else} thực hiện: $\texttt{t1} = \texttt{s2} - 1 = 17 - 1 = \mathbf{16}$.
+    \item \textbf{Giải câu b:} Vì $10 < 5$ là Sai nên $\texttt{x24} = 0$. Lệnh \texttt{bne} không nhảy, thực hiện cộng $10$ ($\texttt{x24} = 10$) rồi trôi tiếp qua nhãn \texttt{L1} cộng thêm $1$ $\implies \mathbf{\texttt{x24 = 11}}$.
+    \item \textbf{Giải câu c:} Vì $\texttt{x5} == \texttt{x6}$ nên lệnh \texttt{bne} không nhảy. Thanh ghi \texttt{x7} nhận giá trị: $100 + 50 + 1 = \mathbf{151}$.
+    \item \textbf{Giải câu d:}
+    \begin{itemize}
+        \item \textit{Bài 1:} $-2 < 2$ là Đúng $\implies$ Nhảy tới \texttt{else}: $\texttt{a0} = 2 + 7 = \mathbf{9}$.
+        \item \textit{Bài 2:} $10 < 10$ là Sai $\implies$ Không nhảy: $\texttt{a0} = 10 + 5 = \mathbf{15}$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 4: Truy cập bộ nhớ (\texttt{lw, lh, lb, lbu, sw}) và Thứ tự Little-Endian}
+
+\textbf{Bài tập 3.29 (Đề Cuối kỳ 2022.2 \& Cuối kỳ 2024.2 -- \#56e53f)}\\
+Giả sử thanh ghi \texttt{s0} đang chứa giá trị địa chỉ \texttt{0x10021000}. Lựa chọn chức năng đúng của câu lệnh hợp ngữ \texttt{lw t0, 8(s0)} (hoặc \texttt{sw t0, 8(s0)}):
+\begin{enumerate}[label=\Alph*.]
+    \item Ghi giá trị hằng số \texttt{0x10021008} vào thanh ghi \texttt{t0}.
+    \item Nạp nội dung word nhớ ở địa chỉ \texttt{0x10021008} đưa vào thanh ghi \texttt{t0}.
+    \item Lấy nội dung thanh ghi \texttt{t0} cộng thêm 8 rồi lưu ra word nhớ ở địa chỉ \texttt{0x10021000}.
+    \item Lưu nội dung thanh ghi \texttt{t0} ra word nhớ ở địa chỉ \texttt{0x10021008}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Địa chỉ hiệu dụng của toán hạng bộ nhớ là $\texttt{s0} + 8 = \texttt{0x10021000} + 8 = \texttt{0x10021008}$.
+    \item Nếu đề bài hỏi lệnh \textbf{\texttt{lw t0, 8(s0)}} (load word): Chức năng là \textbf{B (Nạp nội dung word nhớ ở địa chỉ \texttt{0x10021008} đưa vào thanh ghi \texttt{t0})}.
+    \item Nếu đề bài hỏi lệnh \textbf{\texttt{sw t0, 8(s0)}} (store word): Chức năng là \textbf{D (Lưu nội dung thanh ghi \texttt{t0} ra word nhớ ở địa chỉ \texttt{0x10021008})}.
+\end{itemize}
+
+\textbf{Bài tập 3.30 (Đề Cuối kỳ 2025.1 -- \#1f833e)}\\
+Đoạn lệnh nào dưới đây dùng để nạp một word từ địa chỉ bộ nhớ \texttt{0x10010004} vào thanh ghi \texttt{t1} (mà không dùng lệnh giả)?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{li t0, 0x10010004} $\rightarrow$ \texttt{lw t1, zero(t0)}
+    \item \texttt{lui t0, 0x1001} $\rightarrow$ \texttt{addi t0, t0, 0x0004} $\rightarrow$ \texttt{lw t1, 0(t0)}
+    \item \texttt{lw t1, 0x10010004(zero)}
+    \item \texttt{lui t0, 0x10010} $\rightarrow$ \texttt{addi t0, t0, 0x004} $\rightarrow$ \texttt{lw t1, 0(t0)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Địa chỉ 32-bit \texttt{0x10010004} có 20 bit cao (5 chữ số Hexa đầu) là \texttt{0x10010} và 12 bit thấp (3 chữ số Hexa cuối) là \texttt{0x004}.
+    \item Lệnh \texttt{lui t0, 0x10010} tạo ra \texttt{0x10010000}; lệnh \texttt{addi t0, t0, 0x004} cộng thêm $4$ tạo thành địa chỉ \texttt{0x10010004}; sau đó dùng \texttt{lw t1, 0(t0)} đọc word nhớ lên \texttt{t1}. (Phương án B sai vì \texttt{0x1001} thiếu một chữ số 0).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 3.31 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 20, Mã đề 199 Câu 6 \& Mã đề 204 Câu 1)}\\
+Biến \texttt{X} thuộc kiểu word 32-bit nằm ở địa chỉ \texttt{0x0FB028C4} (hoặc \texttt{0xAFB028C4}). Đoạn chương trình nào sau đây tương đương với câu lệnh trong ngôn ngữ C: \texttt{X = X + 1;}?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{addi t3, x0, 0x0FB028C4} $\rightarrow$ \texttt{lw s3, 0(t3)} $\rightarrow$ \texttt{addi s3, s3, 1} $\rightarrow$ \texttt{sw s3, 0(t3)}
+    \item \texttt{lui t3, 0x0FB03} $\rightarrow$ \texttt{addi t3, t3, -1852} (\textit{hoặc \texttt{lui} + \texttt{ori}}) $\rightarrow$ \texttt{lw s3, 0(t3)} $\rightarrow$ \texttt{addi s3, s3, 1} $\rightarrow$ \texttt{sw s3, 0(t3)}
+    \item \texttt{lui t3, 0x28C4} $\rightarrow$ \texttt{ori t3, t3, 0x0FB0} $\rightarrow$ \texttt{lw s3, 0(t3)} $\rightarrow$ \texttt{addi s3, s3, 1} $\rightarrow$ \texttt{sw s3, 0(t3)}
+    \item \texttt{lui t3, 0x0FB03} $\rightarrow$ \texttt{addi t3, t3, -1852} $\rightarrow$ \texttt{sw s3, 0(t3)} $\rightarrow$ \texttt{addi s3, s3, 1} $\rightarrow$ \texttt{lw s3, 0(t3)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Quy trình chuẩn để tăng biến \texttt{X} trong bộ nhớ lên 1 đơn vị gồm 3 bước:
+    \begin{enumerate}
+        \item Nạp phần cao của địa chỉ bằng \texttt{lui}, ghép phần thấp để tạo địa chỉ \texttt{0x0FB028C4} trong thanh ghi con trỏ \texttt{t3} (Loại A vì \texttt{addi} không nạp được hằng số 32-bit; loại C vì nạp ngược phần thấp lên phần cao).
+        \item Đọc (\texttt{lw}) giá trị của \texttt{X} từ bộ nhớ vào thanh ghi \texttt{s3}, cộng thêm 1 (\texttt{addi s3, s3, 1}).
+        \item Ghi (\texttt{sw}) kết quả từ \texttt{s3} trả lại bộ nhớ (Loại D vì thực hiện \texttt{sw} trước khi \texttt{lw}).
+    \end{enumerate}
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 3.32 (Đề Cuối kỳ 2022.2 -- \#757298, 2024.1 -- \#c99f87, 2024.2 \& Ôn tập 2025.2 -- Câu 20)}\\
+Biến \texttt{x} thuộc kiểu word 32-bit nằm ở địa chỉ \texttt{0x10010200}. Đoạn chương trình RISC-V nào dưới đây tương đương với câu lệnh ngôn ngữ C: \texttt{x = x \& 15;}?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{andi t3, t3, 15}
+    \item \texttt{lui t3, 0x10200} $\rightarrow$ \texttt{addi t3, t3, 0x100} $\rightarrow$ \texttt{lw s3, 0(t3)} $\rightarrow$ \texttt{andi s3, s3, 15} $\rightarrow$ \texttt{sw s3, 0(t3)}
+    \item \texttt{lui t3, 0x10010} $\rightarrow$ \texttt{addi t3, t3, 0x200} $\rightarrow$ \texttt{lw s3, 0(t3)} $\rightarrow$ \texttt{andi s3, s3, 15} $\rightarrow$ \texttt{sw s3, 0(t3)}
+    \item \texttt{lui t3, 0x10010} $\rightarrow$ \texttt{addi t3, t3, 0x200} $\rightarrow$ \texttt{sw s3, 0(t3)} $\rightarrow$ \texttt{andi s3, s3, 15} $\rightarrow$ \texttt{lw s3, 0(t3)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Tạo địa chỉ \texttt{0x10010200} trong \texttt{t3} bằng cặp lệnh \texttt{lui t3, 0x10010} và \texttt{addi t3, t3, 0x200}.
+    \item Đọc \texttt{x} từ bộ nhớ lên \texttt{s3} (\texttt{lw s3, 0(t3)}), thực hiện AND với 15 (\texttt{andi s3, s3, 15}), rồi ghi trả lại bộ nhớ (\texttt{sw s3, 0(t3)}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.33 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 11, Mã đề 204 Câu 12 \& Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 19, Mã đề 244 Câu 3)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243 -- Câu 19):} Trong bộ nhớ chính có 4 byte theo thứ tự địa chỉ tăng dần là \texttt{1A, 2B, 3C, 4D} được lưu theo thứ tự đầu nhỏ (Little-Endian). Hỏi số nguyên 32-bit tương ứng bằng bao nhiêu?\\
+    A. \texttt{0x4321DCBA} \quad B. \texttt{0x4D3C2B1A} \quad C. \texttt{0x1A2B3C4D} \quad D. \texttt{0xDCBA4321}
+    \item \textbf{(Mã đề 244 -- Câu 3):} Trong bộ nhớ chính có 4 byte theo thứ tự địa chỉ tăng dần là \texttt{4D, 3C, 2B, 1A} được lưu theo thứ tự đầu nhỏ. Hỏi số nguyên 32-bit tương ứng bằng bao nhiêu?\\
+    A. \texttt{0x4D3C2B1A} \quad B. \texttt{0x1A2B3C4D} \quad C. \texttt{0x4321DCBA} \quad D. \texttt{0xDCBA4321}
+    \item \textbf{(Mã đề 204 -- Câu 12):} Số 32-bit \texttt{0xC81A56} (tức \texttt{0x00C81A56}) khi được lưu trữ vào bộ nhớ chính theo thứ tự đầu nhỏ thì trình tự các byte theo địa chỉ tăng dần như thế nào?\\
+    A. \texttt{56, 1A, C8} \quad B. \texttt{56, 1A, C8, 00} \quad C. \texttt{00, C8, 1A, 56} \quad D. \texttt{C8, 1A, 56}
+    \item \textbf{(Mã đề 198 -- Câu 11):} Một số 32-bit được lưu ở 4 ngăn nhớ liên tiếp từ địa chỉ 612 đến 615 lần lượt chứa các giá trị Hexa: \texttt{E} (tức \texttt{0E}), \texttt{48}, \texttt{21}, \texttt{A} (tức \texttt{0A}). Giá trị của số đó ở hệ 16 bằng bao nhiêu?\\
+    A. \texttt{E4821A} nếu đầu to \quad B. \texttt{A4821E} nếu đầu to \quad C. \texttt{0A48210E} nếu đầu nhỏ \quad D. \texttt{0E48210A} nếu đầu to
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Theo Little-Endian, ghép ngược từ byte ở địa chỉ lớn nhất về địa chỉ nhỏ nhất: \textbf{\texttt{0x4D3C2B1A}} $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Giải câu b:} Ghép ngược từ phải sang trái: \textbf{\texttt{0x1A2B3C4D}} $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Giải câu c:} Số 32-bit \texttt{0xC81A56} viết đủ 8 chữ số Hexa (4 byte) là \texttt{0x00C81A56}. Lưu theo Little-Endian từ byte thấp nhất đến byte cao nhất là: \textbf{\texttt{56, 1A, C8, 00}} $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Giải câu d:} Mỗi ngăn nhớ 1 byte phải biểu diễn bằng 2 chữ số Hexa: tại 612 là \texttt{0E}, 613 là \texttt{48}, 614 là \texttt{21}, 615 là \texttt{0A}. Nếu lưu theo thứ tự đầu to (Big-Endian) thì ghép xuôi từ 612 đến 615 được \textbf{\texttt{0E48210A}} (nếu đầu nhỏ thì ghép ngược là \texttt{0A21480E}) $\rightarrow$ Chọn \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 3.34 (Đề Giữa kỳ 2023.2 -- Đề 1 Câu 3, Đề 2 Câu 1 \& Giữa kỳ 2022.2 -- Đề 0008, 0007 Câu 2)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2023.2 -- Đề 1, Câu 3):} Bộ nhớ chính lưu theo kiểu đầu nhỏ (Little-Endian). Thanh ghi \texttt{s6} chứa địa chỉ một ngăn nhớ dữ liệu. Sau khi thực hiện: \texttt{lui s0, 0x1B32C} $\rightarrow$ \texttt{addi s0, s0, 0x2E5} (để $\texttt{s0} = \texttt{0x1B32C2E5}$) $\rightarrow$ \texttt{sw s0, 0(s6)} $\rightarrow$ \texttt{lb s1, 1(s6)}. Hãy chỉ ra nội dung của \texttt{s0} và \texttt{s1} theo số Hexa.
+    \item \textbf{(Đề GK 2023.2 -- Đề 2, Câu 1):} Thực hiện đoạn lệnh: \texttt{lui s0, 0x4567C} $\rightarrow$ \texttt{addi s0, s0, -802} (để $\texttt{s0} = \texttt{0x4567BCDE}$) $\rightarrow$ \texttt{addi s1, zero, -16} $\rightarrow$ \texttt{and s2, s0, s1}. Hãy chỉ ra nội dung của \texttt{s1} và \texttt{s2} theo số Hexa.
+    \item \textbf{(Đề GK 2022.2 -- Đề 0008 \& 0007, Câu 2):}
+    \begin{itemize}
+        \item \textit{Đề 0008:} Từ địa chỉ \texttt{0x100110F8} đến \texttt{0x100110FB} lưu 4 byte theo Little-Endian là: \texttt{0x5C, 0x52, 0x0E, 0xEF}. Giá trị biến 32-bit này bằng bao nhiêu? Viết lệnh nạp biến này vào \texttt{s1}.
+        \item \textit{Đề 0007:} Biến 32-bit có giá trị \texttt{0x4CDC001A} lưu ở địa chỉ \texttt{0x1001272C}. Hãy điền các byte vào 4 địa chỉ từ \texttt{0x1001272C} đến \texttt{0x1001272F}.
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Thanh ghi $\mathbf{\texttt{s0 = 0x1B32C2E5}}$.
+        \item Khi \texttt{sw s0, 0(s6)} ra bộ nhớ Little-Endian: tại \texttt{0(s6)} là \texttt{0xE5}, tại \texttt{1(s6)} là \texttt{0xC2}, tại \texttt{2(s6)} là \texttt{0x32}, tại \texttt{3(s6)} là \texttt{0x1B}.
+        \item Lệnh \texttt{lb s1, 1(s6)} đọc byte \texttt{0xC2}. Vì $\texttt{C} \ge 8$ (số âm), mở rộng dấu thành: $\mathbf{\texttt{s1 = 0xFFFFFFC2}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Số $-16$ đổi sang mã bù 2 32-bit là: $\mathbf{\texttt{s1 = 0xFFFFFFF0}}$.
+        \item Lệnh \texttt{and s2, s0, s1} xóa chữ số Hexa cuối cùng của \texttt{0x4567BCDE} về 0: $\mathbf{\texttt{s2 = 0x4567BCD0}}$.
+    \end{itemize}
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item \textit{Đề 0008:} Ghép ngược từ \texttt{0x100110FB} về \texttt{0x100110F8} được \textbf{\texttt{0xEF0E525C}}. Lệnh nạp vào \texttt{s1}: \texttt{lui t0, 0x10011} $\rightarrow$ \texttt{lw s1, 0x0F8(t0)}.
+        \item \textit{Đề 0007:} Tại \texttt{0x1001272C} là \textbf{\texttt{0x1A}}; tại \texttt{0x1001272D} là \textbf{\texttt{0x00}}; tại \texttt{0x1001272E} là \textbf{\texttt{0xDC}}; tại \texttt{0x1001272F} là \textbf{\texttt{0x4C}}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.35 (Đề Giữa kỳ 2024.1 -- \#6a94a2 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 49)}\\
+Địa chỉ của toán hạng đích trong lệnh \texttt{sw} bên dưới là gì (viết ở dạng số Hexa)?
+\begin{lstlisting}
+    li   s0, 0x1001BCDE
+    addi s1, s0, 0x321
+    sw   s0, 1(s1)
+\end{lstlisting}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh 1: $\texttt{s0} = \texttt{0x1001BCDE}$.
+    \item Lệnh 2: $\texttt{s1} = \texttt{0x1001BCDE} + \texttt{0x321} = \texttt{0x1001BFFF}$ (vì $\texttt{0xCDE} + \texttt{0x321} = \texttt{0xFFF}$).
+    \item Lệnh 3 (\texttt{sw s0, 1(s1)}): Địa chỉ của toán hạng đích là:
+    $$\text{Địa chỉ} = \texttt{s1} + 1 = \texttt{0x1001BFFF} + 1 = \mathbf{\texttt{0x1001C000}}$$
+    (Nếu đề bài cắt ngắn hằng số thành \texttt{li s0, 0x1001BC} và \texttt{addi s1, s0, 0x32} như ở ảnh chụp bị che của Câu 49 Ôn tập 2025.2 thì địa chỉ là $\texttt{0x1001BC} + \texttt{0x32} + 1 = \mathbf{\texttt{0x1001EF}}$).
+\end{itemize}
+\subsection{Nhóm 5: Chuyển đổi giữa Ngôn ngữ C và Hợp ngữ RISC-V (Biểu thức, Mảng, Con trỏ, Rẽ nhánh)}
+
+\textbf{Bài tập 3.36 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 13, Mã đề 199 Câu 5 \& Mã đề 204 Câu 2)}\\
+Biến \texttt{X, Y, Z} nằm ở các thanh ghi \texttt{s1, s2, s3} tương ứng. Hỏi mỗi đoạn mã hợp ngữ dưới đây thực hiện phép toán nào?
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 198 \& 199):} \texttt{addi t1, s1, 2} $\rightarrow$ \texttt{slli s2, s2, 2} $\rightarrow$ \texttt{sub s3, t1, s2}.\\
+    A. $Z = 2 - Y \times 2$ \qquad B. $Z = X + 2 - Y \times 4$\\
+    C. $Z = X \times 2 + Y / 2$ \qquad D. $Z = X - Y \times 4$
+    \item \textbf{(Mã đề 204):} \texttt{add t1, s1, s2} $\rightarrow$ \texttt{srli t2, s2, 1} $\rightarrow$ \texttt{add s3, t1, t2}.\\
+    A. $Z = X + Y \times 2$ \qquad B. $Z = X + Y / 2$\\
+    C. $Z = X / 2 + Y$ \qquad D. $Z = X + Y + Y / 2$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item \texttt{addi t1, s1, 2}: $\texttt{t1} = X + 2$.
+        \item \texttt{slli s2, s2, 2}: Dịch trái $2\text{ bit}$ tương đương nhân với $2^2 = 4 \implies \texttt{s2} = Y \times 4$.
+        \item \texttt{sub s3, t1, s2}: $Z = \texttt{t1} - \texttt{s2} = X + 2 - Y \times 4$ $\rightarrow$ Chọn \textbf{B}.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item \texttt{add t1, s1, s2}: $\texttt{t1} = X + Y$.
+        \item \texttt{srli t2, s2, 1}: Dịch phải $1\text{ bit}$ tương đương chia nguyên cho $2^1 = 2 \implies \texttt{t2} = Y / 2$.
+        \item \texttt{add s3, t1, t2}: $Z = X + Y + Y / 2$ $\rightarrow$ Chọn \textbf{D}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.37 (Đề Cuối kỳ 2020.2 -- Trang 9, 2022.2 -- Trang 14, 2024.1 -- \#f4, 2024.2 \& Ôn tập 2025.2 -- Câu 68)}\\
+Đoạn lệnh hợp ngữ RISC-V dưới đây tương ứng với câu lệnh C nào (biết rằng các thanh ghi \texttt{s0, s1, s2, s3} được sử dụng tương ứng cho các biến \texttt{f, g, h, i})?
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    slli t0, s1, 2
+    sub  s3, s0, s2
+    add  s3, s3, t0
+    addi s3, s3, 5
+\end{lstlisting}
+\end{minipage}
+\begin{enumerate}[label=\Alph*.]
+    \item $i = f + h + 4 * g - 5$
+    \item $i = f - h + 4 * g + 5$
+    \item $i = f - h + 4 * g - 5$
+    \item $i = f + h - 4 * g - 5$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh 1 (\texttt{slli t0, s1, 2}): Dịch trái \texttt{s1} ($g$) đi $2\text{ bit}$, tương đương $\texttt{t0} = 4 * g$.
+    \item Lệnh 2 (\texttt{sub s3, s0, s2}): $\texttt{s3} = f - h$.
+    \item Lệnh 3 (\texttt{add s3, s3, t0}): $\texttt{s3} = f - h + 4 * g$.
+    \item Lệnh 4 (\texttt{addi s3, s3, 5}): $i = \texttt{s3} = f - h + 4 * g + 5$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B ($i = f - h + 4 * g + 5$)}.
+\end{itemize}
+
+\textbf{Bài tập 3.38 (Đề Giữa kỳ 2021.1 -- IT3030E, Problem 1)}\\
+Dịch câu lệnh C sau đây sang hợp ngữ RISC-V mà không sử dụng lệnh giả (pseudo instructions):
+$$\texttt{x = (4*x - y) \& (x + 5*z);}$$
+Biết rằng các biến \texttt{x, y, z} được lưu lần lượt trong các thanh ghi \texttt{s1, s2, s3}.
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Phân tích:} Vì bộ xử lý cơ bản thực hiện phép nhân với hằng số qua phép dịch bit và phép cộng, ta tách $4*x = (x \ll 2)$ và $5*z = 4*z + z = (z \ll 2) + z$:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    slli t0, s1, 2      # t0 = 4 * x
+    sub  t0, t0, s2     # t0 = 4 * x - y
+    slli t1, s3, 2      # t1 = 4 * z
+    add  t1, t1, s3     # t1 = 4 * z + z = 5 * z
+    add  t1, s1, t1     # t1 = x + 5 * z
+    and  s1, t0, t1     # x = (4 * x - y) & (x + 5 * z)
+\end{lstlisting}
+\end{minipage}
+\end{itemize}
+
+\textbf{Bài tập 3.39 (Đề Giữa kỳ 2022.2 -- Đề 0009, 0008, 0007, 0006 \& Giữa kỳ 2025.2 -- Đề 0012 Câu 107)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề 0009, 0008, 0012):} Viết 1 lệnh hợp ngữ còn thiếu vào chỗ trống giữa 2 lệnh \texttt{add t2, s3, s4} và \texttt{sub s3, t3, s4} để thực hiện biểu thức (với \texttt{s3} là biến ở vế trái):
+    \begin{itemize}
+        \item TH1 (Đề 0009): $y = (x + y) \times 16 - x$ (với $y$ ở \texttt{s3}, $x$ ở \texttt{s4}).
+        \item TH2 (Đề 0008): $x = (x + y) \times 4 - y$ (với $x$ ở \texttt{s3}, $y$ ở \texttt{s4}).
+        \item TH3 (Đề 0012): $a = (a + b) \times 64 - a$ (với $a$ ở \texttt{s3} ở vế trái, $\texttt{s4} = a$ bị trừ).
+    \end{itemize}
+    \item \textbf{(Đề 0008 -- Câu 6):} Thay thế chuỗi 3 lệnh liên tiếp: \texttt{add s0, t2, t2} $\rightarrow$ \texttt{slli s0, s0, 1} $\rightarrow$ \texttt{slli s0, s0, 2} bằng 1 lệnh hợp ngữ duy nhất.
+    \item \textbf{(Đề 0008 Câu 7, Đề 0007 Câu 6 \& Đề 0006 Câu 10):} Lập trình hợp ngữ RISC-V cho 3 biểu thức:
+    \begin{itemize}
+        \item Biểu thức 1: $\texttt{t0} = 4 * (\texttt{t1} + \texttt{t2}) + 5$.
+        \item Biểu thức 2: $\texttt{t0} = \texttt{t1} + 8 * (\texttt{t2} - 7)$.
+        \item Biểu thức 3: $\texttt{s2} = 8 * (\texttt{t3} + \texttt{t7}) + 6$.
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Thanh ghi \texttt{t2} đã giữ tổng $(x + y)$, lệnh thứ 3 lấy $\texttt{t3} - \texttt{s4}$, nên lệnh ở giữa cần dịch trái \texttt{t2} và cất vào \texttt{t3}:
+    \begin{itemize}
+        \item TH1 (nhân $16 = 2^4$): \textbf{\texttt{slli t3, t2, 4}}.
+        \item TH2 (nhân $4 = 2^2$): \textbf{\texttt{slli t3, t2, 2}}.
+        \item TH3 (nhân $64 = 2^6$): \textbf{\texttt{slli t3, t2, 6}}.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Lệnh \texttt{add s0, t2, t2} nhân $2$, \texttt{slli 1} nhân $2$, \texttt{slli 2} nhân $4$. Tổng cộng nhân $2 \times 2 \times 4 = 16 = 2^4$. Thay bằng 1 lệnh duy nhất là: \textbf{\texttt{slli s0, t2, 4}}.
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item Biểu thức 1: \texttt{add t0, t1, t2} $\rightarrow$ \texttt{slli t0, t0, 2} $\rightarrow$ \texttt{addi t0, t0, 5}.
+        \item Biểu thức 2: \texttt{addi t0, t2, -7} $\rightarrow$ \texttt{slli t0, t0, 3} $\rightarrow$ \texttt{add t0, t1, t0}.
+        \item Biểu thức 3: \texttt{add s2, t3, t7} $\rightarrow$ \texttt{slli s2, s2, 3} $\rightarrow$ \texttt{addi s2, s2, 6}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.40 (Đề Giữa kỳ 2024.1 -- \#f96f43, \#12416e \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 32)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu \#f96f43):} Chọn đoạn lệnh RISC-V thực hiện câu lệnh C: \texttt{*a = b + c;} (giả sử \texttt{a} là con trỏ trong thanh ghi \texttt{a1}, còn \texttt{b, c} là các biến nguyên trong \texttt{a2, a3}).\\
+    A. \texttt{lw t0, 0(a1)} $\rightarrow$ \texttt{add t0, a2, a3} \qquad B. \texttt{add t0, a2, a3} $\rightarrow$ \texttt{lw t0, 0(a1)}\\
+    C. \texttt{sw t0, 0(a1)} $\rightarrow$ \texttt{add t0, a2, a3} \qquad D. \texttt{add t0, a2, a3} $\rightarrow$ \texttt{sw t0, 0(a1)}
+    \item \textbf{(Câu \#12416e \& Câu 32):} Chọn đoạn lệnh RISC-V thực hiện câu lệnh C: \texttt{a = b + *c;} (giả sử \texttt{a, b} nằm trong \texttt{a1, a2}, còn \texttt{c} là một con trỏ nằm trong \texttt{a3}).\\
+    A. \texttt{li t0, 0(a3)} $\rightarrow$ \texttt{add a1, a2, t0} \qquad B. \texttt{sw t0, 0(a3)} $\rightarrow$ \texttt{add a1, a2, t0}\\
+    C. \texttt{la t0, 0(a3)} $\rightarrow$ \texttt{add a1, a2, t0} \qquad D. \texttt{lw t0, 0(a3)} $\rightarrow$ \texttt{add a1, a2, t0}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Toán tử \texttt{*a} ở vế trái nghĩa là lưu kết quả vào ô nhớ được trỏ bởi \texttt{a1}. Ta tính tổng \texttt{add t0, a2, a3} trước, rồi ghi ra bộ nhớ bằng \texttt{sw t0, 0(a1)} $\rightarrow$ Chọn \textbf{D}.
+    \item \textbf{Giải câu b:} Toán tử \texttt{*c} ở vế phải nghĩa là đọc giá trị từ ô nhớ được trỏ bởi \texttt{a3}. Ta đọc bằng \texttt{lw t0, 0(a3)} trước, rồi cộng với \texttt{a2} bằng \texttt{add a1, a2, t0} $\rightarrow$ Chọn \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 3.41 (Đề Cuối kỳ 2022.2 -- \#13504d, 2024.2 \& Đề Giữa kỳ 2024.1 -- \#d0125d)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2022.2 \& 2024.2 -- \#13504d):} Biến \texttt{k} ở thanh ghi \texttt{s1}; \texttt{P, Q} là hai mảng số nguyên 32-bit có địa chỉ cơ sở ở \texttt{s6} và \texttt{s7}. Đoạn lệnh: \texttt{lw t0, 160(s7)} $\rightarrow$ \texttt{add t0, s1, t0} $\rightarrow$ \texttt{sw t0, 80(s6)} tương ứng với câu lệnh C nào?\\
+    A. \texttt{P[80] = k + Q[160]} \qquad B. \texttt{Q[40] = k + P[20]}\\
+    C. \texttt{P[20] = k + Q[40]} \qquad D. \texttt{Q[160] = k + P[80]}
+    \item \textbf{(Đề GK 2024.1 -- \#d0125d):} Cho \texttt{s1, s2} giữ địa chỉ cơ sở của mảng số nguyên 32-bit \texttt{A} và \texttt{B}. Đoạn lệnh: \texttt{lw t0, 24(s1)} $\rightarrow$ \texttt{addi s0, t0, 1} $\rightarrow$ \texttt{sw s0, 20(s2)} tương ứng với câu lệnh C nào?\\
+    A. \texttt{A[24] = B[20] + 1} \qquad B. \texttt{B[20] = A[24] + 1}\\
+    C. \texttt{A[5] = B[6] + 1} \qquad D. \texttt{B[5] = A[6] + 1}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mỗi phần tử số nguyên 32-bit chiếm $4\text{ byte}$, do đó $\text{Chỉ số mảng} = \text{Độ lệch byte (Offset)} \div 4$:
+    \item \textbf{Câu a:} $\texttt{160(s7)} \rightarrow Q[160 \div 4] = Q[40]$; $\texttt{80(s6)} \rightarrow P[80 \div 4] = P[20]$. Vậy biểu thức là \texttt{P[20] = k + Q[40]} $\rightarrow$ Chọn \textbf{C}.
+    \item \textbf{Câu b:} $\texttt{24(s1)} \rightarrow A[24 \div 4] = A[6]$; $\texttt{20(s2)} \rightarrow B[20 \div 4] = B[5]$. Vậy biểu thức là \texttt{B[5] = A[6] + 1} $\rightarrow$ Chọn \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 3.42 (Đề Giữa kỳ 2023.2 -- Đề 1 Câu 5 \& Đề 2 Câu 3)}\\
+Giả thiết \texttt{f, g, h, i, j} là các biến số nguyên 32-bit ở \texttt{s0, s1, s2, s3, s4}; \texttt{A} và \texttt{B} là hai mảng số nguyên 32-bit có địa chỉ cơ sở ở \texttt{s6} và \texttt{s7}.
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề 1 -- Câu 5):} Viết đoạn hợp ngữ RISC-V (có giải thích) cho câu lệnh C: \texttt{f = g + h - A[20];} (với địa chỉ cơ sở của \texttt{A} ở \texttt{s7}).
+    \item \textbf{(Đề 2 -- Câu 3):} Viết câu lệnh C tương ứng với 2 đoạn hợp ngữ sau:
+    \begin{itemize}
+        \item Đoạn 1: \texttt{lw t1, 20(s7)} $\rightarrow$ \texttt{sub s2, s3, t1}.
+        \item Đoạn 2: \texttt{add t0, s1, s0} $\rightarrow$ \texttt{slli t1, s4, 2} $\rightarrow$ \texttt{add t1, s6, t1} $\rightarrow$ \texttt{sw t0, 0(t1)}.
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Phần tử \texttt{A[20]} có độ lệch là $20 \times 4 = 80\text{ byte}$:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lw   t0, 80(s7)     # t0 = A[20] (do lech 20 * 4 = 80 byte)
+    add  t1, s1, s2     # t1 = g + h
+    sub  s0, t1, t0     # f = (g + h) - A[20]
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Đoạn 1: \texttt{20(s7)} là phần tử $\texttt{B[20/4]} = \texttt{B[5]}$, \texttt{s2} là $h$, \texttt{s3} là $i \implies$ Câu lệnh C: \textbf{\texttt{h = i - B[5];}}.
+        \item Đoạn 2: $\texttt{t0} = g + f$; \texttt{slli t1, s4, 2} tính $4 \times j$, cộng với \texttt{s6} ra địa chỉ của \texttt{A[j]}, rồi lưu \texttt{t0} vào \texttt{A[j]} $\implies$ Câu lệnh C: \textbf{\texttt{A[j] = g + f;}}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.43 (Đề Cuối kỳ 2021.2 -- Mã đề B2 Câu 2 \& Mã đề B3 Câu 2)}\\
+Viết đoạn chương trình hợp ngữ tối thiểu của RISC-V (không dùng lệnh giả, có lời giải thích) để thực hiện các câu lệnh C sau (biết biến \texttt{a} nằm trong thanh ghi \texttt{s2}):
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B2):} \texttt{x[2] = x[7] + a;} với \texttt{x} là mảng 32-bit có địa chỉ cơ sở là \texttt{0x00283A00}.
+    \item \textbf{(Mã đề B3):} \texttt{x[3] = x[9] + a;} với \texttt{x} là mảng 32-bit có địa chỉ cơ sở là \texttt{0x00D28900}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Địa chỉ cơ sở \texttt{0x00283A00}):}\\
+    Chữ số Hexa thứ 3 từ phải sang là $\texttt{A} \ge 8$ ($\texttt{0xA00} = 2560 - 4096 = -1536$), nên khi dùng \texttt{lui} phải tăng \texttt{0x00283} lên \texttt{0x00284}:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  t0, 0x00284      # t0 = 0x00284000
+    addi t0, t0, -1536    # t0 = 0x00283A00 (dia chi co so mang x)
+    lw   t1, 28(t0)       # t1 = x[7] (do lech 7 * 4 = 28 byte)
+    add  t1, t1, s2       # t1 = x[7] + a
+    sw   t1, 8(t0)        # x[2] = x[7] + a (do lech 2 * 4 = 8 byte)
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu b (Địa chỉ cơ sở \texttt{0x00D28900}):}\\
+    Chữ số thứ 3 từ phải sang là $\texttt{9} \ge 8$ ($\texttt{0x900} = 2304 - 4096 = -1792$), tăng \texttt{0x00D28} lên \texttt{0x00D29}:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  t0, 0x00D29      # t0 = 0x00D29000
+    addi t0, t0, -1792    # t0 = 0x00D28900 (dia chi co so mang x)
+    lw   t1, 36(t0)       # t1 = x[9] (do lech 9 * 4 = 36 byte)
+    add  t1, t1, s2       # t1 = x[9] + a
+    sw   t1, 12(t0)       # x[3] = x[9] + a (do lech 3 * 4 = 12 byte)
+\end{lstlisting}
+\end{minipage}
+\end{itemize}
+
+\textbf{Bài tập 3.44 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 7, 8, Mã đề 244 Câu 16, 18, Giữa kỳ 2022.2 -- Đề 0008 Câu 8, Đề 0007 Câu 7, Giữa kỳ 2024.1 -- \#3602ec \& Cuối kỳ 2025.1 -- \#da417b)}\\
+Hãy xác định địa chỉ hoặc chỉ số phần tử mảng được truy cập trong các bài toán sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243 Câu 7 \& Mã đề 244 Câu 18):} Mảng 32-bit \texttt{A} có \texttt{A[6]} ở \texttt{0x20200508}, hỏi \texttt{A[9]} ở đâu? Nếu \texttt{A[2]} ở \texttt{0x20200008}, hỏi \texttt{A[5]} ở đâu?
+    \item \textbf{(Mã đề 243 Câu 8 \& Mã đề 244 Câu 16):} Mảng 32-bit \texttt{A} có địa chỉ cơ sở \texttt{0x20201234}.
+    \begin{itemize}
+        \item TH1 (Mã đề 243): Chạy \texttt{lui s0, 0x20201} $\rightarrow$ \texttt{addi s0, s0, 0x230} $\rightarrow$ \texttt{lw t0, 8(s0)}. Hỏi \texttt{t0} nhận phần tử nào?
+        \item TH2 (Mã đề 244): Chạy \texttt{lui s0, 0x20201} $\rightarrow$ \texttt{addi s0, s0, 0x238} $\rightarrow$ \texttt{lw t0, 4(s0)}. Hỏi \texttt{t0} nhận phần tử nào?
+    \end{itemize}
+    \item \textbf{(Đề GK 2022.2 -- Đề 0008 Câu 8 \& Đề 0007 Câu 7):} Mảng 32-bit \texttt{A} ở địa chỉ cơ sở \texttt{0x1000CDC0}.
+    \begin{itemize}
+        \item TH1 (Đề 0008): Khi $\texttt{s1} = \texttt{0x1000CDC4}$, thực hiện \texttt{lw t1, 4(s1)}. Hỏi các địa chỉ byte nào được nạp vào \texttt{t1} và đó là phần tử nào của \texttt{A}?
+        \item TH2 (Đề 0007): Khi $\texttt{s1} = \texttt{0x1000CDC8}$, thực hiện \texttt{lw t1, -4(s1)}. Hỏi đó là phần tử nào của \texttt{A}?
+    \end{itemize}
+    \item \textbf{(Đề GK 2024.1 -- \#3602ec, Ôn tập 2025.2 Câu 72 \& CK 2025.1 -- \#da417b):}
+    \begin{itemize}
+        \item TH1: Mảng \texttt{A[]} ở địa chỉ cơ sở \texttt{0x20230200}. Chạy \texttt{lui s0, 0x20230} $\rightarrow$ \texttt{addi s0, s0, 0x20C} $\rightarrow$ \texttt{lw t0, 4(s0)}. Hỏi \texttt{t0} giữ phần tử nào?
+        \item TH2: Mảng \texttt{A[]} ở địa chỉ cơ sở \texttt{0x20240214}. Chạy \texttt{lui t1, 0x20240} $\rightarrow$ \texttt{addi t1, t1, 0x218} $\rightarrow$ \texttt{lw t0, 4(t1)}. Hỏi \texttt{t0} giữ phần tử nào?
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Cách nhau 3 phần tử $= 3 \times 4 = 12\text{ byte} = \texttt{0x0C}$. Vậy $\texttt{A[9]} = \texttt{0x20200508} + \texttt{0x0C} = \mathbf{\texttt{0x20200514}}$; và $\texttt{A[5]} = \texttt{0x20200008} + \texttt{0x0C} = \mathbf{\texttt{0x20200014}}$.
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item TH1: Địa chỉ đọc $= \texttt{0x20201230} + 8 = \texttt{0x20201238}$. Trừ địa chỉ cơ sở \texttt{0x20201234} được $4\text{ byte} \implies 4 \div 4 = 1 \rightarrow \mathbf{\texttt{A[1]}}$.
+        \item TH2: Địa chỉ đọc $= \texttt{0x20201238} + 4 = \texttt{0x2020123C}$. Trừ \texttt{0x20201234} được $8\text{ byte} \implies 8 \div 4 = 2 \rightarrow \mathbf{\texttt{A[2]}}$.
+    \end{itemize}
+    \item \textbf{Giải câu c:}
+    \begin{itemize}
+        \item TH1: Địa chỉ đọc $= \texttt{0x1000CDC4} + 4 = \texttt{0x1000CDC8}$ (gồm 4 byte từ \texttt{0x1000CDC8} đến \texttt{0x1000CDCB}). Độ lệch so với \texttt{0x1000CDC0} là $8\text{ byte} \implies \mathbf{\texttt{A[2]}}$.
+        \item TH2: Địa chỉ đọc $= \texttt{0x1000CDC8} - 4 = \texttt{0x1000CDC4}$. Độ lệch là $4\text{ byte} \implies \mathbf{\texttt{A[1]}}$.
+    \end{itemize}
+    \item \textbf{Giải câu d:}
+    \begin{itemize}
+        \item TH1: Địa chỉ đọc $= \texttt{0x2023020C} + 4 = \texttt{0x20230210}$. Trừ \texttt{0x20230200} được $\texttt{0x10} = 16\text{ byte} \implies 16 \div 4 = 4 \rightarrow \mathbf{\texttt{A[4]}}$.
+        \item TH2: Địa chỉ đọc $= \texttt{0x20240218} + 4 = \texttt{0x2024021C}$. Trừ \texttt{0x20240214} được $8\text{ byte} \implies 8 \div 4 = 2 \rightarrow \mathbf{\texttt{A[2]}}$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.45 (Đề Cuối kỳ 2022.2 \& Cuối kỳ 2024.2 -- \#0542f \& \#70e201)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu \#0542f):} Mảng \texttt{M[]} gồm 100 phần tử số nguyên 32-bit bắt đầu từ địa chỉ \texttt{0x10020400}. Đoạn lệnh hoán đổi \texttt{M[i]} và \texttt{M[j]} dùng \texttt{lw t0, 0(s6)} và \texttt{lw t1, 0(s7)}. Nếu $i = 9, j = 6$, nội dung các thanh ghi \texttt{s6} và \texttt{s7} cần có giá trị bao nhiêu?
+    \item \textbf{(Câu \#70e201):} Mảng 2 chiều \texttt{M} kích thước $(4 \times 5)$ gồm các phần tử 32-bit, lưu trữ theo hàng bắt đầu tại địa chỉ \texttt{0x10024000}. Để lệnh \texttt{lw t0, 0(s6)} đọc phần tử \texttt{M[2, 2]} (với $i = 0..3, j = 0..4$), nội dung thanh ghi \texttt{s6} phải bằng bao nhiêu?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Với $i = 9$: Độ lệch $= 9 \times 4 = 36\text{ byte} = \texttt{0x24} \implies \texttt{s6} = \texttt{0x10020400} + \texttt{0x24} = \mathbf{\texttt{0x10020424}}$.
+        \item Với $j = 6$: Độ lệch $= 6 \times 4 = 24\text{ byte} = \texttt{0x18} \implies \texttt{s7} = \texttt{0x10020400} + \texttt{0x18} = \mathbf{\texttt{0x10020418}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Mảng có $5$ cột. Với $i = 2, j = 2$, số phần tử đứng trước \texttt{M[2, 2]} là $2 \times 5 + 2 = 12\text{ phần tử}$. Độ lệch byte là $12 \times 4 = 48\text{ byte} = \texttt{0x30}$. Vậy $\texttt{s6} = \texttt{0x10024000} + \texttt{0x30} = \mathbf{\texttt{0x10024030}}$.
+\end{itemize}
+
+\textbf{Bài tập 3.46 (Đề Cuối kỳ 2021.2 -- Mã đề B1 Câu 4.1 \& Ôn tập Cuối kỳ 2025.2 -- P2, Câu 67)}\\
+Trên máy tính có các thanh ghi 32-bit, giả sử có một mảng dữ liệu hai chiều \texttt{B} kích thước $5 \times 7$ (5 hàng, 7 cột) của các phần tử 32-bit. Mảng \texttt{B} được lưu trữ theo hàng trong bộ nhớ chính, cấp phát ban đầu từ địa chỉ \texttt{0x000A5020}. Để trỏ vào phần tử \texttt{B[i, j]}, yêu cầu kết hợp thanh ghi \texttt{R1} để trỏ vào đầu hàng thứ $i$, thanh ghi \texttt{R2} để trỏ tương đối vào phần tử thứ $j$ trong hàng $i$ tính từ đầu hàng.
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2021.2 -- B1):} Với chỉ số tính từ $1$ ($i = 1..5, j = 1..7$), các thanh ghi \texttt{R1} và \texttt{R2} phải được gán giá trị bằng bao nhiêu (dạng Hexa) khi trỏ vào phần tử \texttt{B[2, 5]}?
+    \item \textbf{(Ôn tập 2025.2 -- P2, Câu 67):} Với chỉ số tính từ $0$ ($i = 0..4, j = 0..6$), cho biết địa chỉ của phần tử \texttt{B[1, 4]}?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mỗi hàng có $7$ phần tử 32-bit ($4\text{ byte}$), nên kích thước 1 hàng là $7 \times 4 = 28\text{ byte} = \texttt{0x1C}\text{ byte}$.
+    \item \textbf{Giải câu a:} Phần tử \texttt{B[2, 5]} (khi đếm từ 1) nằm ở hàng thứ 2, cột thứ 5:
+    \begin{itemize}
+        \item Thanh ghi \texttt{R1} trỏ vào đầu hàng 2 (cách đầu mảng 1 hàng $= \texttt{0x1C}$): $\texttt{R1} = \texttt{0x000A5020} + \texttt{0x1C} = \mathbf{\texttt{0x000A503C}}$.
+        \item Thanh ghi \texttt{R2} trỏ tương đối vào phần tử thứ 5 trong hàng (cách đầu hàng $5 - 1 = 4\text{ phần tử} = 16\text{ byte} = \texttt{0x10}$): $\mathbf{\texttt{R2 = 0x00000010}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Phần tử \texttt{B[1, 4]} (khi đếm từ 0) cũng chính là phần tử ở hàng thứ 2, cột thứ 5 nói trên. Địa chỉ của nó là: $\texttt{R1} + \texttt{R2} = \texttt{0x000A503C} + \texttt{0x10} = \mathbf{\texttt{0x000A504C}}$.
+\end{itemize}
+
+\textbf{Bài tập 3.47 (Đề Cuối kỳ 2022.2 -- \#bcfd00, 2024.2 \& Đề Cuối kỳ 2025.1 -- \#31d5bf)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2022.2 \& 2024.2 -- \#bcfd00):} Cho các biến \texttt{a, b, c} được gán tương ứng trong \texttt{s0, s1, s2}. Hãy chỉ ra câu lệnh C tương ứng với đoạn hợp ngữ sau:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    slt  t0, s2, s1
+    bne  t0, zero, L1
+    add  s0, s0, s1
+    j    L2
+L1: add  s0, s0, s2
+L2:
+\end{lstlisting}
+\end{minipage}
+
+    A. \texttt{if (b > c) a = a + b; else a = a + c;}\\
+    B. \texttt{if (b <= c) a = a + b; else a = a + c;}\\
+    C. \texttt{if (b < c) a = a + b; else a = a + c;}\\
+    D. \texttt{if (b >= c) a = a + b; else a = a + c;}
+    \item \textbf{(Đề CK 2025.1 -- \#31d5bf \& Ôn tập 2025.2 -- P2, Câu 46):} Cho các biến \texttt{f, g, h, i, j} lần lượt nằm trong \texttt{s0, s1, s2, s3, s4}. Đoạn mã hợp ngữ sau tương đương với đoạn mã C nào?
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    blt  s2, s1, L1
+    beq  s3, s4, L1
+    add  s0, s0, s1
+    jal  x0, L2
+L1: sub  s0, s0, s1
+L2:
+\end{lstlisting}
+\end{minipage}
+
+    A. \texttt{if ((g > h) \&\& (i == j)) f = f + g; else f = f - g;}\\
+    B. \texttt{if ((h >= g) \&\& (i == j)) f = f + g; else f = f - g;}\\
+    C. \texttt{if ((g > h) \&\& (i != j)) f = f + g; else f = f - g;}\\
+    D. \texttt{if ((h >= g) \&\& (i != j)) f = f + g; else f = f - g;}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Lệnh \texttt{slt t0, s2, s1} kiểm tra $\texttt{s2} < \texttt{s1}$ ($c < b$, tức $b > c$). Nếu $b > c$ ($\texttt{t0} = 1 \neq 0$) thì nhảy xuống \texttt{L1} thực hiện $a = a + c$. Nếu không nhảy (tức \textbf{$b \le c$}) thì thực hiện lệnh ngay bên dưới là $a = a + b$ $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Giải câu b:} Để thực hiện lệnh $f = f + g$ (\texttt{add s0, s0, s1}), chương trình phải \textbf{không nhảy} ở cả hai lệnh \texttt{blt} và \texttt{beq}:
+    \begin{itemize}
+        \item Không nhảy ở \texttt{blt s2, s1, L1} (nhảy khi $h < g$) $\implies$ Điều kiện là \textbf{$h \ge g$}.
+        \item Không nhảy ở \texttt{beq s3, s4, L1} (nhảy khi $i == j$) $\implies$ Điều kiện là \textbf{$i \neq j$}.
+        \item Kết hợp lại: \texttt{if ((h >= g) \&\& (i != j)) f = f + g; else f = f - g;} $\rightarrow$ Chọn \textbf{D}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.48 (Đề Giữa kỳ 2023.2 -- Đề 2 Câu 5, Giữa kỳ 2022.2 -- Đề 0007 Câu 8 \& Cuối kỳ 2021.2 -- Mã đề B5 Câu 3, Mã đề B8 Câu 3)}\\
+Viết đoạn chương trình hợp ngữ tối thiểu của RISC-V (không dùng lệnh giả, có lời giải thích) cho 4 câu lệnh rẽ nhánh \texttt{if/else} sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2023.2 -- Đề 2, Câu 5):} \texttt{if (i <= j) f = f + g; else f = f + h;} (với \texttt{f, g, h, i, j} ở \texttt{s0, s1, s2, s3, s4}).
+    \item \textbf{(Đề GK 2022.2 -- Đề 0007, Câu 8):} \texttt{if (s1 == 0) t2 = 1; else t2 = 2;}.
+    \item \textbf{(Đề CK 2021.2 -- Mã đề B5, Câu 3):} \texttt{if (a == b) i += 1; else i += 3;} (với \texttt{a, b, i} ở \texttt{s0, s1, s2}).
+    \item \textbf{(Đề CK 2021.2 -- Mã đề B8, Câu 3):} \texttt{if (a == 1) m[3] = b - a; else m[4] = b + a*2;} (với \texttt{a, b} ở \texttt{s0, s1}; \texttt{m} là mảng 32-bit có địa chỉ cơ sở \texttt{0x13090134}).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Điều kiện ngược của $i \le j$ là $j < i$ (\texttt{blt s4, s3, Else}):
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    blt  s4, s3, Else     # Neu j < i (tuc i > j) thi nhay xuong Else
+    add  s0, s0, s1       # f = f + g
+    jal  x0, Exit         # Nhay khong dieu kien toi Exit
+Else:
+    add  s0, s0, s2       # f = f + h
+Exit:
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu b:}
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    bne  s1, x0, Else     # Neu s1 != 0 thi nhay xuong Else
+    addi t2, x0, 1        # t2 = 1
+    jal  x0, Exit         # Nhay qua nhanh Else
+Else:
+    addi t2, x0, 2        # t2 = 2
+Exit:
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu c:}
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    bne  s0, s1, Else     # Neu a != b thi nhay xuong Else
+    addi s2, s2, 1        # i = i + 1
+    jal  x0, Exit         # Nhay qua nhanh Else
+Else:
+    addi s2, s2, 3        # i = i + 3
+Exit:
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu d:}
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  t0, 0x13090      # Nap 20 bit cao cua dia chi mang m
+    addi t0, t0, 0x134    # t0 = 0x13090134 (dia chi co so mang m)
+    addi t1, x0, 1        # t1 = 1
+    bne  s0, t1, Else     # Neu a != 1 thi nhay xuong Else
+    sub  t2, s1, s0       # t2 = b - a
+    sw   t2, 12(t0)       # m[3] = b - a (do lech 3 * 4 = 12 byte)
+    jal  x0, Exit         # Nhay toi Exit
+Else:
+    slli t2, s0, 1        # t2 = a * 2
+    add  t2, s1, t2       # t2 = b + a * 2
+    sw   t2, 16(t0)       # m[4] = b + a * 2 (do lech 4 * 4 = 16B)
+Exit:
+\end{lstlisting}
+\end{minipage}
+\end{itemize}
+
+\textbf{Bài tập 3.49 (Đề Giữa kỳ 2021.1 -- IT3030E, Problem 5)}\\
+Cho đoạn mã C sau:
+$$\texttt{if (i < j) f = A[2*i] + B[4*j];}$$
+Giả sử các biến \texttt{f, i, j} được gán cho các thanh ghi \texttt{s0, s1, s2}; địa chỉ cơ sở của mảng 32-bit \texttt{A} và \texttt{B} nằm trong \texttt{s6} và \texttt{s7}. Hãy dịch câu lệnh trên sang hợp ngữ RISC-V và viết mã máy cho từng lệnh.
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Phân tích độ lệch byte:} Mỗi phần tử rộng $4\text{ byte}$. Phần tử \texttt{A[2*i]} có độ lệch byte là $4 \times (2*i) = 8*i = (i \ll 3)$; phần tử \texttt{B[4*j]} có độ lệch byte là $4 \times (4*j) = 16*j = (j \ll 4)$:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    bge  s1, s2, Exit     # Ma may: 0x0124D063 (offset = +32)
+    slli t0, s1, 3        # Ma may: 0x00349293 (t0 = 8 * i)
+    add  t0, s6, t0       # Ma may: 0x005B02B3 (dia chi A[2*i])
+    lw   t0, 0(t0)        # Ma may: 0x0002A283 (t0 = A[2*i])
+    slli t1, s2, 4        # Ma may: 0x00491313 (t1 = 16 * j)
+    add  t1, s7, t1       # Ma may: 0x006B8333 (dia chi B[4*j])
+    lw   t1, 0(t1)        # Ma may: 0x00032303 (t1 = B[4*j])
+    add  s0, t0, t1       # Ma may: 0x00628433 (f = A[2*i] + B[4*j])
+Exit:
+\end{lstlisting}
+\end{minipage}
+\end{itemize}
+
+\textbf{Bài tập 3.50 (Tổng hợp 4 bài tự luận viết hợp ngữ vòng lặp \texttt{for} trong Đề Cuối kỳ 2021.2 -- Mã đề B1, B4, B6, B7)}\\
+Viết đoạn chương trình hợp ngữ tối thiểu của RISC-V (không dùng lệnh giả, có lời giải thích) để thực hiện các vòng lặp ngôn ngữ C sau đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B1, Câu 3):} \texttt{for (i = 0; i < 50; i += 2) a = a + m[5];} (với \texttt{m} là mảng các phần tử 32-bit có địa chỉ cơ sở \texttt{0x07E1100A}; giả sử \texttt{i, a} ở \texttt{s0, s1}).
+    \item \textbf{(Mã đề B4, Câu 2):} \texttt{for (i = 1; i != 20; i += 3) a[i] = a[5] + 1;} (với \texttt{a} là mảng 32-bit có địa chỉ cơ sở \texttt{0x0FE3B128}; \texttt{i} ở \texttt{s0}).
+    \item \textbf{(Mã đề B6, Câu 3):} \texttt{for (i = 0; i < 100; i++) N[i] = N[i] * 16;} (với \texttt{N} là mảng 32-bit có địa chỉ cơ sở \texttt{0x100A4023}; \texttt{i} ở \texttt{s0}).
+    \item \textbf{(Mã đề B7, Câu 3):} \texttt{for (i = 0; i < 100; i++) M[i] = M[i] * 8;} (với \texttt{M} là mảng 32-bit có địa chỉ cơ sở \texttt{0x07AD1309}; \texttt{i} ở \texttt{s0}).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Mã đề B1):} Phần tử \texttt{m[5]} cố định nên đọc ra ngoài vòng lặp để tối ưu:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  t0, 0x07E11      # Nap 20 bit cao cua dia chi co so m
+    addi t0, t0, 0x00A    # t0 = 0x07E1100A (dia chi co so mang m)
+    lw   t1, 20(t0)       # t1 = m[5] (do lech 5 * 4 = 20 byte)
+    addi s0, x0, 0        # i = 0
+    addi t2, x0, 50       # t2 = 50 (gia tri gioi han)
+Loop:
+    bge  s0, t2, Done     # Neu i >= 50 thi thoat vong lap
+    add  s1, s1, t1       # a = a + m[5]
+    addi s0, s0, 2        # i = i + 2
+    jal  x0, Loop         # Quay lai Loop
+Done:
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu b (Mã đề B4):}
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  t0, 0x0FE3B      # Nap 20 bit cao cua dia chi co so a
+    addi t0, t0, 0x128    # t0 = 0x0FE3B128 (dia chi co so mang a)
+    lw   t1, 20(t0)       # t1 = a[5]
+    addi t1, t1, 1        # t1 = a[5] + 1
+    addi s0, x0, 1        # i = 1
+    addi t2, x0, 20       # t2 = 20
+Loop:
+    beq  s0, t2, Done     # Neu i == 20 thi thoat
+    slli t3, s0, 2        # t3 = i * 4 (do lech byte cua a[i])
+    add  t3, t0, t3       # t3 = dia chi cua a[i]
+    sw   t1, 0(t3)        # a[i] = a[5] + 1
+    addi s0, s0, 3        # i = i + 3
+    jal  x0, Loop         # Quay lai Loop
+Done:
+\end{lstlisting}
+\end{minipage}
+
+    \item \textbf{Giải câu c và câu d (Mã đề B6 \& B7):} Nhân với $16 = 2^4$ dùng \texttt{slli ..., 4}; nhân với $8 = 2^3$ dùng \texttt{slli ..., 3}. (Đoạn mã dưới viết cho Đề B6, với Đề B7 chỉ cần thay địa chỉ \texttt{0x07AD1} / \texttt{0x309} và dịch trái \texttt{3}):
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  t0, 0x100A4      # Nap 20 bit cao dia chi mang N
+    addi t0, t0, 0x023    # t0 = 0x100A4023 (dia chi co so N[0])
+    addi s0, x0, 0        # i = 0
+    addi t1, x0, 100      # t1 = 100
+Loop:
+    bge  s0, t1, Done     # Neu i >= 100 thi thoat
+    lw   t2, 0(t0)        # t2 = N[i]
+    slli t2, t2, 4        # t2 = N[i] * 16 (De B7 thay 4 bang 3)
+    sw   t2, 0(t0)        # N[i] = N[i] * 16
+    addi t0, t0, 4        # Tang con tro t0 sang N[i+1]
+    addi s0, s0, 1        # i++
+    jal  x0, Loop         # Lap lai
+Done:
+\end{lstlisting}
+\end{minipage}
+\end{itemize}
+
+\subsection{Nhóm 6: Phân tích Vòng lặp và Đếm tổng số lệnh thực thi}
+
+\textbf{Bài tập 3.51 (Đề Cuối kỳ 2020.2 -- Trang 4 \& Đề Cuối kỳ 2021.1 -- Trang 3)}\\
+Hãy phân tích đoạn mã nguồn chương trình vòng lặp hợp ngữ RISC-V dưới đây và xác định giá trị hằng số hệ thập phân thu được tại thanh ghi kết quả \texttt{a0} sau khi thực thi hoàn tất chương trình:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    addi a1, zero, 14
+    addi s0, zero, 0
+    add  s1, zero, zero
+loop:
+    slt  t0, a1, s1
+    bne  t0, zero, finish
+    add  s0, s0, s1
+    addi s1, s1, 2
+    j    loop
+finish:
+    add  a0, s0, zero
+\end{lstlisting}
+\end{minipage}
+\begin{enumerate}[label=\Alph*.]
+    \item $54$
+    \item $14$
+    \item $56$
+    \item $28$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Khởi tạo: $\texttt{a1} = 14$, biến tổng $\texttt{s0} = 0$, biến chạy $\texttt{s1} = 0$.
+    \item Trong mỗi vòng lặp, lệnh \texttt{slt t0, a1, s1} kiểm tra $14 < \texttt{s1}$. Chừng nào $\texttt{s1} \le 14$ thì $\texttt{t0} = 0$ (không nhảy tới \texttt{finish}), chương trình cộng \texttt{s1} vào \texttt{s0} và tăng \texttt{s1} thêm $2$. Khi $\texttt{s1} = 16$ ($14 < 16$ đúng) thì thoát vòng lặp.
+    \item Vậy chương trình tính tổng các số chẵn từ $0$ đến $14$:
+    $$\texttt{a0} = \texttt{s0} = 0 + 2 + 4 + 6 + 8 + 10 + 12 + 14 = 56$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C (56)}.
+\end{itemize}
+
+\textbf{Bài tập 3.52 (Đề Giữa kỳ 2024.1 -- \#f4fd9f \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 35)}\\
+Sau khi chạy chương trình dưới đây, giá trị thập phân của thanh ghi \texttt{s5} là bao nhiêu?
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+.data
+A: .word 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+.text
+    li   s1, 0
+    li   s3, 10
+    la   s2, A
+    li   s5, 0
+loop:
+    add  t1, s1, s1
+    add  t1, t1, t1
+    add  t1, t1, s2
+    lw   t0, 0(t1)
+    add  s5, s5, t0
+    addi s1, s1, 2
+    bne  s1, s3, loop
+\end{lstlisting}
+\end{minipage}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Hai lệnh \texttt{add t1, s1, s1} ($\texttt{t1} = 2 \times \texttt{s1}$) và \texttt{add t1, t1, t1} ($\texttt{t1} = 4 \times \texttt{s1}$) tính độ lệch byte của phần tử \texttt{A[s1]}.
+    \item Biến chỉ số \texttt{s1} bắt đầu từ $0$, mỗi vòng tăng thêm $2$, và dừng khi $\texttt{s1} == 10$. Vậy \texttt{s1} lần lượt nhận các giá trị: $0, 2, 4, 6, 8$.
+    \item Tổng cộng dồn vào \texttt{s5} là (chú ý $\texttt{A[0]} = 1$):
+    $$\texttt{s5} = \texttt{A[0]} + \texttt{A[2]} + \texttt{A[4]} + \texttt{A[6]} + \texttt{A[8]} = 1 + 3 + 5 + 7 + 9 = \mathbf{25}$$
+\end{itemize}
+
+\textbf{Bài tập 3.53 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 33)}\\
+Sau khi thực thi đoạn mã sau, giá trị cuối cùng của thanh ghi \texttt{x15} là bao nhiêu (thập phân)? Giả sử ban đầu \texttt{x14} chứa $4$ và \texttt{x15} chứa $0$:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+Loop:
+    addi x15, x15, 1
+    addi x14, x14, -1
+    bge  x14, x0, Loop
+\end{lstlisting}
+\end{minipage}
+\begin{enumerate}[label=\Alph*.]
+    \item $4$
+    \item $0$
+    \item $5$
+    \item $6$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{bge x14, x0, Loop} quay lại vòng lặp chừng nào $\texttt{x14} \ge 0$.
+    \item Lần 1: $\texttt{x15} = 1, \texttt{x14} = 3 \ge 0$ (lặp lại).
+    \item Lần 2: $\texttt{x15} = 2, \texttt{x14} = 2 \ge 0$ (lặp lại).
+    \item Lần 3: $\texttt{x15} = 3, \texttt{x14} = 1 \ge 0$ (lặp lại).
+    \item Lần 4: $\texttt{x15} = 4, \texttt{x14} = 0 \ge 0$ (vẫn thỏa mãn $\ge 0$ nên lặp lại lần nữa).
+    \item Lần 5: $\texttt{x15} = 5, \texttt{x14} = -1 < 0$ (thoát vòng lặp).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C (5)}.
+\end{itemize}
+
+\textbf{Bài tập 3.54 (Đề Cuối kỳ 2021.2 -- Mã đề B1 Câu 2 \& Mã đề B5 Câu 2)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B1, Câu 2):} Cho đoạn chương trình hợp ngữ:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    addi t1, zero, 100
+LOOP:
+    lw   s1, 0(s0)
+    add  s2, s2, s1
+    addi s0, s0, 4
+    addi t1, t1, -1
+    bne  t1, x0, LOOP
+\end{lstlisting}
+\end{minipage}
+
+    2.1. Khi thực hiện đoạn chương trình trên, có bao nhiêu lệnh được thực hiện?\\
+    2.2. Biết \texttt{t1} chứa biến \texttt{i}, \texttt{s2} chứa biến \texttt{a}, \texttt{s0} chứa địa chỉ cơ sở mảng \texttt{A}. Hãy chuyển sang ngôn ngữ C.
+    \item \textbf{(Mã đề B5, Câu 2):} Cho đoạn chương trình hợp ngữ (giả sử ban đầu \texttt{s0} giữ địa chỉ cơ sở mảng \texttt{B}, và lệnh đầu gán $\texttt{t1} = \texttt{s0} + 600$):
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    addi t1, s0, 600
+LOOP:
+    lw   s1, 0(s0)
+    add  s2, s2, s1
+    lw   s1, 4(s0)
+    add  s2, s2, s1
+    addi s0, s0, 8
+    bne  t1, s0, LOOP
+\end{lstlisting}
+\end{minipage}
+
+    2.1. Có bao nhiêu lệnh được thực hiện? \quad 2.2. Chuyển đoạn lệnh trên sang ngôn ngữ C.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Mã đề B1):}
+    \begin{itemize}
+        \item \textit{Ý 2.1:} Có $1$ lệnh khởi tạo bên ngoài (\texttt{addi t1, zero, 100}) và $100$ lần lặp, mỗi lần lặp thực hiện $5$ lệnh trong thân \texttt{LOOP}. Tổng số lệnh được thực hiện là: $1 + 100 \times 5 = \mathbf{501\text{ lệnh}}$.
+        \item \textit{Ý 2.2:} Đoạn mã C tương ứng: \texttt{for (i = 100; i != 0; i--) \{ a = a + *A; A++; \}} (hoặc viết theo chỉ số mảng: \texttt{for (i = 0; i < 100; i++) a = a + A[i];}).
+    \end{itemize}
+    \item \textbf{Giải câu b (Mã đề B5):}
+    \begin{itemize}
+        \item \textit{Ý 2.1:} Mỗi vòng lặp địa chỉ trong \texttt{s0} tăng thêm $8\text{ byte}$ (tương ứng $2$ phần tử 32-bit). Để tăng hết $600\text{ byte}$, số lần thực hiện vòng lặp \texttt{LOOP} là $600 \div 8 = 75\text{ vòng}$. Mỗi vòng có $6$ lệnh, cộng $1$ lệnh khởi tạo ở ngoài là: $1 + 75 \times 6 = \mathbf{451\text{ lệnh}}$.
+        \item \textit{Ý 2.2:} Đoạn mã C tương ứng (duyệt $150$ phần tử của mảng \texttt{B}, mỗi bước cộng 2 phần tử liên tiếp vào \texttt{b}): \texttt{for (i = 0; i < 150; i += 2) b = b + B[i] + B[i+1];}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.55 (Đề Cuối kỳ 2021.2 -- Mã đề B2 Câu 3, Mã đề B3 Câu 3 \& Mã đề B4 Câu 3)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B2 \& B3, Câu 3):} Cho đoạn chương trình vòng lặp sau:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+LOOP: slt  t2, zero, t1
+      bne  t2, zero, ELSE
+      jal  x0, DONE
+ELSE: addi s2, s2, 2
+      addi t1, t1, -1
+      jal  x0, LOOP
+DONE:
+\end{lstlisting}
+\end{minipage}
+
+    3.1. Xác định giá trị thanh ghi \texttt{s2} sau khi chạy xong nếu khởi tạo: $\texttt{t1} = 20, \texttt{s2} = 0$ (Đề B2) hoặc $\texttt{t1} = 18, \texttt{s2} = 0$ (Đề B3).\\
+    3.2. Nếu \texttt{t1} khởi tạo bằng $N$ ($N$ nguyên dương), có bao nhiêu lệnh được thực hiện?
+    \item \textbf{(Mã đề B4, Câu 3):} Cho đoạn chương trình 2 vòng lặp lồng nhau:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+LOOP:  addi t2, zero, 0xA
+LOOP2: addi s2, s2, 14
+       addi t2, t2, -1
+       bne  t2, x0, LOOP2
+       addi t1, t1, -1
+       bne  t1, x0, LOOP
+DONE:
+\end{lstlisting}
+\end{minipage}
+
+    3.1. Giả sử ban đầu $\texttt{t1} = 18, \texttt{s2} = 0$. Xác định giá trị của \texttt{s2} sau khi thực hiện xong.\\
+    3.2. Nếu \texttt{t1} khởi tạo bằng $N$ ($N$ nguyên dương), có bao nhiêu lệnh được thực hiện?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Mã đề B2 \& B3):}
+    \begin{itemize}
+        \item \textit{Ý 3.1:} Chừng nào $0 < \texttt{t1}$ ($\texttt{t1} > 0$), chương trình nhảy vào \texttt{ELSE} cộng thêm $2$ vào \texttt{s2} và giảm \texttt{t1} đi $1$.
+        \begin{itemize}
+            \item Với $\texttt{t1} = 20$ (Đề B2): $\texttt{s2} = 20 \times 2 = \mathbf{40}$.
+            \item Với $\texttt{t1} = 18$ (Đề B3): $\texttt{s2} = 18 \times 2 = \mathbf{36}$.
+        \end{itemize}
+        \item \textit{Ý 3.2:} Trong $N$ lần lặp đầu tiên (khi $\texttt{t1} = N, N-1, \dots, 1$), mỗi lần thực hiện $5$ lệnh (\texttt{slt, bne, addi s2, addi t1, jal LOOP}). Ở lần cuối cùng khi $\texttt{t1} = 0$, chương trình thực hiện thêm $3$ lệnh (\texttt{slt, bne, jal DONE}) để thoát. Vậy tổng số lệnh thực hiện là: $\mathbf{5N + 3\text{ lệnh}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b (Mã đề B4):}
+    \begin{itemize}
+        \item \textit{Ý 3.1:} Vòng lặp trong (\texttt{LOOP2}) lặp $\texttt{0xA} = 10\text{ lần}$, mỗi lần cộng $14$ vào \texttt{s2} (tức mỗi vòng ngoài tăng $10 \times 14 = 140$). Với $\texttt{t1} = 18$ vòng ngoài, giá trị cuối của \texttt{s2} là: $18 \times 140 = \mathbf{2520}$.
+        \item \textit{Ý 3.2:} Trong mỗi vòng lặp ngoài (\texttt{LOOP}), số lệnh thực hiện gồm: $1$ lệnh (\texttt{addi t2}) $+ 10 \times 3\text{ lệnh}$ (của \texttt{LOOP2}) $+ 2\text{ lệnh}$ cuối (\texttt{addi t1, bne t1}) $= 33\text{ lệnh}$. Lặp $N$ vòng ngoài sẽ thực hiện tổng cộng: $\mathbf{33N\text{ lệnh}}$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.56 (Đề Cuối kỳ 2021.2 -- Mã đề B6 Câu 2 \& Mã đề B7 Câu 2)}\\
+Cho đoạn chương trình hợp ngữ dưới đây:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    addi t1, zero, K
+    add  s2, x0, x0
+LOOP:
+    slt  t2, x0, t1
+    beq  t2, x0, DONE
+    addi s2, s2, M
+    slli s2, s2, L
+    addi t1, t1, -1
+    jal  x0, LOOP
+DONE:
+\end{lstlisting}
+\end{minipage}
+
+Hãy xác định (2.1) Tổng số lệnh được thực hiện, và (2.2) Giá trị của thanh ghi \texttt{s2} sau khi kết thúc đoạn lệnh trên trong 2 mã đề:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề B6):} $K = 5, M = 3, L = 2$.
+    \item \textbf{(Mã đề B7):} $K = 7, M = 1, L = 1$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Công thức đếm số lệnh tổng quát với $K$ vòng lặp:} Có $2$ lệnh khởi tạo ở ngoài $+ K \times 6\text{ lệnh}$ trong thân \texttt{LOOP} $+ 2\text{ lệnh}$ kiểm tra thoát (\texttt{slt, beq}) khi $\texttt{t1} = 0 \implies \text{Tổng số lệnh} = 6K + 4$.
+    \item \textbf{Giải câu a (Mã đề B6: $K = 5, M = 3, L = 2$):}
+    \begin{itemize}
+        \item \textit{Ý 2.1:} Tổng số lệnh thực hiện $= 6 \times 5 + 4 = \mathbf{34\text{ lệnh}}$.
+        \item \textit{Ý 2.2:} Trong mỗi vòng lặp, \texttt{s2} được cộng thêm $3$ rồi dịch trái $2\text{ bit}$ (nhân $4$): $\texttt{s2}_{\text{mới}} = (\texttt{s2}_{\text{cũ}} + 3) \times 4$:
+        \begin{itemize}
+            \item Vòng 1 ($\texttt{t1}=5$): $\texttt{s2} = (0 + 3) \times 4 = 12$.
+            \item Vòng 2 ($\texttt{t1}=4$): $\texttt{s2} = (12 + 3) \times 4 = 60$.
+            \item Vòng 3 ($\texttt{t1}=3$): $\texttt{s2} = (60 + 3) \times 4 = 252$.
+            \item Vòng 4 ($\texttt{t1}=2$): $\texttt{s2} = (252 + 3) \times 4 = 1020$.
+            \item Vòng 5 ($\texttt{t1}=1$): $\texttt{s2} = (1020 + 3) \times 4 = \mathbf{4092}$.
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Giải câu b (Mã đề B7: $K = 7, M = 1, L = 1$):}
+    \begin{itemize}
+        \item \textit{Ý 2.1:} Tổng số lệnh thực hiện $= 6 \times 7 + 4 = \mathbf{46\text{ lệnh}}$.
+        \item \textit{Ý 2.2:} Trong mỗi vòng lặp, $\texttt{s2}_{\text{mới}} = (\texttt{s2}_{\text{cũ}} + 1) \times 2$:
+        \begin{itemize}
+            \item Vòng 1: $2$; \quad Vòng 2: $6$; \quad Vòng 3: $14$; \quad Vòng 4: $30$; \quad Vòng 5: $62$; \quad Vòng 6: $126$; \quad Vòng 7: $(126 + 1) \times 2 = \mathbf{254}$.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 7: Chương trình con (Thủ tục), Ngăn xếp (Stack) và Lệnh \texttt{jal / jalr}}
+
+\textbf{Bài tập 3.57 (Đề Giữa kỳ 2024.1 -- \#5ebf59 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 50)}\\
+Những lệnh nào lưu địa chỉ của $PC + 4$ vào một thanh ghi trước khi thực hiện rẽ nhánh / nhảy trong RISC-V?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{jal}
+    \item \texttt{beq}
+    \item \texttt{j}
+    \item \texttt{jr}
+    \item \texttt{jalr}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Hai lệnh nhảy và liên kết (Jump and Link) trong RISC-V thực hiện lưu địa chỉ trở về $PC + 4$ vào thanh ghi đích trước khi nhảy là \textbf{\texttt{jal}} và \textbf{\texttt{jalr}}.
+    \item \textbf{Kết luận:} Chọn cả \textbf{A (\texttt{jal})} và \textbf{E (\texttt{jalr})}.
+\end{itemize}
+
+\textbf{Bài tập 3.58 (Đề Cuối kỳ 2022.2 -- \#a3c257, 2024.1 -- \#e79a4d, 2024.2 \& Ôn tập 2025.2 -- P2, Câu 31)}\\
+Cho thân chương trình con hợp ngữ RISC-V gồm có 3 đoạn lệnh như dưới đây:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+# Doan lenh cat noi dung s2 (x18) va s3 (x19) ra ngan xep:
+    addi sp, sp, -8
+    sw   s3, 4(sp)
+    sw   s2, 0(sp)
+# Doan lenh khong lien quan den sp va ngan xep:
+    ...
+# Doan lenh khoi phuc lai noi dung s2, s3 va sp:
+\end{lstlisting}
+\end{minipage}
+
+Hãy chỉ ra đoạn lệnh phù hợp để khôi phục lại nội dung \texttt{s2, s3} và \texttt{sp}?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{lw s2, 0(sp)} $\rightarrow$ \texttt{lw s3, 4(sp)} $\rightarrow$ \texttt{addi sp, sp, 8}
+    \item \texttt{addi sp, sp, 8} $\rightarrow$ \texttt{lw s3, 4(sp)} $\rightarrow$ \texttt{lw s2, 0(sp)}
+    \item \texttt{lw s2, 4(sp)} $\rightarrow$ \texttt{lw s3, 0(sp)} $\rightarrow$ \texttt{addi sp, sp, 8}
+    \item \texttt{addi sp, sp, 8} $\rightarrow$ \texttt{lw s3, 0(sp)} $\rightarrow$ \texttt{lw s2, 4(sp)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lúc cất vào ngăn xếp, \texttt{s2} được lưu tại \texttt{0(sp)} và \texttt{s3} được lưu tại \texttt{4(sp)}.
+    \item Khi khôi phục, phải đọc (\texttt{lw}) \texttt{s2} từ \texttt{0(sp)} và \texttt{s3} từ \texttt{4(sp)} ra trước, sau đó mới cộng trả lại $8\text{ byte}$ cho con trỏ \texttt{sp} (\texttt{addi sp, sp, 8}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (Đoạn 1)}.
+\end{itemize}
+
+\textbf{Bài tập 3.59 (Đề Cuối kỳ 2022.2 -- \#9aec2f, 2024.1 -- \#f023de, 2024.2 \& Ôn tập 2025.2 -- P2, Câu 65)}\\
+Cho đoạn lệnh như dưới đây, bên trái là địa chỉ của lệnh tương ứng:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+0x00402034        jal  ra, XYZ
+0x00402038        ...
+0x00402060  XYZ:  addi sp, sp, -8
+    ...           ...
+0x00402090        ret               # (tuc jalr x0, 0(ra))
+\end{lstlisting}
+\end{minipage}
+
+Hãy cho biết các giá trị sau (viết theo số Hexa 8 chữ số, ví dụ \texttt{0x01234567}):
+\begin{enumerate}[label=\alph*)]
+    \item Nội dung các thanh ghi \texttt{PC} và \texttt{ra} (\texttt{x1}) ngay sau khi thực hiện lệnh \texttt{jal ra, XYZ}.
+    \item Nội dung thanh ghi \texttt{PC} ngay sau khi thực hiện lệnh \texttt{ret} (\texttt{jalr x0, 0(ra)}).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Khi thực hiện lệnh \texttt{jal ra, XYZ} tại địa chỉ \texttt{0x00402034}:
+    \begin{itemize}
+        \item Thanh ghi \texttt{PC} nhảy tới địa chỉ của nhãn \texttt{XYZ}: $\mathbf{\texttt{PC = 0x00402060}}$.
+        \item Thanh ghi \texttt{ra} (\texttt{x1}) lưu địa chỉ của lệnh kế tiếp ($PC + 4$): $\mathbf{\texttt{ra = 0x00402038}}$.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Khi thực hiện lệnh \texttt{ret} (\texttt{jalr x0, 0(ra)}), giá trị trong thanh ghi \texttt{ra} được nạp trả lại cho \texttt{PC}: $\mathbf{\texttt{PC = 0x00402038}}$.
+\end{itemize}
+
+\textbf{Bài tập 3.60 (Đề Cuối kỳ 2022.2 -- \#526d03, 2024.1 -- \#115355 \& 2024.2)}\\
+Cho chương trình con \texttt{count} sau:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+count:  addi s0, zero, 0
+L1:     beq  a0, zero, done
+        andi t0, a0, 1
+        beq  t0, zero, L2
+        addi s0, s0, 1
+L2:     srli a0, a0, 1
+        j    L1
+done:   add  a0, s0, zero
+        ret
+\end{lstlisting}
+\end{minipage}
+\begin{enumerate}[label=\alph*)]
+    \item Giả sử chương trình con được dịch ra mã máy và nạp vào bộ nhớ. Khi thực hiện lệnh \texttt{beq t0, zero, L2} mà nội dung thanh ghi $\texttt{t0} = 0$ thì sau khi hoàn thành lệnh đó, nội dung thanh ghi \texttt{PC} nhận giá trị bao nhiêu? (Xét cả 2 trường hợp đề bài: TH1 đặt lệnh đầu tiên \texttt{count} ở \texttt{0x00400100}; TH2 cắt từ dòng \texttt{beq t0, zero, L2} làm dòng đầu tiên ở \texttt{0x00400100}).
+    \item Giả thiết trước khi thực hiện chương trình con \texttt{count}, thanh ghi $\texttt{a0} = \texttt{0x5678ABCD}$. Hãy cho biết nội dung kết quả trả về tại \texttt{a0} (hoặc \texttt{\$v0}) sau khi thực hiện chương trình con đó (viết theo số thập phân)?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Khi $\texttt{t0} = 0$, điều kiện của lệnh \texttt{beq t0, zero, L2} thỏa mãn nên chương trình rẽ nhánh đến nhãn \texttt{L2} (bỏ qua lệnh \texttt{addi s0, s0, 1}), tức là \texttt{PC} tăng thêm $2\text{ lệnh} = 8\text{ byte}$ so với địa chỉ của lệnh \texttt{beq t0, zero, L2}:
+    \begin{itemize}
+        \item Nếu đề bài cắt từ dòng \texttt{beq t0, zero, L2} là dòng đầu tiên ở \texttt{0x00400100} (như bản in trang 10 đề 2024.2): Nhãn \texttt{L2} nằm ở $\texttt{0x00400100} + 8 = \mathbf{\texttt{0x00400108}}$.
+        \item Nếu đề bài in đầy đủ từ dòng \texttt{count: addi s0, zero, 0} ở \texttt{0x00400100}: Lệnh \texttt{beq t0, zero, L2} là lệnh thứ 4 (ở \texttt{0x0040010C}), nên nhãn \texttt{L2} (lệnh thứ 6) nằm ở \textbf{\texttt{0x00400114}}.
+    \end{itemize}
+    \item \textbf{Giải câu b:} Thuật toán dùng \texttt{andi t0, a0, 1} để kiểm tra từng bit của \texttt{a0} từ phải sang trái; nếu bit bằng 1 thì tăng bộ đếm \texttt{s0} lên 1. Vậy hàm trả về \textbf{tổng số bit 1} trong biểu diễn nhị phân của $\texttt{a0} = \texttt{0x5678ABCD}$:
+    \begin{itemize}
+        \item $\texttt{5} (0101_2) \rightarrow 2\text{ bit }1$; \quad $\texttt{6} (0110_2) \rightarrow 2\text{ bit }1$; \quad $\texttt{7} (0111_2) \rightarrow 3\text{ bit }1$; \quad $\texttt{8} (1000_2) \rightarrow 1\text{ bit }1$.
+        \item $\texttt{A} (1010_2) \rightarrow 2\text{ bit }1$; \quad $\texttt{B} (1011_2) \rightarrow 3\text{ bit }1$; \quad $\texttt{C} (1100_2) \rightarrow 2\text{ bit }1$; \quad $\texttt{D} (1101_2) \rightarrow 3\text{ bit }1$.
+        \item Tổng cộng: $2 + 2 + 3 + 1 + 2 + 3 + 2 + 3 = \mathbf{18}$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 8: Dịch Mã máy -- Hợp ngữ, Tính địa chỉ đích và Giải mã Bản đồ bộ nhớ (Memory Map)}
+
+\textbf{Bài tập 3.61 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 65, 19, 78, 22, 11, 14, 5)}\\
+Hãy dịch 7 câu lệnh hợp ngữ RISC-V dưới đây sang mã máy biểu diễn ở hệ Hexa (8 chữ số, bắt buộc có \texttt{0x} ở đầu):
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu 65 -- Kiểu R):} \texttt{sub t0, t2, t1}
+    \item \textbf{(Câu 19 -- Kiểu I tính toán):} \texttt{addi s2, s1, -14}
+    \item \textbf{(Câu 78 -- Kiểu I đọc bộ nhớ):} \texttt{lh t5, -14(s1)} (và biến thể \texttt{lh t1, -13(s2)})
+    \item \textbf{(Câu 22 -- Kiểu S ghi bộ nhớ):} \texttt{sw s11, -16(s4)}
+    \item \textbf{(Câu 11 -- Kiểu B rẽ nhánh xuôi):} \texttt{beq s0, t5, L1} (biết địa chỉ lệnh là \texttt{0x00401050}, địa chỉ \texttt{L1} là \texttt{0x00401060}).
+    \item \textbf{(Câu 14 -- Kiểu B rẽ nhánh ngược):} \texttt{bne t0, s0, L2} (biết địa chỉ lệnh là \texttt{0x0040008C}, địa chỉ \texttt{L2} là \texttt{0x00400070}).
+    \item \textbf{(Câu 5 -- Kiểu J nhảy):} \texttt{jal x0, L1} (biết địa chỉ lệnh là \texttt{0x004030AC}, địa chỉ \texttt{L1} là \texttt{0x00403074}).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (\texttt{sub t0, t2, t1} -- Kiểu R):}
+    \begin{itemize}
+        \item Số hiệu thanh ghi: $\texttt{rd} = \texttt{t0} = \texttt{x5}$ (\texttt{00101}); $\texttt{rs1} = \texttt{t2} = \texttt{x7}$ (\texttt{00111}); $\texttt{rs2} = \texttt{t1} = \texttt{x6}$ (\texttt{00110}).
+        \item Lệnh \texttt{sub} có $\texttt{funct7} = \texttt{0100000}$, $\texttt{funct3} = \texttt{000}$, $\texttt{opcode} = \texttt{0110011}$.
+        \item Ghép 32 bit (\texttt{funct7 | rs2 | rs1 | funct3 | rd | op}):
+        $$\texttt{0100000\_00110\_00111\_000\_00101\_0110011}_{(2)} = \mathbf{\texttt{0x406382B3}}$$
+    \end{itemize}
+    \item \textbf{Giải câu b (\texttt{addi s2, s1, -14} -- Kiểu I):}
+    \begin{itemize}
+        \item Số hiệu: $\texttt{rd} = \texttt{s2} = \texttt{x18}$ (\texttt{10010}); $\texttt{rs1} = \texttt{s1} = \texttt{x9}$ (\texttt{01001}); $\texttt{funct3} = \texttt{000}$; $\texttt{op} = \texttt{0010011}$.
+        \item Đổi $\texttt{imm} = -14$ sang bù 2 12-bit: $+14 = \texttt{0000\,0000\,1110}_2 \implies -14 = \texttt{1111\,1111\,0010}_2 = \texttt{0xFF2}$.
+        \item Ghép 32 bit (\texttt{imm[11:0] | rs1 | funct3 | rd | op}):
+        $$\texttt{1111\,1111\,0010\_01001\_000\_10010\_0010011}_{(2)} = \mathbf{\texttt{0xFF248913}}$$
+    \end{itemize}
+    \item \textbf{Giải câu c (\texttt{lh t5, -14(s1)} -- Kiểu I Load):}
+    \begin{itemize}
+        \item Số hiệu: $\texttt{rd} = \texttt{t5} = \texttt{x30}$ (\texttt{11110}); $\texttt{rs1} = \texttt{s1} = \texttt{x9}$ (\texttt{01001}); $\texttt{funct3} = \texttt{001}$ (\texttt{lh}); $\texttt{op} = \texttt{0000011}$; $\texttt{imm} = -14 = \texttt{1111\,1111\,0010}_2$.
+        \item Ghép 32 bit: $\texttt{1111\,1111\,0010\_01001\_001\_11110\_0000011}_{(2)} = \mathbf{\texttt{0xFF249F03}}$.
+        \item (Với biến thể \texttt{lh t1, -13(s2)}: $\texttt{imm} = -13 = \texttt{1111\,1111\,0011}_2$, $\texttt{rs1} = 18 = \texttt{10010}_2$, $\texttt{rd} = 6 = \texttt{00110}_2 \implies \mathbf{\texttt{0xFF391303}}$).
+    \end{itemize}
+    \item \textbf{Giải câu d (\texttt{sw s11, -16(s4)} -- Kiểu S Store):}
+    \begin{itemize}
+        \item Số hiệu: $\texttt{rs2} = \texttt{s11} = \texttt{x27}$ (\texttt{11011}); $\texttt{rs1} = \texttt{s4} = \texttt{x20}$ (\texttt{10100}); $\texttt{funct3} = \texttt{010}$; $\texttt{op} = \texttt{0100011}$.
+        \item Đổi $\texttt{imm} = -16$ sang bù 2 12-bit: $\texttt{1111\,1111\,0000}_2 \implies \texttt{imm[11:5]} = \texttt{1111111}$, $\texttt{imm[4:0]} = \texttt{10000}$.
+        \item Ghép 32 bit (\texttt{imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | op}):
+        $$\texttt{1111111\_11011\_10100\_010\_10000\_0100011}_{(2)} = \mathbf{\texttt{0xFFBA2823}}$$
+    \end{itemize}
+    \item \textbf{Giải câu e (\texttt{beq s0, t5, L1} -- Kiểu B):}
+    \begin{itemize}
+        \item Độ lệch $\texttt{imm} = \texttt{0x00401060} - \texttt{0x00401050} = \texttt{0x10} = +16 = \texttt{0\_0\_000000\_1000\_0}_{(2)}$ (từ bit 12 đến bit 0).
+        \item Số hiệu: $\texttt{rs1} = \texttt{s0} = 8$ (\texttt{01000}); $\texttt{rs2} = \texttt{t5} = 30$ (\texttt{11110}); $\texttt{funct3} = \texttt{000}$; $\texttt{op} = \texttt{1100011}$.
+        \item Ghép theo B-type (\texttt{imm[12,10:5] | rs2 | rs1 | funct3 | imm[4:1,11] | op}):
+        $$\texttt{0\_000000\_11110\_01000\_000\_1000\_0\_1100011}_{(2)} = \mathbf{\texttt{0x01E40863}}$$
+    \end{itemize}
+    \item \textbf{Giải câu f (\texttt{bne t0, s0, L2} -- Kiểu B):}
+    \begin{itemize}
+        \item Độ lệch $\texttt{imm} = \texttt{0x00400070} - \texttt{0x0040008C} = -\texttt{0x1C} = -28 = \texttt{1\_1\_111111\_0010\_0}_{(2)}$ (từ bit 12 đến bit 0).
+        \item Số hiệu: $\texttt{rs1} = \texttt{t0} = 5$ (\texttt{00101}); $\texttt{rs2} = \texttt{s0} = 8$ (\texttt{01000}); $\texttt{funct3} = \texttt{001}$; $\texttt{op} = \texttt{1100011}$.
+        \item Ghép theo B-type: $\texttt{1\_111111\_01000\_00101\_001\_0010\_1\_1100011}_{(2)} = \mathbf{\texttt{0xFE8292E3}}$.
+    \end{itemize}
+    \item \textbf{Giải câu g (\texttt{jal x0, L1} -- Kiểu J):}
+    \begin{itemize}
+        \item Độ lệch $\texttt{imm} = \texttt{0x00403074} - \texttt{0x004030AC} = -\texttt{0x38} = -56 = \texttt{1\_11111111\_1\_1111100100\_0}_{(2)}$ (từ bit 20 đến bit 0).
+        \item Ghép theo J-type (\texttt{imm[20,10:1,11,19:12] | rd | op}):
+        $$\texttt{1\_1111100100\_1\_11111111\_00000\_1101111}_{(2)} = \mathbf{\texttt{0xFC9FF06F}}$$
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.62 (Đề Cuối kỳ 2024.1 -- \#b9e098 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 8)}\\
+Cho lệnh máy RISC-V được biểu diễn theo số Hexa: \texttt{0x012B2423}. Hãy chỉ ra lệnh hợp ngữ tương ứng:
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{add t0, s4, s5}
+    \item \texttt{lw t2, 4(s6)}
+    \item \texttt{sw s2, 8(s6)}
+    \item \texttt{addi t0, s3, -4}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Đổi 2 chữ số Hexa cuối $\texttt{23}_{16} = \texttt{0010\,0011}_2 \implies 7\text{ bit opcode} = \texttt{0100011}_2 = 35_{10}$ (Nhóm lệnh Store kiểu S).
+    \item Tách 32 bit theo khuôn dạng S-type (\texttt{imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | op}):
+    $$\texttt{0x012B2423} = \underbrace{\texttt{0000000}}_{\texttt{imm[11:5]}=0} \mid \underbrace{\texttt{10010}}_{\texttt{rs2}=18 (\texttt{s2})} \mid \underbrace{\texttt{10110}}_{\texttt{rs1}=22 (\texttt{s6})} \mid \underbrace{\texttt{010}}_{\texttt{funct3}=2 (\texttt{sw})} \mid \underbrace{\texttt{01000}}_{\texttt{imm[4:0]}=8} \mid \underbrace{\texttt{0100011}}_{\text{opcode}}$$
+    \item Vậy câu lệnh hợp ngữ là: \textbf{\texttt{sw s2, 8(s6)}} $\rightarrow$ Chọn \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.63 (Đề Cuối kỳ 2022.2 \& Cuối kỳ 2024.2 -- \#b7c77a)}\\
+Cho lệnh máy được biểu diễn theo số Hexa: \texttt{0xFFC98293} (trong đề cũ chuyển từ MIPS là \texttt{0x2268FFFC}). Hãy chỉ ra lệnh hợp ngữ tương ứng:
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{lw t2, 4(s6)}
+    \item \texttt{add t0, s4, s5}
+    \item \texttt{sw s2, 8(s6)}
+    \item \texttt{addi t0, s3, -4}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong mã máy \texttt{0xFFC98293} (hoặc \texttt{0x2268FFFC}): hằng số ở đầu/cuối là $\texttt{0xFFC} = -4$, thanh ghi nguồn là $\texttt{s3}$ ($\texttt{x19} = 10011_2$), thanh ghi đích là $\texttt{t0}$ ($\texttt{x5} = 00101_2$), phép toán là cộng hằng số \texttt{addi}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D (\texttt{addi t0, s3, -4})}.
+\end{itemize}
+
+\textbf{Bài tập 3.64 (Đề Cuối kỳ 2024.1 -- \#3ad10f \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 62)}\\
+Giả thiết lệnh \texttt{bge s0, s1, L1} của RISC-V có mã máy là \texttt{0x02945063}, được đặt tại word nhớ có địa chỉ \texttt{0x00404014}. Hãy chỉ ra địa chỉ đích của lệnh đó (nếu điều kiện thỏa mãn). Biết $\text{BTA} = PC + \text{SignExt}(\{\texttt{imm}_{12:1}, \texttt{1'b0}\})$.
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{0x0040401F}
+    \item \texttt{0x00404034}
+    \item \texttt{0x00404030}
+    \item \texttt{0x00404018}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Đổi mã máy \texttt{0x02945063} sang nhị phân và tách theo B-type:
+    $$\underbrace{\texttt{0\_000001}}_{\texttt{imm[12,10:5]}} \mid \underbrace{\texttt{01001}}_{\texttt{rs2}=9} \mid \underbrace{\texttt{01000}}_{\texttt{rs1}=8} \mid \underbrace{\texttt{101}}_{\texttt{funct3}} \mid \underbrace{\texttt{0000\_0}}_{\texttt{imm[4:1,11]}} \mid \underbrace{\texttt{1100011}}_{\text{opcode}}$$
+    \item Ghép lại hằng số 13-bit $\texttt{imm}_{12:0} = \{\texttt{imm}_{12}, \texttt{imm}_{11}, \texttt{imm}_{10:5}, \texttt{imm}_{4:1}, 0\}$:
+    $$\texttt{imm} = \texttt{0\_0\_000001\_0000\_0}_{(2)} = 0000\,0010\,0000_{(2)} = \texttt{0x20} = 32_{(10)}$$
+    \item Địa chỉ đích $\text{BTA} = PC + \texttt{imm} = \texttt{0x00404014} + \texttt{0x20} = \mathbf{\texttt{0x00404034}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B (\texttt{0x00404034})}.
+\end{itemize}
+
+\textbf{Bài tập 3.65 (Đề Cuối kỳ 2020.2 -- Trang 4, Giữa kỳ 2024.1 -- \#a2a36c \& Ôn tập 2025.2 -- Câu 47, 57)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2020.2 -- Trang 4):} Lệnh \texttt{beq t3, s4, L1} trong RISC-V được đặt tại địa chỉ \texttt{0x00401000}, lệnh kế tiếp tại \texttt{0x00401004}. Biết nhãn đích \texttt{L1} nằm tại địa chỉ \texttt{0x0040104C}. Hãy xác định giá trị độ lệch byte (offset) và giá trị 12-bit \texttt{imm[12:1]} mã hóa trong lệnh.
+    \item \textbf{(Đề GK 2024.1 -- \#a2a36c \& Ôn tập 2025.2 Câu 47):} Cho chương trình RISC-V bắt đầu từ địa chỉ \texttt{0x00400000}: (1) \texttt{addi s0, zero, 100}; (2) \texttt{slti t0, s0, -100}; (3) \texttt{beq t0, zero, else}; (4) \texttt{addi t2, t2, 1}; (5) \texttt{j endif}; (6) \texttt{else: addi t2, t2, -1}; (7) \texttt{endif: nop}. Giá trị thập phân của trường 12-bit immediate trong lệnh \texttt{beq t0, zero, else} là bao nhiêu?\\
+    A. $8$ \qquad B. $12$ \qquad C. $3$ \qquad D. $6$
+    \item \textbf{(Ôn tập 2025.2 -- Câu 57):} Giả sử \texttt{PC} hiện tại (địa chỉ của lệnh \texttt{beq}) là \texttt{0x2000}. Với câu lệnh \texttt{beq x1, x2, -12}, nếu $\texttt{x1} == \texttt{x2}$ thì địa chỉ lệnh tiếp theo (Target PC) là bao nhiêu?\\
+    A. \texttt{0x1FE8} \qquad B. \texttt{0x1FF8} \qquad C. \texttt{0x1FF4} \qquad D. \texttt{0x200C}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Độ lệch tính theo byte là: $\text{Offset} = \texttt{0x0040104C} - \texttt{0x00401000} = \mathbf{\texttt{0x4C}} = \mathbf{76\text{ byte}}$. Nếu tính trường 12-bit \texttt{imm[12:1]} lưu trong mã máy (bỏ bit 0, tức chia 2) thì giá trị là $76 \div 2 = \mathbf{38}$ (\texttt{0x26}); nếu tính số lệnh nhảy qua (mỗi lệnh 4 byte) là $76 \div 4 = 19$ (hoặc $18$ nếu trừ $PC+4$ theo đề cũ).
+    \item \textbf{Giải câu b:} Lệnh (3) \texttt{beq} nằm ở địa chỉ \texttt{0x00400008}, nhãn \texttt{else} ở lệnh (6) nằm ở địa chỉ \texttt{0x00400014}. Độ lệch byte là $\texttt{0x14} - \texttt{0x08} = 12\text{ byte}$. Trường 12-bit \texttt{imm[12:1]} được mã hóa trong lệnh có giá trị thập phân là: $12 \div 2 = \mathbf{6}$ $\rightarrow$ Chọn \textbf{D (6)}.
+    \item \textbf{Giải câu c:} $\text{Target PC} = \texttt{0x2000} - 12 = \texttt{0x2000} - \texttt{0x0C} = \mathbf{\texttt{0x1FF4}}$ $\rightarrow$ Chọn \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 3.66 (Đề Cuối kỳ 2023.1 -- \#5a6d48, \#e08504, 2025.1 -- \#794d71, \#0c9d, Giữa kỳ 2024.1 -- \#1c2f2d, \#65dce1 \& Ôn tập 2025.2 -- Câu 16, 60, 77)}\\
+Hãy xác định khuôn dạng lệnh, thanh ghi đích (\texttt{rd}) và các thanh ghi nguồn (\texttt{rs1, rs2}) cho các mã máy RISC-V dưới đây:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(CK 2023.1 -- \#e08504):} Lệnh mã máy \texttt{0x00628863} (\texttt{bne t0, t1, 16}) thuộc định dạng nào (\texttt{R, I, B, J})?
+    \item \textbf{(CK 2023.1 -- \#5a6d48):} Lệnh mã máy \texttt{0x00008067} (\texttt{jalr zero, ra, 0}) có toán hạng đích lưu tại đâu?
+    \item \textbf{(Ôn tập 2025.2 -- P2, Câu 16):} Cho mã máy \texttt{0000000 00111 00000 000 11111 0110011}. Toán hạng đích của nó là gì?
+    \item \textbf{(GK 2024.1 -- \#1c2f2d \& CK 2025.1 -- \#794d71):} Tìm toán hạng đích (\texttt{rd}) của lệnh R-format có mã máy: (1) \texttt{0x007302b3}; và (2) \texttt{0x01c303b3}.
+    \item \textbf{(GK 2024.1 -- \#65dce1 \& CK 2025.1 -- \#0c9d):} Tìm các thanh ghi nguồn (\texttt{rs1, rs2}) của lệnh \texttt{beq} có mã máy: (1) \texttt{0x01ee8463}; và (2) \texttt{0x01de0463}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Câu a:} Lệnh \texttt{bne} có opcode $\texttt{0x63} = \texttt{1100011}_2$, thuộc định dạng \textbf{B-format (B-type)}.
+    \item \textbf{Câu b:} Trong \texttt{jalr zero, ra, 0}, toán hạng đích là \textbf{thanh ghi \texttt{zero} (\texttt{x0})}.
+    \item \textbf{Câu c:} Trường \texttt{rd} (5 bit đứng ngay trước 7 bit opcode) là $\texttt{11111}_2 = 31 \implies$ Thanh ghi \texttt{x31}, tức là \textbf{Thanh ghi \texttt{t6}}.
+    \item \textbf{Câu d:} Đổi 3 chữ số Hexa cuối sang 12 bit nhị phân (\texttt{rd} 5 bit + \texttt{op} 7 bit):
+    \begin{itemize}
+        \item Với \texttt{0x007302b3}: $\texttt{2b3}_{16} = \underbrace{\texttt{00101}}_{\texttt{rd}=5}\,\underbrace{\texttt{0110011}}_{\text{op}} \implies \mathbf{\texttt{x5}}$ (\texttt{t0}).
+        \item Với \texttt{0x01c303b3}: $\texttt{3b3}_{16} = \underbrace{\texttt{00111}}_{\texttt{rd}=7}\,\underbrace{\texttt{0110011}}_{\text{op}} \implies \mathbf{\texttt{x7}}$ (\texttt{t2}).
+    \end{itemize}
+    \item \textbf{Câu e:} Trong lệnh \texttt{beq rs1, rs2, label}, bit 24:20 là \texttt{rs2} và bit 19:15 là \texttt{rs1}:
+    \begin{itemize}
+        \item Với \texttt{0x01ee8463}: $\texttt{01ee8}_{16} = \texttt{0000000\_}\underbrace{\texttt{11110}}_{\texttt{rs2}=30}\_\underbrace{\texttt{11101}}_{\texttt{rs1}=29}\_\texttt{000} \implies$ Nguồn \texttt{rs1, rs2} là \textbf{\texttt{x29, x30}}.
+        \item Với \texttt{0x01de0463}: $\texttt{01de0}_{16} = \texttt{0000000\_}\underbrace{\texttt{11101}}_{\texttt{rs2}=29}\_\underbrace{\texttt{11100}}_{\texttt{rs1}=28}\_\texttt{000} \implies$ Nguồn \texttt{rs1, rs2} là \textbf{\texttt{x28, x29}}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 3.67 (Đề Cuối kỳ 2025.1 -- \#15fd1c \& Ôn tập Cuối kỳ 2025.2 -- P2, Câu 48)}\\
+Cho chương trình hợp ngữ RISC-V dưới đây đã được nạp vào bộ nhớ chính. Giả sử lệnh đầu tiên của chương trình nằm tại địa chỉ \texttt{0x00400000}:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}
+    lui  s0, 0xFFFF0          # 0x00400000
+    addi s0, zero, 0          # 0x00400004
+    slti t1, s0, 100          # 0x00400008
+    beq  t1, zero, else       # 0x0040000C
+    addi t2, zero, 1          # 0x00400010
+    addi t3, zero, 20         # 0x00400014
+    j    endif                # 0x00400018
+else:
+    addi t2, zero, -1         # 0x0040001C
+    addi t3, zero, -20        # 0x00400020
+endif: nop                    # 0x00400024
+\end{lstlisting}
+\end{minipage}
+
+Giá trị hệ thập lục phân (Hexa) của thanh ghi \texttt{PC} ngay sau khi thực hiện lệnh \texttt{beq} là bao nhiêu?
+
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh thứ 2 (\texttt{addi s0, zero, 0}) gán lại $\texttt{s0} = 0 + 0 = 0$ (ghi đè giá trị của lệnh \texttt{lui} đầu tiên).
+    \item Lệnh thứ 3 (\texttt{slti t1, s0, 100}) kiểm tra $0 < 100 \rightarrow$ Đúng, nên $\texttt{t1} = 1$.
+    \item Lệnh thứ 4 (\texttt{beq t1, zero, else} tại địa chỉ \texttt{0x0040000C}) kiểm tra $\texttt{t1} == 0$ ($1 == 0 \rightarrow$ Sai), nên \textbf{không rẽ nhánh}.
+    \item Do không rẽ nhánh, thanh ghi \texttt{PC} tăng thêm $4$ để trỏ sang lệnh kế tiếp thứ 5:
+    $$PC = \texttt{0x0040000C} + 4 = \mathbf{\texttt{0x00400010}}$$
+\end{itemize}
+
+\textbf{Bài tập 3.68 (Giải chi tiết Đề Giữa kỳ 2025.2 -- Đề 0013, Bản 1: Câu 67 đến Câu 77)}\\
+Cho bản đồ bộ nhớ (Memory Map) của hệ thống RISC-V 32-bit lưu trữ theo thứ tự đầu nhỏ (Little-Endian) từ địa chỉ \texttt{0x400000} đến \texttt{0x40001B} như bảng dưới đây:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabularx}{\linewidth}{|C{1.8cm}|C{3.1cm}|C{2.4cm}|Y|}
+\hline
+\textbf{Địa chỉ} & \textbf{4 byte (+0..+3)} & \textbf{Mã máy 32-bit} & \textbf{Giải mã sang lệnh hợp ngữ RISC-V} \\ \hline
+\texttt{0x400000} & \texttt{B3, 02, 73, 00} & \texttt{0x007302B3} & \texttt{add t0, t1, t2} ($\texttt{rd}=\texttt{t0}, \texttt{rs1}=\texttt{t1}, \texttt{rs2}=\texttt{t2}$) \\ \hline
+\texttt{0x400004} & \texttt{13, 0E, 54, 00} & \texttt{0x00540E13} & \texttt{addi t3, s0, 5} ($\texttt{rd}=\texttt{t3}, \texttt{rs1}=\texttt{s0}, \texttt{imm}=5$) \\ \hline
+\texttt{0x400008} & \texttt{93, DE, 74, 00} & \texttt{0x0074DE93} & \texttt{srli t4, s1, 7} (dịch phải logic $7\text{ bit}$) \\ \hline
+\texttt{0x40000C} & \texttt{23, 24, E9, 01} & \texttt{0x01E92423} & \texttt{sw t5, 8(s2)} ($\texttt{rs2}=\texttt{t5}, \texttt{rs1}=\texttt{s2}, \texttt{imm}=8$) \\ \hline
+\texttt{0x400010} & \texttt{E3, 88, 0F, FE} & \texttt{0xFE0F88E3} & \texttt{beq t6, x0, -16} ($\texttt{rs1}=\texttt{t6}, \texttt{rs2}=\texttt{x0}$) \\ \hline
+\texttt{0x400014} & \texttt{B7, 59, 34, 12} & \texttt{0x123459B7} & \texttt{lui s3, 0x12345} ($\texttt{rd}=\texttt{x19}=\texttt{s3}$) \\ \hline
+\texttt{0x400018} & \texttt{EF, F0, 9F, FE} & \texttt{0xFE9FF0EF} & \texttt{jal ra, -24} ($\texttt{rd}=\texttt{x1}=\texttt{ra}$) \\ \hline
+\end{tabularx}
+\end{center}
+Hãy trả lời các câu hỏi trong Đề 0013 (Bản 1):
+\begin{enumerate}[label=\textbf{Câu \arabic*.}, start=67]
+    \item Hãy cho biết giá trị số 32-bit ở địa chỉ \texttt{0x400000} ở hệ 16.
+    \item Sau đoạn lệnh: \texttt{lui s0, 0x400} $\rightarrow$ \texttt{addi s0, s0, 0x18} $\rightarrow$ \texttt{lh t1, 0(s0)}, hai thanh ghi \texttt{s0} và \texttt{t1} bằng bao nhiêu?
+    \item Lệnh ở địa chỉ \texttt{0x400014} có thanh ghi đích \texttt{rd} là gì?
+    \item Lệnh thứ 3 trong bản đồ (tại \texttt{0x400008}) là lệnh tương đương với phép chia. Đó là phép chia với hằng số bằng mấy?
+    \item Hằng số của lệnh ở địa chỉ \texttt{0x400008} bằng mấy (viết ở hệ 16)?
+    \item Hãy cho biết thao tác của lệnh ở địa chỉ \texttt{0x400010} là gì (ví dụ: \texttt{add, bne, lui})?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Câu 67:} Ghép ngược 4 byte từ \texttt{0x400003} về \texttt{0x400000} theo Little-Endian: \textbf{\texttt{0x007302B3}}.
+    \item \textbf{Câu 68:} Sau 2 lệnh đầu, $\mathbf{\texttt{s0 = 0x00400018}}$. Lệnh \texttt{lh t1, 0(s0)} đọc 2 byte tại \texttt{0x400018} (\texttt{0xEF}) và \texttt{0x400019} (\texttt{0xF0}), ghép lại là \texttt{0xF0EF}, mở rộng dấu âm 32-bit thành: $\mathbf{\texttt{t1 = 0xFFFFF0EF}}$.
+    \item \textbf{Câu 69:} Lệnh ở \texttt{0x400014} là \texttt{0x123459B7}. Đổi 3 chữ cuối $\texttt{9B7}_{16} = \underbrace{\texttt{10011}}_{\texttt{rd}=19}\,\underbrace{\texttt{0110111}}_{\text{lui}}$. Thanh ghi $\texttt{x19}$ có tên là \textbf{\texttt{s3}}.
+    \item \textbf{Câu 70:} Lệnh thứ 3 ở \texttt{0x400008} là \texttt{0x0074DE93} (\texttt{srli t4, s1, 7}). Dịch phải $7\text{ bit}$ tương đương chia cho $2^7 = \mathbf{128}$.
+    \item \textbf{Câu 71:} Hằng số dịch của lệnh \texttt{0x0074DE93} là 12 bit đầu \texttt{0x007} $\implies$ Trả lời: \textbf{\texttt{0x7}} (hoặc \texttt{0x007}).
+    \item \textbf{Câu 72:} Lệnh ở \texttt{0x400010} (\texttt{0xFE0F88E3}) có opcode $\texttt{1100011}_2$ (Branch) và $\texttt{funct3} = \texttt{000}_2$ $\implies$ Thao tác là \textbf{\texttt{beq}}.
+\end{itemize}
+
+\textbf{Bài tập 3.69 (Giải chi tiết Đề Giữa kỳ 2025.2 -- Đề 0013, Bản 2: Câu 936 đến Câu 946)}\\
+Sử dụng cùng bản đồ bộ nhớ của Đề 0013 ở Bài tập 3.68 (nhưng tại địa chỉ \texttt{0x40000A} đổi byte \texttt{0x74} thành \texttt{0x34}, tức mã máy tại \texttt{0x400008} là \texttt{0x0034DE93}), hãy trả lời các câu hỏi sau:
+\begin{enumerate}[label=\textbf{Câu \arabic*.}, start=936]
+    \item Giá trị số 32-bit ở địa chỉ \texttt{0x400018} ở hệ 16 là bao nhiêu?
+    \item Sau đoạn lệnh: \texttt{lui s0, 0x400} $\rightarrow$ \texttt{addi s0, s0, 0x16} $\rightarrow$ \texttt{lh t1, 0(s0)}, hai thanh ghi \texttt{s0} và \texttt{t1} bằng bao nhiêu?
+    \item Lệnh ở địa chỉ \texttt{0x400000} có thanh ghi nguồn \texttt{rs1} là gì?
+    \item Lệnh thứ 3 (tại \texttt{0x400008}: \texttt{0x0034DE93}) tương đương với phép chia cho hằng số bằng mấy?
+    \item Trong bản đồ, lệnh \texttt{beq} duy nhất nằm ở địa chỉ nào?
+    \item Hãy cho biết thao tác của lệnh ở địa chỉ \texttt{0x400008} là gì?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Câu 936:} Ghép ngược 4 byte từ \texttt{0x40001B} về \texttt{0x400018} được: \textbf{\texttt{0xFE9FF0EF}}.
+    \item \textbf{Câu 937:} Sau 2 lệnh đầu, $\mathbf{\texttt{s0 = 0x00400016}}$. Lệnh \texttt{lh t1, 0(s0)} đọc 2 byte tại \texttt{0x400016} (\texttt{0x34}) và \texttt{0x400017} (\texttt{0x12}), ghép lại thành \texttt{0x1234}, mở rộng dấu dương được: $\mathbf{\texttt{t1 = 0x00001234}}$.
+    \item \textbf{Câu 938:} Lệnh ở \texttt{0x400000} (\texttt{0x007302B3}) có $\texttt{rs1}$ ở bit 19:15 là $\texttt{00110}_2 = 6$, tức là thanh ghi \textbf{\texttt{t1}} (\texttt{x6}).
+    \item \textbf{Câu 939:} Mã máy \texttt{0x0034DE93} là lệnh \texttt{srli t4, s1, 3}. Dịch phải $3\text{ bit}$ tương đương chia cho $2^3 = \mathbf{8}$.
+    \item \textbf{Câu 940:} Lệnh \texttt{beq} duy nhất nằm ở địa chỉ \textbf{\texttt{0x400010}}.
+    \item \textbf{Câu 941:} Lệnh ở \texttt{0x400008} (\texttt{0x0034DE93}) có opcode $\texttt{0010011}_2$, $\texttt{funct3} = \texttt{101}_2$, 7 bit cao bằng $0$ $\implies$ Thao tác là \textbf{\texttt{srli}}.
+\end{itemize}
+
+\textbf{Bài tập 3.70 (Giải chi tiết Đề Giữa kỳ 2025.2 -- Đề 0012: Câu 100 đến Câu 109)}\\
+Cho bản đồ bộ nhớ của Đề 0012 từ địa chỉ \texttt{0x400000} đến \texttt{0x40001B} như bảng dưới đây:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabularx}{\linewidth}{|C{1.8cm}|C{3.1cm}|C{2.4cm}|Y|}
+\hline
+\textbf{Địa chỉ} & \textbf{4 byte (+0..+3)} & \textbf{Mã máy 32-bit} & \textbf{Giải mã sang lệnh hợp ngữ RISC-V} \\ \hline
+\texttt{0x400000} & \texttt{33, 0E, 73, 40} & \texttt{0x40730E33} & \texttt{sub t3, t1, t2} ($\texttt{rd}=\texttt{t3}, \texttt{rs1}=\texttt{t1}, \texttt{rs2}=\texttt{t2}$) \\ \hline
+\texttt{0x400004} & \texttt{37, 0B, 04, 00} & \texttt{0x00040B37} & \texttt{lui s6, 0x40} (U-type: $\texttt{rd}=\texttt{x22}=\texttt{s6}$) \\ \hline
+\texttt{0x400008} & \texttt{13, 0B, 8B, 03} & \texttt{0x038B0B13} & \texttt{addi s6, s6, 56} (I-type: $\texttt{imm}=56=\texttt{0x38}$) \\ \hline
+\texttt{0x40000C} & \texttt{E3, 0C, CB, FF} & \texttt{0xFFCB0CE3} & \texttt{beq s6, s11, -8} (B-type) \\ \hline
+\texttt{0x400010} & \texttt{33, 83, C3, 01} & \texttt{0x01C38333} & \texttt{add t1, t2, t3} (R-type) \\ \hline
+\texttt{0x400014} & \texttt{6F, F0, 1F, FF} & \texttt{0xFF1FF06F} & \texttt{jal x0, -16} (J-type) \\ \hline
+\texttt{0x400018} & \texttt{13, 1B, 2E, 00} & \texttt{0x002E1B13} & \texttt{slli s6, t3, 2} (dịch trái $2\text{ bit}$, nhân $4$) \\ \hline
+\end{tabularx}
+\end{center}
+Hãy trả lời các câu hỏi trong Đề 0012:
+\begin{enumerate}[label=\textbf{Câu \arabic*.}, start=100]
+    \item Hãy cho biết giá trị số 32-bit ở địa chỉ \texttt{0x400008} ở hệ 16.
+    \item Sau đoạn lệnh: \texttt{lui s0, 0x400} $\rightarrow$ \texttt{addi s0, s0, 0x16} $\rightarrow$ \texttt{lb t1, 0(s0)}, hai thanh ghi \texttt{s0} và \texttt{t1} bằng bao nhiêu?
+    \item Lệnh ở địa chỉ \texttt{0x400000} (\texttt{0x40730E33}) có thanh ghi nguồn \texttt{rs2} là gì?
+    \item Lệnh cuối cùng trong bản đồ (tại \texttt{0x400018}: \texttt{0x002E1B13}) tương đương với phép nhân với hằng số bằng mấy?
+    \item Lệnh dạng U ở địa chỉ \texttt{0x400004} (\texttt{0x00040B37}) có toán hạng hằng số bằng mấy (viết ở hệ 16)?
+    \item Hãy cho biết thao tác của lệnh ở địa chỉ \texttt{0x400004} là gì?
+    \item Giải thích nào về lệnh \texttt{bne t1, t2, -16} là đúng?\\
+    A. Nếu $\texttt{t1} \neq \texttt{t2}$ rẽ nhánh về 4 lệnh sau \qquad B. Nếu $\texttt{t1} \neq \texttt{t2}$ rẽ nhánh về 4 lệnh trước\\
+    C. Nếu $\texttt{t1} == \texttt{t2}$ rẽ nhánh về 4 lệnh sau \qquad D. Nếu $\texttt{t1} == \texttt{t2}$ rẽ nhánh về 4 lệnh trước
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Câu 100:} Tại \texttt{0x400008} có 4 byte \texttt{0x13, 0x0B, 0x8B, 0x03}. Ghép ngược theo Little-Endian được: \textbf{\texttt{0x038B0B13}}.
+    \item \textbf{Câu 101:} $\mathbf{\texttt{s0 = 0x00400016}}$. Tại địa chỉ \texttt{0x400016} của Đề 0012 chứa byte \texttt{0x1F} (số dương), nên sau lệnh \texttt{lb t1, 0(s0)} ta có: $\mathbf{\texttt{t1 = 0x0000001F}}$.
+    \item \textbf{Câu 102:} Trong \texttt{0x40730E33}, 12 bit đầu là $\texttt{407}_{16} = \underbrace{\texttt{0100000}}_{\texttt{funct7}}\,\underbrace{\texttt{00111}}_{\texttt{rs2}=7}$. Thanh ghi $\texttt{x7}$ là \textbf{\texttt{t2}}.
+    \item \textbf{Câu 103:} Lệnh ở \texttt{0x400018} (\texttt{0x002E1B13}) là lệnh \texttt{slli s6, t3, 2}. Dịch trái $2\text{ bit}$ tương đương nhân với $2^2 = \mathbf{4}$.
+    \item \textbf{Câu 104:} Lệnh dạng U ở \texttt{0x400004} (\texttt{0x00040B37}) có 20 bit cao (5 chữ số Hexa đầu) là \textbf{\texttt{0x40}} (hoặc \texttt{0x00040}).
+    \item \textbf{Câu 105:} Opcode của \texttt{0x00040B37} là $\texttt{0110111}_2 = 55_{10} \implies$ Thao tác là \textbf{\texttt{lui}}.
+    \item \textbf{Câu 109:} Lệnh \texttt{bne} kiểm tra khác nhau ($\texttt{t1} \neq \texttt{t2}$), và độ lệch $-16\text{ byte} = -4 \times 4\text{ byte}$ tức là lùi về \textbf{4 lệnh trước lệnh hiện thời} $\rightarrow$ Chọn \textbf{B}.
+\end{itemize}

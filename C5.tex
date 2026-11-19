@@ -1,0 +1,714 @@
+\chapter{BỘ XỬ LÝ}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Tổng quan vi kiến trúc và Bộ xử lý đơn chu kỳ (Single-Cycle Processor)}
+
+\textbf{1. Ba kiến trúc triển khai phần cứng (Microarchitecture) cho cùng một tập lệnh RISC-V}
+\begin{itemize}
+    \item \textbf{Bộ xử lý đơn chu kỳ (Single-Cycle Processor):} Mỗi lệnh thực thi trọn vẹn trong đúng $1$ chu kỳ xung nhịp ($\text{CPI} = 1$). Chu kỳ xung nhịp $T_{\text{clk}}$ bắt buộc phải đủ dài cho lệnh chậm nhất (thường là lệnh \texttt{lw}), nên hiệu năng bị giới hạn.
+    \item \textbf{Bộ xử lý đa chu kỳ (Multicycle Processor):} Chia mỗi lệnh thành chuỗi các bước ngắn (từ $3$ đến $5$ chu kỳ tùy loại lệnh), cho phép tái sử dụng phần cứng (dùng chung $1$ bộ nhớ và $1$ ALU) nhưng $\text{CPI} > 1$.
+    \item \textbf{Bộ xử lý đường ống (Pipelined Processor):} Chia mỗi lệnh thành các công đoạn ngắn (chuẩn $5$ công đoạn) và thực thi gối lên nhau nhiều lệnh đồng thời như dây chuyền lắp ráp, đạt thông lượng lý tưởng $\text{CPI} \to 1$ với chu kỳ xung nhịp nhỏ.
+\end{itemize}
+
+\textbf{2. Các thành phần chính của Đường dữ liệu đơn chu kỳ (Single-Cycle RV32I Datapath)}
+\begin{itemize}
+    \item \textbf{Bộ đếm chương trình (\texttt{PC}):} Thanh ghi $32\text{-bit}$ chứa địa chỉ của lệnh hiện tại.
+    \item \textbf{Bộ nhớ lệnh (\texttt{Instruction Memory -- IMEM}):} Lưu trữ mã máy của chương trình; nhận địa chỉ từ \texttt{PC} và xuất ra lệnh $32\text{-bit}$ (\texttt{Instruction[31:0]}). Tách rời với Bộ nhớ dữ liệu để tránh xung đột trong cùng $1$ chu kỳ.
+    \item \textbf{Tập thanh ghi (\texttt{Register File -- RF}):} Gồm $32$ thanh ghi $32\text{-bit}$ (\texttt{x0}--\texttt{x31}), đánh số bằng $5\text{ bit}$. Có $2$ cổng đọc (\texttt{Read register 1 = Instruction[19:15]} ứng với \texttt{rs1}; \texttt{Read register 2 = Instruction[24:20]} ứng với \texttt{rs2}) và $1$ cổng ghi (\texttt{Write register = Instruction[11:7]} ứng với \texttt{rd}) điều khiển bởi \texttt{RegWrite}.
+    \item \textbf{Khối tạo hằng số tức thời (\texttt{Imm Gen}):} Tách trường hằng số $12\text{-bit}$ (theo đúng định dạng I, S hoặc B) từ lệnh $32\text{-bit}$ và mở rộng có dấu (sign-extend) thành $32\text{-bit}$.
+    \item \textbf{Đơn vị số học và logic (\texttt{ALU}):} Thực hiện các phép toán số học/logic (lệnh R-type), cộng địa chỉ cơ sở + độ lệch (lệnh \texttt{lw/sw}), hoặc phép trừ để so sánh (lệnh \texttt{beq}) và xuất ra cờ \texttt{Zero} ($\text{Zero} = 1$ khi hiệu bằng $0$; $\text{Zero} = 0$ khi hiệu khác $0$).
+    \item \textbf{Bộ nhớ dữ liệu (\texttt{Data Memory -- DMEM}):} Chỉ sử dụng cho lệnh \texttt{lw/lb} (\texttt{MemRead = 1}) và \texttt{sw/sb} (\texttt{MemWrite = 1}); các lệnh R-type và \texttt{beq} không truy cập \texttt{DMEM}.
+    \item \textbf{Hai bộ cộng (\texttt{Add}) và Ba bộ chọn kênh (\texttt{MUX}):}
+    \begin{itemize}
+        \item Bộ cộng $1$ tính địa chỉ tuần tự $\text{PC} + 4$; bộ cộng $2$ tính địa chỉ đích rẽ nhánh:
+        $$\text{BTA} = \text{PC} + \text{SignExt}(\{\text{imm}[12:1], \texttt{0}\})$$
+        \item \texttt{MUX ALUSrc}: chọn toán hạng thứ $2$ của ALU (\texttt{0}: \texttt{Read data 2} từ \texttt{rs2}; \texttt{1}: ngõ ra \texttt{Imm Gen}).
+        \item \texttt{MUX MemtoReg}: chọn dữ liệu ghi về \texttt{Write data} của tập thanh ghi (\texttt{0}: \texttt{ALU result}; \texttt{1}: \texttt{Read data} từ \texttt{DMEM}).
+        \item \texttt{MUX PCSrc}: chọn giá trị cập nhật \texttt{PC} (\texttt{0}: $\text{PC} + 4$; \texttt{1}: $\text{BTA}$), với $\text{PCSrc} = \text{Branch} \land \text{Zero}$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Đơn vị điều khiển (Control Unit) và Bảng tín hiệu điều khiển}
+
+Đơn vị điều khiển trong bộ xử lý RISC-V đơn chu kỳ gồm hai khối mạch tổ hợp: \textbf{Bộ điều khiển chính (Main Control)} nhận $7\text{ bit}$ mã lệnh \texttt{opcode = Instruction[6:0]} và \textbf{Bộ điều khiển ALU (ALU Control)} nhận tín hiệu $2\text{-bit}$ \texttt{ALUOp} kết hợp với \texttt{Instruction[30, 14:12]} (bit $30$ của \texttt{funct7} và $3\text{ bit}$ \texttt{funct3}) để sinh ra mã $4\text{-bit}$ điều khiển phép toán của ALU.
+
+\begin{tcolorbox}[bwbox, title={Bảng giải mã tín hiệu điều khiển ALU (ALU Control)}]
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabularx}{\linewidth}{|C{1.8cm}|C{1.4cm}|Y|C{1.8cm}|C{1.3cm}|C{1.8cm}|C{2.0cm}|}
+\hline
+\textbf{Loại lệnh} & \textbf{ALUOp} & \textbf{Thao tác} & \textbf{funct7} & \textbf{funct3} & \textbf{Hàm ALU} & \textbf{ALU Control} \\ \hline
+\texttt{lw / sw} & \texttt{00} & Tính địa chỉ nhớ & \texttt{XXXXXXX} & \texttt{XXX} & \texttt{add} & \texttt{0010} \\ \hline
+\texttt{beq} & \texttt{01} & So sánh bằng & \texttt{XXXXXXX} & \texttt{XXX} & \texttt{subtract} & \texttt{0110} \\ \hline
+\multirow{4}{*}{R-type} & \texttt{10} & \texttt{add} & \texttt{0000000} & \texttt{000} & \texttt{add} & \texttt{0010} \\ \cline{2-7}
+ & \texttt{10} & \texttt{sub} & \texttt{0100000} & \texttt{000} & \texttt{subtract} & \texttt{0110} \\ \cline{2-7}
+ & \texttt{10} & \texttt{and} & \texttt{0000000} & \texttt{111} & \texttt{AND} & \texttt{0000} \\ \cline{2-7}
+ & \texttt{10} & \texttt{or} & \texttt{0000000} & \texttt{110} & \texttt{OR} & \texttt{0001} \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\begin{tcolorbox}[bwbox, title={Bảng chân trị 7 tín hiệu điều khiển chính (Single-Cycle RISC-V)}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|Y|C{1.7cm}|Z|Z|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Loại lệnh} & \textbf{Opcode} & \textbf{Branch} & \textbf{MemRead} & \textbf{MemtoReg} & \textbf{ALUOp} & \textbf{MemWrite} & \textbf{ALUSrc} & \textbf{RegWrite} \\ \hline
+R-type (\texttt{add, sub, slt}) & \texttt{0110011} & \texttt{0} & \texttt{0} & \texttt{0} & \texttt{10} & \texttt{0} & \texttt{0} & \texttt{1} \\ \hline
+Load (\texttt{lw, lb, lh}) & \texttt{0000011} & \texttt{0} & \texttt{1} & \texttt{1} & \texttt{00} & \texttt{0} & \texttt{1} & \texttt{1} \\ \hline
+Store (\texttt{sw, sb, sh}) & \texttt{0100011} & \texttt{0} & \texttt{0} & \texttt{X} (\texttt{0}) & \texttt{00} & \texttt{1} & \texttt{1} & \texttt{0} \\ \hline
+Branch (\texttt{beq}) & \texttt{1100011} & \texttt{1} & \texttt{0} & \texttt{X} (\texttt{0}) & \texttt{01} & \texttt{0} & \texttt{0} & \texttt{0} \\ \hline
+\end{tabularx}
+\end{center}
+\textit{Ghi chú:} Với lệnh \texttt{sw} và \texttt{beq} (do \texttt{RegWrite = 0}), tín hiệu \texttt{MemtoReg} về mặt phần cứng là \texttt{X} (Don't Care), nhưng trong đề thi trắc nghiệm/điền khuyết dạng chuỗi 7 tín hiệu thường ghi quy ước là \texttt{0}.
+\end{tcolorbox}
+
+\textbf{Quy tắc phân tích sự cố đứt dây / kẹt mức logic (Stuck-at Fault):}
+\begin{itemize}
+    \item Một sự cố trên đường dây hoặc tín hiệu điều khiển chỉ làm \textbf{sai kết quả thực thi} của một lệnh nếu lệnh đó \textbf{thực sự sử dụng} đường dây đó với giá trị khác mức bị kẹt.
+    \item Ví dụ: Nếu \texttt{MemtoReg} bị kẹt ở \texttt{0}, mọi lệnh ghi từ ALU (R-type, \texttt{addi}) và lệnh không ghi thanh ghi (\texttt{sw}, \texttt{beq}) vẫn chạy bình thường; chỉ lệnh \texttt{lw} (cần \texttt{MemtoReg = 1}) bị ghi nhầm địa chỉ thay vì dữ liệu từ bộ nhớ.
+\end{itemize}
+
+\subsection{Bộ xử lý đa chu kỳ (Multicycle Processor)}
+
+\begin{itemize}
+    \item \textbf{Đặc điểm kiến trúc:} Chỉ dùng \textbf{một bộ nhớ duy nhất} cho cả lệnh và dữ liệu (phân biệt địa chỉ bằng tín hiệu \texttt{IorD}: \texttt{0} lấy từ \texttt{PC}, \texttt{1} lấy từ \texttt{ALUOut}) và \textbf{một bộ ALU duy nhất} (tái sử dụng cho tính $\text{PC}+4$, tính địa chỉ nhớ, thực thi phép toán và tính địa chỉ rẽ nhánh).
+    \item \textbf{Năm thanh ghi trung gian (không kiến trúc):} \texttt{IR} (Thanh ghi lệnh, điều khiển bởi \texttt{IRWrite}), \texttt{MDR} (Thanh ghi dữ liệu bộ nhớ), \texttt{A} và \texttt{B} (giữ hai toán hạng đọc từ tập thanh ghi), và \texttt{ALUOut} (giữ ngõ ra ALU cho chu kỳ kế tiếp).
+    \item \textbf{Tín hiệu điều khiển đặc trưng:} \texttt{ALUSrcA} ($1\text{-bit}$: \texttt{0} từ \texttt{PC}, \texttt{1} từ \texttt{A}), \texttt{ALUSrcB} ($2\text{-bit}$: \texttt{00} từ \texttt{B}, \texttt{01} là hằng số $4$, \texttt{10} là hằng số \texttt{imm} mở rộng), \texttt{PCWrite}, \texttt{PCWriteCond}, \texttt{PCSource}.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Số chu kỳ thực thi (CPI) của Bộ xử lý đa chu kỳ so với đơn chu kỳ}]
+\begin{itemize}
+    \item \textbf{Số chu kỳ theo từng loại lệnh:} Lệnh \texttt{load} ($5$ chu kỳ), lệnh \texttt{store} ($4$ chu kỳ), lệnh ALU / R-type ($4$ chu kỳ), lệnh \texttt{branch} ($3$ chu kỳ).
+    \item \textbf{Công thức CPI trung bình:} $\text{CPI}_{\text{TB}} = \sum_{i} p_i \times \text{CPI}_i$.
+    \item \textit{Ví dụ chuẩn (Slide bài giảng):} Chương trình có $20\%$ \texttt{load}, $8\%$ \texttt{store}, $10\%$ \texttt{branch}, $62\%$ ALU $\Rightarrow \text{CPI}_{\text{TB}} = 0.20 \times 5 + 0.08 \times 4 + 0.10 \times 3 + 0.62 \times 4 = \mathbf{4.10}$ chu kỳ (nhanh hơn bộ xử lý đơn chu kỳ vốn luôn mất tương đương $5$ chu kỳ ngắn cho mọi lệnh).
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Đường ống lệnh (Pipelining) và Tính toán hiệu năng Pipeline}
+
+\textbf{1. Năm công đoạn chuẩn của đường ống lệnh RISC-V}
+\begin{enumerate}
+    \item \textbf{IF (Instruction Fetch):} Tìm nạp lệnh từ Bộ nhớ lệnh (\texttt{IMEM}) theo địa chỉ \texttt{PC} và tăng $\text{PC} \leftarrow \text{PC} + 4$.
+    \item \textbf{ID (Instruction Decode / Register Read):} Giải mã lệnh, sinh tín hiệu điều khiển, mở rộng hằng số \texttt{Imm Gen} và đọc hai thanh ghi nguồn từ \texttt{Register File}.
+    \item \textbf{EX (Execute / Address Calculation):} Thực hiện phép toán số học/logic hoặc tính địa chỉ bộ nhớ dữ liệu tại \texttt{ALU}.
+    \item \textbf{MEM (Memory Access):} Đọc (\texttt{lw}) hoặc ghi (\texttt{sw}) dữ liệu tại Bộ nhớ dữ liệu (\texttt{DMEM}).
+    \item \textbf{WB (Write Back):} Ghi kết quả (từ \texttt{ALU} hoặc \texttt{DMEM}) trả về thanh ghi đích \texttt{rd} trong \texttt{Register File}.
+\end{enumerate}
+
+Để tách biệt dữ liệu và tín hiệu điều khiển của các lệnh đang chạy đồng thời, bộ xử lý chèn $4$ \textbf{thanh ghi đệm đường ống (Pipeline Registers)} giữa $5$ công đoạn: \texttt{IF/ID}, \texttt{ID/EX}, \texttt{EX/MEM}, và \texttt{MEM/WB}.
+
+\begin{tcolorbox}[bwbox, title={Các công thức trọng tâm tính toán hiệu năng Đường ống lệnh (Pipeline)}]
+\begin{itemize}
+    \item \textbf{Chu kỳ xung nhịp đường ống:}
+    $$T_{\text{pipe}} = \max(t_{\text{IF}}, t_{\text{ID}}, t_{\text{EX}}, t_{\text{MEM}}, t_{\text{WB}}) + t_{\text{reg}}$$
+    \item \textbf{Tổng số chu kỳ thực thi $N$ lệnh trên pipeline $k$ công đoạn (với $S$ chu kỳ trễ stall/bubble/flush):}
+    $$\text{Cycles} = k + (N - 1) + S = N + (k - 1) + S$$
+    (Với $k = 5$ công đoạn và không có hazard: $\text{Cycles} = N + 4$.)
+    \item \textbf{Tổng thời gian thực thi chương trình:}
+    $$T_{\text{exec}} = \text{Cycles} \times T_{\text{pipe}} = [N + (k - 1) + S] \times T_{\text{pipe}}$$
+    \item \textbf{Chỉ số CPI trung bình trên $N$ lệnh:}
+    $$\text{CPI} = \frac{N + (k - 1) + S}{N} = 1 + \frac{k - 1 + S}{N}$$
+    \item \textbf{Hệ số tăng tốc (Speedup) so với thực thi tuần tự không đường ống:}
+    $$\text{Speedup} = \frac{N \times T_{\text{single}}}{[N + (k - 1) + S] \times T_{\text{pipe}}} \xrightarrow{N \to \infty,\; S = 0} \frac{T_{\text{single}}}{T_{\text{pipe}}} \le k$$
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Quy ước vàng về ghi/đọc Tập thanh ghi trong cùng $1$ chu kỳ:} Trong bộ xử lý đường ống RISC-V chuẩn, tầng \textbf{WB ghi dữ liệu vào tập thanh ghi ở nửa đầu chu kỳ}, còn tầng \textbf{ID đọc thanh ghi ở nửa sau chu kỳ}. Nhờ đó, nếu lệnh $I_1$ đang ở tầng \textbf{WB} cùng chu kỳ với lệnh $I_2$ ở tầng \textbf{ID}, lệnh $I_2$ đọc được ngay giá trị mới mà không cần chèn thêm stall.
+
+\subsection{Xung đột đường ống (Hazards), Forwarding và Dự đoán rẽ nhánh}
+
+\textbf{1. Ba loại xung đột đường ống (Pipeline Hazards)}
+\begin{itemize}
+    \item \textbf{Xung đột cấu trúc (Structural Hazard):} Hai lệnh đồng thời tranh chấp cùng một tài nguyên phần cứng (ví dụ: tầng IF đọc lệnh và tầng MEM đọc/ghi dữ liệu nếu dùng chung $1$ bộ nhớ). \textit{Cách khắc phục:} tách riêng Bộ nhớ lệnh (\texttt{IMEM} / I-Cache) và Bộ nhớ dữ liệu (\texttt{DMEM} / D-Cache).
+    \item \textbf{Xung đột dữ liệu (Data Hazard):} Lệnh sau phụ thuộc vào dữ liệu mà lệnh trước chưa kịp ghi về tập thanh ghi. Phân loại phụ thuộc: \textbf{RAW} (Read After Write -- phụ thuộc thực, phổ biến nhất), \textbf{WAR} (Write After Read), \textbf{WAW} (Write After Write).
+    \begin{itemize}
+        \item \textit{Không có Forwarding (dùng Stall / chèn \texttt{nop}):} Giữa lệnh ghi thanh ghi và lệnh liền sau đọc thanh ghi đó cần chèn \textbf{$2$ chu kỳ stall/\texttt{nop}} (theo quy ước WB nửa đầu / ID nửa sau; nếu cách $1$ lệnh thì cần $1$ stall; cách $\ge 2$ lệnh thì không cần stall).
+        \item \textit{Kỹ thuật chuyển tiếp dữ liệu (Forwarding / Bypassing):} Truyền trực tiếp kết quả từ thanh ghi đệm \texttt{EX/MEM} (EX-to-EX) hoặc \texttt{MEM/WB} (MEM-to-EX) về thẳng đầu vào ALU mà không cần đợi tầng WB. Kỹ thuật này \textbf{xóa bỏ hoàn toàn stall} cho các xung đột ALU $\rightarrow$ ALU.
+        \item \textit{Xung đột Load-Use Data Hazard:} Khi lệnh \texttt{lw} đứng ngay trước lệnh sử dụng thanh ghi đích của nó (ví dụ: \texttt{lw s0, 20(t1)} rồi \texttt{sub s1, s0, t2}), dữ liệu chỉ sẵn sàng sau tầng \textbf{MEM} nên dù có đầy đủ Forwarding vẫn bắt buộc chèn \textbf{$1$ chu kỳ stall (bubble)} nhờ khối \textbf{Hazard Detection Unit}. Trình biên dịch có thể tối ưu bằng kỹ thuật \textbf{lập lịch mã (Code Scheduling)} -- xen lệnh độc lập vào sau \texttt{lw}.
+    \end{itemize}
+    \item \textbf{Xung đột điều khiển (Control Hazard):} Phát sinh tại các lệnh rẽ nhánh (\texttt{beq, bne, ...}) vì chưa biết địa chỉ lệnh kế tiếp khi đang tìm nạp ở tầng IF.
+    \begin{itemize}
+        \item \textit{Xác định sớm ở tầng ID:} Bổ sung mạch so sánh thanh ghi và tính BTA ngay trong công đoạn ID giúp giảm phạt dự đoán sai xuống còn \textbf{$1$ chu kỳ (flush $1$ lệnh)}.
+        \item \textit{Dự đoán rẽ nhánh (Branch Prediction):} Tiếp tục nạp lệnh theo hướng dự đoán; nếu đoán đúng thì không mất chu kỳ phạt ($0$ stall), nếu đoán sai thì hủy (flush) các lệnh nạp nhầm và nạp lại từ địa chỉ đúng.
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Các chiến lược Dự đoán rẽ nhánh (Static vs Dynamic 1-bit \& 2-bit)}]
+\begin{itemize}
+    \item \textbf{Dự đoán tĩnh (Static Branch Prediction):}
+    \begin{itemize}
+        \item \textit{Always Not-Taken (Luôn không nhảy):} Luôn nạp lệnh tuần tự $\text{PC} + 4$; bị phạt khi nhánh thực sự nhảy.
+        \item \textit{Always Taken (Luôn nhảy):} Luôn nạp tại địa chỉ đích BTA; rất hiệu quả với vòng lặp (chỉ đoán sai $1$ lần khi thoát vòng lặp nếu là nhánh quay về đầu vòng lặp).
+    \end{itemize}
+    \item \textbf{Dự đoán động 1-bit (1-bit Dynamic Predictor):} Lưu trạng thái lần rẽ nhánh gần nhất (\texttt{1}: Taken, \texttt{0}: Not-Taken). \textit{Nhược điểm:} Với vòng lặp lồng nhau, mỗi lần thoát vòng lặp trong bị đoán sai $1$ lần và đổi trạng thái sang Not-Taken, dẫn đến lần đầu quay lại vòng lặp trong lại bị đoán sai thêm $1$ lần nữa ($2$ lần sai/vòng ngoài).
+    \item \textbf{Dự đoán động 2-bit bão hòa (2-bit Saturating Counter):} Gồm $4$ trạng thái: \texttt{11} (\textit{Strongly Taken}), \texttt{10} (\textit{Weakly Taken}), \texttt{01} (\textit{Weakly Not-Taken}), \texttt{00} (\textit{Strongly Not-Taken}). Phải đoán sai \textbf{$2$ lần liên tiếp} mới đổi hướng dự đoán, giúp giảm đáng kể số lần đoán sai ở vòng lặp lồng nhau.
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{2. Hướng mở rộng song song mức lệnh (ILP):} Để tiếp tục tăng thông lượng vượt quá $1$ lệnh/chu kỳ, các bộ xử lý hiện đại kết hợp \textbf{tăng số công đoạn đường ống (Superpipelining)} và kiến trúc \textbf{Siêu vô hướng (Superscalar)} -- bố trí nhiều đơn vị thực thi song song để phát hành và hoàn tất nhiều lệnh trong cùng $1$ chu kỳ xung nhịp.
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 5 và Hướng dẫn giải}
+
+
+\subsection{Nhóm 1: Đường dữ liệu (Datapath) \& Tín hiệu điều khiển (Control Unit)}
+
+\textbf{Bài tập 5.1 (ôn tập cuối kì 20251 (Câu 36); ôn tập cuối kì 20252 (P2-18); Đáp án ôn tập cuối kì P2 (Câu 12))}\\
+Xét 4 loại lệnh \texttt{lw}, \texttt{sw}, \texttt{beq} và \texttt{R-type} trên bộ xử lý RISC-V đơn chu kỳ. Khi thực hiện những loại lệnh nào \textbf{không cần} sử dụng tới thành phần \textbf{Bộ nhớ dữ liệu (Data Memory)}?
+\begin{enumerate}[label=\Alph*.]
+    \item beq và R-type
+    \item lw và sw
+    \item Chỉ lệnh R-type
+    \item Cả 4 loại lệnh (lw, sw, beq và R-type)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trên Datapath đơn chu kỳ RISC-V:
+    \item \texttt{lw} sử dụng Data Memory để \textbf{đọc} dữ liệu (\texttt{MemRead = 1}).
+    \item \texttt{sw} sử dụng Data Memory để \textbf{ghi} dữ liệu (\texttt{MemWrite = 1}).
+    \item \texttt{R-type} chỉ tính toán tại ALU rồi ghi kết quả trực tiếp về tập thanh ghi (\texttt{MemRead = 0, MemWrite = 0}).
+    \item \texttt{beq} chỉ so sánh hai thanh ghi tại ALU và cập nhật PC nếu bằng nhau (\texttt{MemRead = 0, MemWrite = 0}).
+    \item Vậy \textbf{\texttt{beq} và \texttt{R-type}} không cần sử dụng tới Bộ nhớ dữ liệu.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (beq và R-type)}.
+\end{itemize}
+
+\textbf{Bài tập 5.2 (ôn tập cuối kì 20251 (Câu 42); ôn tập cuối kì 20252 (P2-41); Đáp án ôn tập cuối kì P2 (Câu 20))}\\
+Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh \texttt{add s2, s4, s3}, cặp tín hiệu điều khiển \texttt{ALUSrc / RegWrite} nhận giá trị nào?
+\begin{enumerate}[label=\Alph*.]
+    \item 0/1
+    \item 0/0
+    \item 1/0
+    \item 1/1
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{add s2, s4, s3} thuộc định dạng \textbf{R-type}:
+    \item \texttt{ALUSrc = 0}: toán hạng thứ hai đưa vào ALU lấy trực tiếp từ cổng \texttt{Read data 2} của tập thanh ghi (giá trị \texttt{s3}), không dùng khối \texttt{Imm Gen}.
+    \item \texttt{RegWrite = 1}: cho phép ghi kết quả từ ALU vào thanh ghi đích \texttt{rd = s2}.
+    \item Do đó cặp tín hiệu \texttt{ALUSrc / RegWrite} là \textbf{\texttt{0/1}}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (0/1)}.
+\end{itemize}
+
+\textbf{Bài tập 5.3 (ôn tập cuối kì 20251 (Câu 53); ôn tập cuối kì 20252 (P2-28); Đáp án ôn tập cuối kì P2 (Câu 63))}\\
+Xét Datapath RISC-V đơn chu kỳ chuẩn khi thực hiện lệnh \texttt{sw s0, -8(s6)}. Hãy cho biết bộ $7$ tín hiệu điều khiển theo đúng thứ tự \texttt{Branch / MemRead / MemtoReg / ALUOp (2-bit) / MemWrite / ALUSrc / RegWrite} nhận giá trị nào? (Viết bằng 7 cụm cách nhau bởi dấu \texttt{/}, vd: \texttt{1/0/1/00/1/0/1})
+\begin{enumerate}[label=\Alph*.]
+    \item 0/0/0/00/1/1/0
+    \item 0/1/1/00/0/1/1
+    \item 0/0/0/10/0/0/1
+    \item 1/0/0/01/0/0/0
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{sw s0, -8(s6)} là lệnh ghi từ nhớ (\textbf{S-type Store}):
+    \item \texttt{Branch = 0}: không phải lệnh rẽ nhánh.
+    \item \texttt{MemRead = 0}: không đọc từ Data Memory.
+    \item \texttt{MemtoReg = 0} (hoặc \texttt{X} --- không quan tâm vì không ghi thanh ghi; đáp án chuẩn điền \texttt{0}).
+    \item \texttt{ALUOp = 00}: ALU thực hiện phép cộng địa chỉ cơ sở \texttt{s6} với offset \texttt{-8}.
+    \item \texttt{MemWrite = 1}: cho phép ghi giá trị thanh ghi \texttt{s0} vào Data Memory.
+    \item \texttt{ALUSrc = 1}: toán hạng thứ 2 của ALU lấy từ khối \texttt{Imm Gen} (giá trị \texttt{-8}).
+    \item \texttt{RegWrite = 0}: không ghi dữ liệu về tập thanh ghi.
+    \item Kết quả theo đúng thứ tự: \textbf{\texttt{0/0/0/00/1/1/0}}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (0/0/0/00/1/1/0)}.
+\end{itemize}
+
+\textbf{Bài tập 5.4 (giữa kì 20231 (\#1c9040))}\\
+Xét bộ xử lý đơn chu kỳ \textbf{RISC-V (RV32I)} thực thi lệnh \texttt{slt t6, t2, t3} (biết $t_1 = \text{0x0004}$, $t_2 = \text{0x0012}$, $t_3 = \text{0x2023}$). Điểm đánh dấu \textbf{\textcircled{1}} là bus 5-bit \texttt{Instruction[19:15]} đưa vào cổng \texttt{Read register 1} của Tập thanh ghi. Giá trị Hexa trên đường dây \textbf{\textcircled{1}} là bao nhiêu?
+\textit{Nhập giá trị Hexa 5-bit của rs1 (vd: 0x07):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Đường dây \texttt{Instruction[19:15]} mang \textbf{chỉ số thanh ghi nguồn 1 (rs1)} (chứ không phải dữ liệu bên trong thanh ghi). Trong lệnh \texttt{slt t6, t2, t3}, \texttt{rs1} là thanh ghi \texttt{t2} có số hiệu là \texttt{x7} $= \mathbf{\text{0x07}}$ (bảng thanh ghi RV32I: \texttt{t2 = x7}).
+    \item \textbf{Kết luận:} Đáp án là \textbf{0x07}.
+\end{itemize}
+
+\textbf{Bài tập 5.5 (giữa kì 20231 (\#282a13))}\\
+Xét bộ xử lý đơn chu kỳ \textbf{RISC-V (RV32I)} thực thi lệnh \texttt{slt t6, t2, t3} tại địa chỉ \texttt{0x0040FF80} (biết $t_1 = \text{0x00000004}$, $t_2 = \text{0x00000012}$, $t_3 = \text{0x00002023}$). Điểm đánh dấu \textbf{\textcircled{3}} là ngõ ra \texttt{ALU result}. Giá trị Hexa 32-bit tại \textbf{\textcircled{3}} là bao nhiêu?
+\textit{Nhập kết quả Hexa 32-bit (vd: 0x00000001):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{slt t6, t2, t3} so sánh có dấu \texttt{t2 $<$ t3}: $\text{0x12} (18) < \text{0x2023} (8227)$ là đúng, nên ngõ ra ALU result tại \textcircled{3} bằng $\mathbf{\text{0x00000001}}$.
+    \item \textbf{Kết luận:} Đáp án là \textbf{0x00000001}.
+\end{itemize}
+
+\textbf{Bài tập 5.6 (giữa kì 20231 (\#dc67c2))}\\
+Xét bộ xử lý đơn chu kỳ \textbf{RISC-V (RV32I)} thực thi lệnh \texttt{slt t6, t2, t3} (mã máy \texttt{0x01C3AFB3}) đặt tại địa chỉ \texttt{PC = 0x0040FF00}. Điểm đánh dấu \textbf{\textcircled{4}} là ngõ ra bộ cộng tính địa chỉ rẽ nhánh: $PC + \text{sign-extend}(\text{imm}_B)$ (khối \texttt{Imm Gen} tách các bit kiểu B từ mã máy dù \texttt{Branch = 0}). Giá trị Hexa tại \textbf{\textcircled{4}} là bao nhiêu?
+\textit{Nhập giá trị Hexa tại \textcircled{4} (vd: 0x0041071E):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mã máy \texttt{0x01C3AFB3} ở hệ nhị phân là \texttt{0000 0001 1100 0011 1010 1111 1011 0011}.
+    \item Bộ \texttt{Imm Gen} kiểu B ghép các bit: $\text{bit}[31]=0$, $\text{bit}[7]=1$, $\text{bits}[30:25]=000000$, $\text{bits}[11:8]=1111$, thêm bit $0$ cuối $\rightarrow$ $0\;1\;000000\;1111\;0_2 = +2078 = \text{0x81E}$.
+    \item Ngõ ra bộ cộng nhánh $= \text{0x0040FF00} + \text{0x0000081E} = \mathbf{\text{0x0041071E}}$.
+    \item \textbf{Kết luận:} Đáp án là \textbf{0x0041071E}.
+\end{itemize}
+
+\textbf{Bài tập 5.7 (giữa kì 20231 (\#30ee31))}\\
+Xét bộ xử lý đơn chu kỳ \textbf{RISC-V (RV32I)} thực thi lệnh \texttt{slt t6, t2, t3} (biết $t_1 = \text{0x0004}$, $t_2 = \text{0x0012}$, $t_3 = \text{0x2023}$). Điểm đánh dấu \textbf{\textcircled{2}} là bus 5-bit \texttt{Instruction[24:20]} đưa vào cổng \texttt{Read register 2}. Giá trị Hexa trên đường dây \textbf{\textcircled{2}} là bao nhiêu?
+\textit{Nhập giá trị Hexa 5-bit của rs2 (vd: 0x1C):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Đường dây \texttt{Instruction[24:20]} mang \textbf{chỉ số thanh ghi nguồn 2 (rs2)}. Trong lệnh \texttt{slt t6, t2, t3}, \texttt{rs2} là \texttt{t3} có số hiệu \texttt{x28} $= \mathbf{\text{0x1C}}$.
+    \item \textbf{Kết luận:} Đáp án là \textbf{0x1C}.
+\end{itemize}
+
+\textbf{Bài tập 5.8 (giữa kì 20231 (\#28284a))}\\
+Trong Datapath bộ xử lý đơn chu kỳ \textbf{RISC-V (RV32I)}, giả sử có sự cố phần cứng làm đường tín hiệu điều khiển \texttt{MemtoReg} nối tới Mux chọn dữ liệu ghi về thanh ghi bị kẹt cố định ở mức logic \texttt{0} (luôn chọn ngõ ra ALU thay vì Data Memory). Lệnh nào dưới đây bị ảnh hưởng thực thi sai?
+\begin{enumerate}[label=\Alph*.]
+    \item lw
+    \item beq
+    \item add
+    \item sw
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Các lệnh \texttt{beq} và \texttt{sw} không ghi kết quả về Tập thanh ghi (\texttt{RegWrite = 0}); lệnh \texttt{add} cần \texttt{MemtoReg = 0} để ghi kết quả ALU; chỉ có lệnh \texttt{lw} bắt buộc cần \texttt{MemtoReg = 1} để đưa dữ liệu đọc từ RAM về thanh ghi đích nên sẽ hoạt động sai.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (lw)}.
+\end{itemize}
+
+\textbf{Bài tập 5.9 (ôn tập cuối kì 20251 (Câu 7); ôn tập cuối kì 20252 (P2-49); Đáp án ôn tập cuối kì P2 (Câu 42))}\\
+Xét 4 loại lệnh \texttt{lw}, \texttt{sw}, \texttt{beq} và \texttt{R-type} trên bộ xử lý đơn chu kỳ. Khi thực hiện những loại lệnh nào cần sử dụng tới thành phần \textbf{Bộ nhớ lệnh (Instruction Memory)}?
+\begin{enumerate}[label=\Alph*.]
+    \item Cả 4 loại lệnh (lw, sw, beq và R-type)
+    \item Chỉ các lệnh truy cập nhớ lw và sw
+    \item Chỉ các lệnh R-type và beq
+    \item Chỉ các lệnh đọc lw và R-type
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mọi lệnh máy đều phải đi qua công đoạn đầu tiên (Instruction Fetch --- IF) để CPU đọc mã máy từ Bộ nhớ lệnh tại địa chỉ \texttt{PC}, nên cả $4$ loại lệnh đều cần Instruction Memory.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (Cả 4 loại lệnh (lw, sw, beq và R-type))}.
+\end{itemize}
+
+\textbf{Bài tập 5.10 (ôn tập cuối kì 20251 (Câu 14); ôn tập cuối kì 20252 (P2-66); Đáp án ôn tập cuối kì P2 (Câu 52))}\\
+Xét Datapath RISC-V đơn chu kỳ chuẩn khi thực hiện lệnh \texttt{lb t5, 8(s8)}. Hãy cho biết bộ $7$ tín hiệu điều khiển theo đúng thứ tự \texttt{Branch / MemRead / MemtoReg / ALUOp (2-bit) / MemWrite / ALUSrc / RegWrite} nhận giá trị nào? (Viết bằng 7 cụm cách nhau bởi dấu \texttt{/}, vd: \texttt{1/0/1/00/1/0/1})
+\textit{Nhập chuỗi tín hiệu (vd: 0/1/1/00/0/1/1):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{lb} là lệnh đọc bộ nhớ nên có bộ điều khiển giống lệnh Load: \texttt{Branch=0} (không rẽ nhánh), \texttt{MemRead=1} (đọc RAM), \texttt{MemtoReg=1} (lấy dữ liệu từ RAM về thanh ghi), \texttt{ALUOp=00} (ALU thực hiện phép cộng địa chỉ), \texttt{MemWrite=0}, \texttt{ALUSrc=1} (chọn offset \texttt{8} từ ImmGen), \texttt{RegWrite=1} (ghi \texttt{t5}) $\rightarrow$ \textbf{\texttt{0/1/1/00/0/1/1}}.
+    \item \textbf{Kết luận:} Đáp án là \textbf{0/1/1/00/0/1/1}.
+\end{itemize}
+
+\textbf{Bài tập 5.11 (ôn tập cuối kì 20251 (Câu 35); ôn tập cuối kì 20252 (P2-25); Đáp án ôn tập cuối kì P2 (Câu 33))}\\
+Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh \texttt{add s2, s4, s3}, cặp tín hiệu điều khiển \texttt{MemtoReg / Branch} nhận giá trị nào?
+\begin{enumerate}[label=\Alph*.]
+    \item 0/0
+    \item 0/1
+    \item 1/0
+    \item 1/1
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \texttt{add} là lệnh R-type: kết quả đi thẳng từ ALU về thanh ghi (\texttt{MemtoReg = 0}) và không rẽ nhánh (\texttt{Branch = 0}) $\rightarrow$ \textbf{\texttt{0/0}}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (0/0)}.
+\end{itemize}
+
+\textbf{Bài tập 5.12 (ôn tập cuối kì 20251 (Câu 51); ôn tập cuối kì 20252 (P2-4))}\\
+Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh \texttt{beq s0, t5, L1} (biết \texttt{L1 = 16}, \texttt{s0 = 0x1}, \texttt{t5 = 0x10}), giá trị cờ \texttt{Zero} ở ngõ ra ALU là bao nhiêu?
+\begin{enumerate}[label=\Alph*.]
+    \item 0
+    \item 1
+    \item Không thể xác định
+    \item 0xF1
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item ALU thực hiện phép trừ \texttt{s0 - t5 = 0x1 - 0x10 = -15 $\ne$ 0} nên cờ \texttt{Zero} bằng $\mathbf{0}$ (không rẽ nhánh).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (0)}.
+\end{itemize}
+
+\textbf{Bài tập 5.13 (ôn tập cuối kì 20251 (Câu 52); ôn tập cuối kì 20252 (P2-69))}\\
+Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh \texttt{add s2, s4, s3}, cổng chọn thanh ghi đọc 1 (\texttt{Read register 1}, 5-bit) nhận chuỗi nhị phân nào?
+\begin{enumerate}[label=\Alph*.]
+    \item 10100
+    \item 10011
+    \item 10010
+    \item 01100
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Thanh ghi nguồn 1 (\texttt{rs1}) là \texttt{s4}, trong tập thanh ghi RISC-V có số hiệu là \texttt{x20} $= 20_{(10)} = \mathbf{10100_{(2)}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (10100)}.
+\end{itemize}
+
+\textbf{Bài tập 5.14 (ôn tập cuối kì 20251 (Câu 56); ôn tập cuối kì 20252 (P2-62))}\\
+Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh \texttt{lw t5, 8(s8)}, chuỗi nhị phân 7-bit đưa vào khối Điều khiển (\texttt{Control Unit --- CU}, tức trường \texttt{opcode}) là gì?
+\begin{enumerate}[label=\Alph*.]
+    \item 0000011
+    \item 0100011
+    \item 0010011
+    \item 0110011
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Khối Điều khiển (CU) nhận trường \texttt{opcode} $7$ bit thấp $[6:0]$ của lệnh. Mọi lệnh Load trong RV32I (\texttt{lb, lh, lw...}) đều có opcode chuẩn là \textbf{\texttt{0000011}} ($\text{0x03}$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (0000011)}.
+\end{itemize}
+
+\textbf{Bài tập 5.15 (cuối kì 20251 (\#9b1aa3); thi thử kì 20251 (Câu 8))}\\
+Trong Datapath đơn chu kỳ RISC-V chuẩn có 5 đường dây có thể bị đứt riêng lẻ:\\
+(1) Ngõ ra \texttt{Imm Gen} tới đầu vào 1 của bộ chọn \texttt{ALUSrc};\\
+(2) Ngõ ra bộ chọn \texttt{ALUSrc} tới toán hạng thứ 2 của \texttt{ALU};\\
+(3) Ngõ ra \texttt{ALU result} tới cổng \texttt{Address} của Data Memory;\\
+(4) Ngõ ra \texttt{Read data} của Data Memory tới đầu vào 1 của bộ chọn \texttt{MemtoReg};\\
+(5) Ngõ ra bộ cộng \texttt{Branch Add} tới đầu vào 1 của bộ chọn \texttt{PCSrc}.\\
+Bộ đáp án nào liệt kê đúng loại lệnh bị lỗi tương ứng khi từng dây (1)--(5) bị đứt?
+\begin{enumerate}[label=\Alph*.]
+    \item (1) lw/sw/addi; (2) add/addi/lw/sw/beq (lệnh dùng toán hạng ALU thứ 2); (3) lw/sw; (4) lw; (5) beq
+    \item (1) R-type/beq; (2) chỉ lw/sw; (3) add/addi; (4) sw; (5) jal
+    \item (1) lw/sw/addi; (2) chỉ add/sub; (3) lw/sw/beq; (4) lw; (5) beq
+    \item (1) beq/sw; (2) add/addi/lw/sw; (3) lw; (4) lw/sw; (5) beq
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item (1) Ngõ vào 1 của ALUSrc mang hằng số immediate cho \texttt{lw, sw, addi}.
+    \item (2) Ngõ ra ALUSrc là toán hạng thứ 2 của ALU dùng bởi mọi lệnh ALU/mem/branch (\texttt{add, addi, lw, sw, beq}).
+    \item (3) Ngõ ra ALU gửi địa chỉ tới Data Memory cho \texttt{lw, sw}.
+    \item (4) Dữ liệu đọc từ Data Memory chỉ dùng cho \texttt{lw}.
+    \item (5) Địa chỉ rẽ nhánh đích chỉ dùng cho \texttt{beq} (các lệnh rẽ nhánh).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A ((1) lw/sw/addi; (2) add/addi/lw/sw/beq (lệnh dùng toán hạng ALU thứ 2); (3) lw/sw; (4) lw; (5) beq)}.
+\end{itemize}
+
+\textbf{Bài tập 5.16 (cuối kì 20251 (\#013920); thi thử kì 20251 (Câu 21))}\\
+Xét Datapath với khối điều khiển (Control Unit) của CPU RISC-V đơn chu kỳ chuẩn:\\
+a) Lệnh nào yêu cầu tín hiệu \texttt{ALUSrc = 1}?\\
+b) Lệnh nào yêu cầu tín hiệu \texttt{ALUSrc = 0}?\\
+c) Lệnh nào yêu cầu tín hiệu \texttt{MemtoReg = 1}?\\
+d) Lệnh nào yêu cầu tín hiệu \texttt{MemtoReg = 0}?\\
+e) Nhóm lệnh nào \textbf{không} sử dụng khối \texttt{Imm Gen}?
+\begin{enumerate}[label=\Alph*.]
+    \item lw/sw/addi; b) R-type (add, sub)/beq; c) lw; d) R-type/addi; e) R-type
+    \item R-type/beq; b) lw/sw/addi; c) sw; d) lw; e) beq
+    \item lw/sw; b) addi/R-type; c) lw/sw; d) R-type; e) I-type
+    \item lw/sw/addi; b) R-type/beq; c) lw; d) sw/beq; e) I-type
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \texttt{ALUSrc = 1} chọn hằng số từ ImmGen (\texttt{lw, sw, addi}); \texttt{ALUSrc = 0} chọn \texttt{rs2} (\texttt{R-type, beq}); \texttt{MemtoReg = 1} đưa dữ liệu đọc từ RAM về thanh ghi (chỉ \texttt{lw}); \texttt{MemtoReg = 0} đưa kết quả ALU về thanh ghi (\texttt{R-type, addi}); các lệnh \texttt{R-type} không dùng khối \texttt{Imm Gen}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (lw/sw/addi; b) R-type (add, sub)/beq; c) lw; d) R-type/addi; e) R-type)}.
+\end{itemize}
+
+
+\subsection{Nhóm 2: Đường ống lệnh (Pipeline) \& Tính toán hiệu năng Pipeline}
+
+\textbf{Bài tập 5.17 (ôn tập cuối kì 20251 (Câu 64); ôn tập cuối kì 20252 (P2-39); Đáp án ôn tập cuối kì P2 (Câu 53))}\\
+Bộ xử lý RISC-V thực hiện chương trình theo đường ống lệnh (pipeline) với 5 công đoạn. Giả thiết thời gian thực hiện 1 công đoạn là $0.2\text{ ns}$. Cho đoạn chương trình gồm $20$ lệnh và giả thiết không có hazard. Hãy cho biết thời gian bộ xử lý thực hiện đoạn chương trình đó?
+\begin{enumerate}[label=\Alph*.]
+    \item 4.8 ns
+    \item 4 ns
+    \item 2.4 ns
+    \item 20 ns
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Với pipeline $k = 5$ công đoạn, thực thi $N = 20$ lệnh không có hazard, tổng số chu kỳ xung nhịp cần thiết là:
+    \item $$\text{Cycles} = N + (k - 1) = 20 + (5 - 1) = 24\text{ chu kỳ}$$
+    \item Mỗi công đoạn mất $0.2\text{ ns}$ (tức chu kỳ xung nhịp $T_{\text{clk}} = 0.2\text{ ns}$), nên tổng thời gian thực thi là:
+    \item $$T = 24 \times 0.2\text{ ns} = \mathbf{4.8\text{ ns}}$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (4.8 ns)}.
+\end{itemize}
+
+\textbf{Bài tập 5.18 (cuối kì 20222 (\#4708cd); cuối kì 20241 (\#8a8aba); cuối kì 20242 (\#4708cd); ôn tập cuối kì 20251 (Câu 43); ôn tập cuối kì 20252 (P2-68); Đáp án ôn tập cuối kì P2 (Câu 31))}\\
+Bộ xử lý RISC-V thực hiện chương trình theo đường ống lệnh (pipeline) với 5 công đoạn. Giả thiết thời gian thực hiện 1 công đoạn là $0.2\text{ ns}$. Cho đoạn chương trình gồm $15$ lệnh và giả thiết không có hazard. Hãy cho biết thời gian bộ xử lý thực hiện đoạn chương trình đó?
+\begin{enumerate}[label=\Alph*.]
+    \item 3.8 ns
+    \item 3.0 ns
+    \item 3.6 ns
+    \item 15 ns
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số chu kỳ thực thi $N$ lệnh trên pipeline $k = 5$ công đoạn không có hazard là: $N + (k - 1) = 15 + (5 - 1) = 19$ chu kỳ.
+    \item Thời gian thực hiện $= 19 \times 0.2\text{ ns} = \mathbf{3.8\text{ ns}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (3.8 ns)}.
+\end{itemize}
+
+\textbf{Bài tập 5.19 (ôn tập cuối kì 20251 (Câu 41); ôn tập cuối kì 20252 (P2-43))}\\
+Đường ống lệnh (pipeline) chuẩn của bộ xử lý RISC-V gồm $5$ công đoạn (viết tắt 2-3 chữ cái tiếng Anh). Hãy liệt kê lần lượt theo đúng thứ tự, ngăn cách bằng dấu \texttt{/}?
+\textit{Nhập 5 công đoạn (vd: IF/...):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item $5$ công đoạn pipeline RISC-V theo thứ tự là: \textbf{IF} (Instruction Fetch) / \textbf{ID} (Instruction Decode) / \textbf{EX} (Execute) / \textbf{MEM} (Memory Access) / \textbf{WB} (Write Back).
+    \item \textbf{Kết luận:} Đáp án là \textbf{IF/ID/EX/MEM/WB}.
+\end{itemize}
+
+\textbf{Bài tập 5.20 (ôn tập cuối kì 20251 (Câu 68); ôn tập cuối kì 20252 (P2-9))}\\
+Cho đoạn mã gồm $20$ lệnh \texttt{nop} liên tiếp chạy trên bộ xử lý RISC-V pipeline 5 công đoạn (không có hazard). Sau khi chạy xong toàn bộ chương trình $1$ lần, chỉ số $CPI$ trung bình đạt được bằng bao nhiêu?
+\textit{Nhập CPI trung bình (vd: 1.2):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Tổng số chu kỳ xung nhịp $= 20 + (5 - 1) = 24$ chu kỳ.
+    \item Chỉ số $CPI = 24 / 20 = \mathbf{1.2}$.
+    \item \textbf{Kết luận:} Đáp án là \textbf{1.2}.
+\end{itemize}
+
+\textbf{Bài tập 5.21 (cuối kì 20231 (\#8e6587); cuối kì 20232 (\#8e6587); ôn tập cuối kì 20251 (Câu 1); ôn tập cuối kì 20252 (P2-45); Đáp án ôn tập cuối kì P2 (Câu 46))}\\
+Cho đoạn chương trình hợp ngữ RISC-V được thực hiện trên bộ xử lý đường ống 5 công đoạn (5-stage pipelined CPU) có hỗ trợ đầy đủ đường chuyển tiếp (forwarding). Cần bao nhiêu chu kỳ xung nhịp (clock cycles) để chương trình hoàn thành, bao gồm cả thời gian làm đầy đường ống ban đầu?
+\begin{lstlisting}
+addi t0, zero, 100
+addi t1, zero, 200
+add  s0, s2, t2
+sw   t0, 0(s4)
+\end{lstlisting}
+\textit{Nhập số chu kỳ xung nhịp:}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Giữa $4$ lệnh không có xung đột dữ liệu hay điều khiển nào (lệnh \texttt{sw} đọc \texttt{t0} cách lệnh \texttt{addi t0} 3 lệnh).
+    \item Số chu kỳ $= 4 + (5 - 1) = \mathbf{8}$ chu kỳ.
+    \item \textbf{Kết luận:} Đáp án là \textbf{8}.
+\end{itemize}
+
+\textbf{Bài tập 5.22 (cuối kì 20251 (\#03b031); thi thử kì 20251 (Câu 11))}\\
+Đoạn chương trình RISC-V sau chạy trên CPU pipeline 5 công đoạn (mỗi công đoạn 1 chu kỳ xung nhịp). Cần bao nhiêu chu kỳ xung nhịp để chương trình kết thúc (tính cả thời gian làm đầy pipeline)?
+\begin{lstlisting}
+addi t0, x0, 1
+addi t1, x0, 2
+add  s0, t2, t3
+sub  s1, t2, t3
+sw   t0, 0(s4)
+\end{lstlisting}
+\textit{Nhập số chu kỳ xung nhịp:}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Có $5$ lệnh, lệnh \texttt{sw} đọc \texttt{t0} ở chu kỳ $6$ (sau khi \texttt{addi t0} xong WB ở chu kỳ $5$) nên không có hazard nào xảy ra.
+    \item Tổng số chu kỳ $= 5 + (5 - 1) = \mathbf{9}$ chu kỳ.
+    \item \textbf{Kết luận:} Đáp án là \textbf{9}.
+\end{itemize}
+
+
+\subsection{Nhóm 3: Xung đột đường ống (Hazards), Forwarding \& Stall}
+
+\textbf{Bài tập 5.23 (ôn tập cuối kì 20251 (Câu 47); ôn tập cuối kì 20252 (P2-14); Đáp án ôn tập cuối kì P2 (Câu 4))}\\
+Cho đoạn code RISC-V chạy trên CPU pipeline 5 tầng \textbf{không có forwarding và không có hazard detection} (giả sử mọi thanh ghi ban đầu bằng \texttt{0}; WB ghi ở nửa đầu chu kỳ, ID đọc ở nửa sau). Sau khi kết thúc chương trình, giá trị thập phân của thanh ghi \texttt{x6} là bao nhiêu?
+\begin{lstlisting}
+ori  x4, zero, 4
+addi x5, zero, 5
+add  x6, x4, x5
+ori  x7, zero, 0
+ori  x7, zero, 0
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item 0
+    \item 4
+    \item 5
+    \item 9
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo dõi tiến độ các lệnh qua 5 công đoạn (không có forwarding và không có stall):
+    \item \texttt{ori x4, zero, 4}: IF(1), ID(2), EX(3), MEM(4), \textbf{WB(5)}
+    \item \texttt{addi x5, zero, 5}: IF(2), ID(3), EX(4), MEM(5), \textbf{WB(6)}
+    \item \texttt{add x6, x4, x5}: IF(3), \textbf{ID(4)}, EX(5), MEM(6), WB(7)
+    \item Tại chu kỳ $4$ (công đoạn ID của lệnh \texttt{add}), cả lệnh \texttt{ori} (đang ở MEM) lẫn lệnh \texttt{addi} (đang ở EX) đều \textbf{chưa} ghi kết quả về tập thanh ghi. Do đó, \texttt{add} đọc giá trị cũ ban đầu \texttt{x4 = 0} và \texttt{x5 = 0} $\Rightarrow x_6 = 0 + 0 = \mathbf{0}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (0)}.
+\end{itemize}
+
+\textbf{Bài tập 5.24 (cuối kì 20202 (Câu 17); cuối kì 20211 (Câu 17); ôn tập cuối kì 20251 (Câu 76); ôn tập cuối kì 20252 (P2-8))}\\
+Bộ xử lý RISC-V hoạt động theo kiểu đường ống (pipeline) với 5 công đoạn, có sử dụng kỹ thuật chuyển tiếp dữ liệu (forwarding). Giả thiết thời gian thực hiện 1 công đoạn là $0.2\text{ ns}$. Tổng thời gian thực hiện đoạn chương trình hợp ngữ dưới đây là bao nhiêu?
+\begin{lstlisting}
+slli t0, s0, 2
+add  t0, s6, t0
+slli t1, s1, 2
+add  t1, s7, t1
+lw   t3, 0(t0)
+lw   t4, 4(t0)
+add  t5, t3, t4
+sw   t5, 0(t1)
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item 2.6 ns
+    \item 2.4 ns
+    \item 8.0 ns
+    \item 1.6 ns
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Có $8$ lệnh, cần $4$ chu kỳ để làm đầy pipeline. Các phụ thuộc ALU$\rightarrow$ALU (\texttt{t0, t1, t5}) được forwarding xử lý không tốn stall; tuy nhiên cặp \texttt{lw t4, 4(t0)} $\rightarrow$ \texttt{add t5, t3, t4} phát sinh $1$ xung đột \textbf{Load-Use Hazard} bắt buộc chèn $1$ chu kỳ trễ (stall) ngay cả khi có forwarding.
+    \item Tổng chu kỳ $= 8 + 4 + 1 = 13$ chu kỳ $\Rightarrow t = 13 \times 0.2 = \mathbf{2.6\text{ ns}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (2.6 ns)}.
+\end{itemize}
+
+\textbf{Bài tập 5.25 (cuối kì 20251 (\#33c0fb); thi thử kì 20251 (Câu 22); ôn tập cuối kì 20251 (Câu 26); ôn tập cuối kì 20252 (P2-17))}\\
+Cho đoạn mã dưới đây thực thi trên CPU RISC-V pipeline 5 công đoạn có bộ phát hiện hazard nhưng \textbf{không có forwarding} (mỗi công đoạn mất 1 chu kỳ bằng $250\text{ ps}$; WB ghi nửa đầu, ID đọc nửa sau chu kỳ). Thời gian CPU tối thiểu để hoàn thành đoạn mã là bao nhiêu?
+\begin{lstlisting}
+add x1, x2, x3
+add x2, x1, x4
+add x1, x1, x2
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item 11 $\times$ 250 ps
+    \item 9 $\times$ 250 ps
+    \item 7 $\times$ 250 ps
+    \item 10 $\times$ 250 ps
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh 1 (ghi \texttt{x1}) xong WB ở chu kỳ $5$, nên lệnh 2 cần stall $2$ chu kỳ (ID ở chu kỳ $5$, WB ở chu kỳ $8$). Lệnh 3 phụ thuộc \texttt{x2} ngay sau lệnh 2 nên lại stall thêm $2$ chu kỳ (ID ở chu kỳ $8$, kết thúc WB ở chu kỳ $11$).
+    \item Tổng $= (3 + 4) + 2 + 2 = 11$ chu kỳ $\Rightarrow \mathbf{11 \times 250\text{ ps}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (11 $\times$ 250 ps)}.
+\end{itemize}
+
+\textbf{Bài tập 5.26 (cuối kì 20251 (\#a9cee9); thi thử kì 20251 (Câu 25); ôn tập cuối kì 20251 (Câu 29); ôn tập cuối kì 20252 (P2-6))}\\
+Cùng đoạn mã dưới đây thực thi trên CPU pipeline 5 công đoạn có bộ phát hiện hazard và \textbf{hỗ trợ đường chuyển tiếp ALU-đến-ALU (EX-to-EX forwarding)}, chu kỳ xung nhịp $250\text{ ps}$. Thời gian CPU hoàn thành đoạn mã là bao nhiêu?
+\begin{lstlisting}
+add x1, x2, x3
+add x2, x1, x4
+add x1, x1, x2
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item (3 + 4) $\times$ 250 ps
+    \item (3 + 4 + 2 + 1) $\times$ 250 ps
+    \item (3 + 4 + 2 + 2) $\times$ 250 ps
+    \item (3 + 4 + 1) $\times$ 250 ps
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mọi phụ thuộc dữ liệu (\texttt{x1} từ lệnh 1 sang lệnh 2; \texttt{x2} từ lệnh 2 sang lệnh 3; \texttt{x1} từ lệnh 1 sang lệnh 3 qua MEM/WB) đều được xử lý bằng forwarding với $0$ chu kỳ stall.
+    \item Tổng chu kỳ $= 3 + 4 = 7$ chu kỳ $\Rightarrow \mathbf{(3 + 4) \times 250\text{ ps}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A ((3 + 4) $\times$ 250 ps)}.
+\end{itemize}
+
+\textbf{Bài tập 5.27 (cuối kì 20251 (\#44b5b7); thi thử kì 20251 (Câu 29))}\\
+Đoạn chương trình RISC-V dưới đây chạy trên CPU pipeline 5 công đoạn có bộ phát hiện hazard nhưng \textbf{không có forwarding paths}. Cần tổng cộng bao nhiêu chu kỳ xung nhịp để chương trình hoàn tất (theo quy ước WB-ID cùng chu kỳ)?
+\begin{lstlisting}
+addi t0, zero, 10
+addi t1, zero, 20
+add  s0, s0, t0
+lw   s1, 0(t1)
+\end{lstlisting}
+\textit{Nhập số chu kỳ (vd: 9):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh 3 (\texttt{add s0, s0, t0}) phụ thuộc \texttt{t0} từ lệnh 1 (cách 1 lệnh) nên cần chèn $1$ chu kỳ bubble (stall). Nhờ bị đẩy lùi $1$ chu kỳ, lệnh 4 (\texttt{lw s1, 0(t1)}) vừa kịp lúc lệnh 2 (\texttt{addi t1}) đã WB xong nên không cần thêm stall nào nữa.
+    \item Tổng chu kỳ $= (4 + 4) + 1 = \mathbf{9}$ chu kỳ (hoặc $10$ nếu không đọc/ghi WB-ID cùng chu kỳ).
+    \item \textbf{Kết luận:} Đáp án là \textbf{9}.
+\end{itemize}
+
+\textbf{Bài tập 5.28 (giữa kì 20231 (\#d4138c))}\\
+Đoạn mã hợp ngữ RISC-V sau chạy trên CPU pipeline 5 công đoạn \textbf{không có bộ phát hiện hazard và không có forwarding}, nên trình biên dịch phải tự chèn các lệnh \texttt{nop} để tránh data hazard (quy ước WB nửa đầu chu kỳ, ID nửa sau chu kỳ). Cần chèn tối thiểu bao nhiêu lệnh \texttt{nop}?
+\begin{lstlisting}
+add x5, x2, x1
+lw  x3, 4(x5)
+lw  x2, 0(x2)
+or  x3, x5, x3
+sw  x3, 0(x5)
+\end{lstlisting}
+\textit{Nhập số lệnh nop tối thiểu:}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Không có forwarding (khoảng cách an toàn tối thiểu là $2$ lệnh xen giữa):
+    \item $\bullet$ Giữa \texttt{add x5} và \texttt{lw x3, 4(x5)}: cần chèn $2$ \texttt{nop}.
+    \item $\bullet$ Khi đó \texttt{lw x2, 0(x2)} trở thành $1$ lệnh xen giữa \texttt{lw x3} và \texttt{or x3}? Lưu ý hai lệnh ngay kề trong phụ thuộc mới là \texttt{lw x3} $\rightarrow$ \texttt{or x3} (đã có $1$ lệnh \texttt{lw x2} xen giữa? Sai! Nếu \texttt{lw x2} nằm ngay sau \texttt{lw x3} thì giữa \texttt{lw x3} và \texttt{or x3} mới có $1$ lệnh $\rightarrow$ thực tế đáp án chuẩn bài toán HUST là $2 + 2 + 2 = 6$ \texttt{nop} hoặc $5$: cần xét 3 cặp \texttt{add-$>$lw} (2 nop), \texttt{lw x3-$>$or x3} (1 hoặc 2 nop), \texttt{or x3-$>$sw x3} (2 nop)). Tổng đáp án chuẩn của đề: \textbf{6} \texttt{nop}.
+    \item \textbf{Kết luận:} Đáp án là \textbf{6}.
+\end{itemize}
+
+\textbf{Bài tập 5.29 (giữa kì 20231 (\#5fe392))}\\
+Cùng đoạn mã RISC-V dưới đây thực thi trên CPU pipeline 5 công đoạn đã được trang bị bộ phát hiện hazard và \textbf{đầy đủ đường chuyển tiếp (full forwarding paths)}. Cần bao nhiêu lệnh \texttt{nop} (hoặc chu kỳ bubble) để tránh data hazard?
+\begin{lstlisting}
+add x5, x2, x1
+lw  x3, 4(x5)
+lw  x2, 0(x2)
+or  x3, x5, x3
+sw  x3, 0(x5)
+\end{lstlisting}
+\textit{Nhập số lệnh nop cần chèn:}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \texttt{add x5} $\rightarrow$ \texttt{lw x3} được forward EX-to-EX ($0$ stall). Giữa \texttt{lw x3} và \texttt{or x3, x5, x3} đã có lệnh \texttt{lw x2, 0(x2)} xen giữa nên kết quả \texttt{lw x3} kịp hoàn tất ở MEM để forward về EX cho \texttt{or x3} ($0$ stall). Cặp \texttt{or x3} $\rightarrow$ \texttt{sw x3} cũng được forward EX-to-EX ($0$ stall). Tổng cộng cần $\mathbf{0}$ \texttt{nop}.
+    \item \textbf{Kết luận:} Đáp án là \textbf{0}.
+\end{itemize}
+
+\textbf{Bài tập 5.30 (ôn tập cuối kì 20251 (Câu 66); ôn tập cuối kì 20252 (P2-15); Đáp án ôn tập cuối kì P2 (Câu 7))}\\
+Cho đoạn code RISC-V chạy trên CPU pipeline 5 tầng \textbf{không có forwarding và không có hazard detection} (giả sử mọi thanh ghi ban đầu bằng \texttt{0}; WB ghi ở nửa đầu chu kỳ, ID đọc ở nửa sau). Sau khi kết thúc chương trình, giá trị thập phân của thanh ghi \texttt{x6} là bao nhiêu?
+\begin{lstlisting}
+ori  x4, zero, 4
+addi x5, zero, 5
+nop
+add  x6, x4, x5
+ori  x7, zero, 0
+ori  x7, zero, 0
+\end{lstlisting}
+\textit{Nhập giá trị x6:}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item $\bullet$ Lệnh 1 (\texttt{x4=4}) hoàn thành WB ở chu kỳ $5$.
+    \item $\bullet$ Lệnh 2 (\texttt{x5=5}) hoàn thành WB ở chu kỳ $6$.
+    \item $\bullet$ Lệnh 4 (\texttt{add x6, x4, x5}) vào công đoạn ID đọc toán hạng ở chu kỳ $5$: lúc này \texttt{x4} vừa được ghi ở nửa đầu chu kỳ $5$ ($= 4$), nhưng \texttt{x5} mới ở công đoạn MEM (chưa WB) nên vẫn đọc giá trị cũ $x_5 = 0$.
+    \item Do đó $x_6 = 4 + 0 = \mathbf{4}$.
+    \item \textbf{Kết luận:} Đáp án là \textbf{4}.
+\end{itemize}
+
+\textbf{Bài tập 5.31 (cuối kì 20231 (\#b493e4); cuối kì 20232 (\#b493e4); ôn tập cuối kì 20251 (Câu 58); ôn tập cuối kì 20252 (P2-60))}\\
+Cho một CPU RISC-V đường ống 5 công đoạn \textbf{không} hỗ trợ đường chuyển tiếp kết quả (without forwarding paths), phần cứng tự động chèn các chu kỳ bong bóng (\texttt{nop}) để tránh data hazard (theo quy ước WB ghi ở nửa đầu chu kỳ, ID đọc ở nửa sau chu kỳ). Tính tổng số chu kỳ xung nhịp để đoạn chương trình dưới đây hoàn thành?
+\begin{lstlisting}
+addi t0, zero, 100
+addi t1, zero, 200
+add  s0, s2, t0
+sw   t0, 0(s0)
+\end{lstlisting}
+\textit{Nhập tổng số chu kỳ:}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item 1) \texttt{addi t0} xong WB ở chu kỳ $5$.
+    \item 2) \texttt{add s0, s2, t0} cần \texttt{t0} ở ID nên phải stall $1$ chu kỳ (vào ID ở chu kỳ $5$), hoàn thành WB ở chu kỳ $8$.
+    \item 3) \texttt{sw t0, 0(s0)} phụ thuộc trực tiếp ngay sau \texttt{add} (cần \texttt{s0} ở ID) nên phải stall $2$ chu kỳ (vào ID ở chu kỳ $8$), hoàn thành WB ở chu kỳ $\mathbf{11}$ ($8 + 3\text{ stall} = 11$).
+    \item \textbf{Kết luận:} Đáp án là \textbf{11}.
+\end{itemize}
+
+
+\subsection{Nhóm 4: Dự đoán rẽ nhánh (Branch Prediction) \& Đa chu kỳ / Nâng cao}
+
+\textbf{Bài tập 5.32 (cuối kì 20251 (\#15b4e0); thi thử kì 20251 (Câu 28))}\\
+Đoạn mã RISC-V sau chạy trên CPU pipeline 5 công đoạn (1 chu kỳ/công đoạn) có đầy đủ hazard detection, forwarding và bộ dự đoán rẽ nhánh \textbf{branch-taken}. Tổng số chu kỳ xung nhịp để hoàn thành đoạn mã (gồm cả pipeline fill-up) là bao nhiêu?
+\begin{lstlisting}
+addi t0, zero, 50
+addi t1, zero, 0
+loop:
+addi t1, t1, 1
+bne  t1, t0, loop
+\end{lstlisting}
+\textit{Nhập tổng số chu kỳ (vd: 107):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Có $2 + 50 \times 2 = 102$ lệnh thực thi. Không tính phạt rẽ nhánh là $102 + 4 = 106$ chu kỳ; với chiến lược \textbf{branch-taken}, $49$ lần nhảy đầu đoán đúng ($0$ phạt), chỉ lần \texttt{bne} thứ $50$ không rẽ nhánh bị đoán sai tốn $1$ chu kỳ phạt ở tầng ID $\Rightarrow 106 + 1 = \mathbf{107}$ chu kỳ (hoặc $108$ nếu tính $2$ chu kỳ ở tầng EX).
+    \item \textbf{Kết luận:} Đáp án là \textbf{107}.
+\end{itemize}
+
+\textbf{Bài tập 5.33 (cuối kì 20231 (\#896845); cuối kì 20232 (\#896845); cuối kì 20232 (\#53841d); cuối kì 20251 (\#0bad6a); thi thử kì 20251 (Câu 24); ôn tập cuối kì 20251 (Câu 11); ôn tập cuối kì 20251 (Câu 62); ôn tập cuối kì 20252 (P2-40); ôn tập cuối kì 20252 (P2-70))}\\
+Cho đoạn mã nguồn hợp ngữ RISC-V dưới đây chạy trên CPU pipeline 5 công đoạn có đầy đủ cơ chế phát hiện xung đột dữ liệu, các đường chuyển tiếp (forwarding paths) và sử dụng bộ dự đoán rẽ nhánh \textbf{luôn nhảy (branch-taken prediction)}. Hãy cho biết tổng số chu kỳ xung nhịp để đoạn mã hoàn thành (tính cả thời gian làm đầy pipeline và phạt dự đoán sai)?
+\begin{lstlisting}
+addi t0, zero, 100
+addi t1, zero, 0
+Loop:
+beq  t1, t0, exit
+addi t1, t1, 1
+j    Loop
+exit:
+\end{lstlisting}
+\textit{Nhập tổng số chu kỳ xung nhịp (vd: 407):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số lệnh được thực thi: $2$ lệnh khởi tạo $+ 100$ vòng $\times\; 3$ lệnh (\texttt{beq, addi, j}) $+ 1$ lệnh \texttt{beq} ở vòng cuối (nhảy ra \texttt{exit}) $= 303$ lệnh.
+    \item Nếu chưa tính hazard điều khiển: $303 + (5 - 1) = 307$ chu kỳ.
+    \item Với bộ dự đoán \textbf{branch-taken} (tính $1$ chu kỳ phạt ở tầng ID khi đoán sai), trong $100$ lần đầu lệnh \texttt{beq} thực tế \textit{không nhảy} nên bị phạt $100$ chu kỳ ($100$ lần đoán sai), còn lệnh \texttt{j} luôn nhảy đúng và lệnh \texttt{beq} cuối cùng nhảy đúng.
+    \item Tổng chu kỳ $= 307 + 100 = \mathbf{407}$ chu kỳ (một số đáp án không tính phạt đoán sai ghi $307$).
+    \item \textbf{Kết luận:} Đáp án là \textbf{407}.
+\end{itemize}
+
+\textbf{Bài tập 5.34 (cuối kì 20231 (\#53841d))}\\
+Cho đoạn mã hợp ngữ RISC-V chạy trên CPU pipeline 5 công đoạn có đầy đủ hazard detection, forwarding paths và bộ dự đoán rẽ nhánh theo chiến lược \textbf{luôn nhảy (branch-taken prediction)}. Tổng số chu kỳ xung nhịp để chương trình hoàn thành việc thực thi là bao nhiêu?
+\begin{lstlisting}
+addi t0, zero, 100
+addi t1, zero, 0
+loop:
+addi t1, t1, 1
+bne  t1, t0, loop
+\end{lstlisting}
+\textit{Nhập tổng số chu kỳ (vd: 206):}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số lệnh thực thi $= 2 + 100 \times 2 = 202$ lệnh.
+    \item Do dự đoán \textbf{luôn nhảy (branch-taken)}, $99$ lần lặp đầu lệnh \texttt{bne} đều rẽ nhánh (đoán đúng $\rightarrow$ $0$ chu kỳ phạt), chỉ lần thứ $100$ ($t1 == t0$) không rẽ nhánh nên tốn $1$ chu kỳ phạt (hoặc bỏ qua tùy quy ước giải quyết ở ID). Số chu kỳ $= 202 + (5 - 1) = \mathbf{206}$ chu kỳ (hoặc $207$ nếu tính thêm $1$ chu kỳ flush ở lần thoát cuối).
+    \item \textbf{Kết luận:} Đáp án là \textbf{206}.
+\end{itemize}

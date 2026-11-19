@@ -35,7 +35,8 @@ const results = {
     ch1_ch2: rawCh1Ch2.length,
     ch3: rawCh3.length,
     ch4: rawCh4.length,
-    sum: rawCh1Ch2.length + rawCh3.length + rawCh4.length
+    ch5_ch7: archivedCh57.length,
+    sum: rawCh1Ch2.length + rawCh3.length + rawCh4.length + archivedCh57.length
   },
   distribution: { A: 0, B: 0, C: 0, D: 0, fill: 0, other: 0 },
   chapterDistribution: {},

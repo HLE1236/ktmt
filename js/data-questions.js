@@ -1,11 +1,12 @@
-// js/data-questions.js - Tổng hợp, Xáo trộn xác định, Gắn bộ đề các năm & Chuẩn hóa câu hỏi KTMT từ 4 chương (RISC-V)
+// js/data-questions.js - Tổng hợp, Xáo trộn xác định, Gắn bộ đề các năm & Chuẩn hóa câu hỏi KTMT từ 7 chương (RISC-V)
 
 (function (root) {
   var ch1_ch2 = root.KTMT_QUESTIONS_CH1_CH2 || [];
   var ch3 = root.KTMT_QUESTIONS_CH3 || [];
   var ch4 = root.KTMT_QUESTIONS_CH4 || [];
+  var ch5_ch7 = root.KTMT_QUESTIONS_CH5_CH7 || [];
 
-  var rawList = [].concat(ch1_ch2, ch3, ch4);
+  var rawList = [].concat(ch1_ch2, ch3, ch4, ch5_ch7);
   var keysLetter = ['A', 'B', 'C', 'D'];
 
   // Danh mục 22 bộ đề thi chính thức các năm (2018.2 - 2025.2)

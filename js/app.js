@@ -378,7 +378,7 @@
   // DASHBOARD VIEW
   // ==========================================
   function renderDashboardChaptersToc() {
-    [1, 2, 3, 4].forEach(chNum => {
+    [1, 2, 3, 4, 5, 6, 7].forEach(chNum => {
       const container = document.getElementById(`dash-ch${chNum}-links`);
       if (!container) return;
       const chObj = chaptersList.find(c => c.id === chNum);
@@ -446,7 +446,7 @@
     if (elMistakes) elMistakes.textContent = mistakeCount;
 
     // Update chapter cards progress
-    [1, 2, 3, 4].forEach(chNum => {
+    [1, 2, 3, 4, 5, 6, 7].forEach(chNum => {
       const chQuestions = allQuestions.filter(q => q.chapter === chNum);
       const chCorrect = chQuestions.filter(q => appState.history[q.id] && appState.history[q.id].isCorrect);
       const pct = chQuestions.length > 0 ? Math.round((chCorrect.length / chQuestions.length) * 100) : 0;
@@ -510,6 +510,23 @@
       if (g === '4.2.3') return '4.1.3';
       if (g === '4.2.4' || g === '4.2.5') return '4.1.4';
       return '4.1.5';
+    }
+    if (q.chapter === 5) {
+      if (g === '5.1') return '5.1.1';
+      if (g === '5.2') return '5.1.2';
+      if (g === '5.3') return '5.1.3';
+      return '5.1.4';
+    }
+    if (q.chapter === 6) {
+      if (g === '6.1') return '6.1.1';
+      if (g === '6.2') return '6.1.2';
+      if (g === '6.3') return '6.1.3';
+      return '6.1.4';
+    }
+    if (q.chapter === 7) {
+      if (g === '7.1') return '7.1.1';
+      if (g === '7.2') return '7.1.2';
+      return '7.1.3';
     }
     return q.relatedTheoryId || '1.1.1';
   }
@@ -677,8 +694,8 @@
       prevBtn.textContent = chapterNum > 1 ? `← Chương ${chapterNum - 1}` : '← Chương trước';
     }
     if (nextBtn) {
-      nextBtn.disabled = chapterNum >= 4;
-      nextBtn.textContent = chapterNum < 4 ? `Chương ${chapterNum + 1} →` : 'Chương tiếp →';
+      nextBtn.disabled = chapterNum >= 7;
+      nextBtn.textContent = chapterNum < 7 ? `Chương ${chapterNum + 1} →` : 'Chương tiếp →';
     }
   }
 
@@ -947,12 +964,14 @@
     const container = document.getElementById('cheatsheet-content');
     if (!container) return;
 
-    const methodChapters = (window.KTMT_PROBLEM_METHODS_CHEATSHEET || []).filter(
-      c => cheatSheetChapterFilter === 'all' || String(c.chapter) === String(cheatSheetChapterFilter)
-    );
-    const csCards = (window.KTMT_CHEATSHEET || []).filter(
-      c => cheatSheetChapterFilter === 'all' || String(c.chapter) === String(cheatSheetChapterFilter)
-    );
+    const matchesCsChapter = (ch) => {
+      if (cheatSheetChapterFilter === 'all') return true;
+      if (cheatSheetChapterFilter === 'gk') return Number(ch) <= 4;
+      if (cheatSheetChapterFilter === 'ck') return Number(ch) >= 5;
+      return String(ch) === String(cheatSheetChapterFilter);
+    };
+    const methodChapters = (window.KTMT_PROBLEM_METHODS_CHEATSHEET || []).filter(c => matchesCsChapter(c.chapter));
+    const csCards = (window.KTMT_CHEATSHEET || []).filter(c => matchesCsChapter(c.chapter));
     const regs = window.RISCV_REGISTERS || {};
     const regRows = Object.values(regs).map(r => `
       <tr>
@@ -967,16 +986,21 @@
     let html = `
       <div class="cs-filter-bar">
         <div class="cs-view-pills" role="tablist" aria-label="Chế độ xem Cheatsheet">
-          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'all' ? 'active' : ''}" data-cs-view="all">Tất cả (23 dạng + Công thức)</button>
-          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'methods' ? 'active' : ''}" data-cs-view="methods">Chỉ Cách làm 23 dạng bài</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'all' ? 'active' : ''}" data-cs-view="all">Tất cả (34 dạng + Công thức)</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'methods' ? 'active' : ''}" data-cs-view="methods">Chỉ Cách làm 34 dạng bài</button>
           <button type="button" class="mode-pill-btn ${cheatSheetViewMode === 'formulas' ? 'active' : ''}" data-cs-view="formulas">Chỉ Công thức &amp; Bảng tra</button>
         </div>
         <div class="cs-view-pills" role="tablist" aria-label="Lọc theo chương">
-          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === 'all' ? 'active' : ''}" data-cs-ch="all">4 Chương</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === 'all' ? 'active' : ''}" data-cs-ch="all">7 Chương</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === 'gk' ? 'active' : ''}" data-cs-ch="gk">GK (1–4)</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === 'ck' ? 'active' : ''}" data-cs-ch="ck">CK (5–7)</button>
           <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '1' ? 'active' : ''}" data-cs-ch="1">Ch.1</button>
           <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '2' ? 'active' : ''}" data-cs-ch="2">Ch.2</button>
           <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '3' ? 'active' : ''}" data-cs-ch="3">Ch.3</button>
           <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '4' ? 'active' : ''}" data-cs-ch="4">Ch.4</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '5' ? 'active' : ''}" data-cs-ch="5">Ch.5</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '6' ? 'active' : ''}" data-cs-ch="6">Ch.6</button>
+          <button type="button" class="mode-pill-btn ${cheatSheetChapterFilter === '7' ? 'active' : ''}" data-cs-ch="7">Ch.7</button>
         </div>
       </div>
     `;
@@ -1322,7 +1346,11 @@
 
     let filtered = allQuestions.slice();
 
-    if (chFilter !== 'all') {
+    if (chFilter === 'gk') {
+      filtered = filtered.filter(q => q.chapter <= 4);
+    } else if (chFilter === 'ck') {
+      filtered = filtered.filter(q => q.chapter >= 5);
+    } else if (chFilter !== 'all') {
       const chNum = parseInt(chFilter);
       filtered = filtered.filter(q => q.chapter === chNum);
     }
@@ -1356,13 +1384,27 @@
     const currentVal = groupSelect.value;
     groupSelect.innerHTML = '';
 
-    if (chFilter === 'all') {
+    if (chFilter === 'all' || chFilter === 'gk' || chFilter === 'ck') {
+      const scopeChapters = chFilter === 'gk'
+        ? chaptersList.filter(ch => ch.id <= 4)
+        : chFilter === 'ck'
+          ? chaptersList.filter(ch => ch.id >= 5)
+          : chaptersList;
+      const scopeQCount = chFilter === 'gk'
+        ? allQuestions.filter(q => q.chapter <= 4).length
+        : chFilter === 'ck'
+          ? allQuestions.filter(q => q.chapter >= 5).length
+          : allQuestions.length;
       const optAll = document.createElement('option');
       optAll.value = 'all';
-      optAll.textContent = `Tất cả bài tập (${allQuestions.length} câu)`;
+      optAll.textContent = chFilter === 'gk'
+        ? `Tất cả bài tập Giữa kỳ C1–C4 (${scopeQCount} câu)`
+        : chFilter === 'ck'
+          ? `Tất cả bài tập Cuối kỳ C5–C7 (${scopeQCount} câu)`
+          : `Tất cả bài tập (${scopeQCount} câu)`;
       groupSelect.appendChild(optAll);
 
-      chaptersList.forEach(ch => {
+      scopeChapters.forEach(ch => {
         const chSections = theorySections.filter(s => s.chapter === ch.id);
         if (chSections.length > 0) {
           const optGroupSec = document.createElement('optgroup');
@@ -2434,7 +2476,11 @@
     const chVal = chSelect ? chSelect.value : 'all';
 
     let cards = allQuestions.slice();
-    if (chVal !== 'all') {
+    if (chVal === 'gk') {
+      cards = cards.filter(q => q.chapter <= 4);
+    } else if (chVal === 'ck') {
+      cards = cards.filter(q => q.chapter >= 5);
+    } else if (chVal !== 'all') {
       cards = cards.filter(q => q.chapter === parseInt(chVal));
     }
 
@@ -3509,10 +3555,22 @@
       }
     });
     document.getElementById('btn-theory-next-ch')?.addEventListener('click', () => {
-      if (currentTheoryChapter < 4) {
+      if (currentTheoryChapter < 7) {
         renderTheory(currentTheoryChapter + 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+    });
+    document.querySelectorAll('#dash-scope-pills [data-dash-scope]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scope = btn.getAttribute('data-dash-scope') || 'all';
+        document.querySelectorAll('#dash-scope-pills [data-dash-scope]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('#dashboard-chapters-roadmap .chapter-card').forEach(card => {
+          const ch = parseInt(card.getAttribute('data-chapter'), 10);
+          const show = scope === 'all' || (scope === 'gk' && ch <= 4) || (scope === 'ck' && ch >= 5);
+          card.style.display = show ? '' : 'none';
+        });
+      });
     });
     document.getElementById('btn-theory-scroll-top')?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });

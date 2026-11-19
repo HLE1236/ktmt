@@ -1,0 +1,611 @@
+\chapter{HỆ THỐNG VÀO-RA}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Tổng quan Hệ thống Vào-Ra và Mô-đun Vào-Ra}
+
+\textbf{1. Chức năng và đặc điểm của Hệ thống Vào-Ra (I/O System)}
+\begin{itemize}
+    \item \textbf{Chức năng:} Trao đổi thông tin giữa bên trong máy tính (CPU, bộ nhớ chính) với thế giới bên ngoài thông qua hai thao tác cơ bản là \textbf{Vào dữ liệu (Input)} và \textbf{Ra dữ liệu (Output)}.
+    \item \textbf{Hai thành phần chính:} Các \textbf{thiết bị vào-ra} (thiết bị ngoại vi) và các \textbf{mô-đun vào-ra} (I/O modules).
+    \item \textbf{Đặc điểm:} Thiết bị ngoại vi rất đa dạng về nguyên tắc hoạt động, tốc độ truyền và khuôn dạng dữ liệu; hầu hết đều hoạt động \textbf{chậm hơn nhiều} so với CPU và RAM. Do đó, thiết bị ngoại vi không nối trực tiếp vào bus hệ thống mà phải kết nối thông qua các \textbf{mô-đun vào-ra}.
+\end{itemize}
+
+\textbf{2. Thiết bị vào-ra (Peripherals)}
+\begin{itemize}
+    \item \textbf{Chức năng:} Chuyển đổi dữ liệu giữa bên trong (tín hiệu nhị phân) và bên ngoài máy tính.
+    \item \textbf{Phân loại theo chức năng:} Thiết bị vào (bàn phím, chuột, máy quét), Thiết bị ra (màn hình, máy in, loa), Thiết bị lưu trữ (HDD, SSD, USB), Thiết bị truyền thông (card mạng NIC, modem).
+    \item \textbf{Phân loại theo giao tiếp:} Giao tiếp \textit{Người -- Máy} và giao tiếp \textit{Máy -- Máy}.
+    \item \textbf{Cấu trúc chung của thiết bị vào-ra:} Gồm 3 khối cơ bản là \textit{Bộ đệm}, \textit{Bộ chuyển đổi dữ liệu} (Transducer) và \textit{Khối logic điều khiển}.
+\end{itemize}
+
+\textbf{3. Mô-đun vào-ra (I/O Module)}
+\begin{itemize}
+    \item \textbf{Năm chức năng cơ bản:}
+    \begin{enumerate}[label=\arabic*.]
+        \item \textbf{Điều khiển và định thời:} Điều phối luồng dữ liệu giữa tài nguyên bên trong và thiết bị ngoại vi.
+        \item \textbf{Trao đổi thông tin với CPU hoặc bộ nhớ chính:} Giải mã lệnh từ CPU, truyền dữ liệu và báo trạng thái qua bus hệ thống.
+        \item \textbf{Trao đổi thông tin với thiết bị vào-ra:} Gửi lệnh điều khiển, nhận tín hiệu trạng thái và trao đổi dữ liệu với ngoại vi.
+        \item \textbf{Đệm dữ liệu (Data Buffering):} Trung hòa sự chênh lệch tốc độ rất lớn giữa CPU/RAM và thiết bị vào-ra.
+        \item \textbf{Phát hiện lỗi:} Phát hiện lỗi cơ học/điện tử ở ngoại vi hoặc lỗi truyền bit (ví dụ bit chẵn lẻ -- parity bit) và báo về CPU.
+    \end{enumerate}
+    \item \textbf{Cấu trúc bên trong:} Gồm các \textbf{cổng vào-ra (I/O Ports)} (thanh ghi dữ liệu, thanh ghi trạng thái, thanh ghi điều khiển), \textbf{bộ đệm dữ liệu} và \textbf{khối logic điều khiển} nối ghép giữa bus hệ thống và thiết bị ngoại vi.
+\end{itemize}
+
+\subsection{Địa chỉ hóa cổng Vào-Ra (MMIO và Isolated I/O)}
+
+Để CPU có thể chọn đúng cổng vào-ra cần trao đổi dữ liệu, mỗi cổng vào-ra được gán một địa chỉ theo một trong hai phương pháp:
+
+\begin{tcolorbox}[bwbox, title={So sánh Vào-ra theo bản đồ bộ nhớ (MMIO) và Vào-ra riêng biệt (Isolated I/O)}]
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{tabularx}{\linewidth}{|L{3.0cm}|Y|Y|}
+\hline
+\textbf{Tiêu chí} & \textbf{Vào-ra theo bản đồ bộ nhớ (MMIO)} & \textbf{Vào-ra riêng biệt (Isolated / PMIO)} \\ \hline
+\textbf{Không gian địa chỉ} & Dùng \textbf{chung} một không gian địa chỉ bộ nhớ cho cả các ngăn nhớ chính và các cổng vào-ra. & Có \textbf{hai không gian địa chỉ tách biệt}: không gian địa chỉ bộ nhớ ($N$ bit) và không gian địa chỉ vào-ra riêng ($N_1$ bit). \\ \hline
+\textbf{Tập lệnh sử dụng} & Dùng chính các lệnh truy cập bộ nhớ (\texttt{lw}, \texttt{sw}, \texttt{lb}, \texttt{sb} trên RISC-V) vì CPU coi cổng I/O như ngăn nhớ. & Cần các lệnh vào-ra chuyên dụng riêng biệt (ví dụ \texttt{IN}, \texttt{OUT} trên Intel x86). \\ \hline
+\textbf{Ưu / Nhược điểm} & Tận dụng toàn bộ các chế độ định địa chỉ và lệnh bộ nhớ; có thể thực hiện trên mọi hệ thống; chiếm một phần không gian địa chỉ bộ nhớ. & Không chiếm không gian địa chỉ bộ nhớ chính; nhưng cần thêm đường điều khiển phân biệt bộ nhớ/I/O và giới hạn lệnh thao tác. \\ \hline
+\textbf{Kiến trúc tiêu biểu} & RISC-V, MIPS, ARM, Motorola 680x0. & Intel x86 (dùng $8\text{ bit}$ hoặc $16\text{ bit}$ địa chỉ cổng vào-ra). \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\begin{itemize}
+    \item \textbf{Công thức tính số cổng và dải địa chỉ:} Nếu máy tính dùng $N\text{ bit}$ để đánh địa chỉ cổng vào-ra riêng biệt thì số cổng tối đa là $2^N$ cổng, có dải địa chỉ từ $0$ đến $2^N - 1$. Ví dụ với $N = 16\text{ bit}$: số cổng tối đa là $2^{16} = 65\,536$ cổng ($64\text{K}$ cổng), dải địa chỉ Hexa ($16 / 4 = 4$ chữ số Hexa) từ \texttt{0x0000} đến \texttt{0xFFFF}.
+    \item \textbf{Ví dụ lập trình MMIO trên RISC-V:} Với Cổng 1 ở \texttt{0xFFFF1000} và Cổng 2 ở \texttt{0xFFFF1004}:
+\end{itemize}
+
+\begin{lstlisting}
+lui  s0, 0xFFFF1     # s0 = 0xFFFF1000 (dia chi nen cua Cong 1)
+addi s1, x0, 7       # nap gia tri 7 vao thanh ghi s1
+sw   s1, 0(s0)       # ghi gia tri 7 ra Cong 1 (0xFFFF1000)
+lw   s2, 4(s0)       # doc du lieu tu Cong 2 (0xFFFF1004) vao s2
+\end{lstlisting}
+
+\subsection{Các phương pháp điều khiển Vào-Ra (Polling, Ngắt và DMA)}
+
+\textbf{1. Vào-ra bằng chương trình (Programmed I/O -- Polling)}
+\begin{itemize}
+    \item \textbf{Nguyên tắc:} \textbf{CPU trực tiếp điều khiển} quá trình trao đổi dữ liệu giữa CPU và mô-đun vào-ra bằng chương trình. Do thiết bị ngoại vi chậm hơn CPU rất nhiều, CPU phải liên tục đọc và kiểm tra thanh ghi trạng thái trong một vòng lặp chờ (\textbf{Polling / Busy-waiting}) cho đến khi thiết bị sẵn sàng.
+    \item \textbf{Bốn tín hiệu điều khiển vào-ra:} \textit{Control} (kích hoạt thiết bị), \textit{Test} (kiểm tra trạng thái), \textit{Read} (đọc dữ liệu từ ngoại vi vào bộ đệm rồi về CPU), \textit{Write} (đưa dữ liệu từ bus vào bộ đệm rồi ra ngoại vi).
+    \item \textbf{Nhược điểm lớn nhất:} Lãng phí rất nhiều thời gian của CPU chỉ để chờ đợi và thăm dò trạng thái thiết bị.
+\end{itemize}
+
+\textbf{2. Vào-ra điều khiển bằng ngắt (Interrupt-driven I/O)}
+\begin{itemize}
+    \item \textbf{Nguyên tắc:} CPU phát lệnh vào-ra rồi chuyển sang thực hiện công việc khác mà \textbf{không phải chờ đợi}. Khi mô-đun vào-ra sẵn sàng, phần cứng sẽ phát tín hiệu \textbf{ngắt (Interrupt)} gửi tới CPU.
+    \item \textbf{Quy trình xử lý tại CPU:} Cuối mỗi chu trình lệnh, CPU kiểm tra tín hiệu yêu cầu ngắt. Nếu có ngắt: (1) Cất ngữ cảnh (lưu \texttt{PC} và các thanh ghi liên quan) $\rightarrow$ (2) Nhảy đến thực hiện chương trình con phục vụ ngắt (\textbf{ISR -- Interrupt Service Routine}) để trao đổi dữ liệu $\rightarrow$ (3) Khôi phục ngữ cảnh và quay lại chương trình đang chạy dở.
+    \item \textbf{Bốn phương pháp nối ghép, xác định nguồn ngắt và quy định ưu tiên ngắt:}
+    \begin{enumerate}[label=\arabic*.]
+        \item \textit{Sử dụng nhiều đường yêu cầu ngắt:} Mỗi mô-đun nối một đường riêng tới CPU; giới hạn số mô-đun.
+        \item \textit{Hỏi vòng bằng phần mềm (Software Poll):} CPU chạy phần mềm kiểm tra lần lượt từng mô-đun; tốc độ chậm; thứ tự kiểm tra là thứ tự ưu tiên.
+        \item \textit{Hỏi vòng bằng phần cứng (Daisy Chain / Hardware Poll):} CPU phát tín hiệu chấp nhận ngắt (\texttt{INTA}) theo chuỗi nối tiếp qua các mô-đun; mô-đun đứng gần CPU nhất có mức ưu tiên cao nhất.
+        \item \textit{Sử dụng bộ điều khiển ngắt lập trình được (\textbf{PIC -- Programmable Interrupt Controller}):} Có nhiều đường vào yêu cầu ngắt (\texttt{IRQ}) có quy định mức ưu tiên và có thanh ghi mặt nạ (\texttt{IMR}) cho phép che/cấm từng đường ngắt khả che (maskable); PIC chọn yêu cầu ngắt không bị cấm có mức ưu tiên cao nhất gửi tới CPU.
+    \end{enumerate}
+    \item \textbf{Thanh ghi trạng thái và điều khiển ngắt (CSRs) trong RISC-V:} Ở mức Machine (hoặc mức User trong trình mô phỏng RARS với tiền tố \texttt{u}), RISC-V quản lý ngắt thông qua các thanh ghi CSR: \texttt{mtvec}/\texttt{utvec} (địa chỉ vector trình phục vụ ngắt), \texttt{mepc}/\texttt{uepc} (lưu địa chỉ lệnh bị ngắt để quay về), \texttt{mcause}/\texttt{ucause} (mã nguyên nhân ngắt/ngoại lệ), \texttt{mstatus}/\texttt{ustatus} (bit cho phép ngắt toàn cục), \texttt{mie}/\texttt{uie} (cho phép từng nguồn ngắt riêng lẻ), \texttt{mip}/\texttt{uip} (cờ ngắt đang chờ xử lý) và lệnh trở về từ ngắt \texttt{mret}/\texttt{uret}.
+\end{itemize}
+
+\textbf{3. Truy nhập bộ nhớ trực tiếp (DMA -- Direct Memory Access)}
+\begin{itemize}
+    \item \textbf{Nguyên tắc:} Trong cả Polling và Interrupt-driven I/O, mọi byte/word dữ liệu đều phải đi qua CPU. Khi truyền các khối dữ liệu lớn, hệ thống sử dụng bộ điều khiển phần cứng chuyên dụng \textbf{DMAC (DMA Controller)} để truyền dữ liệu \textbf{trực tiếp giữa mô-đun vào-ra và bộ nhớ chính (RAM)} mà không đi qua CPU, giải phóng CPU làm việc khác.
+    \item \textbf{Bốn thành phần chính của DMAC:}
+    \begin{enumerate}[label=\arabic*.]
+        \item \textbf{Thanh ghi dữ liệu (Data Register):} Chứa dữ liệu tạm thời khi trao đổi.
+        \item \textbf{Thanh ghi địa chỉ (Address Register):} Chứa địa chỉ ngăn nhớ đầu của mảng dữ liệu trong RAM (tự động tăng sau mỗi từ truyền).
+        \item \textbf{Bộ đếm dữ liệu (Data Counter):} Chứa số từ dữ liệu cần truyền (tự động giảm sau mỗi từ truyền; khi bằng $0$ thì phát tín hiệu ngắt báo CPU kết thúc DMA).
+        \item \textbf{Logic điều khiển (Control Logic):} Điều khiển hoạt động của DMAC, thực hiện xin quyền sử dụng bus (\texttt{BRQ -- Bus Request}) và nhận tín hiệu nhượng bus (\texttt{BGT -- Bus Grant}) từ CPU.
+    \end{enumerate}
+    \item \textbf{Ba chế độ thực hiện DMA:}
+    \begin{itemize}
+        \item \textbf{DMA truyền theo khối (Block-transfer / Burst-mode DMA):} DMAC chiếm bus liên tục cho đến khi truyền xong toàn bộ khối dữ liệu rồi mới trả bus cho CPU.
+        \item \textbf{DMA lấy chu kỳ (Cycle-stealing DMA):} DMAC ép CPU tạm dừng từng chu kỳ bus để truyền lần lượt từng từ dữ liệu.
+        \item \textbf{DMA trong suốt (Transparent DMA):} DMAC phát hiện những chu kỳ CPU không sử dụng bus hệ thống để tranh thủ truyền dữ liệu (không làm chậm CPU). Đây là phương pháp \textbf{tối ưu hiệu năng nhất} nhưng \textbf{khó thực hiện nhất} về mặt phần cứng.
+    \end{itemize}
+    \item \textbf{Mở rộng -- Bộ xử lý vào-ra (I/O Processor / Channel):} Là bộ xử lý chuyên dụng hoạt động theo chương trình riêng để điều khiển toàn bộ các tác vụ vào-ra phức tạp.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={So sánh ba phương pháp điều khiển Vào-Ra (Hiệu suất sử dụng CPU tăng dần)}]
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{tabularx}{\linewidth}{|L{2.8cm}|Y|Y|Y|}
+\hline
+\textbf{Tiêu chí} & \textbf{Programmed I/O (Polling)} & \textbf{Interrupt-driven I/O (Ngắt)} & \textbf{DMA (Direct Memory Access)} \\ \hline
+\textbf{Thành phần điều khiển} & CPU trực tiếp điều khiển hoàn toàn bằng phần mềm. & Kết hợp phần cứng (phát ngắt) và phần mềm (CPU chạy ISR). & DMAC điều khiển trực tiếp hoàn toàn bằng phần cứng. \\ \hline
+\textbf{Đường đi dữ liệu} & I/O $\leftrightarrow$ CPU $\leftrightarrow$ RAM & I/O $\leftrightarrow$ CPU $\leftrightarrow$ RAM & I/O $\leftrightarrow$ (DMAC) $\leftrightarrow$ RAM (không qua CPU) \\ \hline
+\textbf{Hiệu suất CPU} & \textbf{Thấp nhất} (lãng phí thời gian trong vòng lặp chờ). & \textbf{Trung bình} (CPU làm việc khác trong khi chờ, nhưng vẫn chuyển từng từ). & \textbf{Cao nhất} (CPU chỉ khởi tạo và nhận 1 ngắt kết thúc cả khối). \\ \hline
+\textbf{Phạm vi phù hợp} & Thiết bị đơn giản, hệ thống nhỏ. & Thiết bị tốc độ thấp/trung bình (bàn phím, chuột). & Truyền khối dữ liệu lớn, tốc độ cao (ổ đĩa, mạng, đồ họa). \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\subsection{Nối ghép thiết bị và Lập trình MMIO trên RISC-V RARS}
+
+\textbf{1. Các kiểu nối ghép và cấu hình nối ghép vào-ra}
+\begin{itemize}
+    \item \textbf{Nối ghép song song:} Truyền nhiều bit đồng thời trên nhiều đường dữ liệu $\rightarrow$ tốc độ nhanh (ở khoảng cách ngắn) nhưng cần nhiều dây dẫn.
+    \item \textbf{Nối ghép nối tiếp:} Truyền lần lượt từng bit trên ít đường dây $\rightarrow$ cần bộ chuyển đổi song song $\leftrightarrow$ nối tiếp, ít dây dẫn, ít nhiễu xuyên âm, truyền xa tốt.
+    \item \textbf{Cấu hình Điểm tới điểm (Point-to-Point):} Một cổng vào-ra chuyên dụng nối ghép với đúng một thiết bị (hạn chế số lượng thiết bị).
+    \item \textbf{Cấu hình Điểm tới đa điểm (Point-to-Multipoint):} Một cổng vào-ra cho phép nối ghép với nhiều thiết bị cùng lúc (ví dụ: \textbf{USB} hỗ trợ tối đa $127$ thiết bị, \textbf{Thunderbolt}).
+\end{itemize}
+
+\textbf{2. Bản đồ địa chỉ MMIO trong trình mô phỏng RARS (RISC-V)}
+\begin{itemize}
+    \item \textbf{Keyboard and Display MMIO Simulator:}
+    \begin{itemize}
+        \item \texttt{0xFFFF0000} (\texttt{KEY\_READY}): Thanh ghi trạng thái bàn phím (bit $0 = 1$ khi có phím mới được nhấn).
+        \item \texttt{0xFFFF0004} (\texttt{KEY\_CODE}): Thanh ghi dữ liệu chứa mã ASCII của phím vừa nhấn.
+        \item \texttt{0xFFFF0008} (\texttt{DISPLAY\_READY}): Thanh ghi trạng thái màn hình (bit $0 = 1$ khi màn hình sẵn sàng nhận ký tự mới).
+        \item \texttt{0xFFFF000C} (\texttt{DISPLAY\_CODE}): Thanh ghi dữ liệu xuất ký tự ASCII lên màn hình.
+    \end{itemize}
+    \item \textbf{Digital Lab Sim (LED 7 thanh và Bàn phím ma trận 4x4):}
+    \begin{itemize}
+        \item \texttt{0xFFFF0010} (\texttt{SEVENSEG\_RIGHT}): Byte điều khiển LED 7 thanh \textbf{bên phải}.
+        \item \texttt{0xFFFF0011} (\texttt{SEVENSEG\_LEFT}): Byte điều khiển LED 7 thanh \textbf{bên trái}.
+        \item \texttt{0xFFFF0012} (\texttt{IN\_ADDRESS\_HEXA\_KEYBOARD}): Ghi mã chọn hàng quét (\texttt{0x01}: hàng 1, \texttt{0x02}: hàng 2, \texttt{0x04}: hàng 3, \texttt{0x08}: hàng 4) hoặc ghi bit $7 = 1$ (\texttt{0x80}) để cho phép bàn phím phát ngắt phần cứng.
+        \item \texttt{0xFFFF0014} (\texttt{OUT\_ADDRESS\_HEXA\_KEYBOARD}): Đọc mã quét phím nhấn của hàng đang được chọn.
+    \end{itemize}
+    \item \textbf{Thiết bị Mars Bot MMIO:} Cổng góc hướng \texttt{HEADING} tại \texttt{0xFFFF8010} và cổng bật/tắt di chuyển \texttt{MOVING} tại \texttt{0xFFFF8050}; dịch vụ hệ thống \texttt{ecall} với \texttt{a7 = 32} (ngủ theo mili-giây trong \texttt{a0}) và \texttt{a7 = 34} (in số nguyên ở dạng Hexa).
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Bảng mã LED 7 thanh chuẩn trên RARS Digital Lab Sim (bit 0--6 ứng với a--g, bit 7 = dp)}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|Z|Z|Z|Z|Z||Z|Z|Z|Z|Z|}
+\hline
+\textbf{Số} & \textbf{Đoạn sáng} & \textbf{Nhị phân} & \textbf{Hex} & \textbf{Dec} & \textbf{Số} & \textbf{Đoạn sáng} & \textbf{Nhị phân} & \textbf{Hex} & \textbf{Dec} \\ \hline
+\textbf{0} & \texttt{a,b,c,d,e,f} & \texttt{0011 1111} & \texttt{0x3F} & $63$ & \textbf{5} & \texttt{a,c,d,f,g} & \texttt{0110 1101} & \texttt{0x6D} & $109$ \\ \hline
+\textbf{1} & \texttt{b,c} & \texttt{0000 0110} & \texttt{0x06} & $6$ & \textbf{6} & \texttt{a,c,d,e,f,g} & \texttt{0111 1101} & \texttt{0x7D} & $125$ \\ \hline
+\textbf{2} & \texttt{a,b,d,e,g} & \texttt{0101 1011} & \texttt{0x5B} & $91$ & \textbf{7} & \texttt{a,b,c} & \texttt{0000 0111} & \texttt{0x07} & $7$ \\ \hline
+\textbf{3} & \texttt{a,b,c,d,g} & \texttt{0100 1111} & \texttt{0x4F} & $79$ & \textbf{8} & \texttt{a,b,c,d,e,f,g} & \texttt{0111 1111} & \texttt{0x7F} & $127$ \\ \hline
+\textbf{4} & \texttt{b,c,f,g} & \texttt{0110 0110} & \texttt{0x66} & $102$ & \textbf{9} & \texttt{a,b,c,d,f,g} & \texttt{0110 1111} & \texttt{0x6F} & $111$ \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 7 và Hướng dẫn giải}
+
+\subsection{Nhóm 1: Tổng quan Hệ thống Vào-Ra, Mô-đun Vào-Ra \& Định địa chỉ I/O (MMIO / Isolated)}
+
+\textbf{Bài tập 7.1 (Đề Cuối kỳ 2021.2 -- Mã đề B3, Câu 4.2)}\\
+Máy tính dùng $16$ bit để đánh địa chỉ cho cổng vào-ra riêng biệt. Số cổng vào-ra tối đa và dải địa chỉ Hexa của chúng là:
+\begin{enumerate}[label=\Alph*.]
+    \item $65\,536$ cổng ($2^{16}$) ; từ \texttt{0x0000} đến \texttt{0xFFFF}
+    \item $32\,768$ cổng ($2^{15}$) ; từ \texttt{0x0000} đến \texttt{0x7FFF}
+    \item $16\,384$ cổng ($2^{14}$) ; từ \texttt{0x0000} đến \texttt{0x3FFF}
+    \item $65\,536$ cổng ($2^{16}$) ; từ \texttt{0x00000} đến \texttt{0xFFFFF}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Với $16\text{ bit}$ địa chỉ, số lượng cổng vào-ra tối đa được đánh địa chỉ là $2^{16} = 65\,536$ cổng ($64\text{K}$ cổng).
+    \item Vì mỗi chữ số Hexa biểu diễn $4\text{ bit}$ nên $16\text{ bit}$ cần đúng $16 / 4 = 4$ chữ số Hexa, chạy từ \texttt{0x0000} đến \texttt{0xFFFF}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.2 (Ôn tập cuối kỳ 2025.1 -- Câu 67; Ôn tập cuối kỳ 2025.2 -- P2, Câu 32)}\\
+Không gian địa chỉ bộ nhớ dùng chung dùng để đánh địa chỉ cho các đối tượng nào?
+\begin{enumerate}[label=\Alph*.]
+    \item Các ngăn nhớ và cổng vào-ra
+    \item Chỉ các ngăn nhớ bộ nhớ chính
+    \item Chỉ các thanh ghi bên trong CPU
+    \item Chỉ các khối dữ liệu trong ổ cứng ngoài
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong phương pháp \textbf{Memory-Mapped I/O} (không gian địa chỉ bộ nhớ dùng chung), các ngăn nhớ chính và cổng vào-ra (mô-đun I/O) chia sẻ chung một không gian địa chỉ hệ thống.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.3 (Ôn tập cuối kỳ 2025.2 -- P1, Câu 9)}\\
+Cổng truy cập (Port) của thiết bị Vào/Ra (I/O) được ánh xạ vào không gian địa chỉ bộ nhớ (Memory-Mapped I/O) có ý nghĩa gì?
+\begin{enumerate}[label=\Alph*.]
+    \item Thiết bị I/O chỉ có thể được truy cập thông qua các lệnh LOAD/STORE, giống như truy cập bộ nhớ.
+    \item CPU cần một tập lệnh I/O đặc biệt (ví dụ: IN/OUT) để giao tiếp với thiết bị.
+    \item Thiết bị I/O có bus địa chỉ hoàn toàn tách biệt với bộ nhớ chính.
+    \item Thiết bị I/O có thể tự xử lý lệnh mà không cần bus hệ thống.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Với Memory-Mapped I/O (như trên RISC-V), thanh ghi cổng I/O mang địa chỉ nằm trong không gian địa chỉ bộ nhớ nên CPU dùng chính các lệnh truy cập bộ nhớ (\texttt{lw}, \texttt{lb}, \texttt{sw}, \texttt{sb}) để đọc/ghi dữ liệu ngoại vi.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\subsection{Nhóm 2: Các phương pháp điều khiển Vào-Ra (Polling, Ngắt, DMA \& DMAC)}
+
+\textbf{Bài tập 7.4 (Đề Cuối kỳ 2022.2; Cuối kỳ 2024.2; Ôn tập cuối kỳ 2025.2 -- P1, Câu 15)}\\
+Với phương pháp vào-ra bằng chương trình, thành phần nào của máy tính trực tiếp điều khiển vào-ra?
+\begin{enumerate}[label=\Alph*.]
+    \item CPU
+    \item DMAC
+    \item Thiết bị vào-ra
+    \item RAM
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong phương pháp vào-ra bằng chương trình (cũng như vào-ra bằng ngắt), \textbf{CPU} trực tiếp điều khiển việc trao đổi dữ liệu với mô-đun vào-ra (không thông qua DMAC).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (CPU)}.
+\end{itemize}
+
+\textbf{Bài tập 7.5 (Cuối kỳ 2023.1, 2023.2, 2025.1; Thi thử 2025.1 -- Câu 7; Ôn tập 2025.1 -- Câu 10; Ôn tập 2025.2 -- P2, Câu 75)}\\
+Cho chương trình con xử lý vào-ra dữ liệu RISC-V dưới đây, trong đó CPU đang cố gắng đọc một từ dữ liệu từ một thiết bị ngoại vi. Phương pháp lập trình Vào-Ra (I/O programming method) nào đang được áp dụng?
+\begin{lstlisting}
+.text
+    li s0, 0xFFFF0004   # Thanh ghi Du lieu (Data register)
+    li s1, 0xFFFF0000   # Thanh ghi Trang thai (Status register)
+Check:
+    lw   t1, 0(s1)      # Doc thanh ghi trang thai
+    andi t1, t1, 0x1
+    beq  t1, zero, Check
+    lw   t0, 0(s0)      # Doc du lieu tu thiet bi
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Thăm dò trạng thái (Polling / Programmed I/O)
+    \item Vào-ra bằng cơ chế ngắt (Interrupt-driven I/O)
+    \item Truy cập bộ nhớ trực tiếp (DMA)
+    \item Vào-ra chồng lấn (Overlapping I/O)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Vòng lặp \texttt{Check} liên tục đọc thanh ghi trạng thái tại \texttt{0xFFFF0000} và tách bit $0$ (\texttt{andi t1, t1, 0x1}) để kiểm tra lặp đi lặp lại cho tới khi bằng $1$ mới đọc dữ liệu từ \texttt{0xFFFF0004}. Đây chính là cơ chế \textbf{Thăm dò trạng thái (Polling / Programmed I/O)}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.6 (Ôn tập cuối kỳ 2025.1 -- Câu 75; Ôn tập cuối kỳ 2025.2 -- P2, Câu 42)}\\
+Những khẳng định nào sau đây là đúng về bộ điều khiển ngắt \texttt{PIC}?
+\begin{enumerate}[label=\Alph*.]
+    \item PIC là viết tắt của Programmable Interrupt Controller và các đường vào yêu cầu ngắt (IRQ) có quy định mức ưu tiên
+    \item PIC là viết tắt của Peripheral I/O Cache dùng tăng tốc truyền dữ liệu qua DMA
+    \item Yêu cầu ngắt có mức ưu tiên cao nhất trong PIC tuyệt đối không bao giờ bị cấm/che bởi thanh ghi mặt nạ (IMR)
+    \item PIC chỉ phục vụ duy nhất 1 nguồn ngắt cố định tại một thời điểm, không có thanh ghi mặt nạ
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{PIC (Programmable Interrupt Controller)} là bộ điều khiển ngắt lập trình được, quản lý nhiều đường vào yêu cầu ngắt (\texttt{IRQ}) theo mức ưu tiên xác định.
+    \item PIC vẫn có thanh ghi mặt nạ (\texttt{IMR}) cho phép che/cấm từng đường ngắt khả che khi cần thiết; PIC chọn yêu cầu ngắt \textit{không bị cấm} có mức ưu tiên cao nhất gửi tới CPU.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.7 (Cuối kỳ 2025.1; Thi thử 2025.1 -- Câu 13)}\\
+What is the main disadvantage of polling when CPU reads from or writes to I/O devices?
+\begin{enumerate}[label=\Alph*.]
+    \item The CPU wastes time constantly checking device status.
+    \item It has higher throughput than DMA for bulk transfer.
+    \item Polling requires complex hardware interrupt controllers.
+    \item Polling cannot be used with memory-mapped I/O.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Nhược điểm lớn nhất của Polling là CPU phải lãng phí rất nhiều chu kỳ trong vòng lặp chờ bận (busy-waiting) để kiểm tra liên tục thanh ghi trạng thái thiết bị ngoại vi.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.8 (Cuối kỳ 2025.1; Thi thử 2025.1 -- Câu 18)}\\
+What is polling in the context of I/O programming?
+\begin{enumerate}[label=\Alph*.]
+    \item A method where the CPU checks the status of a device continuously
+    \item A method where a device interrupts the CPU when data is ready
+    \item A method where the DMA Controller manages direct memory transfer
+    \item A method where I/O bypasses system buses completely
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Polling (thăm dò) là kỹ thuật lập trình vào-ra trong đó CPU chủ động kiểm tra liên tục thanh ghi trạng thái của thiết bị ngoại vi xem thiết bị đã sẵn sàng trao đổi dữ liệu hay chưa.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.9 (Ôn tập cuối kỳ 2025.1 -- Câu 12; Ôn tập cuối kỳ 2025.2 -- P2, Câu 10)}\\
+Tại sao phương pháp DMA (Direct Memory Access) lại hiệu quả hơn khi truyền các khối dữ liệu lớn?
+\begin{enumerate}[label=\Alph*.]
+    \item Vì dữ liệu được truyền trực tiếp giữa thiết bị I/O và bộ nhớ chính thông qua DMAC mà không cần đi qua CPU.
+    \item Vì DMA dùng một tập lệnh phần mềm đặc biệt chạy nhanh hơn gấp 10 lần trên thanh ghi CPU.
+    \item Vì DMA không cần dùng đến bộ nhớ chính (RAM) khi truyền dữ liệu.
+    \item Vì DMA chuyển toàn bộ dữ liệu trực tiếp qua thanh ghi L1 Cache của CPU.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Khi truyền các khối dữ liệu kích thước lớn, bộ điều khiển DMA (DMAC) mượn quyền bus để truyền thẳng dữ liệu giữa mô-đun vào-ra và RAM hoàn toàn bằng phần cứng mà không đi qua CPU từng byte/word, nhờ đó tăng tốc độ truyền và giải phóng CPU thực hiện công việc khác.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.10 (Ôn tập cuối kỳ 2025.1 -- Câu 18; Ôn tập cuối kỳ 2025.2 -- P2, Câu 20)}\\
+Thứ tự nào sau đây phản ánh đúng sự phát triển về hiệu suất (từ thấp đến cao) đối với việc sử dụng CPU trong I/O?
+\begin{enumerate}[label=\Alph*.]
+    \item Programmed I/O $\rightarrow$ Interrupt-driven $\rightarrow$ DMA
+    \item DMA $\rightarrow$ Interrupt-driven $\rightarrow$ Programmed I/O
+    \item Interrupt-driven $\rightarrow$ Programmed I/O $\rightarrow$ DMA
+    \item Programmed I/O $\rightarrow$ DMA $\rightarrow$ Interrupt-driven
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Hiệu suất sử dụng CPU tăng dần theo chiều giảm mức độ bận rộn của CPU vào công việc trao đổi dữ liệu: \textbf{Programmed I/O (Polling)} (CPU phải chờ và tự truyền) $\rightarrow$ \textbf{Interrupt-driven I/O (Ngắt)} (CPU không phải chờ nhưng vẫn truyền từng từ) $\rightarrow$ \textbf{DMA} (DMAC tự truyền cả khối).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.11 (Ôn tập cuối kỳ 2025.1 -- Câu 21; Ôn tập cuối kỳ 2025.2 -- P2, Câu 74)}\\
+Trong phương pháp vào/ra bằng chương trình (Programmed I/O), CPU dành phần lớn thời gian để làm gì khi đợi thiết bị ngoại vi sẵn sàng?
+\begin{enumerate}[label=\Alph*.]
+    \item Kiểm tra trạng thái thiết bị trong một vòng lặp (Polling).
+    \item Tự động chuyển sang chế độ ngủ (Sleep mode).
+    \item Thực hiện các tiến trình khác của hệ điều hành.
+    \item Nhượng quyền bus hoàn toàn cho DMAC xử lý.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong Programmed I/O, CPU tốn phần lớn thời gian chờ đợi bằng cách liên tục đọc và kiểm tra cờ trạng thái của mô-đun vào-ra trong một vòng lặp (Polling).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.12 (Ôn tập cuối kỳ 2025.1 -- Câu 39; Ôn tập cuối kỳ 2025.2 -- P2, Câu 26)}\\
+Bộ điều khiển truy cập bộ nhớ trực tiếp (\texttt{DMAC}) bao gồm đầy đủ những thành phần nào sau đây?
+\begin{enumerate}[label=\Alph*.]
+    \item Logic điều khiển, Thanh ghi dữ liệu, Thanh ghi địa chỉ, Bộ đếm dữ liệu (Data Counter)
+    \item Logic điều khiển, Thanh ghi con trỏ lệnh (PC), Thanh ghi dữ liệu, ALU
+    \item Thanh ghi lệnh (IR), Bộ đếm dữ liệu, Bộ nhớ Cache L1, Thanh ghi địa chỉ
+    \item Logic điều khiển, Bộ giải mã lệnh (Decoder), Thanh ghi PC, Thanh ghi địa chỉ
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo cấu trúc chuẩn của DMAC, bộ điều khiển này gồm 4 thành phần chính: \textbf{Thanh ghi địa chỉ} (Address Register), \textbf{Bộ đếm dữ liệu} (Data Counter), \textbf{Thanh ghi dữ liệu} (Data Register) và \textbf{Logic điều khiển} (gửi/nhận tín hiệu \texttt{BRQ}/\texttt{BGT}, tín hiệu đọc/ghi). DMAC không chứa \texttt{PC}, \texttt{IR} hay \texttt{ALU}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.13 (Ôn tập cuối kỳ 2025.1 -- Câu 40; Ôn tập cuối kỳ 2025.2 -- P2, Câu 72)}\\
+Cách thực hiện DMA nào dưới đây là tối ưu và khó thực hiện hơn cả?
+\begin{enumerate}[label=\Alph*.]
+    \item DMA trong suốt (Transparent DMA)
+    \item DMA truyền theo khối (Burst-mode DMA)
+    \item DMA lấy chu kỳ (Cycle-stealing DMA)
+    \item Ba phương pháp đều có độ phức tạp phần cứng như nhau
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{DMA trong suốt (Transparent DMA)} chỉ tranh thủ sử dụng bus hệ thống trong những chu kỳ mà CPU không truy cập bộ nhớ, nên không hề làm chậm tiến độ thực thi của CPU. Tuy nhiên, mạch phần cứng để phát hiện chính xác các khe thời gian trống này rất phức tạp.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\subsection{Nhóm 3: Lập trình MMIO RISC-V (RARS, LED 7 thanh, Bàn phím) \& Ngắt ngoại vi}
+
+\textbf{Bài tập 7.14 (Cuối kỳ 2022.2, 2024.1, 2024.2; Ôn tập cuối kỳ 2025.2 -- P1, Câu 38)}\\
+Cho máy tính dùng bộ xử lý RISC-V (RV32I) có 4 cổng vào-ra MMIO 32-bit gán tại các địa chỉ: \texttt{P1: 0xF000000C}, \texttt{P2: 0xF0000010}, \texttt{P3: 0xF0000014}, \texttt{P4: 0xF0000018}. Đoạn chương trình hợp ngữ sau thực hiện nhiệm vụ gì?
+\begin{lstlisting}
+lui s0, 0xF0000
+lw  t0, 0x10(s0)
+sw  t0, 0x18(s0)
+lw  t1, 0x0C(s0)
+sw  t1, 0x14(s0)
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Nhận dữ liệu từ cổng P2 đưa ra cổng P4, nhận dữ liệu từ cổng P1 đưa ra cổng P3
+    \item Nhận dữ liệu từ cổng P1 đưa ra cổng P2, nhận dữ liệu từ cổng P3 đưa ra cổng P4
+    \item Nhận dữ liệu từ cổng P4 đưa ra cổng P2, nhận dữ liệu từ cổng P3 đưa ra cổng P1
+    \item Nhận dữ liệu từ cổng P1 đưa ra cổng P4, nhận dữ liệu từ cổng P2 đưa ra cổng P3
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{lui s0, 0xF0000} đặt địa chỉ nền \texttt{s0 = 0xF0000000}.
+    \item \texttt{lw t0, 0x10(s0)} đọc từ địa chỉ \texttt{0xF0000010} (\textbf{P2}), sau đó \texttt{sw t0, 0x18(s0)} ghi ra địa chỉ \texttt{0xF0000018} (\textbf{P4}).
+    \item \texttt{lw t1, 0x0C(s0)} đọc từ địa chỉ \texttt{0xF000000C} (\textbf{P1}), sau đó \texttt{sw t1, 0x14(s0)} ghi ra địa chỉ \texttt{0xF0000014} (\textbf{P3}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.15 (Lab -- Cuối kỳ 2023.2, Câu 15)}\\
+Đoạn mã RISC-V dưới đây điều khiển thiết bị Bot MMIO di chuyển liên tục thành hình vuông (biết cổng điều khiển góc hướng \texttt{HEADING} tại \texttt{0xFFFF8010} và cổng kích hoạt chuyển động \texttt{MOVING} tại \texttt{0xFFFF8050}; \texttt{a7 = 32} là dịch vụ sleep theo ms). Cặp lệnh thích hợp điền vào \texttt{[[1]]} và \texttt{[[2]]} là gì?
+\begin{lstlisting}
+.text
+    li  s0, 0xFFFF8010
+    li  s1, 0xFFFF8050
+    li  t0, 0
+    li  t1, 1
+    [[1]]
+l1:
+    addi t0, t0, 90
+    [[2]]
+    li  a7, 32
+    li  a0, 2000
+    ecall
+    j   l1
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{[[1]]: sw t1, 0(s1)} \textbar{} \texttt{[[2]]: sw t0, 0(s0)}
+    \item \texttt{[[1]]: sw t0, 0(s0)} \textbar{} \texttt{[[2]]: sw t1, 0(s1)}
+    \item \texttt{[[1]]: sw t1, 0(s0)} \textbar{} \texttt{[[2]]: sw t0, 0(s1)}
+    \item \texttt{[[1]]: sw t0, 0(s1)} \textbar{} \texttt{[[2]]: sw t1, 0(s0)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Thanh ghi \texttt{t1 = 1} dùng để kích hoạt trạng thái di chuyển tại cổng \texttt{MOVING} (trỏ bởi \texttt{s1 = 0xFFFF8050}), do đó \texttt{[[1]]} là \texttt{sw t1, 0(s1)}.
+    \item Trong vòng lặp \texttt{l1}, sau khi cộng góc \texttt{t0} thêm $90^\circ$, cần ghi góc mới ra cổng \texttt{HEADING} (trỏ bởi \texttt{s0 = 0xFFFF8010}), do đó \texttt{[[2]]} là \texttt{sw t0, 0(s0)}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.16 (Cuối kỳ 2025.1; Thi thử 2025.1 -- Câu 3; Ôn tập cuối kỳ 2025.2 -- P2, Câu 2)}\\
+Trên thiết bị mô phỏng Digital Lab Sim (RARS), thanh ghi byte điều khiển LED 7 thanh được ánh xạ tại địa chỉ \texttt{0xFFFF0010} (bit 0 = a [trên], bit 1 = b [phải trên], bit 2 = c [phải dưới], bit 3 = d [đáy], bit 4 = e [trái dưới], bit 5 = f [trái trên], bit 6 = g [giữa], bit 7 = dấu chấm). Đoạn mã nào hiển thị chữ số \textbf{1}?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{li t0, 0xFFFF0010 ; li t1, 6 ; sb t1, 0(t0)}
+    \item \texttt{li t0, 0xFFFF0010 ; li t1, 1 ; sb t1, 0(t0)}
+    \item \texttt{li t0, 0xFFFF0010 ; li t1, 0x02 ; sb t1, 0(t0)}
+    \item \texttt{li t0, 0xFFFF0010 ; li t1, 0x3F ; sb t1, 0(t0)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Chữ số \textbf{1} cần làm sáng 2 đoạn bên phải là \texttt{b} (bit 1) và \texttt{c} (bit 2).
+    \item Giá trị byte tương ứng là $0000\;0110_{(2)} = 2^1 + 2^2 = \mathbf{6}$ (\texttt{0x06}), được ghi ra địa chỉ \texttt{0xFFFF0010} bằng lệnh \texttt{sb}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.17 (Lab -- Cuối kỳ 2023.2, Câu 28)}\\
+Lựa chọn phát biểu mô tả đúng nhất chức năng của đoạn mã RISC-V dưới đây (giao tiếp bàn phím MMIO):
+\begin{lstlisting}
+.eqv KEY_CODE  0xFFFF0004
+.eqv KEY_READY 0xFFFF0000
+.text
+    li  t5, KEY_CODE
+    li  t6, KEY_READY
+loop:
+Wait:
+    lw  t1, 0(t6)
+    beq t1, zero, Wait
+    lw  t0, 0(t5)
+    j   loop
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Chờ có 1 phím sẵn sàng rồi đọc mã phím đó lưu vào thanh ghi \texttt{t0}
+    \item Chờ có 1 phím sẵn sàng rồi xuất mã phím đó ra màn hình
+    \item Đọc mã phím lưu vào thanh ghi \texttt{t1}, đọc trạng thái bàn phím lưu vào thanh ghi \texttt{t0}
+    \item Chờ có 1 phím sẵn sàng rồi đọc mã phím đó lưu vào thanh ghi \texttt{t1}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Vòng lặp \texttt{Wait} liên tục đọc cờ trạng thái \texttt{KEY\_READY} (tại \texttt{t6 = 0xFFFF0000}) vào thanh ghi \texttt{t1}.
+    \item Khi \texttt{t1} $\ne 0$ (có phím mới được nhấn), chương trình thoát vòng chờ và thực hiện \texttt{lw t0, 0(t5)} để đọc mã phím từ \texttt{KEY\_CODE} (\texttt{0xFFFF0004}) lưu vào thanh ghi \texttt{t0}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.18 (Lab -- Cuối kỳ 2023.2, Câu 32)}\\
+Trên RARS Digital Lab Sim, 2 LED 7 thanh có địa chỉ byte ánh xạ như dưới đây. Để hiển thị chữ số \textbf{9} trên \textbf{LED TRÁI} (quy ước bit $0..6 = a..g$), đoạn lệnh nào đúng?
+\begin{lstlisting}
+.eqv SEVENSEG_LEFT  0xFFFF0011
+.eqv SEVENSEG_RIGHT 0xFFFF0010
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{li t0, 0xFFFF0011 ; li a0, 0x6F ; sb a0, 0(t0)}
+    \item \texttt{li t0, 0xFFFF0011 ; li a0, 0x7D ; sb a0, 0(t0)}
+    \item \texttt{li t0, 0xFFFF0010 ; li a0, 0x6F ; sb a0, 0(t0)}
+    \item \texttt{li t0, 0xFFFF0010 ; li a0, 0x7D ; sb a0, 0(t0)}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Địa chỉ của \textbf{LED TRÁI} là \texttt{0xFFFF0011}.
+    \item Chữ số \textbf{9} bật các đoạn \texttt{a, b, c, d, f, g} (chỉ tắt đoạn \texttt{e} ở bit 4 và dấu chấm ở bit 7), nên giá trị byte là $0110\;1111_{(2)} =$ \textbf{\texttt{0x6F}} (còn \texttt{0x7D} hiển thị chữ số 6).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.19 (Cuối kỳ 2025.1; Thi thử 2025.1 -- Câu 27; Ôn tập 2025.1 -- Câu 5; Ôn tập 2025.2 -- P2, Câu 29)}\\
+Xét chương trình MMIO trên RARS dưới đây. Nếu người dùng nhấn phím \texttt{'A'} trong Keyboard Simulator, ký tự nào sẽ được hiển thị trên Display Simulator? (chỉ ghi ký tự, không viết dấu ngoặc kép):
+\begin{lstlisting}
+.eqv KEY_CODE      0xFFFF0004
+.eqv KEY_READY     0xFFFF0000
+.eqv DISPLAY_CODE  0xFFFF000C
+.eqv DISPLAY_READY 0xFFFF0008
+.text
+    li a0, KEY_CODE
+    li a1, KEY_READY
+    li s0, DISPLAY_CODE
+    li s1, DISPLAY_READY
+loop:
+WaitForKey:
+    lw  t1, 0(a1)
+    beq t1, zero, WaitForKey
+ReadKey:
+    lw  t0, 0(a0)
+WaitForDis:
+    lw  t2, 0(s1)
+    beq t2, zero, WaitForDis
+Encrypt:
+    addi t0, t0, 2
+ShowKey:
+    sw  t0, 0(s0)
+    j   loop
+\end{lstlisting}
+\textit{Nhập ký tự hiển thị ra Display MMIO:} \underline{\hspace{2.5cm}}\\[4pt]
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Chương trình chờ phím nhấn tại \texttt{KEY\_READY}, đọc mã ASCII của phím \texttt{'A'} (giá trị $65$) vào thanh ghi \texttt{t0}.
+    \item Sau khi chờ màn hình sẵn sàng tại \texttt{DISPLAY\_READY}, lệnh \texttt{addi t0, t0, 2} cộng thêm $2$ vào mã ASCII thành $65 + 2 = 67$, tương ứng với ký tự \textbf{\texttt{C}}, rồi xuất ra \texttt{DISPLAY\_CODE}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{\texttt{C}}.
+\end{itemize}
+
+\textbf{Bài tập 7.20 (Cuối kỳ 2025.1; Thi thử 2025.1 -- Câu 32)}\\
+Cho máy tính RISC-V có 4 cổng vào-ra ánh xạ bộ nhớ (MMIO) ở các địa chỉ: \texttt{P1: 0xFFFF000C}, \texttt{P2: 0xFFFF0010}, \texttt{P3: 0xFFFF0014}, \texttt{P4: 0xFFFF0018}. Đoạn mã hợp ngữ sau thực hiện thao tác gì?
+\begin{lstlisting}
+lui s0, 0xFFFF0
+lw  t0, 0x0C(s0)
+sw  t0, 0x18(s0)
+lw  t1, 0x10(s0)
+sw  t1, 0x14(s0)
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Nhận dữ liệu từ P1 xuất ra P4; nhận dữ liệu từ P2 xuất ra P3
+    \item Nhận dữ liệu từ P1 xuất ra P3; nhận dữ liệu từ P2 xuất ra P4
+    \item Nhận dữ liệu từ P4 xuất ra P1; nhận dữ liệu từ P3 xuất ra P2
+    \item Nhận dữ liệu từ P1 xuất ra P2; nhận dữ liệu từ P3 xuất ra P4
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Lệnh \texttt{lui s0, 0xFFFF0} đặt địa chỉ nền \texttt{s0 = 0xFFFF0000}.
+    \item Offset \texttt{0x0C} (\textbf{P1}) được đọc vào \texttt{t0} rồi ghi ra offset \texttt{0x18} (\textbf{P4}); tiếp theo offset \texttt{0x10} (\textbf{P2}) được đọc vào \texttt{t1} rồi ghi ra offset \texttt{0x14} (\textbf{P3}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.21 (Lab -- Cuối kỳ 2022.2, Câu 1; Lab -- Cuối kỳ 2023.2, Câu 9)}\\
+Chọn phát biểu đúng về chương trình xử lý bàn phím ma trận dưới đây viết cho trình mô phỏng RARS (User-level Trap CSRs: \texttt{utvec}, \texttt{ustatus}, \texttt{uie}, \texttt{uepc}, \texttt{uret}):
+\begin{lstlisting}
+.eqv IN_ADDRESS_HEXA_KEYBOARD 0xFFFF0012
+.data
+    Message: .asciz "Key is pressed\n"
+.text
+main:
+    la   t0, IntSR
+    csrw utvec, t0           # Dang ky dia chi trinh phuc vu ngat
+    li   t0, 0x100
+    csrs uie, t0             # Bat ngat ngoai vi (UEIE)
+    csrsi ustatus, 1         # Bat co ngat toan cuc UIE
+    li   t1, IN_ADDRESS_HEXA_KEYBOARD
+    li   t3, 0x80
+    sb   t3, 0(t1)           # Cho phep ban phim ma tran phat ngat
+Loop:
+    nop
+    j    Loop
+IntSR:
+    li   a7, 4
+    la   a0, Message
+    ecall
+    csrr t0, uepc
+    addi t0, t0, 4
+    csrw uepc, t0
+    uret
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Chương trình cài đặt cơ chế ngắt (Interrupt): khi có phím bấm trên keyboard matrix, CPU tự động chuyển sang trình phục vụ ngắt \texttt{IntSR} (đăng ký qua \texttt{utvec}) rồi kết thúc bằng \texttt{uret}
+    \item Chương trình cài đặt cơ chế thăm dò (Polling): vòng lặp chính liên tục đọc cổng \texttt{0xFFFF0012} để kiểm tra phím rồi in thông báo
+    \item Chương trình cài đặt cơ chế ngắt trong đó vòng \texttt{Loop} chủ động gọi trực tiếp \texttt{jal IntSR} để kiểm tra phím
+    \item Chương trình cài đặt cơ chế Polling trong đó chương trình chính liên tục gọi hàm \texttt{ecall} trong \texttt{Loop}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Chương trình đăng ký địa chỉ trình phục vụ ngắt \texttt{IntSR} vào thanh ghi \texttt{utvec}, bật ngắt ngoại vi trong \texttt{uie} và cờ ngắt toàn cục trong \texttt{ustatus}, đồng thời ghi \texttt{0x80} (bit 7 = 1) ra cổng \texttt{0xFFFF0012} để kích hoạt bàn phím phát tín hiệu ngắt phần cứng.
+    \item Trong vòng lặp chính \texttt{Loop}, CPU chỉ chạy \texttt{nop} mà không hề thăm dò cổng vào-ra; khi có phím nhấn, CPU tự động nhảy vào \texttt{IntSR} để in chuỗi và trở về bằng \texttt{uret}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}
+
+\textbf{Bài tập 7.22 (Lab -- Cuối kỳ 2022.2, Câu 6; Lab -- Cuối kỳ 2023.2, Câu 11)}\\
+Chương trình RISC-V sau thực hiện quét bàn phím ma trận 4x4 trong công cụ RARS Digital Lab Sim (với \texttt{t1 = 0xFFFF0012 [IN\_ADDRESS]}, \texttt{t2 = 0xFFFF0014 [OUT\_ADDRESS]}). Phát biểu nào sau đây mô tả ĐÚNG hoạt động của chương trình?
+\begin{lstlisting}
+polling:
+    li   t3, 0x08
+    sb   t3, 0(t1)
+    lb   a0, 0(t2)
+print:
+    li   a7, 34
+    ecall
+sleep:
+    li   a0, 100
+    li   a7, 32
+    ecall
+    j    polling
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Chương trình chỉ quét hàng 4 (bit 3 = \texttt{0x08}) của bàn phím ma trận bằng phương pháp thăm dò (polling) thông qua ghi mã hàng vào \texttt{0xFFFF0012}
+    \item Chương trình quét 1 hàng của bàn phím bằng cách ghi chỉ số hàng trong \texttt{t3} vào địa chỉ \texttt{0xFFFF0014}
+    \item Chương trình tự động quét luân phiên cả 4 hàng của bàn phím ma trận bằng phương pháp thăm dò
+    \item Chương trình hoạt động dựa trên cơ chế ngắt phần cứng (Interrupt) kích hoạt hàng 4 mỗi 100 ms
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Giá trị \texttt{0x08} ($0000\;1000_{(2)}$) chỉ bật bit 3, tương ứng với việc chọn duy nhất \textbf{hàng 4} của bàn phím ma trận 4x4.
+    \item Chương trình ghi \texttt{0x08} vào địa chỉ chọn hàng \texttt{0xFFFF0012} (\texttt{t1}), đọc mã phím từ \texttt{0xFFFF0014} (\texttt{t2}), in ra ở dạng Hexa (\texttt{a7 = 34}), ngủ $100\text{ ms}$ (\texttt{a7 = 32}) rồi lặp vô hạn theo phương pháp thăm dò (polling).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A}.
+\end{itemize}

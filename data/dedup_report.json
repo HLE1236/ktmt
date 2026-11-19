@@ -1,0 +1,55 @@
+{
+  "reference_ch1_ch4_count": 420,
+  "chapters": {
+    "ch5": {
+      "raw_existing": 30,
+      "newly_extracted": 5,
+      "total_before_dedup": 35,
+      "removed_internal": [
+        {
+          "id": "pdf-2_2_4-21",
+          "question_preview": "Cho đoạn mã RISC-V chạy trên CPU pipeline 5 tầng có forwarding. Tổng số chu kỳ xung nhịp cần thiết để đoạn mã hoàn thành",
+          "reason": "Duplicate 4-instruction hazard-free 5-stage pipeline fill-up problem (x5/x6 register alias variant of pdf-2_2_4-4; merged source and examTags into pdf-2_2_4-4 which has more complete explanation)",
+          "kept_id": "pdf-2_2_4-4"
+        }
+      ],
+      "removed_vs_ch1_ch4": [],
+      "removed_cross_567": [],
+      "final_count": 34
+    },
+    "ch6": {
+      "raw_existing": 31,
+      "newly_extracted": 17,
+      "total_before_dedup": 48,
+      "removed_internal": [],
+      "removed_vs_ch1_ch4": [],
+      "removed_cross_567": [],
+      "final_count": 48
+    },
+    "ch7": {
+      "raw_existing": 24,
+      "newly_extracted": 0,
+      "total_before_dedup": 24,
+      "removed_internal": [],
+      "removed_vs_ch1_ch4": [],
+      "removed_cross_567": [
+        {
+          "removed_from_chapter": 7,
+          "kept_in_chapter": 6,
+          "original_id": "pdf-2_2_6-6",
+          "question_preview": "Trong thực tế hiện nay, phát biểu nào sau đây <strong>SAI</strong> về việc sử dụng HDD và SSD trên c",
+          "reason": "Slide CA.RISCV.2025 Chương 6 chính thức trình bày Bộ nhớ ngoài (HDD, SSD, RAID); Chương 7 không chứa nội dung này -> ưu tiên giữ ở Chương 6."
+        },
+        {
+          "removed_from_chapter": 7,
+          "kept_in_chapter": 6,
+          "original_id": "pdf-2_2_6-10",
+          "question_preview": "Đặc điểm nào sau đây <strong>KHÔNG PHẢI</strong> là ưu điểm của ổ thể rắn SSD so với ổ đĩa từ HDD tr",
+          "reason": "Slide CA.RISCV.2025 Chương 6 chính thức trình bày Bộ nhớ ngoài (HDD, SSD, RAID); Chương 7 không chứa nội dung này -> ưu tiên giữ ở Chương 6."
+        }
+      ],
+      "final_count": 22
+    }
+  },
+  "total_final_ch5_ch7": 104
+}

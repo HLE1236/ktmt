@@ -1,0 +1,153 @@
+\documentclass[12pt,a4paper]{report}
+
+% --- CÁC GÓI LỆNH CƠ BẢN VÀ FONT GỐC (COMPUTER MODERN) ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage[left=2.2cm, right=2.2cm, top=2.2cm, bottom=2.2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% --- CÁC GÓI TOÁN HỌC VÀ BẢNG BIỂU (CHỐNG TRÀN LỀ) ---
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{array, booktabs, multirow, tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+
+% --- CÁC GÓI VẼ HÌNH VÀ MẠCH LOGIC (DÙNG CHO CHƯƠNG 2, 3, 4) ---
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{shapes.gates.logic.US, positioning, arrows.meta, calc}
+
+% --- GÓI ĐỊNH DẠNG DANH SÁCH VÀ CODE HỢP NGỮ ---
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt, topsep=4pt}
+\setlist[enumerate]{leftmargin=1.8em, itemsep=2pt, topsep=4pt}
+
+% --- GÓI ĐÓNG KHUNG: NỀN TRẮNG HOÀN TOÀN, KHÔNG BỊ CẮT ĐÔI QUA TRANG ---
+\usepackage[most]{tcolorbox}
+\tcbset{
+    bwbox/.style={
+        colback=white,
+        colframe=black,
+        colbacktitle=white,
+        coltitle=black,
+        boxrule=0.6pt,
+        titlerule=0.4pt,
+        arc=0pt,
+        outer arc=0pt,
+        left=8pt,
+        right=8pt,
+        top=6pt,
+        bottom=6pt,
+        before skip=10pt,
+        after skip=10pt,
+        fonttitle=\bfseries
+    }
+}
+
+% --- CẤU HÌNH KHUNG CODE HỢP NGỮ: KHÔNG ĐÈ CHỮ, KHÔNG BỊ CẮT ĐÔI ---
+\usepackage{listings}
+\usepackage{etoolbox}
+\lstset{
+    basicstyle=\ttfamily\small,
+    columns=flexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=true,
+    frame=none,
+    numbers=none,
+    xleftmargin=0pt,
+    xrightmargin=0pt,
+    aboveskip=0pt,
+    belowskip=0pt,
+    showstringspaces=false,
+    tabsize=4
+}
+
+% Tự động xuống dòng tạo khoảng cách 6pt trước mọi khung code và bọc khung tcolorbox không cắt trang
+\BeforeBeginEnvironment{lstlisting}{%
+    \par\vspace{6pt}\noindent%
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=black,
+        boxrule=0.5pt,
+        arc=0pt,
+        outer arc=0pt,
+        left=6pt,
+        right=6pt,
+        top=4pt,
+        bottom=4pt,
+        before skip=0pt,
+        after skip=6pt
+    ]%
+}
+\AfterEndEnvironment{lstlisting}{\end{tcolorbox}\par\vspace{2pt}}
+
+% --- TIÊU ĐỀ ĐẦU TRANG VÀ CHÂN TRANG ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Tài liệu ôn tập Kiến trúc máy tính (RISC-V)}
+\fancyhead[R]{\small IT3030 / IT3034 / IT3283}
+\fancyfoot[C]{\small Trang \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% --- ĐỊNH DẠNG TIÊU ĐỀ CHƯƠNG MỤC (GIỐNG BẢN CŨ) ---
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{CHƯƠNG \thechapter}{15pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+
+% --- TRANG BÌA ---
+\begin{titlepage}
+    \begin{center}
+        \textbf{\large ĐẠI HỌC BÁCH KHOA HÀ NỘI}\\
+        \textbf{\large TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG}\\[2.5cm]
+        
+        {\Huge \textbf{TÀI LIỆU ÔN TẬP TRỌNG TÂM}}\\[0.5cm]
+        {\LARGE \textbf{KIẾN TRÚC MÁY TÍNH (PHIÊN BẢN RISC-V)}}\\[0.5cm]
+        {\large \textbf{Mã học phần: IT3030, IT3034, IT3283}}\\[2cm]
+        
+        \begin{tcolorbox}[bwbox, title={Phạm vi và Cấu trúc tài liệu (Chương 1 -- Chương 7)}]
+            \begin{itemize}
+                \item \textbf{Chương 1:} Giới thiệu chung và Đánh giá hiệu năng máy tính.
+                \item \textbf{Chương 2:} Hệ thống máy tính (Cấu trúc CPU, Bộ nhớ, Vào-Ra, Ngắt và Liên kết Bus).
+                \item \textbf{Chương 3:} Kiến trúc tập lệnh RISC-V (Thanh ghi, Hợp ngữ, Mã máy 32-bit, Bản đồ bộ nhớ).
+                \item \textbf{Chương 4:} Số học máy tính và Logic số (Hệ đếm, Cổng logic, Mã bù 2, Tràn số, Chuẩn IEEE 754).
+                \item \textbf{Chương 5:} Bộ xử lý (Đường dữ liệu đơn/đa chu kỳ RV32I, Control Unit, Đường ống lệnh Pipeline, Hazards, Forwarding và Dự đoán rẽ nhánh).
+                \item \textbf{Chương 6:} Bộ nhớ máy tính (Phân cấp bộ nhớ, SRAM/DRAM/ROM, Bộ nhớ đệm Cache, AMAT, Bộ nhớ ảo Paging/TLB và Bộ nhớ ngoài HDD/SSD/RAID).
+                \item \textbf{Chương 7:} Hệ thống Vào-Ra (Mô-đun Vào-Ra, Định địa chỉ MMIO/Isolated I/O, Polling, Ngắt/PIC/CSRs, DMA và Thực hành MMIO RARS).
+            \end{itemize}
+            Tài liệu phân tách nghiêm ngặt kiến thức theo đúng giới hạn từng chương của bài giảng chính thức, kèm quy trình giải từng bước và lời giải chi tiết cho toàn bộ ngân hàng câu hỏi Giữa kỳ và Cuối kỳ.
+        \end{tcolorbox}
+        
+        \vfill
+        {\large \textbf{Hà Nội -- 2026}}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% --- NẠP 7 FILE CHƯƠNG ---
+\input{C1.tex}
+\input{C2.tex}
+\input{C3.tex}
+\input{C4.tex}
+\input{C5.tex}
+\input{C6.tex}
+\input{C7.tex}
+
+\end{document}

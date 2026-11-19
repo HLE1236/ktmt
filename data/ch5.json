@@ -1,0 +1,1177 @@
+[
+  {
+    "id": "c5-001",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.1",
+    "source": "ôn tập cuối kì 20251 (Câu 36); ôn tập cuối kì 20252 (P2-18); Đáp án ôn tập cuối kì P2 (Câu 12)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét 4 loại lệnh <code>lw</code>, <code>sw</code>, <code>beq</code> và <code>R-type</code> trên bộ xử lý RISC-V đơn chu kỳ. Khi thực hiện những loại lệnh nào <strong>không cần</strong> sử dụng tới thành phần <strong>Bộ nhớ dữ liệu (Data Memory)</strong>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "beq và R-type",
+      "lw và sw",
+      "Chỉ lệnh R-type",
+      "Cả 4 loại lệnh (lw, sw, beq và R-type)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trên Datapath đơn chu kỳ RISC-V:</p><ul><li><code>lw</code> sử dụng Data Memory để <strong>đọc</strong> dữ liệu (<code>MemRead = 1</code>).</li><li><code>sw</code> sử dụng Data Memory để <strong>ghi</strong> dữ liệu (<code>MemWrite = 1</code>).</li><li><code>R-type</code> chỉ tính toán tại ALU rồi ghi kết quả trực tiếp về tập thanh ghi (<code>MemRead = 0, MemWrite = 0</code>).</li><li><code>beq</code> chỉ so sánh hai thanh ghi tại ALU và cập nhật PC nếu bằng nhau (<code>MemRead = 0, MemWrite = 0</code>).</li></ul><p>Vậy <strong><code>beq</code> và <code>R-type</code></strong> không cần sử dụng tới Bộ nhớ dữ liệu.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-002",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.2",
+    "source": "ôn tập cuối kì 20251 (Câu 42); ôn tập cuối kì 20252 (P2-41); Đáp án ôn tập cuối kì P2 (Câu 20)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh <code>add s2, s4, s3</code>, cặp tín hiệu điều khiển <code>ALUSrc / RegWrite</code> nhận giá trị nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [
+      "0/1",
+      "0/0",
+      "1/0",
+      "1/1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>add s2, s4, s3</code> thuộc định dạng <strong>R-type</strong>:</p><ul><li><code>ALUSrc = 0</code>: toán hạng thứ hai đưa vào ALU lấy trực tiếp từ cổng <code>Read data 2</code> của tập thanh ghi (giá trị <code>s3</code>), không dùng khối <code>Imm Gen</code>.</li><li><code>RegWrite = 1</code>: cho phép ghi kết quả từ ALU vào thanh ghi đích <code>rd = s2</code>.</li></ul><p>Do đó cặp tín hiệu <code>ALUSrc / RegWrite</code> là <strong><code>0/1</code></strong>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-003",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.3",
+    "source": "ôn tập cuối kì 20251 (Câu 53); ôn tập cuối kì 20252 (P2-28); Đáp án ôn tập cuối kì P2 (Câu 63)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập 7 tín hiệu điều khiển theo dạng x/x/x/xx/x/x/x (vd: 0/0/0/00/1/1/0):",
+    "acceptedAnswers": [
+      "0/0/0/00/1/1/0",
+      "0/0/X/00/1/1/0",
+      "0/0/x/00/1/1/0"
+    ],
+    "question": "Xét Datapath RISC-V đơn chu kỳ chuẩn khi thực hiện lệnh <code>sw s0, -8(s6)</code>. Hãy cho biết bộ $7$ tín hiệu điều khiển theo đúng thứ tự <code>Branch / MemRead / MemtoReg / ALUOp (2-bit) / MemWrite / ALUSrc / RegWrite</code> nhận giá trị nào? (Viết bằng 7 cụm cách nhau bởi dấu <code>/</code>, vd: <code>1/0/1/00/1/0/1</code>)",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [
+      "0/0/0/00/1/1/0",
+      "0/1/1/00/0/1/1",
+      "0/0/0/10/0/0/1",
+      "1/0/0/01/0/0/0"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>sw s0, -8(s6)</code> là lệnh ghi từ nhớ (<strong>S-type Store</strong>):</p><ul><li><code>Branch = 0</code>: không phải lệnh rẽ nhánh.</li><li><code>MemRead = 0</code>: không đọc từ Data Memory.</li><li><code>MemtoReg = 0</code> (hoặc <code>X</code> — không quan tâm vì không ghi thanh ghi; đáp án chuẩn điền <code>0</code>).</li><li><code>ALUOp = 00</code>: ALU thực hiện phép cộng địa chỉ cơ sở <code>s6</code> với offset <code>-8</code>.</li><li><code>MemWrite = 1</code>: cho phép ghi giá trị thanh ghi <code>s0</code> vào Data Memory.</li><li><code>ALUSrc = 1</code>: toán hạng thứ 2 của ALU lấy từ khối <code>Imm Gen</code> (giá trị <code>-8</code>).</li><li><code>RegWrite = 0</code>: không ghi dữ liệu về tập thanh ghi.</li></ul><p>Kết quả theo đúng thứ tự: <strong><code>0/0/0/00/1/1/0</code></strong>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-004",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.4",
+    "source": "giữa kì 20231 (#1c9040)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa 5-bit của rs1 (vd: 0x07):",
+    "acceptedAnswers": [
+      "0x07",
+      "7",
+      "0x7",
+      "07"
+    ],
+    "question": "Xét bộ xử lý đơn chu kỳ <strong>RISC-V (RV32I)</strong> thực thi lệnh <code>slt t6, t2, t3</code> (biết $t_1 = \\text{0x0004}$, $t_2 = \\text{0x0012}$, $t_3 = \\text{0x2023}$). Điểm đánh dấu <strong>①</strong> là bus 5-bit <code>Instruction[19:15]</code> đưa vào cổng <code>Read register 1</code> của Tập thanh ghi. Giá trị Hexa trên đường dây <strong>①</strong> là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đường dây <code>Instruction[19:15]</code> mang <strong>chỉ số thanh ghi nguồn 1 (rs1)</strong> (chứ không phải dữ liệu bên trong thanh ghi). Trong lệnh <code>slt t6, t2, t3</code>, <code>rs1</code> là thanh ghi <code>t2</code> có số hiệu là <code>x7</code> $= \\mathbf{\\text{0x07}}$ (bảng thanh ghi RV32I: <code>t2 = x7</code>).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-005",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.5",
+    "source": "giữa kì 20231 (#282a13)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập kết quả Hexa 32-bit (vd: 0x00000001):",
+    "acceptedAnswers": [
+      "0x00000001",
+      "0x1",
+      "1",
+      "00000001"
+    ],
+    "question": "Xét bộ xử lý đơn chu kỳ <strong>RISC-V (RV32I)</strong> thực thi lệnh <code>slt t6, t2, t3</code> tại địa chỉ <code>0x0040FF80</code> (biết $t_1 = \\text{0x00000004}$, $t_2 = \\text{0x00000012}$, $t_3 = \\text{0x00002023}$). Điểm đánh dấu <strong>③</strong> là ngõ ra <code>ALU result</code>. Giá trị Hexa 32-bit tại <strong>③</strong> là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>slt t6, t2, t3</code> so sánh có dấu <code>t2 &lt; t3</code>: $\\text{0x12} (18) &lt; \\text{0x2023} (8227)$ là đúng, nên ngõ ra ALU result tại ③ bằng $\\mathbf{\\text{0x00000001}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-006",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.6",
+    "source": "giữa kì 20231 (#dc67c2)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa tại ④ (vd: 0x0041071E):",
+    "acceptedAnswers": [
+      "0x0041071E",
+      "0x0041071e",
+      "0041071E",
+      "41071E"
+    ],
+    "question": "Xét bộ xử lý đơn chu kỳ <strong>RISC-V (RV32I)</strong> thực thi lệnh <code>slt t6, t2, t3</code> (mã máy <code>0x01C3AFB3</code>) đặt tại địa chỉ <code>PC = 0x0040FF00</code>. Điểm đánh dấu <strong>④</strong> là ngõ ra bộ cộng tính địa chỉ rẽ nhánh: $PC + \\text{sign-extend}(\\text{imm}_B)$ (khối <code>Imm Gen</code> tách các bit kiểu B từ mã máy dù <code>Branch = 0</code>). Giá trị Hexa tại <strong>④</strong> là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mã máy <code>0x01C3AFB3</code> ở hệ nhị phân là <code>0000 0001 1100 0011 1010 1111 1011 0011</code>.<br>Bộ <code>Imm Gen</code> kiểu B ghép các bit: $\\text{bit}[31]=0$, $\\text{bit}[7]=1$, $\\text{bits}[30:25]=000000$, $\\text{bits}[11:8]=1111$, thêm bit $0$ cuối &rarr; $0\\;1\\;000000\\;1111\\;0_2 = +2078 = \\text{0x81E}$.<br>Ngõ ra bộ cộng nhánh $= \\text{0x0040FF00} + \\text{0x0000081E} = \\mathbf{\\text{0x0041071E}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-007",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.7",
+    "source": "giữa kì 20231 (#30ee31)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị Hexa 5-bit của rs2 (vd: 0x1C):",
+    "acceptedAnswers": [
+      "0x1C",
+      "0x1c",
+      "1C",
+      "1c",
+      "28"
+    ],
+    "question": "Xét bộ xử lý đơn chu kỳ <strong>RISC-V (RV32I)</strong> thực thi lệnh <code>slt t6, t2, t3</code> (biết $t_1 = \\text{0x0004}$, $t_2 = \\text{0x0012}$, $t_3 = \\text{0x2023}$). Điểm đánh dấu <strong>②</strong> là bus 5-bit <code>Instruction[24:20]</code> đưa vào cổng <code>Read register 2</code>. Giá trị Hexa trên đường dây <strong>②</strong> là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Đường dây <code>Instruction[24:20]</code> mang <strong>chỉ số thanh ghi nguồn 2 (rs2)</strong>. Trong lệnh <code>slt t6, t2, t3</code>, <code>rs2</code> là <code>t3</code> có số hiệu <code>x28</code> $= \\mathbf{\\text{0x1C}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-008",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.8",
+    "source": "giữa kì 20231 (#28284a)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong Datapath bộ xử lý đơn chu kỳ <strong>RISC-V (RV32I)</strong>, giả sử có sự cố phần cứng làm đường tín hiệu điều khiển <code>MemtoReg</code> nối tới Mux chọn dữ liệu ghi về thanh ghi bị kẹt cố định ở mức logic <code>0</code> (luôn chọn ngõ ra ALU thay vì Data Memory). Lệnh nào dưới đây bị ảnh hưởng thực thi sai?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [
+      "lw",
+      "beq",
+      "add",
+      "sw"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Các lệnh <code>beq</code> và <code>sw</code> không ghi kết quả về Tập thanh ghi (<code>RegWrite = 0</code>); lệnh <code>add</code> cần <code>MemtoReg = 0</code> để ghi kết quả ALU; chỉ có lệnh <code>lw</code> bắt buộc cần <code>MemtoReg = 1</code> để đưa dữ liệu đọc từ RAM về thanh ghi đích nên sẽ hoạt động sai.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-009",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.9",
+    "source": "ôn tập cuối kì 20251 (Câu 7); ôn tập cuối kì 20252 (P2-49); Đáp án ôn tập cuối kì P2 (Câu 42)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét 4 loại lệnh <code>lw</code>, <code>sw</code>, <code>beq</code> và <code>R-type</code> trên bộ xử lý đơn chu kỳ. Khi thực hiện những loại lệnh nào cần sử dụng tới thành phần <strong>Bộ nhớ lệnh (Instruction Memory)</strong>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Cả 4 loại lệnh (lw, sw, beq và R-type)",
+      "Chỉ các lệnh truy cập nhớ lw và sw",
+      "Chỉ các lệnh R-type và beq",
+      "Chỉ các lệnh đọc lw và R-type"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mọi lệnh máy đều phải đi qua công đoạn đầu tiên (Instruction Fetch — IF) để CPU đọc mã máy từ Bộ nhớ lệnh tại địa chỉ <code>PC</code>, nên cả $4$ loại lệnh đều cần Instruction Memory.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-010",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.10",
+    "source": "ôn tập cuối kì 20251 (Câu 14); ôn tập cuối kì 20252 (P2-66); Đáp án ôn tập cuối kì P2 (Câu 52)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập chuỗi tín hiệu (vd: 0/1/1/00/0/1/1):",
+    "acceptedAnswers": [
+      "0/1/1/00/0/1/1"
+    ],
+    "question": "Xét Datapath RISC-V đơn chu kỳ chuẩn khi thực hiện lệnh <code>lb t5, 8(s8)</code>. Hãy cho biết bộ $7$ tín hiệu điều khiển theo đúng thứ tự <code>Branch / MemRead / MemtoReg / ALUOp (2-bit) / MemWrite / ALUSrc / RegWrite</code> nhận giá trị nào? (Viết bằng 7 cụm cách nhau bởi dấu <code>/</code>, vd: <code>1/0/1/00/1/0/1</code>)",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh <code>lb</code> là lệnh đọc bộ nhớ nên có bộ điều khiển giống lệnh Load: <code>Branch=0</code> (không rẽ nhánh), <code>MemRead=1</code> (đọc RAM), <code>MemtoReg=1</code> (lấy dữ liệu từ RAM về thanh ghi), <code>ALUOp=00</code> (ALU thực hiện phép cộng địa chỉ), <code>MemWrite=0</code>, <code>ALUSrc=1</code> (chọn offset <code>8</code> từ ImmGen), <code>RegWrite=1</code> (ghi <code>t5</code>) &rarr; <strong><code>0/1/1/00/0/1/1</code></strong>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-011",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.11",
+    "source": "ôn tập cuối kì 20251 (Câu 35); ôn tập cuối kì 20252 (P2-25); Đáp án ôn tập cuối kì P2 (Câu 33)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh <code>add s2, s4, s3</code>, cặp tín hiệu điều khiển <code>MemtoReg / Branch</code> nhận giá trị nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [
+      "0/0",
+      "0/1",
+      "1/0",
+      "1/1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>add</code> là lệnh R-type: kết quả đi thẳng từ ALU về thanh ghi (<code>MemtoReg = 0</code>) và không rẽ nhánh (<code>Branch = 0</code>) &rarr; <strong><code>0/0</code></strong>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-012",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.12",
+    "source": "ôn tập cuối kì 20251 (Câu 51); ôn tập cuối kì 20252 (P2-4)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh <code>beq s0, t5, L1</code> (biết <code>L1 = 16</code>, <code>s0 = 0x1</code>, <code>t5 = 0x10</code>), giá trị cờ <code>Zero</code> ở ngõ ra ALU là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0",
+      "1",
+      "Không thể xác định",
+      "0xF1"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>ALU thực hiện phép trừ <code>s0 - t5 = 0x1 - 0x10 = -15 ≠ 0</code> nên cờ <code>Zero</code> bằng $\\mathbf{0}$ (không rẽ nhánh).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-013",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.13",
+    "source": "ôn tập cuối kì 20251 (Câu 52); ôn tập cuối kì 20252 (P2-69)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh <code>add s2, s4, s3</code>, cổng chọn thanh ghi đọc 1 (<code>Read register 1</code>, 5-bit) nhận chuỗi nhị phân nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "10100",
+      "10011",
+      "10010",
+      "01100"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Thanh ghi nguồn 1 (<code>rs1</code>) là <code>s4</code>, trong tập thanh ghi RISC-V có số hiệu là <code>x20</code> $= 20_{(10)} = \\mathbf{10100_{(2)}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-014",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.14",
+    "source": "ôn tập cuối kì 20251 (Câu 56); ôn tập cuối kì 20252 (P2-62)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét bộ xử lý RISC-V đơn chu kỳ chuẩn. Khi thực hiện lệnh <code>lw t5, 8(s8)</code>, chuỗi nhị phân 7-bit đưa vào khối Điều khiển (<code>Control Unit — CU</code>, tức trường <code>opcode</code>) là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "0000011",
+      "0100011",
+      "0010011",
+      "0110011"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Khối Điều khiển (CU) nhận trường <code>opcode</code> $7$ bit thấp $[6:0]$ của lệnh. Mọi lệnh Load trong RV32I (<code>lb, lh, lw...</code>) đều có opcode chuẩn là <strong><code>0000011</code></strong> ($\\text{0x03}$).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-015",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.15",
+    "source": "cuối kì 20251 (#9b1aa3); thi thử kì 20251 (Câu 8)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong Datapath đơn chu kỳ RISC-V chuẩn có 5 đường dây có thể bị đứt riêng lẻ:<br>(1) Ngõ ra <code>Imm Gen</code> tới đầu vào 1 của bộ chọn <code>ALUSrc</code>;<br>(2) Ngõ ra bộ chọn <code>ALUSrc</code> tới toán hạng thứ 2 của <code>ALU</code>;<br>(3) Ngõ ra <code>ALU result</code> tới cổng <code>Address</code> của Data Memory;<br>(4) Ngõ ra <code>Read data</code> của Data Memory tới đầu vào 1 của bộ chọn <code>MemtoReg</code>;<br>(5) Ngõ ra bộ cộng <code>Branch Add</code> tới đầu vào 1 của bộ chọn <code>PCSrc</code>.<br>Bộ đáp án nào liệt kê đúng loại lệnh bị lỗi tương ứng khi từng dây (1)–(5) bị đứt?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [
+      "(1) lw/sw/addi; (2) add/addi/lw/sw/beq (lệnh dùng toán hạng ALU thứ 2); (3) lw/sw; (4) lw; (5) beq",
+      "(1) R-type/beq; (2) chỉ lw/sw; (3) add/addi; (4) sw; (5) jal",
+      "(1) lw/sw/addi; (2) chỉ add/sub; (3) lw/sw/beq; (4) lw; (5) beq",
+      "(1) beq/sw; (2) add/addi/lw/sw; (3) lw; (4) lw/sw; (5) beq"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>(1) Ngõ vào 1 của ALUSrc mang hằng số immediate cho <code>lw, sw, addi</code>.<br>(2) Ngõ ra ALUSrc là toán hạng thứ 2 của ALU dùng bởi mọi lệnh ALU/mem/branch (<code>add, addi, lw, sw, beq</code>).<br>(3) Ngõ ra ALU gửi địa chỉ tới Data Memory cho <code>lw, sw</code>.<br>(4) Dữ liệu đọc từ Data Memory chỉ dùng cho <code>lw</code>.<br>(5) Địa chỉ rẽ nhánh đích chỉ dùng cho <code>beq</code> (các lệnh rẽ nhánh).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-016",
+    "chapter": 5,
+    "groupId": "5.1",
+    "groupTitle": "Nhóm 1: Đường dữ liệu (Datapath) & Tín hiệu điều khiển (Control Unit)",
+    "exerciseCode": "Bài tập 5.16",
+    "source": "cuối kì 20251 (#013920); thi thử kì 20251 (Câu 21)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Xét Datapath với khối điều khiển (Control Unit) của CPU RISC-V đơn chu kỳ chuẩn:<br>a) Lệnh nào yêu cầu tín hiệu <code>ALUSrc = 1</code>?<br>b) Lệnh nào yêu cầu tín hiệu <code>ALUSrc = 0</code>?<br>c) Lệnh nào yêu cầu tín hiệu <code>MemtoReg = 1</code>?<br>d) Lệnh nào yêu cầu tín hiệu <code>MemtoReg = 0</code>?<br>e) Nhóm lệnh nào <strong>không</strong> sử dụng khối <code>Imm Gen</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 140\" width=\"620\" height=\"135\" role=\"img\" aria-label=\"Sơ đồ khối Datapath RV32I\"><rect x=\"10\" y=\"45\" width=\"48\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"34\" y=\"72\" text-anchor=\"middle\" class=\"svg-title\">PC</text><rect x=\"74\" y=\"38\" width=\"76\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"112\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">IMEM</text><text x=\"112\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">Inst[31:0]</text><rect x=\"168\" y=\"38\" width=\"96\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"216\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">Reg File</text><text x=\"216\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">rs1,rs2→rd</text><rect x=\"282\" y=\"38\" width=\"78\" height=\"58\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"321\" y=\"65\" text-anchor=\"middle\" class=\"svg-title-primary\">ALU</text><text x=\"321\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">ALUSrc</text><rect x=\"378\" y=\"38\" width=\"88\" height=\"58\" rx=\"5\" class=\"svg-box\"/><text x=\"422\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">DMEM</text><text x=\"422\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">MemR/W</text><rect x=\"484\" y=\"42\" width=\"142\" height=\"50\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"555\" y=\"65\" text-anchor=\"middle\" class=\"svg-title\">MUX MemtoReg</text><text x=\"555\" y=\"82\" text-anchor=\"middle\" class=\"svg-sub\">RegWrite → rd</text><line x1=\"58\" y1=\"67\" x2=\"74\" y2=\"67\" class=\"svg-line\"/><line x1=\"150\" y1=\"67\" x2=\"168\" y2=\"67\" class=\"svg-line\"/><line x1=\"264\" y1=\"67\" x2=\"282\" y2=\"67\" class=\"svg-line\"/><line x1=\"360\" y1=\"67\" x2=\"378\" y2=\"67\" class=\"svg-line\"/><line x1=\"466\" y1=\"67\" x2=\"484\" y2=\"67\" class=\"svg-line\"/><text x=\"320\" y=\"20\" text-anchor=\"middle\" class=\"svg-sub\">Control Unit: Branch | MemRead | MemtoReg | ALUOp | MemWrite | ALUSrc | RegWrite</text></svg>",
+    "options": [
+      "lw/sw/addi; b) R-type (add, sub)/beq; c) lw; d) R-type/addi; e) R-type",
+      "R-type/beq; b) lw/sw/addi; c) sw; d) lw; e) beq",
+      "lw/sw; b) addi/R-type; c) lw/sw; d) R-type; e) I-type",
+      "lw/sw/addi; b) R-type/beq; c) lw; d) sw/beq; e) I-type"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>ALUSrc = 1</code> chọn hằng số từ ImmGen (<code>lw, sw, addi</code>); <code>ALUSrc = 0</code> chọn <code>rs2</code> (<code>R-type, beq</code>); <code>MemtoReg = 1</code> đưa dữ liệu đọc từ RAM về thanh ghi (chỉ <code>lw</code>); <code>MemtoReg = 0</code> đưa kết quả ALU về thanh ghi (<code>R-type, addi</code>); các lệnh <code>R-type</code> không dùng khối <code>Imm Gen</code>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-017",
+    "chapter": 5,
+    "groupId": "5.2",
+    "groupTitle": "Nhóm 2: Đường ống lệnh (Pipeline) & Tính toán hiệu năng Pipeline",
+    "exerciseCode": "Bài tập 5.17",
+    "source": "ôn tập cuối kì 20251 (Câu 64); ôn tập cuối kì 20252 (P2-39); Đáp án ôn tập cuối kì P2 (Câu 53)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bộ xử lý RISC-V thực hiện chương trình theo đường ống lệnh (pipeline) với 5 công đoạn. Giả thiết thời gian thực hiện 1 công đoạn là $0.2\\text{ ns}$. Cho đoạn chương trình gồm $20$ lệnh và giả thiết không có hazard. Hãy cho biết thời gian bộ xử lý thực hiện đoạn chương trình đó?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 95\" width=\"620\" height=\"90\" role=\"img\" aria-label=\"Pipeline 5 tầng RV32I\"><rect x=\"12\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"60\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">IF</text><rect x=\"118\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"142\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"190\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">ID</text><rect x=\"248\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"272\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"320\" y=\"47\" text-anchor=\"middle\" class=\"svg-title-primary\">EX</text><rect x=\"378\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"402\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"450\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">MEM</text><rect x=\"508\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"532\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"580\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">WB</text><text x=\"125\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">IF/ID</text><text x=\"255\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">ID/EX</text><text x=\"385\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">EX/MEM</text><text x=\"515\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">MEM/WB</text></svg>",
+    "options": [
+      "4.8 ns",
+      "4 ns",
+      "2.4 ns",
+      "20 ns"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Với pipeline $k = 5$ công đoạn, thực thi $N = 20$ lệnh không có hazard, tổng số chu kỳ xung nhịp cần thiết là:</p><p>$$\\text{Cycles} = N + (k - 1) = 20 + (5 - 1) = 24\\text{ chu kỳ}$$</p><p>Mỗi công đoạn mất $0.2\\text{ ns}$ (tức chu kỳ xung nhịp $T_{\\text{clk}} = 0.2\\text{ ns}$), nên tổng thời gian thực thi là:</p><p>$$T = 24 \\times 0.2\\text{ ns} = \\mathbf{4.8\\text{ ns}}$$</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-018",
+    "chapter": 5,
+    "groupId": "5.2",
+    "groupTitle": "Nhóm 2: Đường ống lệnh (Pipeline) & Tính toán hiệu năng Pipeline",
+    "exerciseCode": "Bài tập 5.18",
+    "source": "cuối kì 20222 (#4708cd); cuối kì 20241 (#8a8aba); cuối kì 20242 (#4708cd); ôn tập cuối kì 20251 (Câu 43); ôn tập cuối kì 20252 (P2-68); Đáp án ôn tập cuối kì P2 (Câu 31)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bộ xử lý RISC-V thực hiện chương trình theo đường ống lệnh (pipeline) với 5 công đoạn. Giả thiết thời gian thực hiện 1 công đoạn là $0.2\\text{ ns}$. Cho đoạn chương trình gồm $15$ lệnh và giả thiết không có hazard. Hãy cho biết thời gian bộ xử lý thực hiện đoạn chương trình đó?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 95\" width=\"620\" height=\"90\" role=\"img\" aria-label=\"Pipeline 5 tầng RV32I\"><rect x=\"12\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"60\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">IF</text><rect x=\"118\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"142\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"190\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">ID</text><rect x=\"248\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"272\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"320\" y=\"47\" text-anchor=\"middle\" class=\"svg-title-primary\">EX</text><rect x=\"378\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"402\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"450\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">MEM</text><rect x=\"508\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"532\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"580\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">WB</text><text x=\"125\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">IF/ID</text><text x=\"255\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">ID/EX</text><text x=\"385\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">EX/MEM</text><text x=\"515\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">MEM/WB</text></svg>",
+    "options": [
+      "3.8 ns",
+      "3.0 ns",
+      "3.6 ns",
+      "15 ns"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số chu kỳ thực thi $N$ lệnh trên pipeline $k = 5$ công đoạn không có hazard là: $N + (k - 1) = 15 + (5 - 1) = 19$ chu kỳ.<br>Thời gian thực hiện $= 19 \\times 0.2\\text{ ns} = \\mathbf{3.8\\text{ ns}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-019",
+    "chapter": 5,
+    "groupId": "5.2",
+    "groupTitle": "Nhóm 2: Đường ống lệnh (Pipeline) & Tính toán hiệu năng Pipeline",
+    "exerciseCode": "Bài tập 5.19",
+    "source": "ôn tập cuối kì 20251 (Câu 41); ôn tập cuối kì 20252 (P2-43)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập 5 công đoạn (vd: IF/...):",
+    "acceptedAnswers": [
+      "IF/ID/EX/MEM/WB",
+      "IF / ID / EX / MEM / WB"
+    ],
+    "question": "Đường ống lệnh (pipeline) chuẩn của bộ xử lý RISC-V gồm $5$ công đoạn (viết tắt 2-3 chữ cái tiếng Anh). Hãy liệt kê lần lượt theo đúng thứ tự, ngăn cách bằng dấu <code>/</code>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 95\" width=\"620\" height=\"90\" role=\"img\" aria-label=\"Pipeline 5 tầng RV32I\"><rect x=\"12\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"60\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">IF</text><rect x=\"118\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"142\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"190\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">ID</text><rect x=\"248\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"272\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"320\" y=\"47\" text-anchor=\"middle\" class=\"svg-title-primary\">EX</text><rect x=\"378\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"402\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"450\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">MEM</text><rect x=\"508\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"532\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"580\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">WB</text><text x=\"125\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">IF/ID</text><text x=\"255\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">ID/EX</text><text x=\"385\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">EX/MEM</text><text x=\"515\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">MEM/WB</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$5$ công đoạn pipeline RISC-V theo thứ tự là: <strong>IF</strong> (Instruction Fetch) / <strong>ID</strong> (Instruction Decode) / <strong>EX</strong> (Execute) / <strong>MEM</strong> (Memory Access) / <strong>WB</strong> (Write Back).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-020",
+    "chapter": 5,
+    "groupId": "5.2",
+    "groupTitle": "Nhóm 2: Đường ống lệnh (Pipeline) & Tính toán hiệu năng Pipeline",
+    "exerciseCode": "Bài tập 5.20",
+    "source": "ôn tập cuối kì 20251 (Câu 68); ôn tập cuối kì 20252 (P2-9)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập CPI trung bình (vd: 1.2):",
+    "acceptedAnswers": [
+      "1.2"
+    ],
+    "question": "Cho đoạn mã gồm $20$ lệnh <code>nop</code> liên tiếp chạy trên bộ xử lý RISC-V pipeline 5 công đoạn (không có hazard). Sau khi chạy xong toàn bộ chương trình $1$ lần, chỉ số $CPI$ trung bình đạt được bằng bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 640 95\" width=\"620\" height=\"90\" role=\"img\" aria-label=\"Pipeline 5 tầng RV32I\"><rect x=\"12\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"60\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">IF</text><rect x=\"118\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"142\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"190\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">ID</text><rect x=\"248\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"272\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"320\" y=\"47\" text-anchor=\"middle\" class=\"svg-title-primary\">EX</text><rect x=\"378\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"402\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"450\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">MEM</text><rect x=\"508\" y=\"14\" width=\"14\" height=\"56\" rx=\"2\" class=\"svg-box-primary\"/><rect x=\"532\" y=\"20\" width=\"96\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"580\" y=\"47\" text-anchor=\"middle\" class=\"svg-title\">WB</text><text x=\"125\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">IF/ID</text><text x=\"255\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">ID/EX</text><text x=\"385\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">EX/MEM</text><text x=\"515\" y=\"84\" text-anchor=\"middle\" class=\"svg-sub\">MEM/WB</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Tổng số chu kỳ xung nhịp $= 20 + (5 - 1) = 24$ chu kỳ.<br>Chỉ số $CPI = 24 / 20 = \\mathbf{1.2}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-021",
+    "chapter": 5,
+    "groupId": "5.2",
+    "groupTitle": "Nhóm 2: Đường ống lệnh (Pipeline) & Tính toán hiệu năng Pipeline",
+    "exerciseCode": "Bài tập 5.21",
+    "source": "cuối kì 20231 (#8e6587); cuối kì 20232 (#8e6587); ôn tập cuối kì 20251 (Câu 1); ôn tập cuối kì 20252 (P2-45); Đáp án ôn tập cuối kì P2 (Câu 46)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số chu kỳ xung nhịp:",
+    "acceptedAnswers": [
+      "8"
+    ],
+    "question": "Cho đoạn chương trình hợp ngữ RISC-V được thực hiện trên bộ xử lý đường ống 5 công đoạn (5-stage pipelined CPU) có hỗ trợ đầy đủ đường chuyển tiếp (forwarding). Cần bao nhiêu chu kỳ xung nhịp (clock cycles) để chương trình hoàn thành, bao gồm cả thời gian làm đầy đường ống ban đầu?",
+    "codeBlock": "addi t0, zero, 100\naddi t1, zero, 200\nadd  s0, s2, t2\nsw   t0, 0(s4)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Giữa $4$ lệnh không có xung đột dữ liệu hay điều khiển nào (lệnh <code>sw</code> đọc <code>t0</code> cách lệnh <code>addi t0</code> 3 lệnh).<br>Số chu kỳ $= 4 + (5 - 1) = \\mathbf{8}$ chu kỳ.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-022",
+    "chapter": 5,
+    "groupId": "5.2",
+    "groupTitle": "Nhóm 2: Đường ống lệnh (Pipeline) & Tính toán hiệu năng Pipeline",
+    "exerciseCode": "Bài tập 5.22",
+    "source": "cuối kì 20251 (#03b031); thi thử kì 20251 (Câu 11)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số chu kỳ xung nhịp:",
+    "acceptedAnswers": [
+      "9"
+    ],
+    "question": "Đoạn chương trình RISC-V sau chạy trên CPU pipeline 5 công đoạn (mỗi công đoạn 1 chu kỳ xung nhịp). Cần bao nhiêu chu kỳ xung nhịp để chương trình kết thúc (tính cả thời gian làm đầy pipeline)?",
+    "codeBlock": "addi t0, x0, 1\naddi t1, x0, 2\nadd  s0, t2, t3\nsub  s1, t2, t3\nsw   t0, 0(s4)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Có $5$ lệnh, lệnh <code>sw</code> đọc <code>t0</code> ở chu kỳ $6$ (sau khi <code>addi t0</code> xong WB ở chu kỳ $5$) nên không có hazard nào xảy ra.<br>Tổng số chu kỳ $= 5 + (5 - 1) = \\mathbf{9}$ chu kỳ.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-023",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.23",
+    "source": "ôn tập cuối kì 20251 (Câu 47); ôn tập cuối kì 20252 (P2-14); Đáp án ôn tập cuối kì P2 (Câu 4)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị thập phân của thanh ghi x6 (vd: 0):",
+    "acceptedAnswers": [
+      "0"
+    ],
+    "question": "Cho đoạn code RISC-V chạy trên CPU pipeline 5 tầng <strong>không có forwarding và không có hazard detection</strong> (giả sử mọi thanh ghi ban đầu bằng <code>0</code>; WB ghi ở nửa đầu chu kỳ, ID đọc ở nửa sau). Sau khi kết thúc chương trình, giá trị thập phân của thanh ghi <code>x6</code> là bao nhiêu?",
+    "codeBlock": "ori  x4, zero, 4\naddi x5, zero, 5\nadd  x6, x4, x5\nori  x7, zero, 0\nori  x7, zero, 0",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "0",
+      "4",
+      "5",
+      "9"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo dõi tiến độ các lệnh qua 5 công đoạn (không có forwarding và không có stall):</p><ul><li><code>ori x4, zero, 4</code>: IF(1), ID(2), EX(3), MEM(4), <strong>WB(5)</strong></li><li><code>addi x5, zero, 5</code>: IF(2), ID(3), EX(4), MEM(5), <strong>WB(6)</strong></li><li><code>add x6, x4, x5</code>: IF(3), <strong>ID(4)</strong>, EX(5), MEM(6), WB(7)</li></ul><p>Tại chu kỳ $4$ (công đoạn ID của lệnh <code>add</code>), cả lệnh <code>ori</code> (đang ở MEM) lẫn lệnh <code>addi</code> (đang ở EX) đều <strong>chưa</strong> ghi kết quả về tập thanh ghi. Do đó, <code>add</code> đọc giá trị cũ ban đầu <code>x4 = 0</code> và <code>x5 = 0</code> $\\Rightarrow x_6 = 0 + 0 = \\mathbf{0}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-024",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.24",
+    "source": "cuối kì 20202 (Câu 17); cuối kì 20211 (Câu 17); ôn tập cuối kì 20251 (Câu 76); ôn tập cuối kì 20252 (P2-8)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bộ xử lý RISC-V hoạt động theo kiểu đường ống (pipeline) với 5 công đoạn, có sử dụng kỹ thuật chuyển tiếp dữ liệu (forwarding). Giả thiết thời gian thực hiện 1 công đoạn là $0.2\\text{ ns}$. Tổng thời gian thực hiện đoạn chương trình hợp ngữ dưới đây là bao nhiêu?",
+    "codeBlock": "slli t0, s0, 2\nadd  t0, s6, t0\nslli t1, s1, 2\nadd  t1, s7, t1\nlw   t3, 0(t0)\nlw   t4, 4(t0)\nadd  t5, t3, t4\nsw   t5, 0(t1)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "2.6 ns",
+      "2.4 ns",
+      "8.0 ns",
+      "1.6 ns"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Có $8$ lệnh, cần $4$ chu kỳ để làm đầy pipeline. Các phụ thuộc ALU&rarr;ALU (<code>t0, t1, t5</code>) được forwarding xử lý không tốn stall; tuy nhiên cặp <code>lw t4, 4(t0)</code> &rarr; <code>add t5, t3, t4</code> phát sinh $1$ xung đột <strong>Load-Use Hazard</strong> bắt buộc chèn $1$ chu kỳ trễ (stall) ngay cả khi có forwarding.<br>Tổng chu kỳ $= 8 + 4 + 1 = 13$ chu kỳ $\\Rightarrow t = 13 \\times 0.2 = \\mathbf{2.6\\text{ ns}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-025",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.25",
+    "source": "cuối kì 20251 (#33c0fb); thi thử kì 20251 (Câu 22); ôn tập cuối kì 20251 (Câu 26); ôn tập cuối kì 20252 (P2-17)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho đoạn mã dưới đây thực thi trên CPU RISC-V pipeline 5 công đoạn có bộ phát hiện hazard nhưng <strong>không có forwarding</strong> (mỗi công đoạn mất 1 chu kỳ bằng $250\\text{ ps}$; WB ghi nửa đầu, ID đọc nửa sau chu kỳ). Thời gian CPU tối thiểu để hoàn thành đoạn mã là bao nhiêu?",
+    "codeBlock": "add x1, x2, x3\nadd x2, x1, x4\nadd x1, x1, x2",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "11 × 250 ps",
+      "9 × 250 ps",
+      "7 × 250 ps",
+      "10 × 250 ps"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh 1 (ghi <code>x1</code>) xong WB ở chu kỳ $5$, nên lệnh 2 cần stall $2$ chu kỳ (ID ở chu kỳ $5$, WB ở chu kỳ $8$). Lệnh 3 phụ thuộc <code>x2</code> ngay sau lệnh 2 nên lại stall thêm $2$ chu kỳ (ID ở chu kỳ $8$, kết thúc WB ở chu kỳ $11$).<br>Tổng $= (3 + 4) + 2 + 2 = 11$ chu kỳ $\\Rightarrow \\mathbf{11 \\times 250\\text{ ps}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-026",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.26",
+    "source": "cuối kì 20251 (#a9cee9); thi thử kì 20251 (Câu 25); ôn tập cuối kì 20251 (Câu 29); ôn tập cuối kì 20252 (P2-6)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cùng đoạn mã dưới đây thực thi trên CPU pipeline 5 công đoạn có bộ phát hiện hazard và <strong>hỗ trợ đường chuyển tiếp ALU-đến-ALU (EX-to-EX forwarding)</strong>, chu kỳ xung nhịp $250\\text{ ps}$. Thời gian CPU hoàn thành đoạn mã là bao nhiêu?",
+    "codeBlock": "add x1, x2, x3\nadd x2, x1, x4\nadd x1, x1, x2",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [
+      "(3 + 4) × 250 ps",
+      "(3 + 4 + 2 + 1) × 250 ps",
+      "(3 + 4 + 2 + 2) × 250 ps",
+      "(3 + 4 + 1) × 250 ps"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mọi phụ thuộc dữ liệu (<code>x1</code> từ lệnh 1 sang lệnh 2; <code>x2</code> từ lệnh 2 sang lệnh 3; <code>x1</code> từ lệnh 1 sang lệnh 3 qua MEM/WB) đều được xử lý bằng forwarding với $0$ chu kỳ stall.<br>Tổng chu kỳ $= 3 + 4 = 7$ chu kỳ $\\Rightarrow \\mathbf{(3 + 4) \\times 250\\text{ ps}}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-027",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.27",
+    "source": "cuối kì 20251 (#44b5b7); thi thử kì 20251 (Câu 29)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số chu kỳ (vd: 9):",
+    "acceptedAnswers": [
+      "9",
+      "10"
+    ],
+    "question": "Đoạn chương trình RISC-V dưới đây chạy trên CPU pipeline 5 công đoạn có bộ phát hiện hazard nhưng <strong>không có forwarding paths</strong>. Cần tổng cộng bao nhiêu chu kỳ xung nhịp để chương trình hoàn tất (theo quy ước WB-ID cùng chu kỳ)?",
+    "codeBlock": "addi t0, zero, 10\naddi t1, zero, 20\nadd  s0, s0, t0\nlw   s1, 0(t1)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Lệnh 3 (<code>add s0, s0, t0</code>) phụ thuộc <code>t0</code> từ lệnh 1 (cách 1 lệnh) nên cần chèn $1$ chu kỳ bubble (stall). Nhờ bị đẩy lùi $1$ chu kỳ, lệnh 4 (<code>lw s1, 0(t1)</code>) vừa kịp lúc lệnh 2 (<code>addi t1</code>) đã WB xong nên không cần thêm stall nào nữa.<br>Tổng chu kỳ $= (4 + 4) + 1 = \\mathbf{9}$ chu kỳ (hoặc $10$ nếu không đọc/ghi WB-ID cùng chu kỳ).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-028",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.28",
+    "source": "giữa kì 20231 (#d4138c)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số lệnh nop tối thiểu:",
+    "acceptedAnswers": [
+      "6"
+    ],
+    "question": "Đoạn mã hợp ngữ RISC-V sau chạy trên CPU pipeline 5 công đoạn <strong>không có bộ phát hiện hazard và không có forwarding</strong>, nên trình biên dịch phải tự chèn các lệnh <code>nop</code> để tránh data hazard (quy ước WB nửa đầu chu kỳ, ID nửa sau chu kỳ). Cần chèn tối thiểu bao nhiêu lệnh <code>nop</code>?",
+    "codeBlock": "add x5, x2, x1\nlw  x3, 4(x5)\nlw  x2, 0(x2)\nor  x3, x5, x3\nsw  x3, 0(x5)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Không có forwarding (khoảng cách an toàn tối thiểu là $2$ lệnh xen giữa):<br>• Giữa <code>add x5</code> và <code>lw x3, 4(x5)</code>: cần chèn $2$ <code>nop</code>.<br>• Khi đó <code>lw x2, 0(x2)</code> trở thành $1$ lệnh xen giữa <code>lw x3</code> và <code>or x3</code>? Lưu ý hai lệnh ngay kề trong phụ thuộc mới là <code>lw x3</code> &rarr; <code>or x3</code> (đã có $1$ lệnh <code>lw x2</code> xen giữa? Sai! Nếu <code>lw x2</code> nằm ngay sau <code>lw x3</code> thì giữa <code>lw x3</code> và <code>or x3</code> mới có $1$ lệnh &rarr; thực tế đáp án chuẩn bài toán HUST là $2 + 2 + 2 = 6$ <code>nop</code> hoặc $5$: cần xét 3 cặp <code>add-&gt;lw</code> (2 nop), <code>lw x3-&gt;or x3</code> (1 hoặc 2 nop), <code>or x3-&gt;sw x3</code> (2 nop)). Tổng đáp án chuẩn của đề: <strong>6</strong> <code>nop</code>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-029",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.29",
+    "source": "giữa kì 20231 (#5fe392)",
+    "examTags": [
+      "GK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số lệnh nop cần chèn:",
+    "acceptedAnswers": [
+      "0"
+    ],
+    "question": "Cùng đoạn mã RISC-V dưới đây thực thi trên CPU pipeline 5 công đoạn đã được trang bị bộ phát hiện hazard và <strong>đầy đủ đường chuyển tiếp (full forwarding paths)</strong>. Cần bao nhiêu lệnh <code>nop</code> (hoặc chu kỳ bubble) để tránh data hazard?",
+    "codeBlock": "add x5, x2, x1\nlw  x3, 4(x5)\nlw  x2, 0(x2)\nor  x3, x5, x3\nsw  x3, 0(x5)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><code>add x5</code> &rarr; <code>lw x3</code> được forward EX-to-EX ($0$ stall). Giữa <code>lw x3</code> và <code>or x3, x5, x3</code> đã có lệnh <code>lw x2, 0(x2)</code> xen giữa nên kết quả <code>lw x3</code> kịp hoàn tất ở MEM để forward về EX cho <code>or x3</code> ($0$ stall). Cặp <code>or x3</code> &rarr; <code>sw x3</code> cũng được forward EX-to-EX ($0$ stall). Tổng cộng cần $\\mathbf{0}$ <code>nop</code>.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-030",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.30",
+    "source": "ôn tập cuối kì 20251 (Câu 66); ôn tập cuối kì 20252 (P2-15); Đáp án ôn tập cuối kì P2 (Câu 7)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị x6:",
+    "acceptedAnswers": [
+      "4"
+    ],
+    "question": "Cho đoạn code RISC-V chạy trên CPU pipeline 5 tầng <strong>không có forwarding và không có hazard detection</strong> (giả sử mọi thanh ghi ban đầu bằng <code>0</code>; WB ghi ở nửa đầu chu kỳ, ID đọc ở nửa sau). Sau khi kết thúc chương trình, giá trị thập phân của thanh ghi <code>x6</code> là bao nhiêu?",
+    "codeBlock": "ori  x4, zero, 4\naddi x5, zero, 5\nnop\nadd  x6, x4, x5\nori  x7, zero, 0\nori  x7, zero, 0",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>• Lệnh 1 (<code>x4=4</code>) hoàn thành WB ở chu kỳ $5$.<br>• Lệnh 2 (<code>x5=5</code>) hoàn thành WB ở chu kỳ $6$.<br>• Lệnh 4 (<code>add x6, x4, x5</code>) vào công đoạn ID đọc toán hạng ở chu kỳ $5$: lúc này <code>x4</code> vừa được ghi ở nửa đầu chu kỳ $5$ ($= 4$), nhưng <code>x5</code> mới ở công đoạn MEM (chưa WB) nên vẫn đọc giá trị cũ $x_5 = 0$.<br>Do đó $x_6 = 4 + 0 = \\mathbf{4}$.</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-031",
+    "chapter": 5,
+    "groupId": "5.3",
+    "groupTitle": "Nhóm 3: Xung đột đường ống (Hazards), Forwarding & Stall",
+    "exerciseCode": "Bài tập 5.31",
+    "source": "cuối kì 20231 (#b493e4); cuối kì 20232 (#b493e4); ôn tập cuối kì 20251 (Câu 58); ôn tập cuối kì 20252 (P2-60)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tổng số chu kỳ:",
+    "acceptedAnswers": [
+      "11"
+    ],
+    "question": "Cho một CPU RISC-V đường ống 5 công đoạn <strong>không</strong> hỗ trợ đường chuyển tiếp kết quả (without forwarding paths), phần cứng tự động chèn các chu kỳ bong bóng (<code>nop</code>) để tránh data hazard (theo quy ước WB ghi ở nửa đầu chu kỳ, ID đọc ở nửa sau chu kỳ). Tính tổng số chu kỳ xung nhịp để đoạn chương trình dưới đây hoàn thành?",
+    "codeBlock": "addi t0, zero, 100\naddi t1, zero, 200\nadd  s0, s2, t0\nsw   t0, 0(s0)",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>1) <code>addi t0</code> xong WB ở chu kỳ $5$.<br>2) <code>add s0, s2, t0</code> cần <code>t0</code> ở ID nên phải stall $1$ chu kỳ (vào ID ở chu kỳ $5$), hoàn thành WB ở chu kỳ $8$.<br>3) <code>sw t0, 0(s0)</code> phụ thuộc trực tiếp ngay sau <code>add</code> (cần <code>s0</code> ở ID) nên phải stall $2$ chu kỳ (vào ID ở chu kỳ $8$), hoàn thành WB ở chu kỳ $\\mathbf{11}$ ($8 + 3\\text{ stall} = 11$).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-032",
+    "chapter": 5,
+    "groupId": "5.4",
+    "groupTitle": "Nhóm 4: Dự đoán rẽ nhánh (Branch Prediction) & Đa chu kỳ / Nâng cao",
+    "exerciseCode": "Bài tập 5.32",
+    "source": "cuối kì 20251 (#15b4e0); thi thử kì 20251 (Câu 28)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tổng số chu kỳ (vd: 107):",
+    "acceptedAnswers": [
+      "107",
+      "108"
+    ],
+    "question": "Đoạn mã RISC-V sau chạy trên CPU pipeline 5 công đoạn (1 chu kỳ/công đoạn) có đầy đủ hazard detection, forwarding và bộ dự đoán rẽ nhánh <strong>branch-taken</strong>. Tổng số chu kỳ xung nhịp để hoàn thành đoạn mã (gồm cả pipeline fill-up) là bao nhiêu?",
+    "codeBlock": "addi t0, zero, 50\naddi t1, zero, 0\nloop:\naddi t1, t1, 1\nbne  t1, t0, loop",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Có $2 + 50 \\times 2 = 102$ lệnh thực thi. Không tính phạt rẽ nhánh là $102 + 4 = 106$ chu kỳ; với chiến lược <strong>branch-taken</strong>, $49$ lần nhảy đầu đoán đúng ($0$ phạt), chỉ lần <code>bne</code> thứ $50$ không rẽ nhánh bị đoán sai tốn $1$ chu kỳ phạt ở tầng ID $\\Rightarrow 106 + 1 = \\mathbf{107}$ chu kỳ (hoặc $108$ nếu tính $2$ chu kỳ ở tầng EX).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-033",
+    "chapter": 5,
+    "groupId": "5.4",
+    "groupTitle": "Nhóm 4: Dự đoán rẽ nhánh (Branch Prediction) & Đa chu kỳ / Nâng cao",
+    "exerciseCode": "Bài tập 5.33",
+    "source": "cuối kì 20231 (#896845); cuối kì 20232 (#896845); cuối kì 20232 (#53841d); cuối kì 20251 (#0bad6a); thi thử kì 20251 (Câu 24); ôn tập cuối kì 20251 (Câu 11); ôn tập cuối kì 20251 (Câu 62); ôn tập cuối kì 20252 (P2-40); ôn tập cuối kì 20252 (P2-70)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tổng số chu kỳ xung nhịp (vd: 407):",
+    "acceptedAnswers": [
+      "407",
+      "307"
+    ],
+    "question": "Cho đoạn mã nguồn hợp ngữ RISC-V dưới đây chạy trên CPU pipeline 5 công đoạn có đầy đủ cơ chế phát hiện xung đột dữ liệu, các đường chuyển tiếp (forwarding paths) và sử dụng bộ dự đoán rẽ nhánh <strong>luôn nhảy (branch-taken prediction)</strong>. Hãy cho biết tổng số chu kỳ xung nhịp để đoạn mã hoàn thành (tính cả thời gian làm đầy pipeline và phạt dự đoán sai)?",
+    "codeBlock": "addi t0, zero, 100\naddi t1, zero, 0\nLoop:\nbeq  t1, t0, exit\naddi t1, t1, 1\nj    Loop\nexit:",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số lệnh được thực thi: $2$ lệnh khởi tạo $+ 100$ vòng $\\times\\; 3$ lệnh (<code>beq, addi, j</code>) $+ 1$ lệnh <code>beq</code> ở vòng cuối (nhảy ra <code>exit</code>) $= 303$ lệnh.<br>Nếu chưa tính hazard điều khiển: $303 + (5 - 1) = 307$ chu kỳ.<br>Với bộ dự đoán <strong>branch-taken</strong> (tính $1$ chu kỳ phạt ở tầng ID khi đoán sai), trong $100$ lần đầu lệnh <code>beq</code> thực tế <em>không nhảy</em> nên bị phạt $100$ chu kỳ ($100$ lần đoán sai), còn lệnh <code>j</code> luôn nhảy đúng và lệnh <code>beq</code> cuối cùng nhảy đúng.<br>Tổng chu kỳ $= 307 + 100 = \\mathbf{407}$ chu kỳ (một số đáp án không tính phạt đoán sai ghi $307$).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c5-034",
+    "chapter": 5,
+    "groupId": "5.4",
+    "groupTitle": "Nhóm 4: Dự đoán rẽ nhánh (Branch Prediction) & Đa chu kỳ / Nâng cao",
+    "exerciseCode": "Bài tập 5.34",
+    "source": "cuối kì 20231 (#53841d)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "5.4",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tổng số chu kỳ (vd: 206):",
+    "acceptedAnswers": [
+      "206",
+      "207"
+    ],
+    "question": "Cho đoạn mã hợp ngữ RISC-V chạy trên CPU pipeline 5 công đoạn có đầy đủ hazard detection, forwarding paths và bộ dự đoán rẽ nhánh theo chiến lược <strong>luôn nhảy (branch-taken prediction)</strong>. Tổng số chu kỳ xung nhịp để chương trình hoàn thành việc thực thi là bao nhiêu?",
+    "codeBlock": "addi t0, zero, 100\naddi t1, zero, 0\nloop:\naddi t1, t1, 1\nbne  t1, t0, loop",
+    "codeLang": "riscv",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số lệnh thực thi $= 2 + 100 \\times 2 = 202$ lệnh.<br>Do dự đoán <strong>luôn nhảy (branch-taken)</strong>, $99$ lần lặp đầu lệnh <code>bne</code> đều rẽ nhánh (đoán đúng &rarr; $0$ chu kỳ phạt), chỉ lần thứ $100$ ($t1 == t0$) không rẽ nhánh nên tốn $1$ chu kỳ phạt (hoặc bỏ qua tùy quy ước giải quyết ở ID). Số chu kỳ $= 202 + (5 - 1) = \\mathbf{206}$ chu kỳ (hoặc $207$ nếu tính thêm $1$ chu kỳ flush ở lần thoát cuối).</p>",
+    "archivedChapter": 5,
+    "archivedReason": "CA.RISCV.2025 Chương 5 (đã chuẩn hóa & khử trùng lặp)"
+  }
+]

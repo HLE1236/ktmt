@@ -1,0 +1,933 @@
+\chapter{BỘ NHỚ MÁY TÍNH}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Phân cấp bộ nhớ, Nguyên lý cục bộ và Tổ chức bộ nhớ chính}
+
+\textbf{1. Cấu trúc phân cấp bộ nhớ (Memory Hierarchy)}
+\begin{itemize}
+    \item Để dung hòa ba yếu tố đối nghịch là \textbf{tốc độ truy nhập nhanh}, \textbf{dung lượng lớn} và \textbf{chi phí trên mỗi bit thấp}, máy tính hiện đại tổ chức bộ nhớ theo mô hình phân cấp nhiều tầng.
+    \item \textbf{Chiều tăng dần dung lượng} (từ nhỏ nhất đến lớn nhất):
+    $$\text{Tập thanh ghi (Registers)} < \text{Cache L1} < \text{Cache L2} < \text{Cache L3} < \text{Bộ nhớ chính (RAM)} < \text{Bộ nhớ ngoài (SSD/HDD)}$$
+    \item \textbf{Quy luật phân cấp:} Đi từ đỉnh (gần CPU) xuống đáy (xa CPU), \textbf{dung lượng tăng}, \textbf{giá thành/bit giảm}, nhưng \textbf{thời gian truy nhập tăng} (tốc độ chậm dần) và \textbf{tần suất truy nhập của CPU giảm}.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Thông số tham khảo phân cấp bộ nhớ trên máy tính PC / Server (CA.RISCV.2025)}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|L{3.0cm}|Z|Z|Z|Y|}
+\hline
+\textbf{Tầng nhớ} & \textbf{Công nghệ} & \textbf{Dung lượng (PC)} & \textbf{Độ trễ truy cập} & \textbf{Vai trò chính} \\ \hline
+Thanh ghi CPU & Flip-Flop & $1\text{--}2\text{ KB}$ & $\sim 0.3\text{ ns}$ & Lưu toán hạng trực tiếp cho ALU \\ \hline
+Cache L1 / L2 / L3 & SRAM & $64\text{ KB} / 256\text{ KB} / 8\text{--}32\text{ MB}$ & $1\text{--}20\text{ ns}$ & Đệm lệnh và dữ liệu hay dùng gần CPU \\ \hline
+Bộ nhớ chính & DRAM & $8\text{--}64\text{ GB}$ & $50\text{--}100\text{ ns}$ & Chứa chương trình và dữ liệu đang chạy \\ \hline
+Bộ nhớ ngoài & Flash (SSD) / Từ (HDD) & $512\text{ GB}\text{--}2\text{ TB}$ & $50\text{--}100\,\mu\text{s}$ / $5\text{--}10\text{ ms}$ & Lưu trữ lâu dài (không khả biến) \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\textbf{2. Nguyên lý cục bộ hóa tham chiếu bộ nhớ (Principle of Locality)}
+\begin{itemize}
+    \item \textbf{Cục bộ theo thời gian (Temporal Locality):} Một ô nhớ vừa được truy cập thì có xác suất cao sẽ sớm được truy cập lại trong tương lai gần (ví dụ: biến đếm vòng lặp \texttt{i}, biến tích lũy \texttt{sum}, các lệnh bên trong thân vòng lặp).
+    \item \textbf{Cục bộ theo không gian (Spatial Locality):} Khi một ô nhớ được truy cập, các ô nhớ có địa chỉ nằm liền kề xung quanh nó có xác suất cao sẽ sớm được truy cập tiếp theo (ví dụ: duyệt tuần tự các phần tử mảng \texttt{A[i]}, thực thi chuỗi lệnh tuần tự).
+\end{itemize}
+
+\textbf{3. Phân loại bộ nhớ bán dẫn (SRAM, DRAM, ROM và Flash)}
+\begin{tcolorbox}[bwbox, title={So sánh các loại bộ nhớ bán dẫn cơ bản}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|L{2.4cm}|L{2.5cm}|L{2.8cm}|L{2.2cm}|Y|}
+\hline
+\textbf{Loại bộ nhớ} & \textbf{Phần tử lưu trữ} & \textbf{Khả năng xóa / ghi} & \textbf{Tính khả biến} & \textbf{Đặc điểm \& Ứng dụng} \\ \hline
+\textbf{SRAM} & Mạch Flip-Flop & Bằng điện, từng byte & Khả biến & Rất nhanh, không cần làm tươi, đắt $\rightarrow$ \textbf{Cache} \\ \hline
+\textbf{DRAM} & Tụ điện (1T1C) & Bằng điện, từng byte & Khả biến & Cần \textbf{mạch làm tươi (refresh)}, dung lượng lớn, rẻ $\rightarrow$ \textbf{RAM chính} \\ \hline
+\textbf{Mask ROM / PROM} & Mặt nạ / cầu chì & Không xóa được (PROM ghi 1 lần) & Không khả biến & Lưu firmware cố định, BIOS ban đầu \\ \hline
+\textbf{EPROM} & Cổng nổi & Xóa cả chip bằng tia cực tím (UV) & Không khả biến & Ghi lại nhiều lần bằng thiết bị chuyên dụng \\ \hline
+\textbf{EEPROM} & Cổng nổi & Xóa/ghi bằng điện, từng byte & Không khả biến & Lưu cấu hình dung lượng nhỏ \\ \hline
+\textbf{Flash} & Cổng nổi & Xóa/ghi bằng điện, \textbf{theo từng khối} & Không khả biến & Dung lượng lớn, nhanh $\rightarrow$ \textbf{SSD, USB, thẻ nhớ, Smartphone} \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\textbf{4. Thiết kế mở rộng mô-đun nhớ RAM và Bộ nhớ đan xen (Interleaved Memory)}
+\begin{itemize}
+    \item \textbf{Bài toán ghép chip RAM} dung lượng $M \times W\text{-bit}$ từ các chip SRAM nhỏ $m \times w\text{-bit}$:
+    \begin{itemize}
+        \item \textit{Mở rộng độ dài từ nhớ (chiều rộng):} Ghép song song $k_w = \dfrac{W}{w}$ chip trên mỗi hàng; nối chung đường địa chỉ và tín hiệu chọn chip $\overline{CS}$, chia bus dữ liệu thành $k_w$ nhóm $w$-bit.
+        \item \textit{Mở rộng dung lượng từ nhớ (chiều sâu):} Ghép nối tiếp $k_d = \dfrac{M}{m}$ hàng; nối chung bus dữ liệu và $\log_2(m)$ đường địa chỉ thấp $A_0\dots A_{\log_2 m - 1}$. Dùng $\log_2(k_d)$ đường địa chỉ cao đưa vào cổng NOT (khi $k_d = 2$) hoặc bộ giải mã $\log_2(k_d)$-sang-$k_d$ để sinh tín hiệu $\overline{CS}$ chọn hàng.
+        \item \textit{Tổng số chip cần dùng:} $N_{\text{chip}} = k_w \times k_d = \dfrac{M \times W}{m \times w}$.
+    \end{itemize}
+    \item \textbf{Bộ nhớ tổ chức theo băng nhớ đan xen (Interleaved Memory):} Nếu bus dữ liệu rộng $B_{\text{data}}$ byte (ví dụ $32\text{ bit} = 4\text{ byte} \Rightarrow 4$ băng; $64\text{ bit} = 8\text{ byte} \Rightarrow 8$ băng), byte nhớ có địa chỉ $A$ nằm trên băng nhớ số:
+    $$\text{Chỉ số băng nhớ} = A \bmod B_{\text{data}}$$
+\end{itemize}
+
+\subsection{Bộ nhớ đệm (Cache): Ánh xạ, Tách bit địa chỉ và Kích thước phần cứng}
+
+\textbf{1. Ba phương pháp ánh xạ Cache}
+\begin{itemize}
+    \item \textbf{Ánh xạ trực tiếp (Direct-Mapped):} Mỗi Block của bộ nhớ chính chỉ được phép nạp vào \textbf{duy nhất 1 Line} cố định trong Cache theo công thức $\text{Line} = \text{BlockAddr} \bmod N_{\text{line}}$. Đơn giản, nhanh nhưng dễ xảy ra xung đột (Conflict Miss).
+    \item \textbf{Ánh xạ liên kết toàn phần (Fully-Associative):} Mỗi Block của bộ nhớ chính được phép nạp vào \textbf{bất kỳ Line nào} trong Cache. Giảm tối đa xung đột nhưng mạch so sánh Tag song song phức tạp và đắt tiền.
+    \item \textbf{Ánh xạ liên kết tập hợp $K$-đường ($K$-way Set-Associative):} Cache được chia thành $S = \dfrac{N_{\text{line}}}{K}$ tập hợp (Set), mỗi Set gồm $K$ Line. Mỗi Block ánh xạ cố định vào một Set ($\text{Set} = \text{BlockAddr} \bmod S$) và có thể nạp vào bất kỳ Line nào trong $K$ Line của Set đó.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Bộ công thức tách bit địa chỉ và kích thước phần cứng Cache}]
+Giả sử bộ nhớ chính đánh địa chỉ theo byte với địa chỉ dài $N$ bit (dung lượng $2^N$ byte), Cache có dung lượng dữ liệu $C$ byte, kích thước mỗi khối (Line/Block) là $B$ byte. Khi đó:
+\begin{itemize}
+    \item \textbf{Số bit trường Offset (Word):} $W = \log_2(B)$.
+    \item \textbf{Tổng số Line trong Cache:} $N_{\text{line}} = \dfrac{C}{B}$.
+\end{itemize}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{tabularx}{\linewidth}{|L{3.5cm}|Z|Z|Z|}
+\hline
+\textbf{Kiểu ánh xạ} & \textbf{Số bit Index (Line/Set)} & \textbf{Số bit Tag} & \textbf{Cấu trúc địa chỉ $N$-bit} \\ \hline
+Trực tiếp (Direct) & $L = \log_2(N_{\text{line}})$ & $T = N - L - W$ & \texttt{[Tag | Line | Word]} \\ \hline
+Liên kết tập hợp $K$-way & $S_{\text{bit}} = \log_2\!\left(\dfrac{N_{\text{line}}}{K}\right)$ & $T = N - S_{\text{bit}} - W$ & \texttt{[Tag | Set | Word]} \\ \hline
+Liên kết toàn phần (Fully) & $0$ bit & $T = N - W$ & \texttt{[Tag | Word]} \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Tổng kích thước phần cứng của Cache (tính bằng bit):}
+$$\text{Total Bits} = N_{\text{line}} \times \big(\underbrace{1}_{\text{Valid}} + \underbrace{d}_{\text{Dirty (0 hoặc 1)}} + \underbrace{T}_{\text{Tag bits}} + \underbrace{8 \times B}_{\text{Data bits}}\big)$$
+(Với Cache $K$-way có $S$ Set, có thể viết tương đương: $\text{Total Bits} = S \times K \times (1 + d + T + 8B)$.)
+\end{tcolorbox}
+
+\subsection{Chính sách thay thế, Chính sách ghi, Lỗi 3C và Hiệu năng Cache}
+
+\textbf{1. Thuật toán thay thế Block (khi Cache/Set đã đầy)}
+\begin{itemize}
+    \item \textbf{Ánh xạ trực tiếp:} Không cần chọn, thay thế đúng Line duy nhất đó.
+    \item \textbf{Ánh xạ liên kết (Set / Fully):}
+    \begin{itemize}
+        \item \textbf{LRU (Least Recently Used):} Thay thế block lâu nhất chưa được tham chiếu $\rightarrow$ \textbf{tối ưu nhất} về mặt khai thác tính cục bộ thời gian.
+        \item \textbf{FIFO (First In First Out):} Thay thế block được nạp vào sớm nhất (nằm lâu nhất trong Set).
+        \item \textbf{LFU (Least Frequently Used):} Thay thế block có số lần tham chiếu ít nhất trong một khoảng thời gian.
+        \item \textbf{Random:} Chọn thay thế ngẫu nhiên (phần cứng đơn giản nhất).
+    \end{itemize}
+\end{itemize}
+
+\textbf{2. Chính sách ghi dữ liệu (Write Policy)}
+\begin{itemize}
+    \item \textbf{Khi Cache Hit:}
+    \begin{itemize}
+        \item \textbf{Ghi xuyên qua (Write-Through):} Ghi đồng thời vào cả Cache và bộ nhớ chính $\rightarrow$ đảm bảo nhất quán đơn giản nhưng tốc độ ghi chậm và gây nghẽn bus (thường kết hợp \textit{Write Buffer}).
+        \item \textbf{Ghi trả sau (Write-Back):} Chỉ ghi vào Cache và bật bit trạng thái \texttt{Dirty = 1}; chỉ khi block bị thay thế khỏi Cache mới ghi trả toàn bộ block về RAM $\rightarrow$ tốc độ nhanh, giảm lưu lượng bus.
+    \end{itemize}
+    \item \textbf{Khi Cache Miss:} \textbf{Write-Allocate} (nạp block từ RAM lên Cache rồi mới ghi -- thường đi kèm Write-Back) hoặc \textbf{No-Write-Allocate} (ghi thẳng xuống RAM không nạp lên Cache -- thường đi kèm Write-Through).
+\end{itemize}
+
+\textbf{3. Phân loại lỗi trượt Cache 3C (Three Cs)}
+\begin{itemize}
+    \item \textbf{Compulsory Miss (Cold Miss -- Lỗi bắt buộc):} Xảy ra ở lần truy cập đầu tiên vào một block chưa từng có trong Cache. \textit{Cách giảm:} tăng kích thước block (khai thác cục bộ không gian) hoặc nạp trước (prefetching).
+    \item \textbf{Capacity Miss (Lỗi dung lượng):} Tổng dung lượng Cache nhỏ hơn tập làm việc của chương trình. \textit{Cách giảm:} tăng dung lượng Cache.
+    \item \textbf{Conflict Miss (Lỗi xung đột):} Nhiều block cùng ánh xạ vào một Line/Set dù Cache vẫn còn chỗ trống ở Set khác. \textit{Cách giảm:} tăng bậc liên kết tập hợp (associativity).
+\end{itemize}
+
+\textbf{4. Công thức đánh giá hiệu năng Cache (AMAT và $CPI_{\text{thực}}$)}
+\begin{tcolorbox}[bwbox, title={Công thức AMAT và CPI hiệu dụng khi xét Cache Miss}]
+\begin{itemize}
+    \item \textbf{Thời gian truy nhập bộ nhớ trung bình (AMAT -- Average Memory Access Time):}
+    $$\text{AMAT} = \text{Hit Time} + \text{Miss Rate} \times \text{Miss Penalty}$$
+    \item \textbf{Số chu kỳ dừng do trượt Cache trên mỗi lệnh (Memory Stall Cycles / Instruction):}
+    $$\text{Stall}_{\text{I-cache}} = \text{MR}_I \times \text{MP}, \qquad \text{Stall}_{\text{D-cache}} = f_{\text{mem}} \times \text{MR}_D \times \text{MP}$$
+    trong đó $f_{\text{mem}}$ là tỉ lệ lệnh truy nhập bộ nhớ dữ liệu (\texttt{load}/\texttt{store}), $\text{MR}_I$ và $\text{MR}_D$ là tỉ lệ trượt I-cache và D-cache, $\text{MP}$ là thời gian phạt trượt (Miss Penalty, tính bằng chu kỳ).
+    \item \textbf{CPI thực tế (Effective CPI):}
+    $$\text{CPI}_{\text{actual}} = \text{CPI}_{\text{base}} + \text{MR}_I \times \text{MP} + f_{\text{mem}} \times \text{MR}_D \times \text{MP}$$
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) và TLB}
+
+\begin{itemize}
+    \item \textbf{Khái niệm:} Bộ nhớ ảo kết hợp bộ nhớ chính (RAM) và bộ nhớ ngoài (SSD/HDD) tạo thành một không gian địa chỉ logic thống nhất lớn hơn dung lượng RAM vật lý, cho phép chạy các tiến trình lớn hơn RAM thực và cô lập không gian nhớ giữa các tiến trình.
+    \item \textbf{Kỹ thuật phân trang (Paging):}
+    \begin{itemize}
+        \item Không gian địa chỉ ảo được chia thành các \textbf{trang (Page)} kích thước bằng nhau (thông dụng $4\text{ KiB} = 2^{12}\text{ byte}$); bộ nhớ vật lý chia thành các \textbf{khung trang (Frame)} có cùng kích thước.
+        \item Các trang của một tiến trình \textbf{không cần nạp vào các khung trang vật lý liên tiếp}; ánh xạ được quản lý bởi \textbf{Bảng trang (Page Table)}.
+    \end{itemize}
+    \item \textbf{Dịch địa chỉ ảo sang địa chỉ vật lý:} Địa chỉ ảo $n$-bit được tách thành \texttt{[VPN | Page Offset]} với số bit $\text{Offset} = \log_2(\text{Page Size})$ và $\text{VPN} = n - \text{Offset}$. Dùng \texttt{VPN} tra Bảng trang để thu được \texttt{PFN} (Physical Frame Number), sau đó giữ nguyên \texttt{Offset} để ghép thành địa chỉ vật lý \texttt{[PFN | Page Offset]}.
+    \item \textbf{Lỗi trang (Page Fault) và Thrashing:} Khi bit \texttt{Valid = 0} (trang chưa có trong RAM), CPU phát sinh \textbf{Page Fault} để hệ điều hành nạp trang từ đĩa vào RAM. Nếu quá nhiều tiến trình cùng chạy trong RAM quá nhỏ khiến HĐH liên tục hoán đổi trang ra/vào đĩa, hệ thống rơi vào trạng thái \textbf{Thrashing (thất bại)}.
+    \item \textbf{Bộ đệm dịch địa chỉ TLB (Translation Lookaside Buffer):} Là bộ nhớ Cache phần cứng tốc độ cao bên trong MMU lưu các ánh xạ \texttt{VPN $\rightarrow$ PFN} hay dùng gần đây, giúp tránh phải truy cập RAM 2 lần cho mỗi thao tác đọc/ghi dữ liệu.
+    \item \textbf{Bảng trang đảo (Inverted Page Table):} Thay vì tạo bảng trang theo không gian địa chỉ ảo của từng tiến trình, chỉ duy trì \textbf{đúng 1 mục cho mỗi khung trang vật lý} trong RAM kết hợp hàm băm (Hash function) để tiết kiệm bộ nhớ lưu bảng trang.
+\end{itemize}
+
+\subsection{Bộ nhớ ngoài (HDD, SSD và Hệ thống RAID)}
+
+\begin{itemize}
+    \item \textbf{Ổ đĩa từ HDD (Hard Disk Drive):} Cấu trúc gồm các đĩa từ (Platter) quay quanh trục (Spindle), mỗi mặt đĩa chia thành các đường tròn đồng tâm (\textbf{Track}), mỗi Track chia thành các cung (\textbf{Sector}); tập hợp các Track cùng bán kính trên mọi mặt đĩa tạo thành một \textbf{Cylinder}. Thời gian truy xuất trung bình một khối dữ liệu:
+    $$T_{\text{access}} = T_{\text{seek}} + T_{\text{rot\_avg}} + T_{\text{transfer}}, \qquad \text{với } T_{\text{rot\_avg}} = \frac{1}{2} \times \frac{60}{\text{RPM}}\text{ (giây)}$$
+    \item \textbf{Ổ đĩa thể rắn SSD (Solid State Drive):} Dùng chip nhớ bán dẫn Flash (không khả biến), không có bộ phận cơ khí chuyển động $\rightarrow$ tốc độ truy xuất ngẫu nhiên nhanh hơn, độ trễ thấp hơn, chống sốc tốt hơn, không gây tiếng ồn và tiêu thụ ít điện hơn HDD; tuy nhiên \textbf{giá thành/GB đắt hơn} và có giới hạn chu kỳ ghi/xóa (nên HDD vẫn phổ biến trong hệ thống lưu trữ dung lượng lớn NAS/CCTV 24/7).
+    \item \textbf{Hệ thống mảng đĩa RAID (Redundant Array of Independent Disks):} Ghép nhiều ổ đĩa vật lý thành một ổ logic nhằm tăng tốc độ truy xuất song song và/hoặc tăng độ an toàn dữ liệu nhờ thông tin dư thừa (parity/mirroring):
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Tóm tắt các mức RAID phổ biến với $N$ ổ đĩa cùng dung lượng $C$}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|L{1.8cm}|L{3.0cm}|Z|Z|Y|}
+\hline
+\textbf{Mức RAID} & \textbf{Kỹ thuật} & \textbf{Dung lượng khả dụng} & \textbf{Số đĩa lỗi chịu được} & \textbf{Đặc điểm nổi bật} \\ \hline
+\textbf{RAID 0} & Striping (phân dải) & $N \times C$ & $0$ & Hiệu năng cao nhất, không có dự phòng lỗi \\ \hline
+\textbf{RAID 1} & Mirroring (nhân bản) & $\dfrac{N}{2} \times C$ & $1$ (mỗi cặp) & An toàn cao, chi phí dung lượng $50\%$ \\ \hline
+\textbf{RAID 5} & Striping + 1 Parity phân tán & $(N - 1) \times C$ & $1$ & Cân bằng tốt giữa hiệu năng, dung lượng và an toàn ($N \ge 3$) \\ \hline
+\textbf{RAID 6} & Striping + 2 Parity phân tán & $(N - 2) \times C$ & $2$ & Chịu lỗi đồng thời 2 đĩa ($N \ge 4$) \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 6 và Hướng dẫn giải}
+
+\subsection{Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM \& Tổ chức chip nhớ}
+
+\textbf{Bài tập 6.1 (ôn tập cuối kì 20252 (P2-23); Đáp án ôn tập cuối kỳ P2 (Câu 44); cuối kì 20212 (B1-4.2))}\\
+Trên máy tính dùng bộ xử lý có bus địa chỉ $32\text{-bit}$, bus dữ liệu $64\text{-bit}$, các thanh ghi bên trong có độ dài $32\text{-bit}$. Giả sử có một mảng dữ liệu hai chiều \texttt{B} có kích thước $5 \times 7$ của các phần tử $32\text{-bit}$, lưu trữ theo hàng trong bộ nhớ chính (tổ chức băng nhớ đan xen) bắt đầu từ địa chỉ \texttt{0x000A5020}. Hỏi phần tử \texttt{B[1, 5]} (với chỉ số $i = 0\dots4$, $j = 0\dots6$) nằm trên các băng nhớ nào của bộ nhớ vật lý?
+\begin{enumerate}[label=\Alph*.]
+    \item Băng 0, 1, 2, 3
+    \item Băng 4, 5, 6, 7
+    \item Băng 3, 4, 5, 6
+    \item Băng 1, 2, 3, 4
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1 --- Số băng nhớ đan xen:} Bus dữ liệu rộng $64\text{ bit} = 8\text{ byte} \Rightarrow$ bộ nhớ chính được chia thành \textbf{$8$ băng nhớ đan xen} (Băng $0$ đến Băng $7$). Mỗi byte có địa chỉ $A$ nằm trên băng nhớ số $A \bmod 8$.
+    \item \textbf{Bước 2 --- Địa chỉ phần tử \texttt{B[1, 5]}:} Mảng lưu theo hàng (row-major), mỗi hàng có $7$ phần tử, mỗi phần tử chiếm $4\text{ byte}$:
+    \item $\text{Addr}(B[1, 5]) = \text{0x000A5020} + (1 \times 7 + 5) \times 4 = \text{0x000A5020} + 48 = \text{0x000A5020} + \text{0x30} = \texttt{0x000A5050}$.
+    \item \textbf{Bước 3 --- Xác định băng nhớ:} $4$ byte của \texttt{B[1, 5]} nằm ở các địa chỉ \texttt{0x000A5050} đến \texttt{0x000A5053}. Vì $\text{0x50} = 80 \equiv 0 \pmod 8$, nên $4$ byte này nằm trên các băng nhớ \textbf{0, 1, 2, 3}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Băng 0, 1, 2, 3).
+\end{itemize}
+
+\textbf{Bài tập 6.2 (cuối kì 20212 (B3-4.3))}\\
+Máy tính dùng $36\text{ bit}$ địa chỉ để đánh địa chỉ cho bộ nhớ theo byte, bus dữ liệu kết nối với bộ nhớ chính là $64\text{ bit}$ (tổ chức băng nhớ đan xen). Hãy cho biết hai byte nhớ có địa chỉ \texttt{0x0FE12C39} và \texttt{0x10ABCD05} lần lượt được bố trí ở băng nhớ nào?
+\begin{enumerate}[label=\Alph*.]
+    \item Băng 1 và Băng 1
+    \item Băng 1 và Băng 5
+    \item Băng 5 và Băng 1
+    \item Băng 3 và Băng 5
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Bus dữ liệu rộng $64\text{ bit} = 8\text{ byte} \Rightarrow$ bộ nhớ chính tổ chức thành \textbf{$8$ băng nhớ đan xen} (Băng $0$ đến Băng $7$). Chỉ số băng nhớ bằng $3$ bit thấp nhất của địa chỉ (tức $\text{Addr} \bmod 8$):
+    \item Địa chỉ \texttt{0x0FE12C39}: chữ số Hex cuối là $\text{9} = 1001_2 \Rightarrow 9 \bmod 8 = \mathbf{1}$ (\textbf{Băng 1}).
+    \item Địa chỉ \texttt{0x10ABCD05}: chữ số Hex cuối là $\text{5} = 0101_2 \Rightarrow 5 \bmod 8 = \mathbf{5}$ (\textbf{Băng 5}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B} (Băng 1 và Băng 5).
+\end{itemize}
+
+\textbf{Bài tập 6.3 (cuối kì 20212 (B6-4))}\\
+Thiết kế mô-đun nhớ RAM dung lượng $64\text{K} \times 8\text{-bit}$ trên cơ sở các IC nhớ SRAM dung lượng $32\text{K} \times 4\text{-bit}$ cần bố trí số chip và tín hiệu chọn chip như thế nào?
+\begin{enumerate}[label=\Alph*.]
+    \item Dùng 4 chip ghép nối tiếp theo chiều sâu, dùng A14 và A15 qua bộ giải mã 2-sang-4 để chọn chip
+    \item Dùng 2 chip ghép song song theo chiều rộng, nối chung A0--A15 và tín hiệu CS
+    \item Dùng 4 chip: ghép song song 2 chip theo chiều rộng (4 lên 8 bit) và 2 hàng nối tiếp theo chiều sâu (32K lên 64K), nối chung A0--A14 và dùng A15 (kèm cổng NOT) chọn hàng (CS)
+    \item Dùng 8 chip: ghép song song 4 chip theo chiều rộng và 2 hàng theo chiều sâu, dùng A15 chọn hàng
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{1. Tính số lượng chip:}
+    \item Mở rộng độ dài từ nhớ (chiều rộng): $8\text{ bit} / 4\text{ bit} = 2$ chip ghép song song trên mỗi hàng (chia bus dữ liệu $D_0\text{-}D_3$ và $D_4\text{-}D_7$).
+    \item Mở rộng dung lượng (chiều sâu): $64\text{K} / 32\text{K} = 2$ hàng nối tiếp.
+    \item Tổng số chip cần dùng $= 2 \times 2 = \mathbf{4}$ chip.
+    \item \textbf{2. Kết nối đường địa chỉ \& chọn chip:}
+    \item Mỗi chip $32\text{K} = 2^{15}$ cần $15$ đường địa chỉ $A_0\text{-}A_{14}$ nối chung cho cả $4$ chip.
+    \item Mô-đun $64\text{K} = 2^{16}$ cần $16$ đường địa chỉ $\Rightarrow$ bit cao nhất $A_{15}$ (qua cổng \texttt{NOT}) dùng để kích hoạt tín hiệu $\overline{CS}$ chọn giữa hàng 0 ($A_{15}=0$) và hàng 1 ($A_{15}=1$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C} (Dùng 4 chip: ghép song song 2 chip theo chiều rộng (4 lên 8 bit) và 2 hàng nối tiếp theo chiều sâu (32K lên 64K), nối chung A0--A14 và dùng A15 (kèm cổng NOT) chọn hàng (CS)).
+\end{itemize}
+
+\textbf{Bài tập 6.4 (Lý thuyết slide CA.RISCV.2025 - Mục 6.2 (SRAM \& DRAM))}\\
+Phát biểu nào sau đây phân biệt \textbf{đúng} giữa bộ nhớ RAM tĩnh (\texttt{SRAM}) và RAM động (\texttt{DRAM})?
+\begin{enumerate}[label=\Alph*.]
+    \item SRAM lưu bit trên tụ điện nên cần mạch làm tươi định kỳ; DRAM lưu bit bằng Flip-Flop nên nhanh hơn và dùng làm Cache
+    \item SRAM lưu bit bằng mạch Flip-Flop, tốc độ nhanh, đắt tiền nên dùng làm Cache; DRAM lưu bit trên tụ điện, cần mạch làm tươi (refresh), dung lượng lớn, rẻ hơn nên dùng làm bộ nhớ chính
+    \item Cả SRAM và DRAM đều là bộ nhớ không khả biến (non-volatile), giữ được dữ liệu khi mất nguồn điện
+    \item DRAM có cấu trúc phần tử nhớ phức tạp hơn SRAM nên chi phí trên mỗi bit cao hơn
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 20--21 (CA.RISCV.2025):
+    \item \textbf{SRAM (Static RAM):} Lưu bit bằng \textbf{Flip-Flop}, thông tin ổn định không cần làm tươi, tốc độ rất nhanh nhưng cấu trúc phức tạp và đắt tiền $\Rightarrow$ dùng làm \textbf{bộ nhớ Cache}.
+    \item \textbf{DRAM (Dynamic RAM):} Lưu bit bằng điện tích trên \textbf{tụ điện} nên bị rò điện và bắt buộc có \textbf{mạch làm tươi (refresh)}; cấu trúc đơn giản, mật độ cao, giá rẻ $\Rightarrow$ dùng làm \textbf{bộ nhớ chính}.
+    \item Cả hai đều là bộ nhớ \textbf{khả biến (volatile)}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B} (SRAM lưu bit bằng mạch Flip-Flop, tốc độ nhanh, đắt tiền nên dùng làm Cache; DRAM lưu bit trên tụ điện, cần mạch làm tươi (refresh), dung lượng lớn, rẻ hơn nên dùng làm bộ nhớ chính).
+\end{itemize}
+
+\textbf{Bài tập 6.5 (Lý thuyết slide CA.RISCV.2025 - Mục 6.2 (ROM \& Flash))}\\
+Trong các loại bộ nhớ bán dẫn không khả biến dưới đây, loại nào cho phép \textbf{xóa bằng điện theo từng khối (block)} và được ứng dụng phổ biến làm ổ đĩa SSD, USB và bộ nhớ lưu trữ trên điện thoại thông minh?
+\begin{enumerate}[label=\Alph*.]
+    \item PROM (Programmable ROM)
+    \item EPROM (Erasable PROM)
+    \item Mask ROM (ROM mặt nạ)
+    \item Bộ nhớ Flash (Flash Memory)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 15--18 (CA.RISCV.2025):
+    \item \textbf{Mask ROM:} Ghi khi sản xuất, không xóa được.
+    \item \textbf{PROM:} Chỉ ghi được một lần bằng thiết bị chuyên dụng.
+    \item \textbf{EPROM:} Xóa cả chip bằng tia cực tím (UV).
+    \item \textbf{EEPROM:} Xóa và ghi bằng điện ở mức từng byte.
+    \item \textbf{Bộ nhớ Flash:} Không khả biến, \textbf{xóa và ghi bằng điện theo từng khối}, dung lượng lớn $\Rightarrow$ dùng làm SSD, thẻ nhớ, USB, bộ nhớ smartphone.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D} (Bộ nhớ Flash (Flash Memory)).
+\end{itemize}
+
+\textbf{Bài tập 6.6 (cuối kì 20202 (Câu 16); cuối kì 20211 (Câu 16))}\\
+Hãy tiến hành sắp xếp có tổ chức cấu trúc phân cấp các thành phần bộ nhớ trong kiến trúc máy tính hiện đại dựa theo thứ tự dung lượng lưu trữ tăng dần (từ nhỏ nhất đến lớn nhất):
+\begin{enumerate}[label=\Alph*.]
+    \item Cache L1, Cache L2, Cache L3, Bộ nhớ chính, Bộ nhớ ngoài
+    \item Cache L3, Cache L2, Cache L1, Bộ nhớ chính, Bộ nhớ ngoài
+    \item Bộ nhớ chính, Cache L3, Cache L2, Cache L1, Bộ nhớ ngoài
+    \item Cache L1, Cache L2, Bộ nhớ chính, Cache L3, Bộ nhớ ngoài
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo tháp phân cấp bộ nhớ, từ đỉnh xuống đáy tốc độ giảm dần và \textbf{dung lượng tăng dần}: Thanh ghi $\rightarrow$ Cache L1 $\rightarrow$ Cache L2 $\rightarrow$ Cache L3 $\rightarrow$ Bộ nhớ chính (RAM) $\rightarrow$ Bộ nhớ ngoài (SSD/HDD).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Cache L1, Cache L2, Cache L3, Bộ nhớ chính, Bộ nhớ ngoài).
+\end{itemize}
+
+\textbf{Bài tập 6.7 (cuối kì 20222 (\#ef5037); cuối kì 20241 (\#018513); cuối kì 20242 (\#ef5037); ôn tập cuối kì 20252 (P1-67))}\\
+Hãy chỉ ra đâu là cấu hình bộ nhớ phù hợp cho máy tính PC ?
+\begin{enumerate}[label=\Alph*.]
+    \item Cache L1: 64 KB, Cache L2: 256 KB, Cache L3: 8 MB, RAM: 8 GB, SSD: 512 GB
+    \item Cache L1: 64 KB, Cache L2: 256 KB, Cache L3: 16 GB, RAM: 2 TB, SSD: 1 TB
+    \item Cache L1: 64 KB, Cache L2: 256 GB, Cache L3: 8 MB, RAM: 8 GB, SSD: 512 GB
+    \item Cache L1: 16 MB, Cache L2: 256 KB, Cache L3: 16 MB, RAM: 8 GB, SSD: 1 TB
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Cấu hình bộ nhớ chuẩn của một máy tính PC phải tuân theo trật tự dung lượng tăng dần hợp lý: $L1 < L2 < L3 < \text{RAM} < \text{SSD}$ (ví dụ: L1 $64\text{ KB}$, L2 $256\text{ KB}$, L3 $8\text{ MB}$, RAM $8\text{ GB}$, SSD $512\text{ GB}$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Cache L1: 64 KB, Cache L2: 256 KB, Cache L3: 8 MB, RAM: 8 GB, SSD: 512 GB).
+\end{itemize}
+
+\textbf{Bài tập 6.8 (cuối kì 20212 (B1-5))}\\
+Khi thiết kế mô-đun nhớ RAM dung lượng $64\text{K} \times 16\text{-bit}$ từ các chip nhớ SRAM dung lượng $32\text{K} \times 8\text{-bit}$, phương án ghép chip và chọn chip nào sau đây chính xác?
+\begin{enumerate}[label=\Alph*.]
+    \item Dùng 4 chip: ghép song song 2 chip theo chiều rộng (8 lên 16 bit) và 2 hàng nối tiếp theo chiều sâu (32K lên 64K), dùng đường địa chỉ A15 (và cổng NOT) chọn chip (CS)
+    \item Dùng 4 chip ghép song song toàn bộ theo chiều rộng, dùng A15 và A16 qua bộ giải mã 2-sang-4 để chọn chip
+    \item Dùng 2 chip ghép nối tiếp theo chiều sâu, dùng đường địa chỉ A14 chọn chip (CS)
+    \item Dùng 8 chip: 4 chip theo chiều rộng và 2 hàng theo chiều sâu, dùng A14--A15 để chọn chip
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số chip cần dùng $= (64\text{K}/32\text{K}) \times (16/8) = 2 \times 2 = 4$ chip.
+    \item Chip $32\text{K} = 2^{15}$ dùng 15 đường địa chỉ $A_0\text{-}A_{14}$; mô-đun $64\text{K} = 2^{16}$ cần thêm $A_{15}$ (nối trực tiếp và qua cổng NOT) để kích hoạt chân $\overline{CS}$ của 2 hàng chip; mỗi hàng gồm 2 chip $8\text{-bit}$ chia sẻ bus dữ liệu $D_0\text{-}D_7$ và $D_8\text{-}D_{15}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Dùng 4 chip: ghép song song 2 chip theo chiều rộng (8 lên 16 bit) và 2 hàng nối tiếp theo chiều sâu (32K lên 64K), dùng đường địa chỉ A15 (và cổng NOT) chọn chip (CS)).
+\end{itemize}
+
+\textbf{Bài tập 6.9 (cuối kì 20212 (B2-5); cuối kì 20212 (B5-4))}\\
+Khi thiết kế mô-đun nhớ RAM dung lượng $128\text{K} \times 8\text{-bit}$ trên cơ sở chip nhớ SRAM dung lượng $32\text{K} \times 8\text{-bit}$, cách tổ chức nào sau đây đúng?
+\begin{enumerate}[label=\Alph*.]
+    \item Dùng 4 chip ghép nối tiếp theo chiều sâu, nối chung A0--A14 và D0--D7, dùng 2 bit địa chỉ cao A15, A16 qua bộ giải mã 2-sang-4 để chọn chip (CS)
+    \item Dùng 4 chip ghép song song theo chiều rộng, dùng A15 qua cổng NOT để chọn chip
+    \item Dùng 8 chip ghép kết hợp 2 chiều rộng và 4 chiều sâu, dùng A14--A16 để chọn chip
+    \item Dùng 2 chip ghép nối tiếp theo chiều sâu, dùng đường A15 để chọn chip
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số chip $= (128\text{K}/32\text{K}) \times (8/8) = 4$ chip ghép nối tiếp chiều sâu. Mỗi chip có $15$ đường địa chỉ ($A_0\text{-}A_{14}$); $128\text{K} = 2^{17}$ cần $17$ đường ($A_0\text{-}A_{16}$), nên $2$ đường cao $A_{15}, A_{16}$ đưa qua bộ giải mã $2\text{-to-}4$ để chọn $1$ trong $4$ chip.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Dùng 4 chip ghép nối tiếp theo chiều sâu, nối chung A0--A14 và D0--D7, dùng 2 bit địa chỉ cao A15, A16 qua bộ giải mã 2-sang-4 để chọn chip (CS)).
+\end{itemize}
+
+\textbf{Bài tập 6.10 (cuối kì 20212 (B4-4))}\\
+Để thiết kế mô-đun nhớ RAM dung lượng $32\text{K} \times 16\text{-bit}$ trên cơ sở các IC nhớ SRAM $32\text{K} \times 4\text{-bit}$, cần thiết kế như thế nào?
+\begin{enumerate}[label=\Alph*.]
+    \item Dùng 4 IC ghép song song theo chiều rộng; nối chung A0--A14 và CS cho cả 4 IC, chia bus D0--D15 thành 4 nhóm 4-bit vào từng IC
+    \item Dùng 4 IC ghép nối tiếp theo chiều sâu, dùng A15 và A16 qua bộ giải mã 2-sang-4 để chọn IC
+    \item Dùng 2 IC ghép song song theo chiều rộng để mở rộng từ 4-bit lên 16-bit
+    \item Dùng 8 IC kết hợp 2 nhóm nối tiếp và 4 nhóm song song, dùng A14 để chọn nhóm
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số từ nhớ giữ nguyên ($32\text{K} = 32\text{K}$), chỉ tăng độ rộng dữ liệu từ $4$ bit lên $16$ bit $\Rightarrow$ cần $16 / 4 = 4$ IC ghép \textbf{song song theo chiều rộng}, dùng chung $A_0\text{-}A_{14}$ và $\overline{CS}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Dùng 4 IC ghép song song theo chiều rộng; nối chung A0--A14 và CS cho cả 4 IC, chia bus D0--D15 thành 4 nhóm 4-bit vào từng IC).
+\end{itemize}
+
+\textbf{Bài tập 6.11 (cuối kì 20212 (B7-4))}\\
+Thiết kế mô-đun nhớ RAM dung lượng $64\text{K} \times 8\text{-bit}$ trên cơ sở các IC nhớ SRAM $16\text{K} \times 8\text{-bit}$ cần bố trí như thế nào?
+\begin{enumerate}[label=\Alph*.]
+    \item Dùng 4 IC ghép nối tiếp theo chiều sâu; A0--A13 và D0--D7 nối chung, dùng A14 và A15 qua bộ giải mã 2-sang-4 để chọn chip (CS)
+    \item Dùng 4 IC ghép song song theo chiều rộng, dùng A15 qua cổng NOT để chọn chip
+    \item Dùng 2 IC ghép nối tiếp theo chiều sâu, dùng A14 để chọn chip
+    \item Dùng 4 IC ghép nối tiếp, dùng A15 và A16 qua bộ giải mã 2-sang-4 để chọn chip
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số chip $= 64\text{K} / 16\text{K} = 4$ IC nối tiếp chiều sâu. Mỗi chip $16\text{K} = 2^{14}$ dùng $A_0\text{-}A_{13}$; mô-đun $64\text{K} = 2^{16}$ dùng $2$ đường cao $A_{14}, A_{15}$ đưa qua decoder $2\text{-sang-}4$ để chọn chip.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Dùng 4 IC ghép nối tiếp theo chiều sâu; A0--A13 và D0--D7 nối chung, dùng A14 và A15 qua bộ giải mã 2-sang-4 để chọn chip (CS)).
+\end{itemize}
+
+\textbf{Bài tập 6.12 (cuối kì 20212 (B8-4))}\\
+Bộ xử lý có bus địa chỉ $20\text{ bit}$ ($A_0\text{-}A_{19}$), bus dữ liệu $8\text{ bit}$. $4$ bit cao $A_{19}A_{18}A_{17}A_{16}$ phân vùng: \texttt{0000} cho RAM ($64\text{ KB}$ từ chip SRAM $16\text{K}\times 8\text{-bit}$), \texttt{1111} cho ROM ($32\text{ KB}$), \texttt{1000} cho $32$ cổng I/O (Memory-Mapped I/O, đánh địa chỉ từ $A_{15}\text{-}A_0 = 0$). Kết luận nào đúng về số chip RAM và dải địa chỉ (Hexa) của RAM, ROM, I/O?
+\begin{enumerate}[label=\Alph*.]
+    \item 4 chip SRAM 16K$\times$8-bit; RAM: 0x00000--0x0FFFF; ROM: 0xF0000--0xF7FFF; I/O: 0x80000--0x8001F
+    \item 4 chip SRAM 16K$\times$8-bit; RAM: 0x00000--0x0FFFF; ROM: 0xF0000--0xFFFFF; I/O: 0x80000--0x80020
+    \item 2 chip SRAM 16K$\times$8-bit; RAM: 0x00000--0x07FFF; ROM: 0xF0000--0xF7FFF; I/O: 0x80000--0x8001F
+    \item 4 chip SRAM 16K$\times$8-bit; RAM: 0x00000--0x0FFFF; ROM: 0xE0000--0xE7FFF; I/O: 0x80000--0x8003F
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item RAM $64\text{ KB}$ dùng $4$ chip $16\text{K}\times 8$, chiếm $2^{16}$ địa chỉ khi $A_{19..16} = 0000$: \texttt{0x00000} -- \texttt{0x0FFFF}.
+    \item ROM $32\text{ KB} = 2^{15}$ byte khi $A_{19..16} = 1111$ ($A_{15}=0$): \texttt{0xF0000} -- \texttt{0xF7FFF}.
+    \item Khối $32$ cổng I/O khi $A_{19..16} = 1000$: \texttt{0x80000} -- \texttt{0x8001F} ($31 = \text{0x1F}$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (4 chip SRAM 16K$\times$8-bit; RAM: 0x00000--0x0FFFF; ROM: 0xF0000--0xF7FFF; I/O: 0x80000--0x8001F).
+\end{itemize}
+
+\textbf{Bài tập 6.13 (cuối kì 20222 (\#38a80d); cuối kì 20241 (\#cbb2f4); ôn tập cuối kì 20251 (Câu 57); ôn tập cuối kì 20252 (P2-63))}\\
+Cho một máy tính có bus địa chỉ 32-bit và bus dữ liệu 32-bit. Bộ nhớ chính được đánh địa chỉ theo byte và được thiết kế theo kiểu băng nhớ đan xen. Hãy cho biết byte nhớ có địa chỉ 0x123456AD nằm trên băng nhớ nào?
+\begin{enumerate}[label=\Alph*.]
+    \item băng 1
+    \item băng 0
+    \item băng 2
+    \item băng 3
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Bus dữ liệu $32\text{ bit} = 4\text{ byte}$ nên bộ nhớ chính đan xen được chia làm $4$ băng nhớ ($0, 1, 2, 3$) dựa theo $2$ bit thấp của địa chỉ (hay $\text{Địa chỉ} \bmod 4$).
+    \item Chữ số Hexa cuối của \texttt{0x123456AD} là \texttt{0xD} $= 13_{(10)} = 1101_{(2)}$ (hoặc \texttt{0xAD} $= 173 = 4 \times 43 + 1$). Hai bit thấp là \texttt{01} $\Rightarrow$ nằm trên \textbf{băng 1}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (băng 1).
+\end{itemize}
+
+\textbf{Bài tập 6.14 (cuối kì 20231 (\#d5287a); cuối kì 20232 (\#d5287a); cuối kì 20251 (\#96837); thi thử kì 20251 (Câu 30); ôn tập cuối kì 20251 (Câu 6); ôn tập cuối kì 20252 (P2-71))}\\
+Khẳng định nào dưới đây mô tả chính xác nhất về đặc tính cục bộ bộ nhớ của các biến khi thực thi đoạn mã C bên dưới?
+\begin{lstlisting}
+int i, sum = 0;
+int A[100];
+for (i = 0; i < 100; i++)
+    sum += A[i];
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item Truy cập vào i và sum thể hiện tính cục bộ thời gian (temporal locality); truy cập vào các phần tử A[i] thể hiện tính cục bộ không gian (spatial locality).
+    \item Truy cập vào tất cả các biến đều thể hiện tính cục bộ thời gian (temporal locality).
+    \item Truy cập vào tất cả các biến đều thể hiện tính cục bộ không gian (spatial locality).
+    \item Truy cập vào i và sum thể hiện tính cục bộ không gian (spatial locality); truy cập vào A[i] thể hiện tính cục bộ thời gian (temporal locality).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Biến \texttt{i} và \texttt{sum} được đọc/ghi lặp đi lặp lại trong vòng lặp $\Rightarrow$ \textbf{Temporal Locality} (cục bộ theo thời gian). Các phần tử \texttt{A[i]} nằm liên tiếp nhau trong bộ nhớ và được duyệt tuần tự $\Rightarrow$ \textbf{Spatial Locality} (cục bộ theo không gian).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Truy cập vào i và sum thể hiện tính cục bộ thời gian (temporal locality); truy cập vào các phần tử A[i] thể hiện tính cục bộ không gian (spatial locality).).
+\end{itemize}
+
+\textbf{Bài tập 6.15 (ôn tập cuối kì 20251 (Câu 45); ôn tập cuối kì 20252 (P2-27))}\\
+Đặc điểm nào sau đây \textbf{KHÔNG PHẢI} là ưu điểm của ổ thể rắn SSD so với ổ đĩa từ HDD truyền thống?
+\begin{enumerate}[label=\Alph*.]
+    \item Giá thành trên mỗi đơn vị dung lượng (VNĐ/GB) rẻ hơn
+    \item Tốc độ truy xuất dữ liệu nhanh hơn và độ trễ thấp hơn
+    \item Không có bộ phận chuyển động cơ học nên không gây tiếng ồn
+    \item Khả năng chống sốc vật lý và va đập tốt hơn
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item SSD vượt trội HDD về tốc độ, độ trễ, không tiếng ồn và chống sốc; nhược điểm của SSD so với HDD là \textbf{chi phí trên mỗi GB cao hơn}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Giá thành trên mỗi đơn vị dung lượng (VNĐ/GB) rẻ hơn).
+\end{itemize}
+
+\textbf{Bài tập 6.16 (ôn tập cuối kì 20251 (Câu 19); ôn tập cuối kì 20252 (P2-73))}\\
+Trong thực tế hiện nay, phát biểu nào sau đây \textbf{SAI} về việc sử dụng HDD và SSD trên các thiết bị?
+\begin{enumerate}[label=\Alph*.]
+    \item Camera giám sát (CCTV) ghi hình 24/7 thường ưu tiên dùng SSD vì SSD có độ bền ghi/xóa vượt trội HDD khi ghi liên tục với dung lượng lớn
+    \item Các máy chơi game thế hệ mới (như PS5, Xbox Series X) sử dụng SSD để giảm mạnh thời gian tải màn chơi
+    \item SSD được ưu tiên làm ổ cài hệ điều hành trên Laptop/PC nhờ tốc độ truy xuất ngẫu nhiên nhanh
+    \item HDD vẫn phổ biến trong hệ thống Server lưu trữ (NAS) hoặc trung tâm dữ liệu nhờ dung lượng lớn và giá thành trên GB rẻ
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Camera CCTV ghi hình liên tục 24/7 cần dung lượng lưu trữ lớn, chi phí/GB thấp và độ bền ghi tuần tự cao nên thực tế ưu tiên dùng \textbf{HDD chuyên dụng} thay vì SSD (SSD có giới hạn chu kỳ ghi/xóa tế bào nhớ flash TBW và giá thành cao hơn).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Camera giám sát (CCTV) ghi hình 24/7 thường ưu tiên dùng SSD vì SSD có độ bền ghi/xóa vượt trội HDD khi ghi liên tục với dung lượng lớn).
+\end{itemize}
+
+\subsection{Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) \& Kích thước phần cứng}
+
+\textbf{Bài tập 6.17 (cuối kì 20212 (B5-5))}\\
+Cho máy tính có $64\text{ KB}$ bộ nhớ chính đánh địa chỉ theo byte, bộ nhớ Cache gồm $32$ line tổ chức ánh xạ trực tiếp, kích thước mỗi line là $4\text{ byte}$. Số bit của các trường \texttt{Tag / Line / Word} và dải địa chỉ Hexa của tất cả các byte nằm cùng line với byte nhớ có địa chỉ nhị phân \texttt{0010 0011 1001 0111} lần lượt là:
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 9 bit, Line = 5 bit, Word = 2 bit; cùng line: 0x2394 đến 0x2397
+    \item Tag = 8 bit, Line = 5 bit, Word = 3 bit; cùng line: 0x2390 đến 0x2397
+    \item Tag = 9 bit, Line = 4 bit, Word = 3 bit; cùng line: 0x2390 đến 0x2397
+    \item Tag = 10 bit, Line = 4 bit, Word = 2 bit; cùng line: 0x2394 đến 0x2397
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{1. Phân chia bit địa chỉ:}
+    \item Bộ nhớ chính $64\text{ KB} = 2^{16}\text{ byte} \Rightarrow$ địa chỉ dài $16\text{ bit}$.
+    \item Kích thước line $= 4\text{ byte} = 2^2 \Rightarrow \text{Word} = \mathbf{2\text{ bit}}$.
+    \item Số line $= 32 = 2^5 \Rightarrow \text{Line} = \mathbf{5\text{ bit}}$.
+    \item $\text{Tag} = 16 - 5 - 2 = \mathbf{9\text{ bit}}$.
+    \item \textbf{2. Các byte cùng line với \texttt{0010 0011 1001 0111}:}
+    \item Chuyển sang Hexa là \texttt{0x2397}. Giữ nguyên $14$ bit cao (Tag + Line = \texttt{0010 0011 1001 01}) và cho $2$ bit Word chạy từ \texttt{00} đến \texttt{11}, ta thu được dải địa chỉ \textbf{\texttt{0x2394} đến \texttt{0x2397}}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tag = 9 bit, Line = 5 bit, Word = 2 bit; cùng line: 0x2394 đến 0x2397).
+\end{itemize}
+
+\textbf{Bài tập 6.18 (cuối kì 20212 (B7-5))}\\
+Cho máy tính với bộ nhớ chính có địa chỉ $32\text{-bit}$ (đánh địa chỉ theo từng byte). Bộ nhớ Cache dung lượng $256\text{ KB}$ được tổ chức theo kiểu ánh xạ liên kết tập hợp $8\text{ line/set}$, gồm $512$ Set ($S_0\text{-}S_{511}$). Số bit các trường \texttt{Tag / Set / Word} và chỉ số Set của byte nhớ có địa chỉ \texttt{0x032A0203} lần lượt là:
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 4
+    \item Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 8
+    \item Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 16
+    \item Tag = 18 bit, Set = 8 bit, Word = 6 bit; Set 8
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{1. Phân chia bit địa chỉ:}
+    \item Tổng số line $= 512 \text{ Set} \times 8 \text{ line/set} = 4096 = 2^{12}$ line.
+    \item Kích thước mỗi line $= 256\text{ KB} / 2^{12} = 2^{18} / 2^{12} = 64\text{ byte} = 2^6 \Rightarrow \text{Word} = \mathbf{6\text{ bit}}$.
+    \item Số Set $= 512 = 2^9 \Rightarrow \text{Set} = \mathbf{9\text{ bit}}$.
+    \item $\text{Tag} = 32 - 9 - 6 = \mathbf{17\text{ bit}}$.
+    \item \textbf{2. Tìm Set của địa chỉ \texttt{0x032A0203}:}
+    \item Các bit cuối: \texttt{...0203} $= \dots\texttt{0000 0010 0000 0011}_2$.
+    \item Bỏ $6$ bit Word thấp nhất (\texttt{000011}), lấy $9$ bit Set tiếp theo: \texttt{000001000}$_2 = \mathbf{8}$ (\textbf{Set 8}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B} (Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 8).
+\end{itemize}
+
+\textbf{Bài tập 6.19 (cuối kì 20212 (B8-5))}\\
+Cho máy tính có bộ nhớ chính dung lượng $4\text{ GB}$ (đánh địa chỉ theo từng byte). Bộ nhớ Cache dung lượng $256\text{ KB}$ tổ chức theo ánh xạ liên kết tập hợp $4\text{ line/set}$, gồm $512$ Set ($S_0\text{-}S_{511}$). Số bit các trường \texttt{Tag / Set / Word} và chỉ số Set của byte nhớ có địa chỉ \texttt{0x0A0B1035} lần lượt là:
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 64
+    \item Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 16
+    \item Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 32
+    \item Tag = 16 bit, Set = 10 bit, Word = 6 bit; Set 32
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{1. Phân chia bit địa chỉ:}
+    \item Bộ nhớ chính $4\text{ GB} = 2^{32}\text{ byte} \Rightarrow$ địa chỉ dài $32\text{ bit}$.
+    \item Tổng số line $= 512 \times 4 = 2048 = 2^{11}$ line.
+    \item Kích thước mỗi line $= 256\text{ KB} / 2^{11} = 2^{18} / 2^{11} = 128\text{ byte} = 2^7 \Rightarrow \text{Word} = \mathbf{7\text{ bit}}$.
+    \item Số Set $= 512 = 2^9 \Rightarrow \text{Set} = \mathbf{9\text{ bit}}$.
+    \item $\text{Tag} = 32 - 9 - 7 = \mathbf{16\text{ bit}}$.
+    \item \textbf{2. Tìm Set của địa chỉ \texttt{0x0A0B1035}:}
+    \item $16$ bit thấp là \texttt{0x1035} $= \texttt{0001 0000 0011 0101}_2$.
+    \item Bỏ $7$ bit Word thấp nhất (\texttt{0110101}), lấy $9$ bit Set kế tiếp: \texttt{000100000}$_2 = 2^5 = \mathbf{32}$ (\textbf{Set 32}).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C} (Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 32).
+\end{itemize}
+
+\textbf{Bài tập 6.20 (ôn tập cuối kì 20252 (P2-19); Đáp án ôn tập cuối kỳ P2 (Câu 23))}\\
+Máy tính có bộ nhớ Cache $8\text{ MiB}$ được tổ chức theo ánh xạ liên kết tập hợp $16\text{ line/set}$ với kích thước mỗi line là $64\text{ byte}$; bộ nhớ chính được đánh địa chỉ cho từng byte bằng $36\text{ bit}$ địa chỉ. Giá trị biểu thức $P = \text{số bit trường Set} + 2 \times \text{số bit trường Tag}$ bằng bao nhiêu?
+\begin{enumerate}[label=\Alph*.]
+    \item 45
+    \item 46
+    \item 47
+    \item 48
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Kích thước line $= 64\text{ byte} = 2^6 \Rightarrow \text{Word} = 6\text{ bit}$.
+    \item Tổng số line $= 8\text{ MiB} / 64\text{ B} = 2^{23} / 2^6 = 2^{17}$ line.
+    \item Số Set $= 2^{17} / 16 = 2^{17} / 2^4 = 2^{13} \Rightarrow \text{Set} = \mathbf{13\text{ bit}}$.
+    \item $\text{Tag} = 36 - 13 - 6 = \mathbf{17\text{ bit}}$.
+    \item Vậy $P = 13 + 2 \times 17 = \mathbf{47}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C} (47).
+\end{itemize}
+
+\textbf{Bài tập 6.21 (cuối kì 20212 (B2-4))}\\
+Cho máy tính có $64\text{ KB}$ bộ nhớ chính đánh địa chỉ theo byte, bộ nhớ Cache gồm $16$ line tổ chức ánh xạ trực tiếp, kích thước mỗi line là $8\text{ byte}$.\\
+1) Số bit các trường \texttt{Tag / Line / Word} là bao nhiêu?\\
+2) Byte nhớ có địa chỉ nhị phân \texttt{1100 0011 0011 0100} ánh xạ vào line nào?\\
+3) Byte nhớ \texttt{0x1A15} nạp vào cache cùng những byte nào trong cùng line?
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 6; cùng line: 0x1A10 đến 0x1A17
+    \item Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 3; cùng line: 0x1A10 đến 0x1A17
+    \item Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 12; cùng line: 0x1A00 đến 0x1A0F
+    \item Tag = 8 bit, Line = 4 bit, Word = 4 bit; Line 6; cùng line: 0x1A10 đến 0x1A1F
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item 1) $64\text{ KB} = 2^{16}\text{ B}$ ($16$ bit địa chỉ). Line $8\text{ B} = 2^3 \Rightarrow \text{Word} = 3\text{ bit}$. $16$ line $= 2^4 \Rightarrow \text{Line} = 4\text{ bit}$. $\text{Tag} = 16 - 4 - 3 = 9\text{ bit}$.
+    \item 2) Địa chỉ \texttt{1100 0011 0011 0100} có 4 bit $[6:3] = 0110_2 = \text{Line } 6$.
+    \item 3) Line $8\text{ byte}$ nên các byte cùng block với \texttt{0x1A15} có 3 bit cuối thay đổi từ $000$ đến $111$: \texttt{0x1A10} -- \texttt{0x1A17}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 6; cùng line: 0x1A10 đến 0x1A17).
+\end{itemize}
+
+\textbf{Bài tập 6.22 (cuối kì 20241 (\#2e789d); ôn tập cuối kì 20251 (Câu 20); ôn tập cuối kì 20251 (Câu 22); ôn tập cuối kì 20252 (P2-38))}\\
+Chỉ ra phương pháp ánh xạ mà mỗi Block của bộ nhớ chính được phép nạp vào Line bất kỳ của bộ nhớ cache ?
+\begin{enumerate}[label=\Alph*.]
+    \item Ánh xạ liên kết toàn phần (Fully Associative)
+    \item Ánh xạ trực tiếp (Direct Mapped)
+    \item Ánh xạ liên kết tập hợp (Set Associative)
+    \item Không có phương pháp nào cho phép điều này
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong \textbf{ánh xạ liên kết toàn phần (Fully Associative)}, một block từ bộ nhớ chính có thể được nạp vào \textbf{bất kỳ line nào} còn trống (hoặc thay thế theo thuật toán) trong Cache.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Ánh xạ liên kết toàn phần (Fully Associative)).
+\end{itemize}
+
+\textbf{Bài tập 6.23 (cuối kì 20251 (\#05f48a); thi thử kì 20251 (Câu 10); ôn tập cuối kì 20251 (Câu 46); ôn tập cuối kì 20252 (P2-37))}\\
+Cho một CPU với địa chỉ bộ nhớ 32 bit A[31..0]. Nó có bộ nhớ đệm (cache) thiết kế theo kiểu tập liên kết 4 đường (4-way set associative) với tổng kích thước dữ liệu cache là 16 KiB và kích thước khối (block size) là 64 bytes. Kích thước (tính bằng bit) của bộ nhớ đệm này là bao nhiêu?
+\begin{enumerate}[label=\Alph*.]
+    \item 64 $\times$ 4 $\times$ (1 + 20 + 32 $\times$ 16)
+    \item 64 $\times$ 2 $\times$ (1 + 20 + 32 $\times$ 16)
+    \item 64 $\times$ 2 $\times$ (1 + 20 + 32 $\times$ 8)
+    \item 64 $\times$ 4 $\times$ (1 + 19 + 16 $\times$ 16)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Tổng số block $= 16\text{ KiB} / 64\text{ B} = 256$ block.
+    \item Cache $4\text{-way} \Rightarrow 256 / 4 = \mathbf{64}$ Set ($6$ bit Index), mỗi Set có $\mathbf{4}$ line.
+    \item Block $64\text{ B} = 2^6 \Rightarrow 6$ bit Offset; dữ liệu mỗi block $= 64 \times 8 = 512\text{ bit} = \mathbf{32 \times 16}$ bit.
+    \item $\text{Tag} = 32 - 6 - 6 = \mathbf{20}$ bit, cộng $1$ bit hợp lệ (Valid).
+    \item Tổng kích thước Cache $= \mathbf{64 \times 4 \times (1 + 20 + 32 \times 16)}$ bit.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (64 $\times$ 4 $\times$ (1 + 20 + 32 $\times$ 16)).
+\end{itemize}
+
+\textbf{Bài tập 6.24 (cuối kì 20251 (\#c38eef); thi thử kì 20251 (Câu 17); ôn tập cuối kì 20251 (Câu 28); ôn tập cuối kì 20252 (P2-7))}\\
+Cho một CPU với địa chỉ bộ nhớ 32-bit A[31..0] và bộ nhớ đệm (cache) ánh xạ trực tiếp (direct-mapped) dung lượng 16 KiB với kích thước khối (block size) là 32 bytes. Khi truy cập một từ (word) trong bộ nhớ, những bit địa chỉ nào sẽ được sử dụng để xác định khối cache tương ứng (locate the corresponding cache block)?
+\begin{enumerate}[label=\Alph*.]
+    \item A[13..5]
+    \item A[13..6]
+    \item A[14..6]
+    \item A[14..5]
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Block $32\text{ B} = 2^5 \Rightarrow$ Offset dùng $5$ bit thấp $A[4..0]$.
+    \item Số block Cache $= 16\text{ KiB} / 32\text{ B} = 512 = 2^9 \Rightarrow$ Index cần $9$ bit kế tiếp là $\mathbf{A[13..5]}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (A[13..5]).
+\end{itemize}
+
+\textbf{Bài tập 6.25 (ôn tập cuối kì 20251 (Câu 17); ôn tập cuối kì 20252 (P2-22))}\\
+Đề bài: Cho một CPU có không gian địa chỉ bộ nhớ 32-bit và bộ nhớ đệm (cache) ánh xạ trực tiếp (direct-mapped) dung lượng 16 KiB với kích thước khối (block size) là 64 bytes.
+Câu hỏi: Tổng kích thước (tính bằng bit) của toàn bộ bộ nhớ đệm, bao gồm các trường: bit hợp lệ (valid bit), thẻ (tag) và dữ liệu (data) là bao nhiêu?
+\begin{enumerate}[label=\Alph*.]
+    \item 256 $\times$ (1 + 18 + 32 $\times$ 16)
+    \item 256 $\times$ (1 + 19 + 32 $\times$ 16)
+    \item 256 $\times$ (1 + 18 + 32 $\times$ 8)
+    \item 256 $\times$ (1 + 20 + 32 $\times$ 16)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số block $= 16\text{ KiB} / 64\text{ B} = \mathbf{256}$ ($8$ bit Index). Offset $= 6$ bit ($64\text{ B} = 512\text{ bit} = \mathbf{32 \times 16}$ bit). $\text{Tag} = 32 - 8 - 6 = \mathbf{18}$ bit $+\; 1$ Valid bit $\Rightarrow \mathbf{256 \times (1 + 18 + 32 \times 16)}$ bit.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (256 $\times$ (1 + 18 + 32 $\times$ 16)).
+\end{itemize}
+
+\textbf{Bài tập 6.26 (ôn tập cuối kì 20251 (Câu 34); ôn tập cuối kì 20252 (P2-58))}\\
+Máy tính đánh địa chỉ theo byte với không gian bộ nhớ chính $4\text{ GiB}$, Cache $256\text{ KiB}$, kích thước Line $= 32\text{ byte}$. Tính tổng $P = \text{Tag}_{\text{trực tiếp}} + \text{Tag}_{\text{liên kết toàn phần}} + \text{Tag}_{\text{tập hợp 4 đường}}$?
+\textit{(Dạng điền đáp án -- Nhập giá trị P (vd: 57):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Địa chỉ $32$ bit, Offset $= \log_2(32) = 5$ bit, tổng số line $= 256\text{ KiB}/32\text{ B} = 8192 = 2^{13}$:
+    \item Direct-mapped: $\text{Index} = 13 \Rightarrow \text{Tag}_1 = 32 - 13 - 5 = 14$.
+    \item Fully-associative: $\text{Index} = 0 \Rightarrow \text{Tag}_2 = 32 - 5 = 27$.
+    \item 4-way Set-associative: $2^{13}/4 = 2^{11}$ Set $\Rightarrow \text{Tag}_3 = 32 - 11 - 5 = 16$.
+    \item Tổng $P = 14 + 27 + 16 = \mathbf{57}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{57}.
+\end{itemize}
+
+\textbf{Bài tập 6.27 (ôn tập cuối kì 20251 (Câu 50); ôn tập cuối kì 20252 (P2-55))}\\
+Máy tính có địa chỉ bộ nhớ chính $32\text{-bit}$ (đánh địa chỉ theo byte). Bộ nhớ Cache $128\text{ KiB}$ tổ chức theo ánh xạ liên kết tập hợp $4\text{ line/set}$, gồm $1024$ Set ($S_0\text{-}S_{1023}$). Số bit của trường \texttt{Tag} là bao nhiêu?
+\textit{(Dạng điền đáp án -- Nhập số bit trường Tag (vd: 17):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Số line $= 1024 \times 4 = 4096$. Kích thước 1 line $= 128\text{ KiB}/4096 = 32\text{ B} \Rightarrow \text{Offset} = 5\text{ bit}$.
+    \item $1024\text{ Set} = 2^{10} \Rightarrow \text{Set} = 10\text{ bit}$.
+    \item $\text{Tag} = 32 - 10 - 5 = \mathbf{17}$ bit.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{17}.
+\end{itemize}
+
+\textbf{Bài tập 6.28 (cuối kì 20212 (B3-5))}\\
+Cho máy tính có $64\text{ KB}$ bộ nhớ chính đánh địa chỉ theo byte, bộ nhớ Cache gồm $32$ line ánh xạ trực tiếp, kích thước mỗi line là $16\text{ byte}$.\\
+1) Số bit các trường \texttt{Tag / Line / Word} là bao nhiêu?\\
+2) Bốn địa chỉ \texttt{1101 0001 0001 0010}, \texttt{0010 1011 0011 0110}, \texttt{1101 0110 1001 1100}, \texttt{1110 1010 1000 1011} lần lượt nạp vào các line nào?
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 1, Line 3, Line 9, Line 8
+    \item Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 2, Line 6, Line 18, Line 17
+    \item Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 1, Line 6, Line 9, Line 8
+    \item Tag = 8 bit, Line = 4 bit, Word = 4 bit; Line 1, Line 3, Line 9, Line 10
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item 1) $64\text{ KB}$ ($16$ bit địa chỉ), line $16\text{ B} = 2^4 \Rightarrow \text{Word} = 4\text{ bit}$, $32$ line $= 2^5 \Rightarrow \text{Line} = 5\text{ bit}$, $\text{Tag} = 16 - 5 - 4 = 7\text{ bit}$.
+    \item 2) Lấy 5 bit $[8:4]$ làm chỉ số Line: \texttt{00001} ($1$), \texttt{00011} ($3$), \texttt{01001} ($9$), \texttt{01000} ($8$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 1, Line 3, Line 9, Line 8).
+\end{itemize}
+
+\textbf{Bài tập 6.29 (ôn tập cuối kì 20251 (Câu 74); ôn tập cuối kì 20252 (P2-61))}\\
+Máy tính có địa chỉ bộ nhớ chính $32\text{-bit}$ (đánh địa chỉ theo byte). Bộ nhớ Cache $128\text{ KiB}$ tổ chức theo ánh xạ liên kết tập hợp $4\text{ line/set}$, gồm $1024$ Set ($S_0\text{-}S_{1023}$). Byte nhớ có địa chỉ \texttt{0x003D02AF} được ánh xạ vào Set số mấy?
+\textit{(Dạng điền đáp án -- Nhập chỉ số Set (vd: 21):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Block $= 32\text{ B}$ ($5$ bit Offset $[4:0]$), $1024$ Set ($10$ bit Set $[14:5]$).
+    \item \texttt{0x003D02AF} có 16 bit thấp $= \text{0x02AF} = 0000\;0010\;1010\;1111_2$.
+    \item 10 bit $[14:5]$ là \texttt{0000010101} $= \text{0x15} = \mathbf{21}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{21}.
+\end{itemize}
+
+\textbf{Bài tập 6.30 (ôn tập cuối kì 20252 (P2-3))}\\
+Chỉ ra phương pháp ánh xạ mà mỗi Block của bộ nhớ chính chỉ được phép nạp vào \textbf{duy nhất 1 Line} cố định của bộ nhớ Cache?
+\begin{enumerate}[label=\Alph*.]
+    \item Ánh xạ trực tiếp (Direct Mapped)
+    \item Ánh xạ liên kết toàn phần (Fully Associative)
+    \item Ánh xạ liên kết tập hợp (Set Associative)
+    \item Cả ba phương pháp trên
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong \textbf{ánh xạ trực tiếp}, mỗi Block bộ nhớ chính ánh xạ cố định vào duy nhất $1$ Line xác định bởi công thức $\text{Line} = \text{Block} \bmod \text{Số lượng Line}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Ánh xạ trực tiếp (Direct Mapped)).
+\end{itemize}
+
+\textbf{Bài tập 6.31 (cuối kì 20212 (B4-5); ôn tập cuối kì 20251 (Câu 65); ôn tập cuối kì 20252 (P2-24))}\\
+Cho máy tính có bộ nhớ chính $4\text{ GB}$ (đánh địa chỉ theo byte), bộ nhớ Cache $512\text{ KB}$ tổ chức theo ánh xạ liên kết tập hợp $8\text{ line/set}$ và có tất cả $1024$ Set ($S_0\text{-}S_{1023}$). Số bit của các trường \texttt{Tag / Set / Word} và chỉ số Set của byte nhớ \texttt{0x10250A03} lần lượt là:
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 16 bit, Set = 10 bit, Word = 6 bit; ánh xạ vào Set 40
+    \item Tag = 15 bit, Set = 10 bit, Word = 7 bit; ánh xạ vào Set 20
+    \item Tag = 16 bit, Set = 10 bit, Word = 6 bit; ánh xạ vào Set 25
+    \item Tag = 17 bit, Set = 10 bit, Word = 5 bit; ánh xạ vào Set 80
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Bộ nhớ $4\text{ GB} \Rightarrow 32$ bit địa chỉ. Kích thước mỗi line $= \frac{512\text{ KB}}{1024 \times 8} = 64\text{ B} = 2^6 \Rightarrow \text{Word} = 6\text{ bit}$.
+    \item $1024\text{ Set} = 2^{10} \Rightarrow \text{Set} = 10\text{ bit}$. $\text{Tag} = 32 - 10 - 6 = 16\text{ bit}$.
+    \item 10 bit $[15:6]$ của \texttt{0x10250A03} (tức \texttt{0x0A03 >> 6} $= 2563 // 64$) $= \text{0x028} = \mathbf{40}$ (Set $40$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tag = 16 bit, Set = 10 bit, Word = 6 bit; ánh xạ vào Set 40).
+\end{itemize}
+
+\textbf{Bài tập 6.32 (cuối kì 20212 (B6-5))}\\
+Máy tính có bộ nhớ chính $4\text{ GB}$ đánh địa chỉ theo byte, bộ nhớ Cache tổ chức theo ánh xạ liên kết toàn phần (Fully-Associative), kích thước mỗi line là $32\text{ byte}$. Số bit trường \texttt{Tag / Word} và giá trị Tag (thập phân) của hai địa chỉ \texttt{0x0149C003}, \texttt{0x10390135} lần lượt là:
+\begin{enumerate}[label=\Alph*.]
+    \item Tag = 27 bit, Word = 5 bit; Tag = 674816 và 8507401
+    \item Tag = 26 bit, Word = 6 bit; Tag = 337408 và 4253700
+    \item Tag = 27 bit, Word = 5 bit; Tag = 1349632 và 17014802
+    \item Tag = 22 bit, Word = 5 bit; Tag = 674816 và 8507401
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Liên kết toàn phần không có trường Index/Set: $32\text{ B} = 2^5 \Rightarrow \text{Word} = 5\text{ bit}$, $\text{Tag} = 32 - 5 = 27\text{ bit}$.
+    \item Giá trị Tag $= \text{addr} \gg 5$: \texttt{0x0149C003 >> 5 = 0x000A4E00 = 674816}; \texttt{0x10390135 >> 5 = 0x0081C809 = 8507401}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tag = 27 bit, Word = 5 bit; Tag = 674816 và 8507401).
+\end{itemize}
+
+\textbf{Bài tập 6.33 (cuối kì 20222 (\#c9ea55); cuối kì 20241 (\#7196b2); cuối kì 20242 (\#c9ea55); ôn tập cuối kì 20251 (Câu 9); ôn tập cuối kì 20251 (Câu 37); ôn tập cuối kì 20252 (P2-54))}\\
+Máy tính có bộ nhớ Cache $8\text{ MiB}$ tổ chức theo ánh xạ liên kết tập hợp $16\text{ line/set}$, kích thước mỗi line là $128\text{ byte}$; bộ nhớ chính đánh địa chỉ theo từng byte bằng $36\text{ bit}$ địa chỉ. Số bit của trường \texttt{Set} và trường \texttt{Tag} lần lượt là bao nhiêu?
+\begin{enumerate}[label=\Alph*.]
+    \item Set = 12 bit và Tag = 17 bit
+    \item Set = 13 bit và Tag = 16 bit
+    \item Set = 12 bit và Tag = 16 bit
+    \item Set = 13 bit và Tag = 17 bit
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Kích thước line $= 128\text{ B} = 2^7\text{ B} \Rightarrow \text{Offset (Word)} = 7\text{ bit}$.
+    \item Tổng số line $= \frac{8\text{ MiB}}{128\text{ B}} = \frac{2^{23}}{2^7} = 2^{16}$ line.
+    \item Mỗi Set gồm $16 = 2^4$ line $\Rightarrow$ Số Set $= \frac{2^{16}}{2^4} = 2^{12} \Rightarrow \mathbf{\text{Set} = 12\text{ bit}}$.
+    \item $\mathbf{\text{Tag} = 36 - 12 - 7 = 17\text{ bit}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Set = 12 bit và Tag = 17 bit).
+\end{itemize}
+
+\textbf{Bài tập 6.34 (cuối kì 20231 (\#6bc3f0); ôn tập cuối kì 20251 (Câu 33); ôn tập cuối kì 20252 (P2-44); cuối kì 20232 (\#6bc3f0); cuối kì 20251 (\#3c3218); thi thử kì 20251 (Câu 19))}\\
+Cho một CPU hệ RISC-V với không gian địa chỉ bộ nhớ $32\text{-bit}$ và bộ nhớ Cache ánh xạ trực tiếp (direct-mapped) dung lượng $16\text{ KiB}$ với kích thước khối (block size) là $64\text{ byte}$. Kích thước (tính bằng bit) của trường \texttt{Tag} trong mỗi khối cache là bao nhiêu?
+\textit{(Dạng điền đáp án -- Nhập số bit trường Tag (vd: 18):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Offset $= \log_2(64) = 6\text{ bit}$.
+    \item Số block $= 16\text{ KiB} / 64\text{ B} = 256 = 2^8 \Rightarrow \text{Index} = 8\text{ bit}$.
+    \item Vậy $\text{Tag} = 32 - 8 - 6 = \mathbf{18}$ bit.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{18}.
+\end{itemize}
+
+\subsection{Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C \& Hiệu năng Cache (AMAT / CPI)}
+
+\textbf{Bài tập 6.35 (Lý thuyết slide CA.RISCV.2025 - Mục 6.3 (Write-Through \& Write-Back))}\\
+Khi xảy ra \textbf{Cache Hit} trong thao tác ghi dữ liệu, đặc điểm nào sau đây mô tả đúng chính sách \textbf{Ghi trả sau (Write-Back)}?
+\begin{enumerate}[label=\Alph*.]
+    \item Dữ liệu luôn được ghi đồng thời vào cả Cache và bộ nhớ chính ngay lập tức để đảm bảo nhất quán
+    \item Dữ liệu chỉ được ghi vào Cache (và đánh dấu bằng bit Dirty); khối dữ liệu chỉ được ghi trả về bộ nhớ chính khi khối đó bị thay thế ra khỏi Cache
+    \item Dữ liệu chỉ được ghi trực tiếp vào bộ nhớ chính mà không cập nhật vào Cache
+    \item Tốc độ ghi chậm hơn Write-Through và gây lưu lượng cao trên bus bộ nhớ
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 52 (CA.RISCV.2025):
+    \item \textbf{Ghi xuyên qua (Write-Through):} Ghi đồng thời vào cả Cache và bộ nhớ chính $\Rightarrow$ đơn giản, nhất quán nhưng tốc độ chậm và tốn băng thông bus.
+    \item \textbf{Ghi trả sau (Write-Back):} Chỉ ghi vào Cache (đánh dấu bit \texttt{Dirty}), tốc độ rất nhanh; chỉ khi block đó bị thay thế khỏi Cache mới ghi trả toàn bộ block về bộ nhớ chính.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B} (Dữ liệu chỉ được ghi vào Cache (và đánh dấu bằng bit Dirty); khối dữ liệu chỉ được ghi trả về bộ nhớ chính khi khối đó bị thay thế ra khỏi Cache).
+\end{itemize}
+
+\textbf{Bài tập 6.36 (Lý thuyết slide CA.RISCV.2025 - Mục 6.3 (Phân loại lỗi Cache 3C))}\\
+Trong mô hình phân loại lỗi trượt Cache \textbf{3C} (Compulsory, Capacity, Conflict), giải pháp phần cứng nào sau đây trực tiếp giúp giảm \textbf{lỗi xung đột (Conflict Miss)} mà không nhất thiết phải tăng tổng dung lượng Cache?
+\begin{enumerate}[label=\Alph*.]
+    \item Tăng bậc liên kết tập hợp (associativity), ví dụ chuyển từ ánh xạ trực tiếp sang liên kết tập hợp 4 đường hoặc 8 đường
+    \item Chuyển từ ánh xạ liên kết tập hợp sang ánh xạ trực tiếp (direct-mapped)
+    \item Giảm kích thước của mỗi block (line) xuống mức tối thiểu
+    \item Sử dụng chính sách Write-Through thay cho Write-Back
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Trong mô hình \textbf{3C Misses}:
+    \item \textbf{Compulsory (Cold) Miss:} Lần truy cập đầu tiên vào block $\Rightarrow$ giảm bằng cách tăng kích thước block (tận dụng tính cục bộ không gian) hoặc prefetching.
+    \item \textbf{Capacity Miss:} Dung lượng Cache không đủ chứa toàn bộ tập làm việc $\Rightarrow$ giảm bằng cách tăng dung lượng Cache.
+    \item \textbf{Conflict Miss:} Nhiều block ánh xạ vào cùng một vị trí/Set dù Cache vẫn còn chỗ trống ở Set khác $\Rightarrow$ giảm trực tiếp bằng cách \textbf{tăng bậc liên kết (associativity)}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tăng bậc liên kết tập hợp (associativity), ví dụ chuyển từ ánh xạ trực tiếp sang liên kết tập hợp 4 đường hoặc 8 đường).
+\end{itemize}
+
+\textbf{Bài tập 6.37 (thi thử kì 20251 (Câu 9); ôn tập cuối kì 20251 (Câu 16); ôn tập cuối kì 20252 (P2-12))}\\
+Cho đoạn mã C chạy trên CPU có bộ nhớ đệm liên kết toàn phần (fully associative cache) dung lượng $16\text{ KiB}$, kích thước khối $64\text{ byte}$ (không có xung đột khác). Tỷ lệ trượt trung bình ($\%$) khi truy cập cả hai mảng \texttt{A} và \texttt{B} là bao nhiêu? (Chỉ nhập số, vd: \texttt{9.375})
+\begin{lstlisting}
+int i, sum = 0;
+int A[128];
+int B[256];
+for (i = 0; i < 128; i++)
+    B[i*2] = A[i];
+\end{lstlisting}
+\textit{(Dạng điền đáp án -- Nhập \% miss rate (vd: 9.375):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Block $64\text{ B}$ chứa $16$ số \texttt{int} ($4\text{ B/int}$):
+    \item Mảng \texttt{A[i]} ($128$ lần truy cập liên tiếp, stride 4B): miss $128/16 = 8$ lần.
+    \item Mảng \texttt{B[i*2]} ($128$ lần truy cập cách quãng 8B): miss $128/8 = 16$ lần.
+    \item Tổng miss $= 8 + 16 = 24$ trên tổng $256$ lần truy cập $\Rightarrow \frac{24}{256} = \mathbf{9.375\%}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{9.375}.
+\end{itemize}
+
+\textbf{Bài tập 6.38 (ôn tập cuối kì 20251 (Câu 30); ôn tập cuối kì 20252 (P2-56))}\\
+Cho CPU có tỉ lệ trượt cache lệnh (I-cache miss rate) $= 2\%$, tỉ lệ trượt cache dữ liệu (D-cache miss rate) $= 4\%$, thời gian phạt (miss penalty) $= 100$ chu kỳ, $\text{CPI}_{\text{base}}$ (cache lý tưởng) $= 2$, tỉ lệ lệnh Load/Store chiếm $36\%$. Tỉ số $\text{Actual CPI} / \text{Base CPI}$ bằng bao nhiêu?
+\textit{(Dạng điền đáp án -- Nhập tỉ số (vd: 2.72):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item $\text{Actual CPI} = 2 + (0.02 + 0.36 \times 0.04) \times 100 = 2 + 2 + 1.44 = 5.44$.
+    \item Tỉ số $\frac{5.44}{2} = \mathbf{2.72}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{2.72}.
+\end{itemize}
+
+\textbf{Bài tập 6.39 (ôn tập cuối kì 20251 (Câu 55); ôn tập cuối kì 20252 (P2-47))}\\
+Phương pháp thay thế block trong cache nào là tối ưu nhất?
+\begin{enumerate}[label=\Alph*.]
+    \item LRU (Least Recently Used)
+    \item LFU (Least Frequently Used)
+    \item Random
+    \item FIFO (First-In First-Out)
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{LRU} (thay thế khối ít được sử dụng nhất gần đây) tận dụng tốt nhất nguyên lý cục bộ thời gian nên cho tỉ lệ hit cao nhất trong các chiến lược thông dụng.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (LRU (Least Recently Used)).
+\end{itemize}
+
+\textbf{Bài tập 6.40 (ôn tập cuối kì 20251 (Câu 73); ôn tập cuối kì 20252 (P2-30))}\\
+Một CPU có chu kỳ xung nhịp $1\text{ ns}$, thời gian trúng (hit time) $= 1$ chu kỳ, thời gian phạt trượt (miss penalty) $= 20$ chu kỳ, tỉ lệ trượt I-cache miss rate $= 5\%$. Thời gian truy cập bộ nhớ trung bình (AMAT) bằng bao nhiêu nano-giây?
+\textit{(Dạng điền đáp án -- Nhập AMAT theo ns (vd: 2):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item $\text{AMAT} = \text{Hit Time} + \text{Miss Rate} \times \text{Miss Penalty} = 1 + 0.05 \times 20 = 2\text{ chu kỳ} = \mathbf{2\text{ ns}}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{2}.
+\end{itemize}
+
+\textbf{Bài tập 6.41 (cuối kì 20231 (\#c92c74); cuối kì 20232 (\#c92c74); cuối kì 20251 (\#bf6243); cuối kì 20251 (\#24cd84); thi thử kì 20251 (Câu 2); ôn tập cuối kì 20251 (Câu 8); ôn tập cuối kì 20252 (P2-57))}\\
+Cho đoạn mã C chạy trên CPU RISC-V với bộ nhớ Cache ánh xạ trực tiếp dung lượng $1\text{ KiB}$ và kích thước khối $64\text{ byte}$ (giả sử không có xung đột chương trình khác). Tỷ lệ trượt (miss rate, đơn vị $\%$) khi truy cập mảng \texttt{A} là bao nhiêu? (Chỉ nhập số, vd: \texttt{10.5})
+\begin{lstlisting}
+int i, sum = 0;
+int A[128];
+for (i = 0; i < 128; i++)
+    sum += A[i];
+\end{lstlisting}
+\textit{(Dạng điền đáp án -- Nhập \% miss rate (vd: 6.25):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mỗi phần tử \texttt{int} chiếm $4\text{ byte}$. Một block $64\text{ B}$ chứa được $64 / 4 = 16$ phần tử liên tiếp.
+    \item Khi duyệt tuần tự \texttt{A[0..127]}, mỗi nhóm $16$ phần tử bị miss lần đầu ($1$ lần) và hit $15$ lần sau $\Rightarrow \text{Miss Rate} = \frac{1}{16} = \mathbf{6.25\%}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{6.25}.
+\end{itemize}
+
+\textbf{Bài tập 6.42 (cuối kì 20231 (\#c7a320); cuối kì 20232 (\#c7a320); ôn tập cuối kì 20251 (Câu 32); ôn tập cuối kì 20252 (P2-36))}\\
+Cho một CPU RISC-V có chỉ số CPI cơ bản (base CPI) bằng $1$, thời gian phạt khi trượt cache (miss penalty) là $100$ chu kỳ. Khi thực thi chương trình, tỷ lệ trượt cache lệnh (instruction miss rate) là $1\%$, tỷ lệ trượt cache dữ liệu (data miss rate) là $10\%$, và các lệnh truy nhập dữ liệu (load/store) chiếm $5\%$ tổng số lệnh. Chỉ số CPI hiệu dụng (effective CPI) là bao nhiêu?
+\textit{(Dạng điền đáp án -- Nhập effective CPI (vd: 2.5):)}\par
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item $\text{CPI}_{\text{eff}} = \text{CPI}_{\text{base}} + \text{I-miss stall} + \text{D-miss stall} = 1 + (0.01 \times 100) + (0.05 \times 0.10 \times 100) = 1 + 1 + 0.5 = \mathbf{2.5}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{2.5}.
+\end{itemize}
+
+\subsection{Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) \& TLB}
+
+\textbf{Bài tập 6.43 (Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Bảng trang đảo))}\\
+Ưu điểm cốt lõi của cấu trúc \textbf{Bảng trang đảo (Inverted Page Table)} so với bảng trang truyền thống trong bộ nhớ ảo là gì?
+\begin{enumerate}[label=\Alph*.]
+    \item Mỗi tiến trình có một bảng trang riêng có kích thước tỉ lệ thuận với toàn bộ không gian địa chỉ ảo
+    \item Không cần sử dụng bất kỳ cơ chế băm (hash) hay tìm kiếm nào khi dịch địa chỉ
+    \item Chỉ duy trì đúng một mục cho mỗi khung trang vật lý (physical frame) trong RAM và dùng hàm băm để tra cứu, giúp giảm mạnh dung lượng bộ nhớ cần thiết để lưu bảng trang
+    \item Loại bỏ hoàn toàn hiện tượng lỗi trang (Page Fault) trên hệ thống
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 70 (CA.RISCV.2025):
+    \item Trong \textbf{Bảng trang đảo (Inverted Page Table)}, thay vì lưu bảng trang theo số trang ảo của từng tiến trình (rất lớn với địa chỉ 32/64-bit), hệ thống chỉ lưu \textbf{một mục duy nhất cho mỗi khung trang vật lý} trong RAM (kèm Process ID, Page \#, Control bits và chuỗi liên kết Chain) và sử dụng \textbf{hàm băm (Hash function)} để tra cứu, giúp tiết kiệm đáng kể dung lượng bộ nhớ lưu bảng trang.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C} (Chỉ duy trì đúng một mục cho mỗi khung trang vật lý (physical frame) trong RAM và dùng hàm băm để tra cứu, giúp giảm mạnh dung lượng bộ nhớ cần thiết để lưu bảng trang).
+\end{itemize}
+
+\textbf{Bài tập 6.44 (Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Bộ nhớ ảo \& Phân trang))}\\
+Trong kỹ thuật \textbf{phân trang (Paging)} của hệ thống bộ nhớ ảo (Virtual Memory), khẳng định nào sau đây là \textbf{ĐÚNG}?
+\begin{enumerate}[label=\Alph*.]
+    \item Các trang (Page) của cùng một tiến trình bắt buộc phải được cấp phát vào các khung trang (Frame) nằm liên tiếp nhau trong bộ nhớ vật lý
+    \item Kích thước trang (Page) có thể thay đổi linh hoạt cho từng đoạn chương trình và có thể gối lên nhau
+    \item Bộ nhớ vật lý được chia thành các khung trang (Frame) bằng nhau, tiến trình được chia thành các trang (Page) cùng kích thước (thông dụng 4 KiB) và không yêu cầu cấp phát các khung trang liên tiếp
+    \item Toàn bộ các trang của một tiến trình phải được nạp hết vào RAM trước khi tiến trình bắt đầu thực thi
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 63--64 \& 67 (CA.RISCV.2025):
+    \item Kỹ thuật \textbf{phân trang (Paging)} chia không gian địa chỉ ảo thành các \textbf{trang (Page)} và bộ nhớ vật lý thành các \textbf{khung trang (Frame)} có kích thước bằng nhau (thông dụng $4\text{ KiB}$).
+    \item Các trang của tiến trình \textbf{không cần nằm trên các khung trang vật lý liên tiếp} và được quản lý thông qua \textbf{Bảng trang (Page Table)}.
+    \item Nhờ phân trang theo yêu cầu (Demand Paging), không cần nạp toàn bộ tiến trình vào RAM cùng lúc.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{C} (Bộ nhớ vật lý được chia thành các khung trang (Frame) bằng nhau, tiến trình được chia thành các trang (Page) cùng kích thước (thông dụng 4 KiB) và không yêu cầu cấp phát các khung trang liên tiếp).
+\end{itemize}
+
+\textbf{Bài tập 6.45 (Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Dịch địa chỉ phân trang))}\\
+Khi hệ thống phân trang dịch một \textbf{địa chỉ ảo (Virtual/Logical Address)} gồm hai phần \texttt{(Page Number, Offset)} sang \textbf{địa chỉ vật lý (Physical Address)}, thao tác nào được thực hiện?
+\begin{enumerate}[label=\Alph*.]
+    \item Tra cứu Bảng trang (Page Table) bằng Page Number để lấy Frame Number, sau đó ghép Frame Number với phần Offset giữ nguyên
+    \item Tra cứu Bảng trang bằng phần Offset để lấy Frame Number, giữ nguyên Page Number
+    \item Cộng trực tiếp Page Number với địa chỉ cơ sở của hệ điều hành và bỏ phần Offset
+    \item Dịch trái Page Number rồi XOR với Offset để tạo ra địa chỉ vật lý
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 66 (CA.RISCV.2025):
+    \item Địa chỉ ảo gồm \texttt{[Virtual Page Number (VPN) | Page Offset]}. Hệ thống dùng \texttt{VPN} làm chỉ số tra vào \textbf{Bảng trang (Page Table)} của tiến trình để thu được \texttt{Physical Frame Number (PFN)}, còn phần \textbf{Offset (địa chỉ tương đối trong trang) được giữ nguyên} để ghép thành địa chỉ vật lý \texttt{[PFN | Offset]}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Tra cứu Bảng trang (Page Table) bằng Page Number để lấy Frame Number, sau đó ghép Frame Number với phần Offset giữ nguyên).
+\end{itemize}
+
+\textbf{Bài tập 6.46 (Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Bài tập phân trang))}\\
+Một hệ thống máy tính sử dụng không gian địa chỉ ảo $32\text{-bit}$ (đánh địa chỉ theo byte) và cơ chế phân trang với kích thước mỗi trang là $4\text{ KiB}$. Số bit dành cho phần độ lệch trong trang (\texttt{Page Offset}), số bit của số hiệu trang ảo (\texttt{VPN}) và số lượng mục (entry) tối đa trong bảng trang đơn cấp lần lượt là:
+\begin{enumerate}[label=\Alph*.]
+    \item Offset = 10 bit, VPN = 22 bit, tối đa $2^{22}$ mục
+    \item Offset = 12 bit, VPN = 20 bit, tối đa $2^{20}$ mục
+    \item Offset = 12 bit, VPN = 20 bit, tối đa $2^{12}$ mục
+    \item Offset = 14 bit, VPN = 18 bit, tối đa $2^{18}$ mục
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Kích thước mỗi trang $= 4\text{ KiB} = 2^{12}\text{ byte} \Rightarrow$ số bit trường \texttt{Offset} $= \mathbf{12\text{ bit}}$.
+    \item Địa chỉ ảo dài $32\text{ bit} \Rightarrow$ số bit trường \texttt{VPN} $= 32 - 12 = \mathbf{20\text{ bit}}$.
+    \item Do có $2^{20}$ trang ảo khác nhau (từ $0$ đến $2^{20}-1$), bảng trang đơn cấp cần tối đa $\mathbf{2^{20}}$ mục (entry).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B} (Offset = 12 bit, VPN = 20 bit, tối đa $2^{20}$ mục).
+\end{itemize}
+
+\textbf{Bài tập 6.47 (Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Lỗi trang \& Thrashing))}\\
+Trong hệ thống bộ nhớ ảo phân trang, hiện tượng \textbf{Lỗi trang (Page Fault)} xảy ra khi nào và hiện tượng \textbf{Thrashing (Thất bại)} có đặc trưng gì?
+\begin{enumerate}[label=\Alph*.]
+    \item Page Fault xảy ra khi trang yêu cầu không có trong bộ nhớ chính (HĐH phải hoán đổi trang từ đĩa vào); Thrashing xảy ra khi có quá nhiều tiến trình trong bộ nhớ quá nhỏ khiến HĐH tốn gần như toàn bộ thời gian để hoán đổi trang mà ít thực hiện công việc hữu ích
+    \item Page Fault xảy ra khi Cache L1 bị trượt; Thrashing xảy ra khi CPU chạy ở tần số xung nhịp quá cao
+    \item Page Fault xảy ra khi kích thước trang lớn hơn 4 KiB; Thrashing là lỗi hỏng vật lý của ổ đĩa cứng
+    \item Page Fault chỉ xảy ra ở lệnh ghi dữ liệu; Thrashing xảy ra khi tắt cơ chế bộ nhớ ảo
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide 67--68 (CA.RISCV.2025):
+    \item \textbf{Lỗi trang (Page Fault):} Xảy ra khi trang được CPU tham chiếu hiện không nằm trong bộ nhớ chính (bit Valid = 0). Hệ điều hành phải nạp trang đó từ bộ nhớ ngoài vào RAM (và có thể phải hoán đổi một trang khác ra đĩa).
+    \item \textbf{Thất bại (Thrashing):} Khi có quá nhiều tiến trình cùng chạy trong dung lượng RAM quá nhỏ, HĐH liên tục phải hoán đổi trang (đĩa hoạt động liên tục) làm hiệu năng hệ thống sụp đổ. Giải pháp: giảm số tiến trình, bổ sung RAM hoặc cải tiến thuật toán thay trang.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A} (Page Fault xảy ra khi trang yêu cầu không có trong bộ nhớ chính (HĐH phải hoán đổi trang từ đĩa vào); Thrashing xảy ra khi có quá nhiều tiến trình trong bộ nhớ quá nhỏ khiến HĐH tốn gần như toàn bộ thời gian để hoán đổi trang mà ít thực hiện công việc hữu ích).
+\end{itemize}
+
+\textbf{Bài tập 6.48 (Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (TLB))}\\
+Vai trò chính của bộ đệm dịch địa chỉ \textbf{TLB (Translation Lookaside Buffer)} trong hệ thống bộ nhớ ảo phân trang là gì?
+\begin{enumerate}[label=\Alph*.]
+    \item Lưu trữ toàn bộ dữ liệu của các tiến trình đang tạm dừng thay cho ổ đĩa cứng
+    \item Đóng vai trò bộ nhớ Cache phần cứng tốc độ cao lưu các mục ánh xạ bảng trang (VPN $\rightarrow$ PFN) hay dùng gần đây, giúp tăng tốc quá trình dịch địa chỉ ảo sang vật lý mà không cần truy cập bảng trang trong RAM mỗi lần
+    \item Thay thế hoàn toàn bảng trang (Page Table) trong bộ nhớ chính và quản lý các khung trang trống
+    \item Mã hóa địa chỉ vật lý trước khi gửi ra bus địa chỉ để chống tràn số
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Do \textbf{Bảng trang (Page Table)} nằm trong bộ nhớ chính (RAM), nếu không có TLB thì mỗi lần CPU truy cập dữ liệu sẽ cần tới \textbf{2 lần truy cập RAM} (1 lần đọc bảng trang để dịch địa chỉ, 1 lần đọc dữ liệu thực). \textbf{TLB} là bộ đệm Cache chuyên dụng bên trong MMU lưu các ánh xạ \texttt{VPN $\rightarrow$ PFN} được sử dụng gần đây nhất (tận dụng nguyên lý cục bộ), giúp dịch địa chỉ trong 1 chu kỳ khi TLB hit.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B} (Đóng vai trò bộ nhớ Cache phần cứng tốc độ cao lưu các mục ánh xạ bảng trang (VPN $\rightarrow$ PFN) hay dùng gần đây, giúp tăng tốc quá trình dịch địa chỉ ảo sang vật lý mà không cần truy cập bảng trang trong RAM mỗi lần).
+\end{itemize}
+

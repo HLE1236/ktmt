@@ -1,0 +1,992 @@
+\chapter{SỐ HỌC MÁY TÍNH}
+
+\section{Phần 1: Lý thuyết trọng tâm}
+
+\subsection{Hệ đếm và Chuyển đổi giữa các hệ đếm}
+
+\textbf{1. Ba hệ đếm cơ bản trong máy tính}
+\begin{itemize}
+    \item \textbf{Hệ thập phân (Decimal -- Cơ số 10):} Gồm $10$ chữ số từ $0$ đến $9$. Dùng $n$ chữ số thập phân biểu diễn được $10^n$ giá trị khác nhau (từ $0$ đến $10^n - 1$).
+    \item \textbf{Hệ nhị phân (Binary -- Cơ số 2):} Gồm $2$ chữ số là $0$ và $1$ (mỗi chữ số nhị phân gọi là $1\text{ bit}$ -- đơn vị thông tin nhỏ nhất). Một nhóm $8\text{ bit}$ tạo thành $1\text{ byte}$ ($2^8 = 256$ giá trị). Dùng $n\text{ bit}$ có thể biểu diễn được \textbf{$2^n\text{ giá trị}$} khác nhau.
+    \item \textbf{Hệ mười sáu (Hexadecimal -- Cơ số 16):} Gồm $16$ ký tự: \texttt{0--9} và \texttt{A} ($10$), \texttt{B} ($11$), \texttt{C} ($12$), \texttt{D} ($13$), \texttt{E} ($14$), \texttt{F} ($15$). Hệ Hexa dùng để viết gọn cho số nhị phân: cứ \textbf{1 nhóm 4-bit nhị phân} (tính từ dấu phẩy sang hai bên) được thay bằng đúng \textbf{1 chữ số Hexa}.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Bảng quy đổi chuẩn giữa 4-bit Nhị phân, Hệ Hexa và Hệ Thập phân}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|Z|Z|Z||Z|Z|Z||Z|Z|Z||Z|Z|Z|}
+\hline
+\textbf{Hệ 2} & \textbf{Hex} & \textbf{Hệ 10} & \textbf{Hệ 2} & \textbf{Hex} & \textbf{Hệ 10} & \textbf{Hệ 2} & \textbf{Hex} & \textbf{Hệ 10} & \textbf{Hệ 2} & \textbf{Hex} & \textbf{Hệ 10} \\ \hline
+\texttt{0000} & \texttt{0} & $0$ & \texttt{0100} & \texttt{4} & $4$ & \texttt{1000} & \texttt{8} & $8$ & \texttt{1100} & \texttt{C} & $12$ \\ \hline
+\texttt{0001} & \texttt{1} & $1$ & \texttt{0101} & \texttt{5} & $5$ & \texttt{1001} & \texttt{9} & $9$ & \texttt{1101} & \texttt{D} & $13$ \\ \hline
+\texttt{0010} & \texttt{2} & $2$ & \texttt{0110} & \texttt{6} & $6$ & \texttt{1010} & \texttt{A} & $10$ & \texttt{1110} & \texttt{E} & $14$ \\ \hline
+\texttt{0011} & \texttt{3} & $3$ & \texttt{0111} & \texttt{7} & $7$ & \texttt{1011} & \texttt{B} & $11$ & \texttt{1111} & \texttt{F} & $15$ \\ \hline
+\end{tabularx}
+\end{center}
+\end{tcolorbox}
+
+\textbf{2. Công thức giá trị và Quy tắc chuyển đổi giữa Hệ 10 và Hệ 2}
+\begin{itemize}
+    \item \textbf{Dạng tổng quát của số nhị phân có cả phần nguyên và phần lẻ:}
+    $$A = a_n a_{n-1} \dots a_1 a_0 . a_{-1} a_{-2} \dots a_{-m (2)} = \sum_{i=-m}^{n} a_i \times 2^i$$
+    Trong đó các bit phần nguyên có trọng số là $2^0 = 1, 2^1 = 2, 2^2 = 4, 2^3 = 8, 2^4 = 16, 2^5 = 32, 2^6 = 64, 2^7 = 128\dots$; các bit phần lẻ sau dấu phẩy có trọng số là:
+    $$2^{-1} = 0.5 \quad ; \quad 2^{-2} = 0.25 \quad ; \quad 2^{-3} = 0.125 \quad ; \quad 2^{-4} = 0.0625 \quad ; \quad 2^{-5} = 0.03125$$
+    \item \textbf{Chuyển đổi số thập phân sang nhị phân:}
+    \begin{itemize}
+        \item \textit{Đối với phần nguyên:} Chia liên tiếp cho $2$ rồi viết các số dư theo thứ tự ngược từ dưới lên (hoặc phân tích thành tổng các lũy thừa $2^i$ giảm dần: $128, 64, 32, 16, 8, 4, 2, 1$).
+        \item \textit{Đối với phần lẻ thập phân:} Nhân liên tiếp phần lẻ với $2$, lấy phần nguyên ($0$ hoặc $1$) sau mỗi lần nhân viết theo thứ tự từ trên xuống dưới.
+        \item \textit{Lưu ý về số thực không thể biểu diễn chính xác tuyệt đối trong hệ nhị phân:} Một số lẻ thập phân chỉ biểu diễn chính xác hữu hạn trong hệ nhị phân nếu phần lẻ của nó viết được dưới dạng phân số tối giản có mẫu số là lũy thừa của $2$ ($\dfrac{k}{2^m}$, như $0.5 = \dfrac{1}{2}, 0.25 = \dfrac{1}{4}, 0.75 = \dfrac{3}{4}, 0.125 = \dfrac{1}{8}, 0.375 = \dfrac{3}{8}, 0.625 = \dfrac{5}{8}$). Các số như $0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 0.9$ khi nhân đôi liên tiếp sẽ lặp vô hạn tuần hoàn nên \textbf{không thể biểu diễn chính xác tuyệt đối} bằng số dấu phẩy động nhị phân.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Đại số Boolean, Cổng logic và Mạch số cơ bản}
+
+\textbf{1. Các phép toán Đại số Boolean và Cổng logic cơ bản}
+\begin{itemize}
+    \item \textbf{Ba phép toán cơ bản:} NOT ($\overline{A}$ hoặc $A'$), AND ($A \cdot B$ hoặc $AB$), OR ($A + B$). Thứ tự ưu tiên: $\text{NOT} > \text{AND} > \text{OR}$.
+    \item \textbf{Ba phép toán mở rộng:}
+    \begin{itemize}
+        \item NAND (NOT-AND): $F = \overline{A \cdot B}$ (Chỉ bằng $0$ khi cả $A = 1$ và $B = 1$).
+        \item NOR (NOT-OR): $F = \overline{A + B}$ (Chỉ bằng $1$ khi cả $A = 0$ và $B = 0$).
+        \item XOR (Exclusive-OR): $F = A \oplus B = \overline{A}B + A\overline{B}$ (Bằng $1$ khi hai đầu vào khác nhau; bằng $0$ khi hai đầu vào giống nhau).
+    \end{itemize}
+    \item \textbf{Định lý De Morgan:} $\overline{A \cdot B} = \overline{A} + \overline{B}$ \quad và \quad $\overline{A + B} = \overline{A} \cdot \overline{B}$.
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Ký hiệu hình vẽ chuẩn của 6 cổng logic cơ bản}]
+\begin{center}
+\begin{tikzpicture}[
+    gate/.style={draw=black, thick},
+    every node/.style={font=\small}
+]
+    % Hàng 1: AND, OR, NOT
+    \node[and gate US, draw, thick, logic gate inputs=nn, minimum height=0.8cm] (andg) at (0, 1.5) {};
+    \draw (andg.input 1) -- ++(-0.5,0) node[left] {$A$};
+    \draw (andg.input 2) -- ++(-0.5,0) node[left] {$B$};
+    \draw (andg.output) -- ++(0.5,0) node[right] {$F = AB$};
+    \node[below=4pt of andg, font=\bfseries\footnotesize] {Cổng AND};
+
+    \node[or gate US, draw, thick, logic gate inputs=nn, minimum height=0.8cm] (org) at (5.2, 1.5) {};
+    \draw (org.input 1) -- ++(-0.5,0) node[left] {$A$};
+    \draw (org.input 2) -- ++(-0.5,0) node[left] {$B$};
+    \draw (org.output) -- ++(0.5,0) node[right] {$F = A + B$};
+    \node[below=4pt of org, font=\bfseries\footnotesize] {Cổng OR};
+
+    \node[not gate US, draw, thick, minimum height=0.6cm] (notg) at (10.5, 1.5) {};
+    \draw (notg.input) -- ++(-0.5,0) node[left] {$A$};
+    \draw (notg.output) -- ++(0.5,0) node[right] {$F = \overline{A}$};
+    \node[below=6pt of notg, font=\bfseries\footnotesize] {Cổng NOT};
+
+    % Hàng 2: NAND, NOR, XOR
+    \node[nand gate US, draw, thick, logic gate inputs=nn, minimum height=0.8cm] (nandg) at (0, -0.5) {};
+    \draw (nandg.input 1) -- ++(-0.5,0) node[left] {$A$};
+    \draw (nandg.input 2) -- ++(-0.5,0) node[left] {$B$};
+    \draw (nandg.output) -- ++(0.5,0) node[right] {$F = \overline{AB}$};
+    \node[below=4pt of nandg, font=\bfseries\footnotesize] {Cổng NAND};
+
+    \node[nor gate US, draw, thick, logic gate inputs=nn, minimum height=0.8cm] (norg) at (5.2, -0.5) {};
+    \draw (norg.input 1) -- ++(-0.5,0) node[left] {$A$};
+    \draw (norg.input 2) -- ++(-0.5,0) node[left] {$B$};
+    \draw (norg.output) -- ++(0.5,0) node[right] {$F = \overline{A+B}$};
+    \node[below=4pt of norg, font=\bfseries\footnotesize] {Cổng NOR};
+
+    \node[xor gate US, draw, thick, logic gate inputs=nn, minimum height=0.8cm] (xorg) at (10.5, -0.5) {};
+    \draw (xorg.input 1) -- ++(-0.5,0) node[left] {$A$};
+    \draw (xorg.input 2) -- ++(-0.5,0) node[left] {$B$};
+    \draw (xorg.output) -- ++(0.5,0) node[right] {$F = A \oplus B$};
+    \node[below=4pt of xorg, font=\bfseries\footnotesize] {Cổng XOR};
+\end{tikzpicture}
+\end{center}
+\end{tcolorbox}
+
+\textbf{2. Các mạch tổ hợp và mạch dãy cơ bản trong máy tính}
+\begin{itemize}
+    \item \textbf{Mạch tổ hợp (Combinational Circuits -- mạch không nhớ):} Giá trị đầu ra chỉ phụ thuộc vào tổ hợp giá trị đầu vào tại thời điểm hiện tại. Các bộ phận điển hình:
+    \begin{itemize}
+        \item \textit{Bộ ghép kênh (MUX -- Multiplexer):} Có $2^n$ đầu vào dữ liệu, $n$ đầu vào chọn ($S$) và $1$ đầu ra. Với MUX 2-ra-1: $F = D_0 \cdot \overline{S} + D_1 \cdot S$ (khi $S = 0$ thì nối $D_0$ ra $F$; khi $S = 1$ thì nối $D_1$ ra $F$).
+        \item \textit{Bộ giải mã (Decoder):} Có $n$ đầu vào và $2^n$ đầu ra. Với mỗi tổ hợp của $n$ đầu vào, chỉ có duy nhất $1$ đầu ra tích cực.
+        \item \textit{Bộ cộng bán phần 1-bit (Half Adder):} Cộng 2 bit $A, B$ tạo ra bit tổng $S = A \oplus B$ (dùng cổng \textbf{XOR}) và bit nhớ ra $C_{out} = A \cdot B$ (dùng cổng \textbf{AND}).
+        \item \textit{Bộ cộng toàn phần 1-bit (Full Adder):} Cộng 3 bit ($A, B$ và bit nhớ vào $C_{in}$, hoặc ký hiệu là $C$) tạo ra bit tổng $S$ và bit nhớ ra $C_{out}$:
+        $$S = A \oplus B \oplus C = \overline{A}\,\overline{B}C + \overline{A}B\overline{C} + A\overline{B}\,\overline{C} + ABC \quad ; \quad C_{out} = AB + AC + BC$$
+        (\textit{Quy tắc nhớ nhanh Full Adder:} Đếm số lượng bit $1$ trong 3 đầu vào $(A, B, C)$: nếu có \textbf{lẻ} bit $1$ tức $1$ hoặc $3$ bit $1$ thì $S = 1$, ngược lại $S = 0$; nếu có \textbf{từ 2 bit $1$ trở lên} thì $C_{out} = 1$, ngược lại $C_{out} = 0$).
+    \end{itemize}
+    \item \textbf{Mạch dãy (Sequential Circuits -- mạch có nhớ):} Đầu ra phụ thuộc cả đầu vào hiện tại và trạng thái quá khứ. Được xây dựng từ các phần tử nhớ \textbf{Flip-Flop} (S-R, J-K, D) kết hợp xung nhịp (Clock) để tạo thành các \textbf{Thanh ghi song song} và \textbf{Thanh ghi dịch}.
+\end{itemize}
+
+\subsection{Biểu diễn Số nguyên không dấu và Số nguyên có dấu (Mã bù 2)}
+
+\textbf{1. Biểu diễn số nguyên không dấu (Unsigned Integer) với $n$ bit}
+\begin{itemize}
+    \item Tất cả $n$ bit ($a_{n-1}a_{n-2}\dots a_1a_0$) đều dùng để biểu diễn độ lớn: $A = \sum_{i=0}^{n-1} a_i 2^i$.
+    \item \textbf{Dải biểu diễn của số nguyên không dấu $n$ bit:} Từ \textbf{$0$ đến $2^n - 1$}.
+    \begin{itemize}
+        \item Ví dụ: Với $8\text{ bit}$: $[0, 255]$; với $9\text{ bit}$: $[0, 511]$; với $10\text{ bit}$: $[0, 1023]$; với $16\text{ bit}$: $[0, 65\,535]$.
+        \item Bài toán ngược: Để đếm hoặc mã hóa $M$ đối tượng không âm (ví dụ đếm $M$ sinh viên hoặc $M$ chỗ ngồi), số bit tối thiểu $n$ cần dùng phải thỏa mãn $2^n \ge M$ (hoặc $2^n - 1 \ge M$ nếu tính cả giá trị $0$).
+    \end{itemize}
+\end{itemize}
+
+\textbf{2. Biểu diễn số nguyên có dấu (Signed Integer) theo Mã bù hai (Two's Complement)}\\
+Trong máy tính, số nguyên có dấu $n\text{ bit}$ ($A = a_{n-1}a_{n-2}\dots a_1a_0$) được biểu diễn theo \textbf{Mã bù hai}. Bit ngoài cùng bên trái ($a_{n-1}$) là \textbf{bit dấu (Sign bit)}:
+\begin{itemize}
+    \item Nếu $a_{n-1} = 0$: $A$ là số không âm ($\ge 0$). Giá trị tính như số không dấu: $A = \sum_{i=0}^{n-2} a_i 2^i$.
+    \item Nếu $a_{n-1} = 1$: $A$ là số nguyên âm ($< 0$).
+    \item \textbf{Công thức tổng quát xác định giá trị của số bù hai $n$ bit:}
+    $$A = -a_{n-1}2^{n-1} + \sum_{i=0}^{n-2} a_i 2^i$$
+    \item \textbf{Dải biểu diễn của số nguyên có dấu $n$ bit:} Từ \textbf{$-2^{n-1}$ đến $+(2^{n-1} - 1)$}.
+    \item \textbf{Quy tắc tìm Mã bù một và Mã bù hai (Phép đảo dấu số nguyên):}
+    \begin{enumerate}
+        \item \textbf{Bước 1 (Tìm số bù một):} Đảo giá trị tất cả các bit của số ban đầu ($0 \rightarrow 1$ và $1 \rightarrow 0$).
+        \item \textbf{Bước 2 (Tìm số bù hai):} Lấy số bù một \textbf{cộng thêm 1} ở bit cuối cùng bên phải:
+        $$\text{Số bù hai của } A = (\text{Số bù một của } A) + 1 = 2^n - A = -A$$
+    \end{enumerate}
+    \item \textbf{Quy tắc mở rộng bit cho số nguyên (Sign-extension vs. Zero-extension):}
+    \begin{itemize}
+        \item \textit{Mở rộng không dấu (Zero-extended):} Luôn thêm các bit \texttt{0} vào bên trái.
+        \item \textit{Mở rộng có dấu (Sign-extended):} Giữ nguyên giá trị của bit dấu đẩy sang toàn bộ các bit mới ở bên trái (số dương thêm toàn bit \texttt{0}, tức chữ Hexa \texttt{0}; số âm thêm toàn bit \texttt{1}, tức chữ Hexa \texttt{F}).
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Bảng dải biểu diễn của Số nguyên có dấu và Mẹo tính nhẩm nhanh}]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\linewidth}{|L{2.6cm}|C{3.6cm}|C{3.2cm}|Y|}
+\hline
+\textbf{Số lượng bit ($n$)} & \textbf{Dải giá trị thập phân} & \textbf{Số âm nhỏ nhất} & \textbf{Số dương lớn nhất} \\ \hline
+$6\text{ bit}$ & $[-32, +31]$ & $100000_{(2)}$ ($-32$) & $011111_{(2)}$ ($+31$) \\ \hline
+$8\text{ bit}$ (\texttt{char}) & $[-128, +127]$ & \texttt{0x80} ($-128$) & \texttt{0x7F} ($+127$) \\ \hline
+$9\text{ bit}$ & $[-256, +255]$ & $1\,0000\,0000_{(2)}$ ($-256$) & $0\,1111\,1111_{(2)}$ ($+255$) \\ \hline
+$12\text{ bit}$ (\texttt{imm}) & $[-2048, +2047]$ & \texttt{0x800} ($-2048$) & \texttt{0x7FF} ($+2047$) \\ \hline
+$16\text{ bit}$ (\texttt{short}) & $[-32\,768, +32\,767]$ & \texttt{0x8000} ($-32\,768$) & \texttt{0x7FFF} ($+32\,767$) \\ \hline
+$32\text{ bit}$ (\texttt{int}) & $[-2^{31}, +2^{31}-1]$ & \texttt{0x80000000} & \texttt{0x7FFFFFFF} \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Ba quy tắc tính nhẩm nhanh số bù hai trong phòng thi:}
+\begin{enumerate}
+    \item \textbf{Với số 8-bit có dấu ($a_7a_6a_5a_4a_3a_2a_1a_0$):} Bit đầu $a_7$ mang giá trị $\mathbf{-128}$, các bit còn lại mang giá trị dương $+64, +32, +16, +8, +4, +2, +1$. (Ví dụ: $\texttt{0x8E} = 1000\,1110_2 = -128 + 8 + 4 + 2 = -114$).
+    \item \textbf{Với các số Hexa có dạng toàn chữ \texttt{F} ở đầu (như \texttt{0xFFFFFFF3} hoặc \texttt{0xFFA}):} Vì \texttt{0xFFFFFFFF} $= -1$, nên nếu tất cả các chữ số phía trước đều là \texttt{F}, chỉ cần lấy \textbf{chữ số Hexa cuối cùng trừ đi 16} (Ví dụ: \texttt{0xFFFFFFF3} $\implies 3 - 16 = -13$; \texttt{0xFFA} $\implies 10 - 16 = -6$).
+    \item \textbf{So sánh nhanh các số nguyên có dấu viết ở dạng Hexa:}
+    \begin{itemize}
+        \item Chữ số Hexa đầu tiên từ \texttt{0} đến \texttt{7}: Bit dấu bằng $0 \implies$ \textbf{Số dương} (hoặc $0$).
+        \item Chữ số Hexa đầu tiên từ \texttt{8} đến \texttt{F}: Bit dấu bằng $1 \implies$ \textbf{Số âm} (luôn nhỏ hơn mọi số dương).
+    \end{itemize}
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Cộng / Trừ / Nhân / Chia số nguyên và Hiện tượng Tràn số học (Overflow)}
+
+\textbf{1. Cộng số nguyên không dấu và Tràn nhớ (Carry Out)}
+\begin{itemize}
+    \item Khi cộng hai số nguyên \textbf{không dấu} $n\text{ bit}$, nếu tổng vượt quá $2^n - 1$ thì phát sinh bit nhớ ra ngoài cùng $\mathbf{C_{out} = 1}$, làm kết quả $n\text{ bit}$ bị sai (gọi là tràn nhớ). Nếu $C_{out} = 0$ thì kết quả đúng.
+\end{itemize}
+
+\textbf{2. Cộng/Trừ số nguyên có dấu và Hiện tượng Tràn số học (Overflow)}
+\begin{itemize}
+    \item Phép trừ hai số nguyên được phần cứng đưa về phép cộng thông qua lấy bù hai: $X - Y = X + (-Y) = X + \overline{Y} + 1$.
+    \item Khi cộng hai số nguyên \textbf{có dấu} $n\text{ bit}$, kết quả đúng hay sai \textbf{không phụ thuộc vào bit nhớ $C_{out}$}:
+    \begin{itemize}
+        \item Khi cộng hai số nguyên \textbf{trái dấu nhau}: Kết quả \textbf{luôn luôn đúng} (không bao giờ xảy ra tràn số học).
+        \item Khi cộng hai số nguyên \textbf{cùng dấu nhau}: Nếu bit dấu của kết quả giống với bit dấu của hai số hạng ban đầu thì kết quả đúng. Nếu bit dấu của kết quả \textbf{ngược lại} với bit dấu của hai số hạng ban đầu (Cộng hai số dương ra số âm, hoặc Cộng hai số âm ra số dương) thì xảy ra \textbf{Tràn số học (Overflow)} và kết quả bị sai!
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[bwbox, title={Hai dạng bài toán Tràn số học (Overflow) trọng tâm trong đề thi}]
+\textbf{Dạng 1: Tính giá trị hiển thị khi cộng hai biến \texttt{char} (8-bit có dấu) bị tràn}\\
+Biến kiểu \texttt{char} (hoặc \texttt{int8\_t}) có dải giá trị $[-128, +127]$. Tính tổng toán học thông thường $S = x + y$:
+\begin{itemize}
+    \item Nếu $S \in [-128, +127]$: Không tràn, kết quả chính là $S$.
+    \item Nếu $S > +127$ (tràn dương): Lấy $S - 256$ (Ví dụ: $85 + 52 = 137 > 127 \implies 137 - 256 = -119$).
+    \item Nếu $S < -128$ (tràn âm): Lấy $S + 256$ (Ví dụ: $(-91) + (-67) = -158 < -128 \implies -158 + 256 = +98$).
+\end{itemize}
+
+\textbf{Dạng 2: Tìm phạm vi của thanh ghi thứ hai gây tràn khi thực hiện lệnh \texttt{add rd, rs1, rs2}}\\
+Giả sử thanh ghi thứ nhất đang giữ một số nguyên dương $K > 0$ (ví dụ $K = 512 = \texttt{0x200}$ hoặc $K = 1024 = \texttt{0x400}$). Vì $K > 0$, phép cộng 32-bit \texttt{add} chỉ bị tràn khi thanh ghi thứ hai cũng là một số dương lớn sao cho tổng vượt quá số dương lớn nhất 32-bit là $\text{MAX} = \texttt{0x7FFFFFFF}$:
+$$K + \texttt{rs2} > \texttt{0x7FFFFFFF} \iff \texttt{rs2} \ge \texttt{0x80000000} - K$$
+Vậy phạm vi của thanh ghi thứ hai gây tràn luôn là: \textbf{Từ $(\texttt{0x80000000} - K)$ đến $\texttt{0x7FFFFFFF}$}.\\
+(\textit{Lưu ý:} Điểm kết thúc luôn là \texttt{0x7FFFFFFF}, không bao giờ chọn đáp án kết thúc bởi \texttt{0x80000000} vì \texttt{0x80000000} là số âm $-2^{31}$, cộng với số dương $K$ là hai số trái dấu nên không bao giờ tràn).
+\end{tcolorbox}
+
+\textbf{3. Nhân/Chia số nguyên và Quy tắc dấu của phép chia trong RISC-V (RV32M)}
+\begin{itemize}
+    \item \textbf{Nhân hai số 32-bit tạo tích 64-bit:} Lệnh \texttt{mul rd, rs1, rs2} lấy 32 bit thấp của tích; các lệnh \texttt{mulh} (2 số có dấu), \texttt{mulhu} (2 số không dấu), \texttt{mulhsu} (\texttt{rs1} có dấu, \texttt{rs2} không dấu) lấy 32 bit cao của tích.
+    \item \textbf{Chia hai số nguyên 32-bit có dấu (\texttt{div} và \texttt{rem}):}
+    $$\text{Số bị chia} = (\text{Số chia} \times \text{Thương}) + \text{Số dư}$$
+    \begin{itemize}
+        \item \textbf{Dấu của Thương (\texttt{div rd, rs1, rs2}):} Cùng dấu thì thương dương ($+$); khác dấu thì thương âm ($-$).
+        \item \textbf{Dấu của Số dư (\texttt{rem rd, rs1, rs2}):} Số dư luôn luôn \textbf{cùng dấu với SỐ BỊ CHIA (\texttt{rs1})}, bất kể số chia âm hay dương.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Số thực dấu phẩy động chuẩn IEEE 754}
+
+\textbf{1. Cấu trúc chuẩn IEEE 754 độ chính xác đơn 32-bit (Single Precision -- Binary32)}\\
+Một số thực dấu phẩy động 32-bit gồm 3 trường từ trái sang phải (\textbf{1 bit -- 8 bit -- 23 bit}):
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{0.85\linewidth}{|C{2.8cm}|C{4.2cm}|Z|}
+\hline
+\textbf{Bit 31 (1 bit)} & \textbf{Bit 30:23 (8 bit)} & \textbf{Bit 22:0 (23 bit)} \\ \hline
+Bit dấu $S$ (Sign) & Số mũ lệch $e$ (Biased Exponent) & Phần lẻ định trị $m$ (Fraction) \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Công thức xác định giá trị của số thực $X$ ở trạng thái chuẩn hóa ($0 < e < 255$):}
+$$X = (-1)^S \times (1.m)_{(2)} \times 2^{e - 127}$$
+Trong đó:
+\begin{itemize}
+    \item \textbf{Bit dấu $S$:} Nếu $S = 0$ thì $X > 0$ (số dương); nếu $S = 1$ thì $X < 0$ (số âm).
+    \item \textbf{Số mũ thực $E$:} $E = e - 127 \iff e = E + 127$ (số $127$ là hằng số độ lệch Bias của dạng 32-bit).
+    \item \textbf{Phần định trị $M = (1.m)_{(2)}$:} Bit $1.$ trước dấu phẩy được ẩn đi (implied bit) để tiết kiệm 1 bit lưu trữ.
+    \item (\textit{Với dạng 64-bit Double Precision:} Gồm $1\text{ bit}$ dấu $S$, $11\text{ bit}$ mũ $e = E + 1023$, và $52\text{ bit}$ lẻ định trị $m$).
+\end{itemize}
+
+\textbf{2. Các giá trị đặc biệt trong chuẩn IEEE 754 32-bit}
+\begin{itemize}
+    \item \textbf{Số $\pm 0$:} Khi tất cả 8 bit mũ $e = 0$ (\texttt{00000000}) và tất cả 23 bit $m = 0$ (\texttt{0x00000000} là $+0$; \texttt{0x80000000} là $-0$).
+    \item \textbf{Số Vô cùng ($\pm \infty$ -- Infinity):} Khi tất cả 8 bit mũ $e = 255$ (\texttt{11111111}) và tất cả 23 bit $m = 0$:
+    \begin{itemize}
+        \item $+\infty$ có mã Hexa là \textbf{\texttt{0x7F800000}} (3 chữ số Hexa đầu là \texttt{7F8}).
+        \item $-\infty$ có mã Hexa là \textbf{\texttt{0xFF800000}} (3 chữ số Hexa đầu là \texttt{FF8}).
+    \end{itemize}
+    \item \textbf{Không phải là số (NaN -- Not a Number):} Khi tất cả 8 bit mũ $e = 255$ (\texttt{11111111}) và phần lẻ định trị $\mathbf{m \neq 0}$ (có ít nhất 1 bit bằng $1$ trong 23 bit của $m$).
+    \begin{itemize}
+        \item \textit{Tổng số cách biểu diễn NaN trong chuẩn 32-bit:} Trường $e = \texttt{11111111}$ có $1$ cách; phần lẻ $m$ (23 bit) phải khác $0$ nên có $2^{23} - 1$ tổ hợp; bit dấu $S$ có $2$ cách chọn ($0$ hoặc $1$). Vậy tổng số biểu diễn NaN là:
+        $$2 \times (2^{23} - 1) = \mathbf{2^{24} - 2}$$
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\section{Phần 2: Toàn bộ bài tập Chương 4 và Hướng dẫn giải}
+
+\subsection{Nhóm 1: Hệ đếm, Chuyển đổi cơ số và Xác định số bit biểu diễn}
+
+\textbf{Bài tập 4.1 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 7 \& Mã đề 199 Câu 2)}\\
+Số dương $1101011.1011$ ở hệ cơ số 2 bằng với số nào trong các số thập phân sau đây?
+\begin{enumerate}[label=\Alph*.]
+    \item $107.125_{(10)}$
+    \item $107.129_{(10)}$
+    \item $107.1875_{(10)}$
+    \item $107.6875_{(10)}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Tính phần nguyên $1101011_{(2)}$):}
+    $$1101011_{(2)} = 2^6 + 2^5 + 0 + 2^3 + 0 + 2^1 + 2^0 = 64 + 32 + 8 + 2 + 1 = 107$$
+    \item \textbf{Bước 2 (Tính phần lẻ $.1011_{(2)}$):}
+    $$0.1011_{(2)} = 1 \times 2^{-1} + 0 \times 2^{-2} + 1 \times 2^{-3} + 1 \times 2^{-4} = 0.5 + 0.125 + 0.0625 = 0.6875$$
+    \item \textbf{Bước 3 (Ghép lại):} $1101011.1011_{(2)} = 107.6875_{(10)}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D ($107.6875_{(10)}$)}.
+\end{itemize}
+
+\textbf{Bài tập 4.2 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 3, Mã đề 199 Câu 12, 18, Mã đề 204 Câu 3, 20 \& Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 4, Mã đề 244 Câu 11)}\\
+Hãy trả lời chuỗi câu hỏi về dải biểu diễn và số lượng bit cần dùng cho số nguyên:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 198 -- Câu 3):} Sử dụng $9\text{ bit}$ để biểu diễn một số nguyên \textbf{có dấu}, dải biểu diễn sẽ là?\\
+    A. Từ $-255$ tới $+256$ \quad B. Từ $-256$ tới $+255$ \quad C. Từ $0$ tới $255$ \quad D. Từ $0$ tới $511$
+    \item \textbf{(Mã đề 204 -- Câu 3):} Sử dụng $9\text{ bit}$ để biểu diễn một số nguyên \textbf{không dấu}, dải biểu diễn sẽ là?\\
+    A. Từ $0$ tới $255$ \quad B. Từ $-256$ tới $+255$ \quad C. Từ $-255$ tới $+256$ \quad D. Từ $0$ tới $511$
+    \item \textbf{(Mã đề 199 -- Câu 18):} Sử dụng $10\text{ bit}$ để biểu diễn một số nguyên \textbf{không dấu}, dải biểu diễn sẽ là?\\
+    A. Từ $-511$ tới $+512$ \quad B. Từ $0$ tới $1023$ \quad C. Từ $-512$ tới $+511$ \quad D. Từ $0$ tới $511$
+    \item \textbf{(Mã đề 199 -- Câu 12):} Biết rằng $511$ là số không dấu lớn nhất trong phạm vi biểu diễn. Vậy kiểu dữ liệu số nguyên này có bao nhiêu bit?\\
+    A. $9\text{ bit}$ \quad B. $8\text{ bit}$ \quad C. $10\text{ bit}$ \quad D. $11\text{ bit}$
+    \item \textbf{(Mã đề 204 -- Câu 20):} Sử dụng $6\text{ bit}$ nhị phân để biểu diễn số nguyên \textbf{có dấu}. Hỏi giá trị lớn nhất có thể biểu diễn là bao nhiêu?\\
+    A. $15$ \quad B. $31$ \quad C. $16$ \quad D. $32$
+    \item \textbf{(Mã đề 243 Câu 4 \& Mã đề 244 Câu 11):}
+    \begin{itemize}
+        \item Lớp học Kiến trúc máy tính có $150$ sinh viên. Biến số nguyên để đếm số sinh viên cần tối thiểu mấy bit?
+        \item Hội trường C2 có $1008$ chỗ ngồi. Biến số nguyên để đếm số ghế cần tối thiểu mấy bit?
+    \end{itemize}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Câu a:} Với $n = 9\text{ bit}$ có dấu, dải biểu diễn là $[-2^{9-1}, +2^{9-1}-1] = [-2^8, +2^8-1] = [\mathbf{-256, +255}]$ $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Câu b:} Với $n = 9\text{ bit}$ không dấu, dải biểu diễn là $[0, 2^9 - 1] = [\mathbf{0, 511}]$ $\rightarrow$ Chọn \textbf{D}.
+    \item \textbf{Câu c:} Với $n = 10\text{ bit}$ không dấu, dải biểu diễn là $[0, 2^{10} - 1] = [\mathbf{0, 1023}]$ $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Câu d:} Ta có $2^n - 1 = 511 \iff 2^n = 512 = 2^9 \implies n = \mathbf{9\text{ bit}}$ $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Câu e:} Với $n = 6\text{ bit}$ có dấu, giá trị dương lớn nhất là $2^{6-1} - 1 = 2^5 - 1 = \mathbf{31}$ $\rightarrow$ Chọn \textbf{B}.
+    \item \textbf{Câu f:}
+    \begin{itemize}
+        \item Để đếm $150$ sinh viên: Vì $2^7 - 1 = 127 < 150 \le 2^8 - 1 = 255$, cần tối thiểu \textbf{8 bit}.
+        \item Để đếm $1008$ chỗ ngồi: Vì $2^9 - 1 = 511 < 1008 \le 2^{10} - 1 = 1023$, cần tối thiểu \textbf{10 bit}.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 2: Nhận diện Cổng logic, Mạch tổ hợp và Bộ cộng 1-bit}
+
+\textbf{Bài tập 4.3 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 16 \& Câu 74)}\\
+Hãy cho biết mỗi hình vẽ ký hiệu cổng logic dưới đây biểu diễn cho phép toán logic nào?
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small}]
+    % Hình a: Cổng NAND (Câu 16)
+    \node[nand gate US, draw, thick, logic gate inputs=nn, minimum height=1.0cm, minimum width=1.4cm] (g1) at (-3.5, 0) {};
+    \draw[thick] (g1.input 1) -- ++(-0.7,0) node[left, font=\bfseries] {A};
+    \draw[thick] (g1.input 2) -- ++(-0.7,0) node[left, font=\bfseries] {B};
+    \draw[thick] (g1.output) -- ++(0.7,0);
+    \node[below=8pt of g1, font=\bfseries] {Hình a) Câu 16};
+
+    % Hình b: Cổng XOR (Câu 74)
+    \node[xor gate US, draw, thick, logic gate inputs=nn, minimum height=1.0cm, minimum width=1.4cm] (g2) at (3.5, 0) {};
+    \draw[thick] (g2.input 1) -- ++(-0.7,0) node[left, font=\bfseries] {A};
+    \draw[thick] (g2.input 2) -- ++(-0.7,0) node[left, font=\bfseries] {B};
+    \draw[thick] (g2.output) -- ++(0.7,0);
+    \node[below=8pt of g2, font=\bfseries] {Hình b) Câu 74};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu 16 -- Hình a):} A. NOR \qquad B. XOR \qquad C. AND \qquad D. NAND
+    \item \textbf{(Câu 74 -- Hình b):} A. XOR \qquad B. AND \qquad C. NOR \qquad D. NAND
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Hình a):} Thân cổng có hình chữ D là cổng AND, ở đầu ra có thêm vòng tròn nhỏ đảo bit (NOT) tạo thành cổng \textbf{NAND} ($F = \overline{AB}$) $\rightarrow$ Chọn \textbf{D (NAND)}.
+    \item \textbf{Giải câu b (Hình b):} Thân cổng có mũi nhọn giống cổng OR nhưng có thêm một đường cong tách rời ở phần đuôi là ký hiệu của cổng \textbf{XOR} ($F = A \oplus B$) $\rightarrow$ Chọn \textbf{A (XOR)}.
+\end{itemize}
+
+\textbf{Bài tập 4.4 (Slide Chương 4 -- Trang 30 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 51)}\\
+Mạch logic tổ hợp dưới đây có biểu thức đại số Boolean là gì? (Ký hiệu $A'$ là NOT $A$):
+\begin{center}
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\small}]
+    % 3 đường dọc A, B, C và 3 cổng NOT
+    \foreach \x/\lbl in {0/A, 2.0/B, 4.0/C} {
+        \node[font=\bfseries] at (\x, 3.8) {\lbl};
+        \draw[thick] (\x, 3.5) -- (\x, -2.5);
+        \fill (\x, 3.2) circle (2pt);
+        \draw[thick] (\x, 3.2) -- (\x+0.7, 3.2) -- (\x+0.7, 2.9);
+        \node[not gate US, draw, thick, rotate=-90, minimum width=0.45cm] (not\lbl) at (\x+0.7, 2.6) {};
+        \draw[thick] (not\lbl.output) -- (\x+0.7, -2.5);
+    }
+
+    % 3 cổng AND
+    \node[and gate US, draw, thick, logic gate inputs=nnn, minimum height=0.9cm] (and1) at (6.8, 1.4) {};
+    \node[and gate US, draw, thick, logic gate inputs=nnn, minimum height=0.9cm] (and2) at (6.8, -0.2) {};
+    \node[and gate US, draw, thick, logic gate inputs=nnn, minimum height=0.9cm] (and3) at (6.8, -1.8) {};
+
+    % Kết nối cổng AND 1: A' B C'
+    \draw[thick] (0.7, 1.65) -- (and1.input 1); \fill (0.7, 1.65) circle (2pt);
+    \draw[thick] (2.0, 1.40) -- (and1.input 2); \fill (2.0, 1.40) circle (2pt);
+    \draw[thick] (4.7, 1.15) -- (and1.input 3); \fill (4.7, 1.15) circle (2pt);
+
+    % Kết nối cổng AND 2: A' B C
+    \draw[thick] (0.7, 0.05) -- (and2.input 1); \fill (0.7, 0.05) circle (2pt);
+    \draw[thick] (2.0, -0.20) -- (and2.input 2); \fill (2.0, -0.20) circle (2pt);
+    \draw[thick] (4.0, -0.45) -- (and2.input 3); \fill (4.0, -0.45) circle (2pt);
+
+    % Kết nối cổng AND 3: A B C'
+    \draw[thick] (0.0, -1.55) -- (and3.input 1); \fill (0.0, -1.55) circle (2pt);
+    \draw[thick] (2.0, -1.80) -- (and3.input 2); \fill (2.0, -1.80) circle (2pt);
+    \draw[thick] (4.7, -2.05) -- (and3.input 3); \fill (4.7, -2.05) circle (2pt);
+
+    % Cổng OR tổng hợp
+    \node[or gate US, draw, thick, logic gate inputs=nnn, minimum height=1.1cm] (org) at (9.6, -0.2) {};
+    \draw[thick] (and1.output) -- ++(0.6,0) |- (org.input 1);
+    \draw[thick] (and2.output) -- (org.input 2);
+    \draw[thick] (and3.output) -- ++(0.6,0) |- (org.input 3);
+    \draw[thick] (org.output) -- ++(0.7,0) node[right, font=\bfseries] {$F$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*.]
+    \item $F = (A + B + C')(A + B' + C)(A' + B + C)$
+    \item $F = A'B'C' + A'BC + AB'C$
+    \item $F = ABC' + A'BC + AB'C$
+    \item $F = A'BC + A'BC' + ABC'$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Mỗi đường tín hiệu $A, B, C$ có 2 nhánh dọc: nhánh bên trái đi thẳng là tín hiệu gốc ($A, B, C$), nhánh bên phải đi qua cổng đảo NOT là tín hiệu đảo ($A', B', C'$).
+    \item Xác định biểu thức đầu ra của 3 cổng AND từ trên xuống dưới:
+    \begin{itemize}
+        \item Cổng AND thứ nhất nối với: nhánh đảo của $A$ ($A'$), nhánh thẳng của $B$ ($B$), nhánh đảo của $C$ ($C'$) $\implies \mathbf{A'BC'}$.
+        \item Cổng AND thứ hai nối với: nhánh đảo của $A$ ($A'$), nhánh thẳng của $B$ ($B$), nhánh thẳng của $C$ ($C$) $\implies \mathbf{A'BC}$.
+        \item Cổng AND thứ ba nối với: nhánh thẳng của $A$ ($A$), nhánh thẳng của $B$ ($B$), nhánh đảo của $C$ ($C'$) $\implies \mathbf{ABC'}$.
+    \end{itemize}
+    \item Cổng OR ở cuối cộng 3 tích trên lại: $F = A'BC' + A'BC + ABC'$ (hay $F = A'BC + A'BC' + ABC'$).
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 4.5 (Slide Chương 4 -- Trang 37, 38 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 17 \& Câu 25)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu 17):} Bản chất của bộ cộng bán phần 1-bit (Half Adder) là thực hiện hai phép toán logic nào?\\
+    A. Thực hiện phép XOR và AND \qquad B. Thực hiện phép OR và AND\\
+    C. Thực hiện phép NOR và NAND \qquad D. Thực hiện phép OR và NAND
+    \item \textbf{(Câu 25):} Bộ cộng toàn phần 1-bit (Full Adder) có đầu vào là $(A, B, C)$ và đầu ra là $(S, C_{out})$. Với bộ giá trị đầu vào $(A, B, C) = (1, 1, 0)$, hãy xác định giá trị đầu ra tương ứng $(S, C_{out}) =$ ?\\
+    A. $(0, 0)$ \qquad B. $(0, 1)$ \qquad C. $(1, 0)$ \qquad D. $(1, 1)$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Theo Slide Chương 4 (trang 37), bộ cộng bán phần 1-bit tính bit tổng $S = A \oplus B$ (phép \textbf{XOR}) và bit nhớ ra $C_{out} = A \cdot B$ (phép \textbf{AND}) $\rightarrow$ Chọn \textbf{A}.
+    \item \textbf{Giải câu b:} Cộng 3 bit nhị phân: $A + B + C = 1 + 1 + 0 = 2_{(10)} = 10_{(2)}$, trong đó chữ số hàng đơn vị là bit tổng $S = 0$ và chữ số hàng cao là bit nhớ ra $C_{out} = 1$. Vậy $(S, C_{out}) = (0, 1)$ $\rightarrow$ Chọn \textbf{B}.
+\end{itemize}
+
+\subsection{Nhóm 3: Biểu diễn và So sánh Số nguyên có dấu (Mã bù 2)}
+
+\textbf{Bài tập 4.6 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 6, Mã đề 199 Câu 10 \& Mã đề 204 Câu 8)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 198 Câu 6 \& Mã đề 199 Câu 10):} Số âm $-127_{(10)}$ bằng với số nào trong các số biểu diễn nhị phân 8-bit có dấu sau đây?\\
+    A. \texttt{1000 0000} \qquad B. \texttt{1000 0001} \qquad C. \texttt{-0111 1111} \qquad D. \texttt{0111 1111}
+    \item \textbf{(Mã đề 204 -- Câu 8):} Số nguyên $-77_{(10)}$ được biểu diễn dưới dạng số nhị phân 8-bit bù 2 là?\\
+    A. \texttt{0100 1101} \qquad B. \texttt{1011 0011} \qquad C. \texttt{1011 1011} \qquad D. \texttt{1011 0010}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Biểu diễn $-127$ bằng 8 bit):}
+    \begin{itemize}
+        \item Bước 1: Số dương $+127 = \texttt{0111 1111}_{(2)}$.
+        \item Bước 2 (Đảo bit tìm bù 1): $\texttt{1000 0000}_{(2)}$.
+        \item Bước 3 (Cộng 1 tìm bù 2): $\texttt{1000 0000} + 1 = \mathbf{\texttt{1000 0001}_{(2)}}$ (Kiểm tra: $-128 + 1 = -127$) $\rightarrow$ Chọn \textbf{B}.
+    \end{itemize}
+    \item \textbf{Giải câu b (Biểu diễn $-77$ bằng 8 bit):}
+    \begin{itemize}
+        \item Bước 1: Số dương $+77 = 64 + 8 + 4 + 1 = \texttt{0100 1101}_{(2)}$.
+        \item Bước 2 (Đảo bit tìm bù 1): $\texttt{1011 0010}_{(2)}$.
+        \item Bước 3 (Cộng 1 tìm bù 2): $\texttt{1011 0010} + 1 = \mathbf{\texttt{1011 0011}_{(2)}}$ $\rightarrow$ Chọn \textbf{B}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.7 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 9 \& Mã đề 244 Câu 15)}\\
+Số nguyên 8-bit nào sau đây có dạng biểu diễn ở hệ 16 là \texttt{0xB2}?
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243):} A. Là số \texttt{10110010} ở hệ 2 \quad B. Là số $177$ ở hệ 10, không dấu \quad C. Là số \texttt{00100010} ở hệ 2 \quad D. Là số $179$ ở hệ 10, không dấu
+    \item \textbf{(Mã đề 244):} A. Là số $177$ ở hệ 10, không dấu \quad B. Là số \texttt{00100010} ở hệ 2 \quad C. Là số \texttt{10100000} ở hệ 2 \quad D. Là số $-78$ ở hệ 10, có dấu
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Đổi \texttt{0xB2} sang hệ nhị phân 8-bit: $\texttt{B} = 11 = \texttt{1011}_2$ và $\texttt{2} = \texttt{0010}_2 \implies \texttt{0xB2} = \mathbf{\texttt{1011\,0010}_{(2)}}$.
+    \item Nếu xét là số \textbf{không dấu}: $128 + 32 + 16 + 2 = 178_{(10)}$.
+    \item Nếu xét là số \textbf{có dấu} (bù 2): $-128 + 32 + 16 + 2 = \mathbf{-78_{(10)}}$.
+    \item \textbf{Kết luận:} Câu a (Mã đề 243) chọn \textbf{A}; Câu b (Mã đề 244) chọn \textbf{D}.
+\end{itemize}
+
+\textbf{Bài tập 4.8 (Đề Cuối kỳ 2020.2 -- Trang 2 \& Đề Cuối kỳ 2021.1 -- Trang 2)}\\
+Giả sử biến \texttt{i} là một biến số nguyên có dấu kích thước 8-bit được lưu trữ với giá trị Hexa là $\texttt{i} = \texttt{0x8E}$. Hãy cho biết giá trị tương ứng của biến số nguyên này trong hệ thập phân (cơ số 10)?
+\begin{enumerate}[label=\Alph*.]
+    \item $142$
+    \item $-114$
+    \item $-113$
+    \item $-14$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Đổi \texttt{0x8E} sang nhị phân 8-bit: $\texttt{0x8E} = \texttt{1000\,1110}_{(2)}$.
+    \item Vì bit dấu đầu tiên bằng $1$ (trọng số $-128$) và các bit $1$ còn lại ở vị trí $8, 4, 2$:
+    $$i = -128 + 8 + 4 + 2 = -128 + 14 = -114$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B ($-114$)}.
+\end{itemize}
+
+\textbf{Bài tập 4.9 (Đề Cuối kỳ 2022.2 -- \#f9c617, 2024.2 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 69)}\\
+Giả thiết \texttt{k} là biến số nguyên có dấu 16-bit, cho $k = -68$. Hãy cho biết nội dung \texttt{k} biểu diễn theo số Hexa?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{0xFFBC}
+    \item \texttt{0x00BC}
+    \item \texttt{0x8044}
+    \item \texttt{0xFF44}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1:} Biểu diễn số dương $+68$ ở dạng 16-bit: $68 = 64 + 4 = \texttt{0100\,0100}_{(2)} = \texttt{0x0044}$:
+    $$+68 = \texttt{0000\,0000\,0100\,0100}_{(2)}$$
+    \item \textbf{Bước 2 (Tìm bù 1 -- đảo tất cả các bit):} $\texttt{1111\,1111\,1011\,1011}_{(2)}$.
+    \item \textbf{Bước 3 (Tìm bù 2 -- cộng thêm 1):}
+    $$-68 = \texttt{1111\,1111\,1011\,1100}_{(2)} = \mathbf{\texttt{0xFFBC}}$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{A (\texttt{0xFFBC})}.
+\end{itemize}
+
+\textbf{Bài tập 4.10 (Đề Cuối kỳ 2022.2 -- \#7151, 2024.1 -- \#0182da, 2024.2 \& Ôn tập 2025.2 -- Câu 45, Câu 73)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2022.2, 2024.2 -- \#7151 \& Ôn tập 2025.2 Câu 73):} Giả thiết \texttt{i} là biến số nguyên có dấu 32-bit, cho nội dung $\texttt{i} = \texttt{0xFFFFFFF3}$. Giá trị của \texttt{i} theo số thập phân là bao nhiêu?\\
+    A. $-4$ \qquad B. $-3$ \qquad C. $-13$ \qquad D. $-12$
+    \item \textbf{(Đề CK 2024.1 -- \#0182da \& Ôn tập 2025.2 Câu 45):} Giả thiết \texttt{i} là biến số nguyên có dấu 32-bit, cho nội dung $\texttt{i} = \texttt{0xFFFFFFF4}$. Giá trị của \texttt{i} theo số thập phân là bao nhiêu?\\
+    A. $-11$ \qquad B. $-12$ \qquad C. $-4$ \qquad D. $12$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Áp dụng quy tắc tính nhanh cho các số âm có 7 chữ số đầu đều là \texttt{F}: lấy chữ số Hexa cuối cùng trừ đi $16$:
+    \item \textbf{Câu a:} Với \texttt{0xFFFFFFF3}, chữ số cuối là $3 \implies i = 3 - 16 = \mathbf{-13}$ $\rightarrow$ Chọn \textbf{C}.
+    \item \textbf{Câu b:} Với \texttt{0xFFFFFFF4}, chữ số cuối là $4 \implies i = 4 - 16 = \mathbf{-12}$ $\rightarrow$ Chọn \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 4.11 (Đề Cuối kỳ 2023.1 -- \#581f03, 2023.2, Giữa kỳ 2024.1 -- \#30a33e \& Ôn tập 2025.2 -- Câu 48)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2023.1 -- \#581f03):} Cho lệnh hợp ngữ RISC-V: \texttt{addi t0, s0, 0xFFA} (với toán hạng tức thời hằng số 12-bit được biểu diễn dưới dạng bù 2). Giá trị thập phân tương ứng của toán hạng tức thời này là bao nhiêu?\\
+    A. $4010$ \qquad B. $-4010$ \qquad C. $6$ \qquad D. $-6$
+    \item \textbf{(Đề GK 2024.1 -- \#30a33e \& Ôn tập 2025.2 Câu 48):} Giá trị thập phân của toán hạng immediate trong lệnh \texttt{addi t0, s0, 0x1FF} là bao nhiêu?\\
+    A. $-511$ \qquad B. $2047$ \qquad C. $-2047$ \qquad D. $511$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Hằng số 12-bit \texttt{0xFFA} có 2 chữ đầu là \texttt{FF} (bit dấu số 11 bằng 1, số âm) và chữ số cuối là $\texttt{A} = 10$. Lấy $10 - 16 = \mathbf{-6}$ $\rightarrow$ Chọn \textbf{D ($-6$)}.
+    \item \textbf{Giải câu b:} Hằng số 12-bit \texttt{0x1FF} có chữ số đầu là $\texttt{1} = \texttt{0001}_2$ (bit dấu số 11 bằng 0, số dương). Giá trị thập phân là: $1 \times 16^2 + 15 \times 16^1 + 15 = 256 + 240 + 15 = \mathbf{511}$ $\rightarrow$ Chọn \textbf{D ($511$)}.
+\end{itemize}
+
+\textbf{Bài tập 4.12 (Đề Giữa kỳ 2023.2 -- Đề 1 Câu 2 \& Đề Giữa kỳ 2022.2 -- Đề 0008 Câu 4, Đề 0006 Câu 2)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2023.2):} Biểu diễn các số nguyên có dấu $+105$ và $-42$ theo mã bù hai 8-bit và 16-bit dưới dạng số Hexa.
+    \item \textbf{(Đề GK 2022.2 -- Đề 0008 \& 0006):} Hoàn thành bảng chuyển đổi số nguyên 8-bit có dấu giữa Hệ 10, Hệ 2 bù 2 và Hệ 16 bù 2 cho các giá trị: $+77$; $-86$; $-19$; và $\texttt{0011 1101}_{(2)}$ (\texttt{3D}).
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:}
+    \begin{itemize}
+        \item Với $+105$: $105 = 64 + 32 + 8 + 1 = \texttt{0110\,1001}_{(2)} = \texttt{0x69}$. Biểu diễn 8-bit là \textbf{\texttt{0x69}}; mở rộng dấu dương 16-bit là \textbf{\texttt{0x0069}}.
+        \item Với $-42$: Ta có $+42 = 32 + 8 + 2 = \texttt{0010\,1010}_{(2)} \xrightarrow{\text{bù 1}} \texttt{1101\,0101}_{(2)} \xrightarrow{+1} \texttt{1101\,0110}_{(2)} = \texttt{0xD6}$. Biểu diễn 8-bit là \textbf{\texttt{0xD6}}; mở rộng dấu âm 16-bit (thêm \texttt{FF} vào bên trái) là \textbf{\texttt{0xFFD6}}.
+    \end{itemize}
+    \item \textbf{Giải câu b (Bảng kết quả chuyển đổi 8-bit có dấu):}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabularx}{0.9\linewidth}{|C{2.2cm}|C{3.2cm}|C{2.2cm}|Y|}
+    \hline
+    \textbf{Hệ 10} & \textbf{Hệ 2 (Bù 2)} & \textbf{Hệ 16} & \textbf{Giải thích cách tính} \\ \hline
+    $+77$ & \texttt{0100 1101} & \texttt{4D} & $64 + 8 + 4 + 1 = 77$ \\ \hline
+    $-86$ & \texttt{1010 1010} & \texttt{AA} & $+86 = \texttt{0101 0110}_2 \xrightarrow{\text{bù 2}} \texttt{1010 1010}_2$ \\ \hline
+    $-19$ & \texttt{1110 1101} & \texttt{ED} & $+19 = \texttt{0001 0011}_2 \xrightarrow{\text{bù 2}} \texttt{1110 1101}_2$ \\ \hline
+    $+61$ & \texttt{0011 1101} & \texttt{3D} & $32 + 16 + 8 + 4 + 1 = +61$ \\ \hline
+    \end{tabularx}
+    \end{center}
+\end{itemize}
+
+\textbf{Bài tập 4.13 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 16, Mã đề 199 Câu 11 \& Mã đề 204 Câu 17)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 198 -- Câu 16):} Cho 4 số nguyên 16-bit \textbf{có dấu} có mã Hexa tương ứng như sau: \texttt{8792}, \texttt{2763}, \texttt{F652}, \texttt{A876}. Số nào là số lớn nhất?\\
+    A. \texttt{2763} \qquad B. \texttt{A876} \qquad C. \texttt{F652} \qquad D. \texttt{8792}
+    \item \textbf{(Mã đề 204 -- Câu 17):} Cho 4 số nguyên 16-bit \textbf{không dấu} có mã Hexa tương ứng như sau: \texttt{8792}, \texttt{2763}, \texttt{F652}, \texttt{A876}. Số nào là số lớn nhất?\\
+    A. \texttt{8792} \qquad B. \texttt{A876} \qquad C. \texttt{2763} \qquad D. \texttt{F652}
+    \item \textbf{(Mã đề 199 -- Câu 11):} Cho 4 số nguyên 16-bit \textbf{không dấu} có mã Hexa: \texttt{79F1}, \texttt{2AB7}, \texttt{8000}, \texttt{FFAA}. Số nào là số nhỏ nhất?\\
+    A. \texttt{8000} \qquad B. \texttt{79F1} \qquad C. \texttt{2AB7} \qquad D. \texttt{FFAA}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Xét số có dấu):} Ba số \texttt{8792}, \texttt{F652}, \texttt{A876} đều bắt đầu bằng chữ số Hexa $\ge 8$ nên có bit dấu bằng $1$ (đều là các số nguyên âm). Chỉ có duy nhất số \textbf{\texttt{2763}} bắt đầu bằng chữ số $2 < 8$ (bit dấu bằng $0$) là số nguyên dương nên lớn nhất $\rightarrow$ Chọn \textbf{A (\texttt{2763})}.
+    \item \textbf{Giải câu b (Xét số không dấu -- tìm số lớn nhất):} Khi không dấu, so sánh trực tiếp chữ số Hexa đầu tiên từ trái sang phải ($\texttt{F} > \texttt{A} > \texttt{8} > \texttt{2}$). Vậy số lớn nhất là \textbf{\texttt{F652}} $\rightarrow$ Chọn \textbf{D (\texttt{F652})}.
+    \item \textbf{Giải câu c (Xét số không dấu -- tìm số nhỏ nhất):} So sánh chữ số Hexa đầu tiên ($\texttt{2} < \texttt{7} < \texttt{8} < \texttt{F}$). Vậy số nhỏ nhất là \textbf{\texttt{2AB7}} $\rightarrow$ Chọn \textbf{C (\texttt{2AB7})}.
+\end{itemize}
+
+\textbf{Bài tập 4.14 (Đề Giữa kỳ 2022.2 -- Đề 0006 Câu 1, Đề 0008, 0009 Câu 2 \& Đề Giữa kỳ 2025.2 -- Đề 0013 Câu 73, 942, Đề 0012 Câu 106)}\\
+Hãy sắp xếp các bộ 3 số nguyên \textbf{8-bit có dấu} dưới đây theo đúng thứ tự yêu cầu của từng đề thi:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2022.2 -- Đề 0006, Câu 1):} Sắp xếp theo thứ tự \textbf{giảm dần}: $-108$ (hệ 10), \texttt{0001 0001} (hệ 2), \texttt{91} (hệ 16).
+    \item \textbf{(Đề GK 2022.2 -- Đề 0009, Câu 2):} Mảng \texttt{A} gồm 3 phần tử 8-bit có dấu ở địa chỉ cơ sở \texttt{0x40000E} lần lượt là: \texttt{0xCE}, \texttt{0x12}, \texttt{0x20}. Sắp xếp theo giá trị \textbf{tăng dần}.
+    \item \textbf{(Đề GK 2022.2 -- Đề 0008, Câu 2):} Mảng \texttt{A} gồm 3 phần tử 8-bit có dấu ở địa chỉ cơ sở \texttt{0x400008} lần lượt là: \texttt{0x38}, \texttt{0x00}, \texttt{0xD6}. Sắp xếp theo giá trị \textbf{tăng dần}.
+    \item \textbf{(Đề GK 2025.2 -- Đề 0013, Câu 73):} Mảng \texttt{A} gồm 3 phần tử 8-bit có dấu ở địa chỉ cơ sở \texttt{0x400009} (tra bảng Memory Map Đề 0013 tại \texttt{0x400009, 0x40000A, 0x40000B}) lần lượt là: \texttt{0xDE}, \texttt{0x74}, \texttt{0x00}. Sắp xếp theo giá trị \textbf{tăng dần}.
+    \item \textbf{(Đề GK 2025.2 -- Đề 0013, Câu 942):} Mảng \texttt{A} gồm 3 phần tử 8-bit có dấu ở địa chỉ cơ sở \texttt{0x400014} (tại \texttt{0x400014, 0x400015, 0x400016}) lần lượt là: \texttt{0xB7}, \texttt{0x59}, \texttt{0x34}. Sắp xếp theo giá trị \textbf{tăng dần}.
+    \item \textbf{(Đề GK 2025.2 -- Đề 0012, Câu 106):} Mảng \texttt{A} gồm 3 phần tử 8-bit có dấu ở địa chỉ cơ sở \texttt{0x400009} (tra bảng Đề 0012 tại \texttt{0x400009, 0x40000A, 0x40000B}) lần lượt là: \texttt{0x0B}, \texttt{0x8B}, \texttt{0x03}. Sắp xếp theo giá trị \textbf{tăng dần}.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Quy tắc chung:} Với số 8-bit có dấu viết dạng Hexa, các số bắt đầu bằng \texttt{8..F} là \textbf{số âm}; các số bắt đầu bằng \texttt{0..7} là \textbf{số dương} (hoặc $0$).
+    \item \textbf{Câu a:} Đổi về hệ 10: $-108$; $\texttt{0001 0001}_2 = +17$; $\texttt{0x91} = \texttt{1001 0001}_2 = -128 + 16 + 1 = -111$. Vì $+17 > -108 > -111$, thứ tự giảm dần là: \textbf{\texttt{0001 0001} $> -108 > \texttt{91}$}.
+    \item \textbf{Câu b:} Có \texttt{0xCE} là số âm ($-50$), còn $\texttt{0x12} (+18) < \texttt{0x20} (+32) \implies$ Tăng dần: \textbf{$\texttt{0xCE} < \texttt{0x12} < \texttt{0x20}$}.
+    \item \textbf{Câu c:} Có \texttt{0xD6} là số âm ($-42$), còn $\texttt{0x00} (0) < \texttt{0x38} (+56) \implies$ Tăng dần: \textbf{$\texttt{0xD6} < \texttt{0x00} < \texttt{0x38}$}.
+    \item \textbf{Câu d (Đề 0013 -- Câu 73):} Có \texttt{0xDE} là số âm ($-34$), còn $\texttt{0x00} (0) < \texttt{0x74} (+116) \implies$ Tăng dần: \textbf{$\texttt{0xDE} < \texttt{0x00} < \texttt{0x74}$}.
+    \item \textbf{Câu e (Đề 0013 -- Câu 942):} Có \texttt{0xB7} là số âm ($-73$), còn $\texttt{0x34} (+52) < \texttt{0x59} (+89) \implies$ Tăng dần: \textbf{$\texttt{0xB7} < \texttt{0x34} < \texttt{0x59}$}.
+    \item \textbf{Câu f (Đề 0012 -- Câu 106):} Có \texttt{0x8B} là số âm ($-117$), còn $\texttt{0x03} (+3) < \texttt{0x0B} (+11) \implies$ Tăng dần: \textbf{$\texttt{0x8B} < \texttt{0x03} < \texttt{0x0B}$}.
+\end{itemize}
+
+\subsection{Nhóm 4: Phép cộng/trừ số nguyên và Hiện tượng Tràn số học (Overflow)}
+
+\textbf{Bài tập 4.15 (Đề Giữa kỳ 2018.2 -- Mã đề 198 Câu 8 \& Mã đề 199 Câu 9)}\\
+Máy tính thực hiện phép toán cộng 2 số 8-bit không dấu ở hệ cơ số 2 sau đây, kết quả (lưu trong thanh ghi 8-bit) sẽ bằng bao nhiêu:
+$$\texttt{1010 1000} + \texttt{1111 1010}$$
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{1000 0010}
+    \item \texttt{1000 0100}
+    \item \texttt{1010 0100}
+    \item \texttt{1010 0010}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Thực hiện cộng từng cột bit từ phải sang trái:
+    \begin{itemize}
+        \item 4 bit thấp: $\texttt{1000} + \texttt{1010} = \texttt{1\,0010}$ (viết \textbf{\texttt{0010}}, nhớ $1$ sang 4 bit cao).
+        \item 4 bit cao: $\texttt{1010} + \texttt{1111} + 1\text{ (nhớ)} = \texttt{1010} + \texttt{1\,0000} = \texttt{1\,1010}$ (trong 8 bit giữ lại \textbf{\texttt{1010}}, bit nhớ tràn ra ngoài $C_{out} = 1$).
+    \end{itemize}
+    \item Ghép 8 bit kết quả lại ta được: \textbf{\texttt{1010 0010}}.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D (\texttt{1010 0010})}.
+\end{itemize}
+
+\textbf{Bài tập 4.16 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 2)}\\
+Khẳng định nào dưới đây là đúng khi thực hiện phép cộng hai số nguyên $n\text{-bit}$?
+\begin{enumerate}[label=\Alph*.]
+    \item Khi cộng hai số nguyên không dấu $n\text{-bit}$, nếu $C_{out} = 1 \rightarrow$ kết quả sai.
+    \item Khi cộng hai số nguyên có dấu $n\text{-bit}$, nếu $C_{out} = 1$ và hai số ban đầu cùng dấu nhau $\rightarrow$ kết quả sai.
+    \item Khi cộng hai số nguyên có dấu $n\text{-bit}$, nếu hai số ban đầu trái dấu nhau $\rightarrow$ kết quả đúng.
+    \item Khi cộng hai số nguyên có dấu $n\text{-bit}$, nếu hai số ban đầu cùng dấu nhau và bit cao nhất của kết quả giống bit cao nhất của hai số ban đầu $\rightarrow$ chưa thể kết luận tính đúng sai.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Theo Slide Chương 4 (trang 70 và trang 74):
+    \begin{itemize}
+        \item Khi cộng hai số nguyên \textbf{không dấu} $n\text{-bit}$, nếu có nhớ ra ngoài ($C_{out} = 1$) thì tổng vượt quá $2^n - 1$ nên kết quả $n\text{-bit}$ bị sai $\implies$ \textbf{Khẳng định A đúng}.
+        \item Khi cộng hai số nguyên \textbf{có dấu} $n\text{-bit}$, nếu hai số ban đầu \textbf{trái dấu nhau} thì tổng luôn nằm trong dải biểu diễn nên kết quả luôn luôn đúng $\implies$ \textbf{Khẳng định C đúng}.
+        \item (Khẳng định B sai vì khi cộng hai số âm không bị tràn như $(-1) + (-1) = -2$, luôn có $C_{out} = 1$ nhưng kết quả vẫn đúng; Khẳng định D sai vì khi hai số cùng dấu mà kết quả vẫn cùng dấu thì chắc chắn kết quả đúng).
+    \end{itemize}
+    \item \textbf{Kết luận:} Chọn cả \textbf{A} và \textbf{C}.
+\end{itemize}
+
+\textbf{Bài tập 4.17 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 12 \& Mã đề 244 Câu 5)}\\
+Tổng của 2 số 8-bit có dấu nào dưới đây sẽ bị hiện tượng tràn số học (Overflow)?
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243 -- Câu 12):}\\
+    A. $\texttt{01010001} + \texttt{00101100}$ \qquad B. $\texttt{10010001} + \texttt{01001000}$\\
+    C. $\texttt{00010001} + \texttt{11001000}$ \qquad D. $\texttt{10010001} + \texttt{11001000}$
+    \item \textbf{(Mã đề 244 -- Câu 5):}\\
+    A. $\texttt{00010001} + \texttt{11001000}$ \qquad B. $\texttt{00011001} + \texttt{00111000}$\\
+    C. $\texttt{01010001} + \texttt{01001000}$ \qquad D. $\texttt{10010001} + \texttt{01001000}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Loại ngay các cặp trái dấu):} Các phép cộng có một số bắt đầu bằng bit \texttt{0} và một số bắt đầu bằng bit \texttt{1} là cộng hai số trái dấu nên không bao giờ tràn (Loại B, C ở câu a; loại A, D ở câu b).
+    \item \textbf{Bước 2 (Kiểm tra các cặp cùng dấu):}
+    \begin{itemize}
+        \item Ở câu a: Phương án A cộng hai số dương $81 + 44 = +125 \le 127$ (không tràn). Phương án D cộng hai số âm: $\texttt{1001\,0001}_2 (-111) + \texttt{1100\,1000}_2 (-56) = -167 < -128$ (kết quả 8-bit ra $\texttt{0101\,1001}_2$ có bit dấu bằng \texttt{0} -- lật thành số dương) $\implies$ \textbf{Bị tràn âm (Chọn D)}.
+        \item Ở câu b: Phương án B cộng $25 + 56 = 81 \le 127$ (không tràn). Phương án C cộng hai số dương: $\texttt{0101\,0001}_2 (+81) + \texttt{0100\,1000}_2 (+72) = +153 > 127$ (kết quả 8-bit ra $\texttt{1001\,1001}_2$ có bit dấu bằng \texttt{1} -- lật thành số âm) $\implies$ \textbf{Bị tràn dương (Chọn C)}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.18 (Đề Cuối kỳ 2022.2 -- \#6d82ac, 2024.2 \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 66)}\\
+Trong ngôn ngữ lập trình C, biến kiểu \texttt{char} là biến dữ liệu số nguyên có dấu 8-bit. Cho chương trình C dưới đây, hãy cho biết kết quả của biến \texttt{sum} hiển thị trên màn hình khi chạy chương trình?
+\begin{lstlisting}
+#include <stdio.h>
+int main() {
+    char a = -91;
+    char b = -67;
+    char sum = a + b;
+    printf("sum = %d", sum); // hien thi sum dang thap phan
+    return 0;
+}
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item $-98$
+    \item $-158$
+    \item $158$
+    \item $98$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Tổng toán học thông thường: $S = (-91) + (-67) = -158$.
+    \item Vì biến \texttt{sum} thuộc kiểu \texttt{char} (8-bit có dấu, chỉ biểu diễn được từ $-128$ đến $+127$), nên giá trị $-158 < -128$ bị tràn âm (Overflow).
+    \item Áp dụng công thức tràn âm 8-bit (cộng thêm $2^8 = 256$):
+    $$\texttt{sum} = -158 + 256 = +98$$
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D (98)}.
+\end{itemize}
+
+\textbf{Bài tập 4.19 (Đề Cuối kỳ 2025.1 -- \#e3221e, Giữa kỳ 2024.1 -- \#f2d536, Giữa kỳ 2022.2 -- Đề 0007 Câu 1 \& Ôn tập 2025.2 -- Câu 40)}\\
+Giả thiết tất cả các biến đều là số nguyên 8-bit có dấu (\texttt{signed char}). Hãy tính giá trị thập phân lưu trong biến kết quả sau khi thực hiện các phép cộng sau:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2025.1 -- \#e3221e):} Cho $x = 85, y = 52$. Tính $z = x + y$.
+    \item \textbf{(Đề GK 2024.1 -- \#f2d536 \& Ôn tập 2025.2 Câu 40):} Tính $+65 + 65$.
+    \item \textbf{(Đề GK 2022.2 -- Đề 0007, Câu 1a):} Tính $5 + 125$.
+    \item \textbf{(Đề GK 2022.2 -- Đề 0007, Câu 1b):} Tính $(-108) + (-42)$.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}\\
+Dải biểu diễn của số nguyên 8-bit có dấu là $[-128, +127]$. Nếu tổng lớn hơn $+127$ thì trừ đi $256$; nếu tổng nhỏ hơn $-128$ thì cộng thêm $256$:
+\begin{itemize}
+    \item \textbf{Câu a:} $S = 85 + 52 = 137 > 127$ (tràn dương) $\implies z = 137 - 256 = \mathbf{-119}$.
+    \item \textbf{Câu b:} $S = 65 + 65 = 130 > 127$ (tràn dương) $\implies \text{Kết quả} = 130 - 256 = \mathbf{-126}$.
+    \item \textbf{Câu c:} $S = 5 + 125 = 130 > 127$ (tràn dương) $\implies \text{Kết quả} = 130 - 256 = \mathbf{-126}$.
+    \item \textbf{Câu d:} $S = (-108) + (-42) = -150 < -128$ (tràn âm) $\implies \text{Kết quả} = -150 + 256 = \mathbf{+106}$.
+\end{itemize}
+
+\textbf{Bài tập 4.20 (Đề Cuối kỳ 2023.1 -- \#cd9132, 2023.2, Giữa kỳ 2024.1 -- \#e83dac \& Ôn tập 2025.2 -- Câu 7)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2023.1 -- \#cd9132 \& Ôn tập 2025.2 Câu 7):} Giả sử thanh ghi \texttt{s0} đang lưu trữ giá trị thập phân là $1024$. Hãy cho biết phạm vi giá trị của thanh ghi \texttt{s1} để gây ra hiện tượng tràn số học (overflow) khi thực hiện lệnh \texttt{add s2, s0, s1}?\\
+    A. \texttt{0x7FFFFC00 -- 0x7FFFFFFF} \qquad B. \texttt{0x7FFFFC01 -- 0x80000000}\\
+    C. \texttt{0x7FFFFBFF -- 0x7FFFFFFF} \qquad D. \texttt{0x7FFFFC00 -- 0x80000000}
+    \item \textbf{(Đề GK 2024.1 -- \#e83dac):} Giả sử thanh ghi \texttt{t0} đang lưu trữ giá trị thập phân là $512$. Phạm vi giá trị nào của thanh ghi \texttt{t1} sẽ gây ra tràn số học khi thực hiện lệnh \texttt{add t2, t0, t1}?\\
+    A. \texttt{0x7FFFFD00 -- 0x7FFFFFFF} \qquad B. \texttt{0x7FFFFDFF -- 0x7FFFFFFF}\\
+    C. \texttt{0x7FFFFE00 -- 0x80000000} \qquad D. \texttt{0x7FFFFE00 -- 0x7FFFFFFF}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Với $K = 1024 = 2^{10} = \texttt{0x00000400}$):}
+    \begin{itemize}
+        \item Giá trị nhỏ nhất của \texttt{s1} bắt đầu làm tổng vượt quá $\texttt{0x7FFFFFFF}$ là:
+        $$\texttt{s1}_{\min} = \texttt{0x80000000} - \texttt{0x400} = \texttt{0x7FFFFC00}\quad (\text{vì }\texttt{0x1000} - \texttt{0x400} = \texttt{0xC00})$$
+        \item Giá trị dương lớn nhất của thanh ghi 32-bit là \texttt{0x7FFFFFFF}.
+        \item Kết luận: Chọn \textbf{A (\texttt{0x7FFFFC00 -- 0x7FFFFFFF})}.
+    \end{itemize}
+    \item \textbf{Giải câu b (Với $K = 512 = 2^9 = \texttt{0x00000200}$):}
+    \begin{itemize}
+        \item Giá trị nhỏ nhất của \texttt{t1} bắt đầu gây tràn là:
+        $$\texttt{t1}_{\min} = \texttt{0x80000000} - \texttt{0x200} = \texttt{0x7FFFFE00}\quad (\text{vì }\texttt{0x1000} - \texttt{0x200} = \texttt{0xE00})$$
+        \item Kết luận: Chọn \textbf{D (\texttt{0x7FFFFE00 -- 0x7FFFFFFF})}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.21 (Ôn tập Cuối kỳ 2025.1 -- Câu 15 \& Ôn tập 2025.2 -- P2, Câu 59)}\\
+Đoạn lệnh nào sau đây có xảy ra hiện tượng tràn số học (OVERFLOW)?
+\begin{enumerate}[label=\Alph*.]
+    \item \texttt{li x8, 0xFFFFFFFF} $\rightarrow$ \texttt{li x9, 0xFFFFFFFF} $\rightarrow$ \texttt{add x10, x8, x9}
+    \item \texttt{li x8, 0xFFFFFFFF} $\rightarrow$ \texttt{li x9, 0x80000000} $\rightarrow$ \texttt{add x10, x8, x9}
+    \item \texttt{li x8, 0xFFFFFFFF} $\rightarrow$ \texttt{li x9, 0x80000000} $\rightarrow$ \texttt{sub x10, x8, x9}
+    \item \texttt{li x8, 0xFFFFFFFF} $\rightarrow$ \texttt{li x9, 0xFFFFFFFF} $\rightarrow$ \texttt{sub x10, x8, x9}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Ta có $\texttt{0xFFFFFFFF} = -1$ và $\texttt{0x80000000} = -2^{31}$ (số nguyên âm nhỏ nhất của 32-bit).
+    \item Kiểm tra từng phương án:
+    \begin{itemize}
+        \item Phương án A: $(-1) + (-1) = -2$ (nằm trong dải, không tràn).
+        \item Phương án B: Cộng hai số âm $(-1) + (-2^{31}) = -(2^{31} + 1) < -2^{31}$. Vì $\texttt{x9} = -2^{31}$ đã ở kịch biên âm của 32-bit, cộng thêm $-1$ sẽ vượt ra ngoài dải biểu diễn và lật thành số dương \texttt{0x7FFFFFFF} $\implies$ \textbf{Xảy ra tràn số học (Overflow)}.
+        \item Phương án C: $(-1) - (-2^{31}) = +2^{31} - 1 = \texttt{0x7FFFFFFF}$ (vừa đúng biên dương lớn nhất, chưa tràn).
+        \item Phương án D: $(-1) - (-1) = 0$ (không tràn).
+    \end{itemize}
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B}.
+\end{itemize}
+
+\textbf{Bài tập 4.22 (Đề Giữa kỳ 2021.1 -- IT3030E, Problem 4)}\\
+Hai thanh ghi \texttt{s0} và \texttt{s1} đang giữ các giá trị:
+$$\texttt{s0 = 0x80000000} \quad ; \quad \texttt{s1 = 0xD0000000}$$
+Hãy xác định giá trị Hexa của thanh ghi \texttt{t0} và cho biết có xảy ra tràn số học (Overflow) hay không cho 3 đoạn lệnh sau:
+\begin{enumerate}[label=4.\arabic*.]
+    \item \texttt{add t0, s0, s1}
+    \item \texttt{sub t0, s0, s1}
+    \item \texttt{add t0, s0, s1} $\rightarrow$ \texttt{add t0, t0, s0}
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Nhận xét dấu ban đầu: Cả $\texttt{s0} = \texttt{0x80000000}$ (chữ đầu $\texttt{8} = 1000_2$) và $\texttt{s1} = \texttt{0xD0000000}$ (chữ đầu $\texttt{D} = 1101_2$) đều có bit dấu số 31 bằng $1$, tức \textbf{cả \texttt{s0} và \texttt{s1} đều là số nguyên âm}.
+    \item \textbf{Giải ý 4.1 (\texttt{add t0, s0, s1}):}
+    \begin{itemize}
+        \item Cộng chữ số Hexa đầu tiên: $\texttt{8} + \texttt{D} = 8 + 13 = 21 = 16 + 5 = \texttt{15}_{(16)}$ (tràn chữ số $1$ ra ngoài 32-bit, còn lại chữ số $\texttt{5}$).
+        \item Giá trị lưu trong \texttt{t0} là: $\mathbf{\texttt{t0 = 0x50000000}}$.
+        \item Vì cộng hai số âm (\texttt{s0 < 0, s1 < 0}) mà kết quả thu được lại là số dương ($\texttt{t0} = \texttt{0x50000000}$ có bit dấu bằng $0$), nên \textbf{CÓ xảy ra tràn số học (Overflow)}.
+    \end{itemize}
+    \item \textbf{Giải ý 4.2 (\texttt{sub t0, s0, s1}):}
+    \begin{itemize}
+        \item Thực hiện phép trừ: $\texttt{s0} - \texttt{s1} = \texttt{0x80000000} - \texttt{0xD0000000}$. Đổi $-\texttt{s1}$ bằng cách lấy bù 2 của \texttt{0xD0000000} là \texttt{0x30000000} (số dương).
+        \item Cộng lại: $\texttt{0x80000000} + \texttt{0x30000000} = \mathbf{\texttt{0xB0000000}}$.
+        \item Vì đây là phép cộng hai số trái dấu ($\texttt{s0} < 0$ và $-\texttt{s1} > 0$), nên \textbf{KHÔNG xảy ra tràn số học}.
+    \end{itemize}
+    \item \textbf{Giải ý 4.3 (\texttt{add t0, s0, s1} rồi \texttt{add t0, t0, s0}):}
+    \begin{itemize}
+        \item Sau lệnh đầu tiên, $\texttt{t0} = \texttt{0x50000000}$ (có tràn ở lệnh 1).
+        \item Ở lệnh thứ hai, cộng $\texttt{t0} + \texttt{s0} = \texttt{0x50000000} + \texttt{0x80000000} = \mathbf{\texttt{0xD0000000}}$ (bản thân lệnh thứ hai cộng số dương \texttt{0x50000000} với số âm \texttt{0x80000000} nên lệnh thứ hai không tràn).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm 5: Lệnh Chia và Lấy phần dư số nguyên (\texttt{div, rem})}
+
+\textbf{Bài tập 4.23 (Đề Giữa kỳ 2024.1 -- \#054a4a)}\\
+Giá trị của các thanh ghi \texttt{t0, t1} sau khi thực hiện đoạn mã RISC-V dưới đây là gì?
+\begin{lstlisting}
+    li  s0, 67
+    li  s1, -13
+    div t0, s0, s1
+    rem t1, s0, s1
+\end{lstlisting}
+\begin{enumerate}[label=\Alph*.]
+    \item $\texttt{t0} = \texttt{0xfffffffb}, \texttt{t1} = \texttt{0x00000010}$
+    \item $\texttt{t0} = \texttt{0x00000005}, \texttt{t1} = \texttt{0xfffffffd}$
+    \item $\texttt{t0} = \texttt{0xfffffffb}, \texttt{t1} = \texttt{0x00000005}$
+    \item $\texttt{t0} = \texttt{0xfffffffb}, \texttt{t1} = \texttt{0x00000002}$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Ta có số bị chia $\texttt{s0} = +67$ và số chia $\texttt{s1} = -13$.
+    \item \textbf{Tính thương \texttt{t0} (\texttt{div t0, s0, s1}):}
+    \begin{itemize}
+        \item Chia độ lớn: $67 \div 13 = 5$ (vì $13 \times 5 = 65$).
+        \item Vì hai số trái dấu nên thương mang dấu âm: $\texttt{t0} = -5$.
+        \item Đổi $-5$ sang Hexa 32-bit (lấy $16 - 5 = 11 = \texttt{b}$): $\texttt{t0} = \mathbf{\texttt{0xfffffffb}}$.
+    \end{itemize}
+    \item \textbf{Tính số dư \texttt{t1} (\texttt{rem t1, s0, s1}):}
+    \begin{itemize}
+        \item Độ lớn phần dư: $67 - 65 = 2$.
+        \item Theo quy tắc: \textbf{Số dư luôn cùng dấu với số bị chia} ($\texttt{s0} = +67 > 0$), nên số dư mang dấu dương: $\texttt{t1} = +2 = \mathbf{\texttt{0x00000002}}$.
+    \end{itemize}
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{D ($\texttt{t0} = \texttt{0xfffffffb}, \texttt{t1} = \texttt{0x00000002}$)}.
+\end{itemize}
+
+\subsection{Nhóm 6: Số thực dấu phẩy động chuẩn IEEE 754 (32-bit)}
+
+\begin{tcolorbox}[bwbox, title={Quy trình 4 bước giải nhanh bài toán IEEE 754 32-bit}]
+\begin{itemize}
+    \item \textbf{Bài toán 1: Cho mã Hexa 32-bit $\rightarrow$ Tìm giá trị thập phân $X$}
+    \begin{enumerate}
+        \item Đổi 3 hoặc 4 chữ số Hexa đầu tiên sang nhị phân (12 hoặc 16 bit đầu).
+        \item Tách \textbf{1 bit đầu} là dấu $S$ ($0 \rightarrow +$; $1 \rightarrow -$); \textbf{8 bit tiếp theo} là số mũ lệch $e$; các bit còn lại là phần lẻ định trị $m$.
+        \item Tính số mũ thực: $E = e - 127$.
+        \item Ghép bit ẩn $1.$ vào trước $m$ được $(1.m)_{(2)}$, rồi dịch dấu phẩy sang phải $E$ vị trí (nếu $E > 0$) và đổi sang hệ 10.
+    \end{enumerate}
+    \item \textbf{Bài toán 2: Cho số thực thập phân $X \rightarrow$ Tìm mã Hexa 32-bit}
+    \begin{enumerate}
+        \item Xác định bit dấu $S$ ($X > 0 \implies S = 0$; $X < 0 \implies S = 1$).
+        \item Đổi $|X|$ sang nhị phân, rồi dịch dấu phẩy về ngay sau bit $1$ đầu tiên để đưa về dạng chuẩn $(1.m)_{(2)} \times 2^E$.
+        \item Tính số mũ lệch $e = E + 127$ và đổi $e$ ra 8 bit nhị phân (nhớ rằng $128 = \texttt{1000\,0000}_2$).
+        \item Ghép $[S\text{ (1 bit)} \mid e\text{ (8 bit)} \mid m\text{ (23 bit)}]$, rồi nhóm từng cụm 4 bit từ trái sang phải để viết thành 8 chữ số Hexa.
+    \end{enumerate}
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Bài tập 4.24 (Đề Giữa kỳ 2019.2 -- Mã đề 243 Câu 2 \& Mã đề 244 Câu 17)}\\
+Số thực dấu phẩy động (chuẩn IEEE 754) \textbf{không thể} biểu diễn chính xác tuyệt đối được số nào dưới đây?
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Mã đề 243 -- Câu 2):} A. $0.5$ \qquad B. $0.4$ \qquad C. $12$ \qquad D. $2$
+    \item \textbf{(Mã đề 244 -- Câu 17):} A. $-8$ \qquad B. $-1$ \qquad C. $1$ \qquad D. $0.7$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Các số nguyên nhỏ ($1, -1, 2, -8, 12$) và số thực có phần lẻ là lũy thừa âm của $2$ (như $0.5 = 2^{-1} = 0.1_{(2)}$) đều biểu diễn chính xác tuyệt đối bằng hữu hạn bit nhị phân.
+    \item Các số thập phân có phần lẻ là $0.4 = \dfrac{2}{5}$ hoặc $0.7 = \dfrac{7}{10}$ (mẫu số chứa thừa số nguyên tố $5 \neq 2$) khi đổi sang nhị phân sẽ ra chuỗi bit tuần hoàn vô hạn ($0.4_{(10)} = 0.01100110011\dots_{(2)}$), nên bị làm tròn và không thể biểu diễn chính xác tuyệt đối.
+    \item \textbf{Kết luận:} Câu a chọn \textbf{B ($0.4$)}; Câu b chọn \textbf{D ($0.7$)}.
+\end{itemize}
+
+\textbf{Bài tập 4.25 (Đề Giữa kỳ 2018.2 -- Mã đề 198, Câu 5)}\\
+Số dấu phẩy động 32-bit sau có giá trị thập phân bằng bao nhiêu?
+$$\texttt{1100 0000 1000 0000 0000 0000 0000 0000}$$
+\begin{enumerate}[label=\Alph*.]
+    \item $-5$
+    \item $-4$
+    \item $-2.5$
+    \item $-8$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item Tách 3 trường (1 bit -- 8 bit -- 23 bit):
+    $$\underbrace{\texttt{1}}_{S=1} \mid \underbrace{\texttt{1000\,0001}}_{e=129} \mid \underbrace{\texttt{000\,0000\dots}}_{m=0}$$
+    \item Bit dấu $S = 1 \implies$ Số âm ($-$).
+    \item Số mũ thực: $E = e - 127 = 129 - 127 = 2$.
+    \item Phần định trị: $1.m = 1.0_{(2)} = 1$.
+    \item Giá trị số thực: $X = -1.0 \times 2^2 = \mathbf{-4}$.
+    \item \textbf{Kết luận:} Đáp án đúng là \textbf{B ($-4$)}.
+\end{itemize}
+
+\textbf{Bài tập 4.26 (Đề Cuối kỳ 2022.2 -- \#bd4c95, 2024.1 -- \#e73be8, 2024.2 \& Ôn tập 2025.2 -- Câu 39, Câu 53)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề CK 2022.2, 2024.2 -- \#bd4c95 \& Ôn tập 2025.2 Câu 53):} Giả thiết $X$ là biến số dấu phẩy động theo chuẩn IEEE 754 32-bit, cho nội dung $X = \texttt{0x40400000}$. Hãy xác định giá trị của $X$ dưới dạng thập phân?\\
+    A. $3$ \qquad B. $-3$ \qquad C. $2$ \qquad D. $4$
+    \item \textbf{(Đề CK 2024.1 -- \#e73be8 \& Ôn tập 2025.2 Câu 39):} Cho nội dung $X = \texttt{0x40A00000}$. Hãy xác định giá trị của $X$ dưới dạng thập phân?\\
+    A. $6$ \qquad B. $5$ \qquad C. $-5$ \qquad D. $4$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Với $X = \texttt{0x40400000}$):}
+    \begin{itemize}
+        \item Đổi 3 chữ số Hexa đầu (\texttt{404}) sang 12 bit nhị phân:
+        $$\texttt{404}_{(16)} = \texttt{0100\,0000\,0100}_{(2)} = \underbrace{\texttt{0}}_{S=0} \mid \underbrace{\texttt{1000\,0000}}_{e=128} \mid \underbrace{\texttt{100\dots}}_{m}$$
+        \item Ta có: $S = 0$ (số dương); $E = 128 - 127 = 1$; $1.m = 1.1_{(2)} = 1.5$.
+        \item Giá trị: $X = +1.5 \times 2^1 = \mathbf{3}$ $\rightarrow$ Chọn \textbf{A (3)}.
+    \end{itemize}
+    \item \textbf{Giải câu b (Với $X = \texttt{0x40A00000}$):}
+    \begin{itemize}
+        \item Đổi 3 chữ số Hexa đầu (\texttt{40A}) sang 12 bit nhị phân:
+        $$\texttt{40A}_{(16)} = \texttt{0100\,0000\,1010}_{(2)} = \underbrace{\texttt{0}}_{S=0} \mid \underbrace{\texttt{1000\,0001}}_{e=129} \mid \underbrace{\texttt{010\dots}}_{m}$$
+        \item Ta có: $S = 0$ (số dương); $E = 129 - 127 = 2$; $1.m = 1.01_{(2)} = 1.25$.
+        \item Giá trị: $X = +1.25 \times 2^2 = 1.25 \times 4 = \mathbf{5}$ $\rightarrow$ Chọn \textbf{B (5)}.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.27 (Đề Giữa kỳ 2024.1 -- \#94ec4c \& Ôn tập Cuối kỳ 2025.2 -- P1, Câu 30)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Đề GK 2024.1 -- \#94ec4c):} Cho số thực dấu phẩy động IEEE 754 độ chính xác đơn 32-bit được biểu diễn bởi word \texttt{0xC11A0000}. Giá trị của số này ở hệ thập phân là gì?
+    \item \textbf{(Ôn tập 2025.2 -- P1, Câu 30):} Giả thiết $X$ là số thực dấu phẩy động IEEE 754 32-bit được biểu diễn bởi \texttt{0xC1E00000}. Giá trị của $X$ ở hệ thập phân là gì?
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Với \texttt{0xC11A0000}):}
+    \begin{itemize}
+        \item Đổi 4 chữ số Hexa đầu (\texttt{C11A}) sang 16 bit nhị phân:
+        $$\texttt{C11A}_{(16)} = \texttt{1100\,0001\,0001\,1010}_{(2)} = \underbrace{\texttt{1}}_{S=1} \mid \underbrace{\texttt{1000\,0010}}_{e=130} \mid \underbrace{\texttt{0011010\dots}}_{m}$$
+        \item Ta có: $S = 1$ (số âm); $E = 130 - 127 = 3$; $1.m = 1.001101_{(2)}$.
+        \item Dịch dấu phẩy sang phải $3$ vị trí:
+        $$X = -1.001101_{(2)} \times 2^3 = -1001.101_{(2)} = -(8 + 1 + 0.5 + 0.125) = \mathbf{-9.625}$$
+    \end{itemize}
+    \item \textbf{Giải câu b (Với \texttt{0xC1E00000}):}
+    \begin{itemize}
+        \item Đổi 3 chữ số Hexa đầu (\texttt{C1E}) sang 12 bit nhị phân:
+        $$\texttt{C1E}_{(16)} = \texttt{1100\,0001\,1110}_{(2)} = \underbrace{\texttt{1}}_{S=1} \mid \underbrace{\texttt{1000\,0011}}_{e=131} \mid \underbrace{\texttt{110\dots}}_{m}$$
+        \item Ta có: $S = 1$ (số âm); $E = 131 - 127 = 4$; $1.m = 1.11_{(2)}$.
+        \item Dịch dấu phẩy sang phải $4$ vị trí:
+        $$X = -1.1100_{(2)} \times 2^4 = -11100_{(2)} = -(16 + 8 + 4) = \mathbf{-28}$$
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.28 (Đề Cuối kỳ 2021.2 -- Mã đề B5, Câu 1.1 \& Slide Chương 4 -- Trang 98, 99)}\\
+Chuyển đổi các số biểu diễn dưới dạng Hexa sau về số thực dấu phẩy động theo chuẩn IEEE 754 32-bit:
+\begin{enumerate}[label=\alph*)]
+    \item \texttt{0x42A78000}
+    \item \texttt{0xC1560000}
+    \item \texttt{0x3FC00000} (\texttt{0011 1111 1100 0000 ...})
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Với \texttt{0x42A78000}):}
+    \begin{itemize}
+        \item Đổi 5 chữ số Hexa đầu (\texttt{42A78}) sang 20 bit nhị phân:
+        $$\texttt{0100\,0010\,1010\,0111\,1000}_{(2)} = \underbrace{\texttt{0}}_{S=0} \mid \underbrace{\texttt{1000\,0101}}_{e=133} \mid \underbrace{\texttt{01001111000\dots}}_{m}$$
+        \item Ta có: $S = 0$ (số dương); $E = 133 - 127 = 6$; $1.m = 1.01001111_{(2)}$.
+        \item Dịch dấu phẩy sang phải $6$ vị trí:
+        $$X = +1010011.11_{(2)} = (64 + 16 + 2 + 1) + (0.5 + 0.25) = \mathbf{+83.75}$$
+    \end{itemize}
+    \item \textbf{Giải câu b (Với \texttt{0xC1560000}):}
+    \begin{itemize}
+        \item Đổi 4 chữ số Hexa đầu (\texttt{C156}) sang 16 bit nhị phân:
+        $$\texttt{1100\,0001\,0101\,0110}_{(2)} = \underbrace{\texttt{1}}_{S=1} \mid \underbrace{\texttt{1000\,0010}}_{e=130} \mid \underbrace{\texttt{1010110\dots}}_{m}$$
+        \item Ta có: $S = 1$ (số âm); $E = 130 - 127 = 3$; $1.m = 1.101011_{(2)}$.
+        \item Dịch dấu phẩy sang phải $3$ vị trí:
+        $$X = -1101.011_{(2)} = -(8 + 4 + 1 + 0.25 + 0.125) = \mathbf{-13.375}$$
+    \end{itemize}
+    \item \textbf{Giải câu c (Với \texttt{0x3FC00000}):}
+    \begin{itemize}
+        \item Đổi 3 chữ số Hexa đầu (\texttt{3FC}) sang 12 bit nhị phân:
+        $$\texttt{0011\,1111\,1100}_{(2)} = \underbrace{\texttt{0}}_{S=0} \mid \underbrace{\texttt{0111\,1111}}_{e=127} \mid \underbrace{\texttt{100\dots}}_{m}$$
+        \item Ta có: $S = 0$; $E = 127 - 127 = 0$; $X = +1.1_{(2)} \times 2^0 = \mathbf{+1.5}$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.29 (Đề Giữa kỳ 2024.1 -- \#386374)}\\
+Biểu diễn các giá trị thập phân sau sang số dấu phẩy động chuẩn IEEE 754 độ chính xác đơn (32-bit) dưới dạng số Hexa:
+\begin{enumerate}[label=\alph*)]
+    \item $-13.75$
+    \item $-46.375$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a (Biểu diễn $-13.75$):}
+    \begin{itemize}
+        \item Bước 1: Vì $-13.75 < 0$ nên bit dấu $S = 1$.
+        \item Bước 2: Đổi $13.75$ sang nhị phân và chuẩn hóa:
+        $$13 = 1101_{(2)} \ ; \ 0.75 = 0.11_{(2)} \implies 13.75 = 1101.11_{(2)} = 1.10111_{(2)} \times 2^3$$
+        \item Bước 3: Tính số mũ lệch $e = E + 127 = 3 + 127 = 130 = 128 + 2 = \texttt{1000\,0010}_{(2)}$.
+        \item Bước 4: Ghép $[S \mid e \mid m]$ và nhóm 4 bit một thành chữ số Hexa:
+        $$\underbrace{\texttt{1}}_{S}\,\underbrace{\texttt{1000\,0010}}_{e}\,\underbrace{\texttt{101\,1100\,0000\dots}}_{m} = \texttt{1100\,0001\,0101\,1100\,0000\dots}_{(2)} = \mathbf{\texttt{0xC15C0000}}$$
+    \end{itemize}
+    \item \textbf{Giải câu b (Biểu diễn $-46.375$):}
+    \begin{itemize}
+        \item Bước 1: Số âm nên $S = 1$.
+        \item Bước 2: $46 = 32 + 8 + 4 + 2 = 101110_{(2)}$ và $0.375 = 0.25 + 0.125 = 0.011_{(2)}$:
+        $$46.375 = 101110.011_{(2)} = 1.01110011_{(2)} \times 2^5$$
+        \item Bước 3: Tính số mũ lệch $e = 5 + 127 = 132 = 128 + 4 = \texttt{1000\,0100}_{(2)}$.
+        \item Bước 4: Ghép $[S \mid e \mid m]$ và đổi sang Hexa:
+        $$\underbrace{\texttt{1}}_{S}\,\underbrace{\texttt{1000\,0100}}_{e}\,\underbrace{\texttt{011\,1001\,1000\dots}}_{m} = \texttt{1100\,0010\,0011\,1001\,1000\,0000\dots}_{(2)} = \mathbf{\texttt{0xC2398000}}$$
+    \end{itemize}
+\end{itemize}
+
+\textbf{Bài tập 4.30 (Ôn tập Cuối kỳ 2025.2 -- P1, Câu 46 \& Câu 59)}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{(Câu 59):} Cho số thực dấu phẩy động 32-bit theo chuẩn IEEE 754 viết theo hệ Hexa có 3 chữ số có ý nghĩa lớn nhất (bên trái) là \texttt{7F8}, phần còn lại chưa được biết. Khẳng định nào dưới đây có khả năng đúng? (Chọn tất cả các khẳng định đúng)\\
+    1. Số thực này bằng $0$\\
+    2. Số thực này biểu diễn NaN (Not a Number)\\
+    3. Số thực này biểu diễn giá trị dương xác định\\
+    4. Số thực này biểu diễn vô cùng (Infinity)
+    \item \textbf{(Câu 46):} Có bao nhiêu cách biểu diễn NaN (Not a Number) khi dùng số thực dấu phẩy động 32-bit theo chuẩn IEEE 754?\\
+    A. $128$ \qquad B. $2^{23} - 1$ \qquad C. $2^{24} - 2$ \qquad D. $2$
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{itemize}
+    \item \textbf{Giải câu a:} Đổi 3 chữ số Hexa đầu \texttt{7F8} sang 12 bit nhị phân:
+    $$\texttt{7F8}_{(16)} = \texttt{0111\,1111\,1000}_{(2)} = \underbrace{\texttt{0}}_{S=0} \mid \underbrace{\texttt{1111\,1111}}_{e=255} \mid \underbrace{\texttt{000\dots}}_{\text{3 bit đầu của } m}$$
+    Vì cả 8 bit của trường mũ $e$ đều bằng $1$ ($e = 255$), theo quy ước đặc biệt của IEEE 754 (Slide Chương 4, trang 100):
+    \begin{itemize}
+        \item Nếu 20 bit còn lại đều bằng $0$ (tức toàn bộ 23 bit $m = 0$), thì số này biểu diễn $+\infty$ (\textbf{vô cùng}).
+        \item Nếu trong 20 bit còn lại có ít nhất 1 bit bằng $1$ (tức $m \neq 0$), thì số này biểu diễn \textbf{NaN (Not a Number)}.
+        \item Vậy cả hai khẳng định \textbf{2 (biểu diễn NaN)} và \textbf{4 (biểu diễn vô cùng)} đều có khả năng đúng.
+    \end{itemize}
+    \item \textbf{Giải câu b:}
+    \begin{itemize}
+        \item Một chuỗi 32-bit là NaN khi trường mũ $e = \texttt{11111111}$ ($1$ cách) và trường định trị $m$ (23 bit) khác $0$.
+        \item Số cách chọn 23 bit của $m$ sao cho không đồng thời bằng $0$ là: $2^{23} - 1$.
+        \item Bit dấu $S$ ở đầu có thể bằng $0$ hoặc bằng $1$ ($2$ cách chọn).
+        \item Tổng số cách biểu diễn NaN là: $2 \times (2^{23} - 1) = \mathbf{2^{24} - 2}$ $\rightarrow$ Chọn \textbf{C ($2^{24} - 2$)}.
+    \end{itemize}
+\end{itemize}

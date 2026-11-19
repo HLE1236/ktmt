@@ -1,0 +1,1676 @@
+[
+  {
+    "id": "c6-001",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.1",
+    "source": "ôn tập cuối kì 20252 (P2-23); Đáp án ôn tập cuối kỳ P2 (Câu 44); cuối kì 20212 (B1-4.2)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trên máy tính dùng bộ xử lý có bus địa chỉ $32\\text{-bit}$, bus dữ liệu $64\\text{-bit}$, các thanh ghi bên trong có độ dài $32\\text{-bit}$. Giả sử có một mảng dữ liệu hai chiều <code>B</code> có kích thước $5 \\times 7$ của các phần tử $32\\text{-bit}$, lưu trữ theo hàng trong bộ nhớ chính (tổ chức băng nhớ đan xen) bắt đầu từ địa chỉ <code>0x000A5020</code>. Hỏi phần tử <code>B[1, 5]</code> (với chỉ số $i = 0\\dots4$, $j = 0\\dots6$) nằm trên các băng nhớ nào của bộ nhớ vật lý?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Băng 0, 1, 2, 3",
+      "Băng 4, 5, 6, 7",
+      "Băng 3, 4, 5, 6",
+      "Băng 1, 2, 3, 4"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>Bước 1 — Số băng nhớ đan xen:</strong> Bus dữ liệu rộng $64\\text{ bit} = 8\\text{ byte} \\Rightarrow$ bộ nhớ chính được chia thành <strong>$8$ băng nhớ đan xen</strong> (Băng $0$ đến Băng $7$). Mỗi byte có địa chỉ $A$ nằm trên băng nhớ số $A \\bmod 8$.</p><p><strong>Bước 2 — Địa chỉ phần tử <code>B[1, 5]</code>:</strong> Mảng lưu theo hàng (row-major), mỗi hàng có $7$ phần tử, mỗi phần tử chiếm $4\\text{ byte}$:<br>$\\text{Addr}(B[1, 5]) = \\text{0x000A5020} + (1 \\times 7 + 5) \\times 4 = \\text{0x000A5020} + 48 = \\text{0x000A5020} + \\text{0x30} = \\texttt{0x000A5050}$.</p><p><strong>Bước 3 — Xác định băng nhớ:</strong> $4$ byte của <code>B[1, 5]</code> nằm ở các địa chỉ <code>0x000A5050</code> đến <code>0x000A5053</code>. Vì $\\text{0x50} = 80 \\equiv 0 \\pmod 8$, nên $4$ byte này nằm trên các băng nhớ <strong>0, 1, 2, 3</strong>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-002",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.2",
+    "source": "cuối kì 20212 (B3-4.3)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Máy tính dùng $36\\text{ bit}$ địa chỉ để đánh địa chỉ cho bộ nhớ theo byte, bus dữ liệu kết nối với bộ nhớ chính là $64\\text{ bit}$ (tổ chức băng nhớ đan xen). Hãy cho biết hai byte nhớ có địa chỉ <code>0x0FE12C39</code> và <code>0x10ABCD05</code> lần lượt được bố trí ở băng nhớ nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Băng 1 và Băng 1",
+      "Băng 1 và Băng 5",
+      "Băng 5 và Băng 1",
+      "Băng 3 và Băng 5"
+    ],
+    "correctIndex": 1,
+    "correctIndices": [
+      1
+    ],
+    "explanation": "<p>Bus dữ liệu rộng $64\\text{ bit} = 8\\text{ byte} \\Rightarrow$ bộ nhớ chính tổ chức thành <strong>$8$ băng nhớ đan xen</strong> (Băng $0$ đến Băng $7$). Chỉ số băng nhớ bằng $3$ bit thấp nhất của địa chỉ (tức $\\text{Addr} \\bmod 8$):</p><p>• Địa chỉ <code>0x0FE12C39</code>: chữ số Hex cuối là $\\text{9} = 1001_2 \\Rightarrow 9 \\bmod 8 = \\mathbf{1}$ (<strong>Băng 1</strong>).<br>• Địa chỉ <code>0x10ABCD05</code>: chữ số Hex cuối là $\\text{5} = 0101_2 \\Rightarrow 5 \\bmod 8 = \\mathbf{5}$ (<strong>Băng 5</strong>).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-003",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.3",
+    "source": "cuối kì 20212 (B6-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Thiết kế mô-đun nhớ RAM dung lượng $64\\text{K} \\times 8\\text{-bit}$ trên cơ sở các IC nhớ SRAM dung lượng $32\\text{K} \\times 4\\text{-bit}$ cần bố trí số chip và tín hiệu chọn chip như thế nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Dùng 4 chip ghép nối tiếp theo chiều sâu, dùng A14 và A15 qua bộ giải mã 2-sang-4 để chọn chip",
+      "Dùng 2 chip ghép song song theo chiều rộng, nối chung A0–A15 và tín hiệu CS",
+      "Dùng 4 chip: ghép song song 2 chip theo chiều rộng (4 lên 8 bit) và 2 hàng nối tiếp theo chiều sâu (32K lên 64K), nối chung A0–A14 và dùng A15 (kèm cổng NOT) chọn hàng (CS)",
+      "Dùng 8 chip: ghép song song 4 chip theo chiều rộng và 2 hàng theo chiều sâu, dùng A15 chọn hàng"
+    ],
+    "correctIndex": 2,
+    "correctIndices": [
+      2
+    ],
+    "explanation": "<p><strong>1. Tính số lượng chip:</strong><br>• Mở rộng độ dài từ nhớ (chiều rộng): $8\\text{ bit} / 4\\text{ bit} = 2$ chip ghép song song trên mỗi hàng (chia bus dữ liệu $D_0\\text{–}D_3$ và $D_4\\text{–}D_7$).<br>• Mở rộng dung lượng (chiều sâu): $64\\text{K} / 32\\text{K} = 2$ hàng nối tiếp.<br>• Tổng số chip cần dùng $= 2 \\times 2 = \\mathbf{4}$ chip.</p><p><strong>2. Kết nối đường địa chỉ &amp; chọn chip:</strong><br>• Mỗi chip $32\\text{K} = 2^{15}$ cần $15$ đường địa chỉ $A_0\\text{–}A_{14}$ nối chung cho cả $4$ chip.<br>• Mô-đun $64\\text{K} = 2^{16}$ cần $16$ đường địa chỉ $\\Rightarrow$ bit cao nhất $A_{15}$ (qua cổng <code>NOT</code>) dùng để kích hoạt tín hiệu $\\overline{CS}$ chọn giữa hàng 0 ($A_{15}=0$) và hàng 1 ($A_{15}=1$).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-004",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.4",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.2 (SRAM & DRAM)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Phát biểu nào sau đây phân biệt <strong>đúng</strong> giữa bộ nhớ RAM tĩnh (<code>SRAM</code>) và RAM động (<code>DRAM</code>)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "SRAM lưu bit trên tụ điện nên cần mạch làm tươi định kỳ; DRAM lưu bit bằng Flip-Flop nên nhanh hơn và dùng làm Cache",
+      "SRAM lưu bit bằng mạch Flip-Flop, tốc độ nhanh, đắt tiền nên dùng làm Cache; DRAM lưu bit trên tụ điện, cần mạch làm tươi (refresh), dung lượng lớn, rẻ hơn nên dùng làm bộ nhớ chính",
+      "Cả SRAM và DRAM đều là bộ nhớ không khả biến (non-volatile), giữ được dữ liệu khi mất nguồn điện",
+      "DRAM có cấu trúc phần tử nhớ phức tạp hơn SRAM nên chi phí trên mỗi bit cao hơn"
+    ],
+    "correctIndex": 1,
+    "correctIndices": [
+      1
+    ],
+    "explanation": "<p>Theo Slide 20–21 (CA.RISCV.2025):<br>• <strong>SRAM (Static RAM):</strong> Lưu bit bằng <strong>Flip-Flop</strong>, thông tin ổn định không cần làm tươi, tốc độ rất nhanh nhưng cấu trúc phức tạp và đắt tiền $\\Rightarrow$ dùng làm <strong>bộ nhớ Cache</strong>.<br>• <strong>DRAM (Dynamic RAM):</strong> Lưu bit bằng điện tích trên <strong>tụ điện</strong> nên bị rò điện và bắt buộc có <strong>mạch làm tươi (refresh)</strong>; cấu trúc đơn giản, mật độ cao, giá rẻ $\\Rightarrow$ dùng làm <strong>bộ nhớ chính</strong>.<br>• Cả hai đều là bộ nhớ <strong>khả biến (volatile)</strong>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-005",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.5",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.2 (ROM & Flash)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong các loại bộ nhớ bán dẫn không khả biến dưới đây, loại nào cho phép <strong>xóa bằng điện theo từng khối (block)</strong> và được ứng dụng phổ biến làm ổ đĩa SSD, USB và bộ nhớ lưu trữ trên điện thoại thông minh?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "PROM (Programmable ROM)",
+      "EPROM (Erasable PROM)",
+      "Mask ROM (ROM mặt nạ)",
+      "Bộ nhớ Flash (Flash Memory)"
+    ],
+    "correctIndex": 3,
+    "correctIndices": [
+      3
+    ],
+    "explanation": "<p>Theo Slide 15–18 (CA.RISCV.2025):<br>• <strong>Mask ROM:</strong> Ghi khi sản xuất, không xóa được.<br>• <strong>PROM:</strong> Chỉ ghi được một lần bằng thiết bị chuyên dụng.<br>• <strong>EPROM:</strong> Xóa cả chip bằng tia cực tím (UV).<br>• <strong>EEPROM:</strong> Xóa và ghi bằng điện ở mức từng byte.<br>• <strong>Bộ nhớ Flash:</strong> Không khả biến, <strong>xóa và ghi bằng điện theo từng khối</strong>, dung lượng lớn $\\Rightarrow$ dùng làm SSD, thẻ nhớ, USB, bộ nhớ smartphone.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-006",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.6",
+    "source": "cuối kì 20202 (Câu 16); cuối kì 20211 (Câu 16)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hãy tiến hành sắp xếp có tổ chức cấu trúc phân cấp các thành phần bộ nhớ trong kiến trúc máy tính hiện đại dựa theo thứ tự dung lượng lưu trữ tăng dần (từ nhỏ nhất đến lớn nhất):",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Cache L1, Cache L2, Cache L3, Bộ nhớ chính, Bộ nhớ ngoài",
+      "Cache L3, Cache L2, Cache L1, Bộ nhớ chính, Bộ nhớ ngoài",
+      "Bộ nhớ chính, Cache L3, Cache L2, Cache L1, Bộ nhớ ngoài",
+      "Cache L1, Cache L2, Bộ nhớ chính, Cache L3, Bộ nhớ ngoài"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo tháp phân cấp bộ nhớ, từ đỉnh xuống đáy tốc độ giảm dần và <strong>dung lượng tăng dần</strong>: Thanh ghi &rarr; Cache L1 &rarr; Cache L2 &rarr; Cache L3 &rarr; Bộ nhớ chính (RAM) &rarr; Bộ nhớ ngoài (SSD/HDD).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-007",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.7",
+    "source": "cuối kì 20222 (#ef5037); cuối kì 20241 (#018513); cuối kì 20242 (#ef5037); ôn tập cuối kì 20252 (P1-67)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Hãy chỉ ra đâu là cấu hình bộ nhớ phù hợp cho máy tính PC ?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Cache L1: 64 KB, Cache L2: 256 KB, Cache L3: 8 MB, RAM: 8 GB, SSD: 512 GB",
+      "Cache L1: 64 KB, Cache L2: 256 KB, Cache L3: 16 GB, RAM: 2 TB, SSD: 1 TB",
+      "Cache L1: 64 KB, Cache L2: 256 GB, Cache L3: 8 MB, RAM: 8 GB, SSD: 512 GB",
+      "Cache L1: 16 MB, Cache L2: 256 KB, Cache L3: 16 MB, RAM: 8 GB, SSD: 1 TB"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Cấu hình bộ nhớ chuẩn của một máy tính PC phải tuân theo trật tự dung lượng tăng dần hợp lý: $L1 &lt; L2 &lt; L3 &lt; \\text{RAM} &lt; \\text{SSD}$ (ví dụ: L1 $64\\text{ KB}$, L2 $256\\text{ KB}$, L3 $8\\text{ MB}$, RAM $8\\text{ GB}$, SSD $512\\text{ GB}$).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-008",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.8",
+    "source": "cuối kì 20212 (B1-5)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khi thiết kế mô-đun nhớ RAM dung lượng $64\\text{K} \\times 16\\text{-bit}$ từ các chip nhớ SRAM dung lượng $32\\text{K} \\times 8\\text{-bit}$, phương án ghép chip và chọn chip nào sau đây chính xác?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Dùng 4 chip: ghép song song 2 chip theo chiều rộng (8 lên 16 bit) và 2 hàng nối tiếp theo chiều sâu (32K lên 64K), dùng đường địa chỉ A15 (và cổng NOT) chọn chip (CS)",
+      "Dùng 4 chip ghép song song toàn bộ theo chiều rộng, dùng A15 và A16 qua bộ giải mã 2-sang-4 để chọn chip",
+      "Dùng 2 chip ghép nối tiếp theo chiều sâu, dùng đường địa chỉ A14 chọn chip (CS)",
+      "Dùng 8 chip: 4 chip theo chiều rộng và 2 hàng theo chiều sâu, dùng A14–A15 để chọn chip"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số chip cần dùng $= (64\\text{K}/32\\text{K}) \\times (16/8) = 2 \\times 2 = 4$ chip.<br>Chip $32\\text{K} = 2^{15}$ dùng 15 đường địa chỉ $A_0\\text{–}A_{14}$; mô-đun $64\\text{K} = 2^{16}$ cần thêm $A_{15}$ (nối trực tiếp và qua cổng NOT) để kích hoạt chân $\\overline{CS}$ của 2 hàng chip; mỗi hàng gồm 2 chip $8\\text{-bit}$ chia sẻ bus dữ liệu $D_0\\text{–}D_7$ và $D_8\\text{–}D_{15}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-009",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.9",
+    "source": "cuối kì 20212 (B2-5); cuối kì 20212 (B5-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khi thiết kế mô-đun nhớ RAM dung lượng $128\\text{K} \\times 8\\text{-bit}$ trên cơ sở chip nhớ SRAM dung lượng $32\\text{K} \\times 8\\text{-bit}$, cách tổ chức nào sau đây đúng?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Dùng 4 chip ghép nối tiếp theo chiều sâu, nối chung A0–A14 và D0–D7, dùng 2 bit địa chỉ cao A15, A16 qua bộ giải mã 2-sang-4 để chọn chip (CS)",
+      "Dùng 4 chip ghép song song theo chiều rộng, dùng A15 qua cổng NOT để chọn chip",
+      "Dùng 8 chip ghép kết hợp 2 chiều rộng và 4 chiều sâu, dùng A14–A16 để chọn chip",
+      "Dùng 2 chip ghép nối tiếp theo chiều sâu, dùng đường A15 để chọn chip"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số chip $= (128\\text{K}/32\\text{K}) \\times (8/8) = 4$ chip ghép nối tiếp chiều sâu. Mỗi chip có $15$ đường địa chỉ ($A_0\\text{–}A_{14}$); $128\\text{K} = 2^{17}$ cần $17$ đường ($A_0\\text{–}A_{16}$), nên $2$ đường cao $A_{15}, A_{16}$ đưa qua bộ giải mã $2\\text{-to-}4$ để chọn $1$ trong $4$ chip.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-010",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.10",
+    "source": "cuối kì 20212 (B4-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Để thiết kế mô-đun nhớ RAM dung lượng $32\\text{K} \\times 16\\text{-bit}$ trên cơ sở các IC nhớ SRAM $32\\text{K} \\times 4\\text{-bit}$, cần thiết kế như thế nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Dùng 4 IC ghép song song theo chiều rộng; nối chung A0–A14 và CS cho cả 4 IC, chia bus D0–D15 thành 4 nhóm 4-bit vào từng IC",
+      "Dùng 4 IC ghép nối tiếp theo chiều sâu, dùng A15 và A16 qua bộ giải mã 2-sang-4 để chọn IC",
+      "Dùng 2 IC ghép song song theo chiều rộng để mở rộng từ 4-bit lên 16-bit",
+      "Dùng 8 IC kết hợp 2 nhóm nối tiếp và 4 nhóm song song, dùng A14 để chọn nhóm"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số từ nhớ giữ nguyên ($32\\text{K} = 32\\text{K}$), chỉ tăng độ rộng dữ liệu từ $4$ bit lên $16$ bit $\\Rightarrow$ cần $16 / 4 = 4$ IC ghép <strong>song song theo chiều rộng</strong>, dùng chung $A_0\\text{–}A_{14}$ và $\\overline{CS}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-011",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.11",
+    "source": "cuối kì 20212 (B7-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Thiết kế mô-đun nhớ RAM dung lượng $64\\text{K} \\times 8\\text{-bit}$ trên cơ sở các IC nhớ SRAM $16\\text{K} \\times 8\\text{-bit}$ cần bố trí như thế nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Dùng 4 IC ghép nối tiếp theo chiều sâu; A0–A13 và D0–D7 nối chung, dùng A14 và A15 qua bộ giải mã 2-sang-4 để chọn chip (CS)",
+      "Dùng 4 IC ghép song song theo chiều rộng, dùng A15 qua cổng NOT để chọn chip",
+      "Dùng 2 IC ghép nối tiếp theo chiều sâu, dùng A14 để chọn chip",
+      "Dùng 4 IC ghép nối tiếp, dùng A15 và A16 qua bộ giải mã 2-sang-4 để chọn chip"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số chip $= 64\\text{K} / 16\\text{K} = 4$ IC nối tiếp chiều sâu. Mỗi chip $16\\text{K} = 2^{14}$ dùng $A_0\\text{–}A_{13}$; mô-đun $64\\text{K} = 2^{16}$ dùng $2$ đường cao $A_{14}, A_{15}$ đưa qua decoder $2\\text{-sang-}4$ để chọn chip.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-012",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.12",
+    "source": "cuối kì 20212 (B8-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Bộ xử lý có bus địa chỉ $20\\text{ bit}$ ($A_0\\text{–}A_{19}$), bus dữ liệu $8\\text{ bit}$. $4$ bit cao $A_{19}A_{18}A_{17}A_{16}$ phân vùng: <code>0000</code> cho RAM ($64\\text{ KB}$ từ chip SRAM $16\\text{K}\\times 8\\text{-bit}$), <code>1111</code> cho ROM ($32\\text{ KB}$), <code>1000</code> cho $32$ cổng I/O (Memory-Mapped I/O, đánh địa chỉ từ $A_{15}\\text{–}A_0 = 0$). Kết luận nào đúng về số chip RAM và dải địa chỉ (Hexa) của RAM, ROM, I/O?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "4 chip SRAM 16K×8-bit; RAM: 0x00000–0x0FFFF; ROM: 0xF0000–0xF7FFF; I/O: 0x80000–0x8001F",
+      "4 chip SRAM 16K×8-bit; RAM: 0x00000–0x0FFFF; ROM: 0xF0000–0xFFFFF; I/O: 0x80000–0x80020",
+      "2 chip SRAM 16K×8-bit; RAM: 0x00000–0x07FFF; ROM: 0xF0000–0xF7FFF; I/O: 0x80000–0x8001F",
+      "4 chip SRAM 16K×8-bit; RAM: 0x00000–0x0FFFF; ROM: 0xE0000–0xE7FFF; I/O: 0x80000–0x8003F"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>RAM $64\\text{ KB}$ dùng $4$ chip $16\\text{K}\\times 8$, chiếm $2^{16}$ địa chỉ khi $A_{19..16} = 0000$: <code>0x00000</code> – <code>0x0FFFF</code>.<br>ROM $32\\text{ KB} = 2^{15}$ byte khi $A_{19..16} = 1111$ ($A_{15}=0$): <code>0xF0000</code> – <code>0xF7FFF</code>.<br>Khối $32$ cổng I/O khi $A_{19..16} = 1000$: <code>0x80000</code> – <code>0x8001F</code> ($31 = \\text{0x1F}$).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-013",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.13",
+    "source": "cuối kì 20222 (#38a80d); cuối kì 20241 (#cbb2f4); ôn tập cuối kì 20251 (Câu 57); ôn tập cuối kì 20252 (P2-63)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho một máy tính có bus địa chỉ 32-bit và bus dữ liệu 32-bit. Bộ nhớ chính được đánh địa chỉ theo byte và được thiết kế theo kiểu băng nhớ đan xen. Hãy cho biết byte nhớ có địa chỉ 0x123456AD nằm trên băng nhớ nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "băng 1",
+      "băng 0",
+      "băng 2",
+      "băng 3"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bus dữ liệu $32\\text{ bit} = 4\\text{ byte}$ nên bộ nhớ chính đan xen được chia làm $4$ băng nhớ ($0, 1, 2, 3$) dựa theo $2$ bit thấp của địa chỉ (hay $\\text{Địa chỉ} \\bmod 4$).<br>Chữ số Hexa cuối của <code>0x123456AD</code> là <code>0xD</code> $= 13_{(10)} = 1101_{(2)}$ (hoặc <code>0xAD</code> $= 173 = 4 \\times 43 + 1$). Hai bit thấp là <code>01</code> $\\Rightarrow$ nằm trên <strong>băng 1</strong>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-014",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.14",
+    "source": "cuối kì 20231 (#d5287a); cuối kì 20232 (#d5287a); cuối kì 20251 (#96837); thi thử kì 20251 (Câu 30); ôn tập cuối kì 20251 (Câu 6); ôn tập cuối kì 20252 (P2-71)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khẳng định nào dưới đây mô tả chính xác nhất về đặc tính cục bộ bộ nhớ của các biến khi thực thi đoạn mã C bên dưới?",
+    "codeBlock": "int i, sum = 0;\nint A[100];\nfor (i = 0; i < 100; i++)\n    sum += A[i];",
+    "codeLang": "c",
+    "svgDiagram": null,
+    "options": [
+      "Truy cập vào i và sum thể hiện tính cục bộ thời gian (temporal locality); truy cập vào các phần tử A[i] thể hiện tính cục bộ không gian (spatial locality).",
+      "Truy cập vào tất cả các biến đều thể hiện tính cục bộ thời gian (temporal locality).",
+      "Truy cập vào tất cả các biến đều thể hiện tính cục bộ không gian (spatial locality).",
+      "Truy cập vào i và sum thể hiện tính cục bộ không gian (spatial locality); truy cập vào A[i] thể hiện tính cục bộ thời gian (temporal locality)."
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Biến <code>i</code> và <code>sum</code> được đọc/ghi lặp đi lặp lại trong vòng lặp $\\Rightarrow$ <strong>Temporal Locality</strong> (cục bộ theo thời gian). Các phần tử <code>A[i]</code> nằm liên tiếp nhau trong bộ nhớ và được duyệt tuần tự $\\Rightarrow$ <strong>Spatial Locality</strong> (cục bộ theo không gian).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-015",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.15",
+    "source": "ôn tập cuối kì 20251 (Câu 45); ôn tập cuối kì 20252 (P2-27)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đặc điểm nào sau đây <strong>KHÔNG PHẢI</strong> là ưu điểm của ổ thể rắn SSD so với ổ đĩa từ HDD truyền thống?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Giá thành trên mỗi đơn vị dung lượng (VNĐ/GB) rẻ hơn",
+      "Tốc độ truy xuất dữ liệu nhanh hơn và độ trễ thấp hơn",
+      "Không có bộ phận chuyển động cơ học nên không gây tiếng ồn",
+      "Khả năng chống sốc vật lý và va đập tốt hơn"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>SSD vượt trội HDD về tốc độ, độ trễ, không tiếng ồn và chống sốc; nhược điểm của SSD so với HDD là <strong>chi phí trên mỗi GB cao hơn</strong>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-016",
+    "chapter": 6,
+    "groupId": "6.1",
+    "groupTitle": "Nhóm 1: Phân cấp bộ nhớ, Nguyên lý cục bộ, SRAM/DRAM & Tổ chức chip nhớ",
+    "exerciseCode": "Bài tập 6.16",
+    "source": "ôn tập cuối kì 20251 (Câu 19); ôn tập cuối kì 20252 (P2-73)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.1",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong thực tế hiện nay, phát biểu nào sau đây <strong>SAI</strong> về việc sử dụng HDD và SSD trên các thiết bị?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Camera giám sát (CCTV) ghi hình 24/7 thường ưu tiên dùng SSD vì SSD có độ bền ghi/xóa vượt trội HDD khi ghi liên tục với dung lượng lớn",
+      "Các máy chơi game thế hệ mới (như PS5, Xbox Series X) sử dụng SSD để giảm mạnh thời gian tải màn chơi",
+      "SSD được ưu tiên làm ổ cài hệ điều hành trên Laptop/PC nhờ tốc độ truy xuất ngẫu nhiên nhanh",
+      "HDD vẫn phổ biến trong hệ thống Server lưu trữ (NAS) hoặc trung tâm dữ liệu nhờ dung lượng lớn và giá thành trên GB rẻ"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Camera CCTV ghi hình liên tục 24/7 cần dung lượng lưu trữ lớn, chi phí/GB thấp và độ bền ghi tuần tự cao nên thực tế ưu tiên dùng <strong>HDD chuyên dụng</strong> thay vì SSD (SSD có giới hạn chu kỳ ghi/xóa tế bào nhớ flash TBW và giá thành cao hơn).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-017",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.17",
+    "source": "cuối kì 20212 (B5-5)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính có $64\\text{ KB}$ bộ nhớ chính đánh địa chỉ theo byte, bộ nhớ Cache gồm $32$ line tổ chức ánh xạ trực tiếp, kích thước mỗi line là $4\\text{ byte}$. Số bit của các trường <code>Tag / Line / Word</code> và dải địa chỉ Hexa của tất cả các byte nằm cùng line với byte nhớ có địa chỉ nhị phân <code>0010 0011 1001 0111</code> lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 9 bit, Line = 5 bit, Word = 2 bit; cùng line: 0x2394 đến 0x2397",
+      "Tag = 8 bit, Line = 5 bit, Word = 3 bit; cùng line: 0x2390 đến 0x2397",
+      "Tag = 9 bit, Line = 4 bit, Word = 3 bit; cùng line: 0x2390 đến 0x2397",
+      "Tag = 10 bit, Line = 4 bit, Word = 2 bit; cùng line: 0x2394 đến 0x2397"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>1. Phân chia bit địa chỉ:</strong><br>• Bộ nhớ chính $64\\text{ KB} = 2^{16}\\text{ byte} \\Rightarrow$ địa chỉ dài $16\\text{ bit}$.<br>• Kích thước line $= 4\\text{ byte} = 2^2 \\Rightarrow \\text{Word} = \\mathbf{2\\text{ bit}}$.<br>• Số line $= 32 = 2^5 \\Rightarrow \\text{Line} = \\mathbf{5\\text{ bit}}$.<br>• $\\text{Tag} = 16 - 5 - 2 = \\mathbf{9\\text{ bit}}$.</p><p><strong>2. Các byte cùng line với <code>0010 0011 1001 0111</code>:</strong><br>Chuyển sang Hexa là <code>0x2397</code>. Giữ nguyên $14$ bit cao (Tag + Line = <code>0010 0011 1001 01</code>) và cho $2$ bit Word chạy từ <code>00</code> đến <code>11</code>, ta thu được dải địa chỉ <strong><code>0x2394</code> đến <code>0x2397</code></strong>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-018",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.18",
+    "source": "cuối kì 20212 (B7-5)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính với bộ nhớ chính có địa chỉ $32\\text{-bit}$ (đánh địa chỉ theo từng byte). Bộ nhớ Cache dung lượng $256\\text{ KB}$ được tổ chức theo kiểu ánh xạ liên kết tập hợp $8\\text{ line/set}$, gồm $512$ Set ($S_0\\text{–}S_{511}$). Số bit các trường <code>Tag / Set / Word</code> và chỉ số Set của byte nhớ có địa chỉ <code>0x032A0203</code> lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 4",
+      "Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 8",
+      "Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 16",
+      "Tag = 18 bit, Set = 8 bit, Word = 6 bit; Set 8"
+    ],
+    "correctIndex": 1,
+    "correctIndices": [
+      1
+    ],
+    "explanation": "<p><strong>1. Phân chia bit địa chỉ:</strong><br>• Tổng số line $= 512 \\text{ Set} \\times 8 \\text{ line/set} = 4096 = 2^{12}$ line.<br>• Kích thước mỗi line $= 256\\text{ KB} / 2^{12} = 2^{18} / 2^{12} = 64\\text{ byte} = 2^6 \\Rightarrow \\text{Word} = \\mathbf{6\\text{ bit}}$.<br>• Số Set $= 512 = 2^9 \\Rightarrow \\text{Set} = \\mathbf{9\\text{ bit}}$.<br>• $\\text{Tag} = 32 - 9 - 6 = \\mathbf{17\\text{ bit}}$.</p><p><strong>2. Tìm Set của địa chỉ <code>0x032A0203</code>:</strong><br>Các bit cuối: <code>...0203</code> $= \\dots\\texttt{0000 0010 0000 0011}_2$.<br>Bỏ $6$ bit Word thấp nhất (<code>000011</code>), lấy $9$ bit Set tiếp theo: <code>000001000</code>$_2 = \\mathbf{8}$ (<strong>Set 8</strong>).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-019",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.19",
+    "source": "cuối kì 20212 (B8-5)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính có bộ nhớ chính dung lượng $4\\text{ GB}$ (đánh địa chỉ theo từng byte). Bộ nhớ Cache dung lượng $256\\text{ KB}$ tổ chức theo ánh xạ liên kết tập hợp $4\\text{ line/set}$, gồm $512$ Set ($S_0\\text{–}S_{511}$). Số bit các trường <code>Tag / Set / Word</code> và chỉ số Set của byte nhớ có địa chỉ <code>0x0A0B1035</code> lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 17 bit, Set = 9 bit, Word = 6 bit; Set 64",
+      "Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 16",
+      "Tag = 16 bit, Set = 9 bit, Word = 7 bit; Set 32",
+      "Tag = 16 bit, Set = 10 bit, Word = 6 bit; Set 32"
+    ],
+    "correctIndex": 2,
+    "correctIndices": [
+      2
+    ],
+    "explanation": "<p><strong>1. Phân chia bit địa chỉ:</strong><br>• Bộ nhớ chính $4\\text{ GB} = 2^{32}\\text{ byte} \\Rightarrow$ địa chỉ dài $32\\text{ bit}$.<br>• Tổng số line $= 512 \\times 4 = 2048 = 2^{11}$ line.<br>• Kích thước mỗi line $= 256\\text{ KB} / 2^{11} = 2^{18} / 2^{11} = 128\\text{ byte} = 2^7 \\Rightarrow \\text{Word} = \\mathbf{7\\text{ bit}}$.<br>• Số Set $= 512 = 2^9 \\Rightarrow \\text{Set} = \\mathbf{9\\text{ bit}}$.<br>• $\\text{Tag} = 32 - 9 - 7 = \\mathbf{16\\text{ bit}}$.</p><p><strong>2. Tìm Set của địa chỉ <code>0x0A0B1035</code>:</strong><br>$16$ bit thấp là <code>0x1035</code> $= \\texttt{0001 0000 0011 0101}_2$.<br>Bỏ $7$ bit Word thấp nhất (<code>0110101</code>), lấy $9$ bit Set kế tiếp: <code>000100000</code>$_2 = 2^5 = \\mathbf{32}$ (<strong>Set 32</strong>).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-020",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.20",
+    "source": "ôn tập cuối kì 20252 (P2-19); Đáp án ôn tập cuối kỳ P2 (Câu 23)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị biểu thức P (vd: 47):",
+    "acceptedAnswers": [
+      "47"
+    ],
+    "question": "Máy tính có bộ nhớ Cache $8\\text{ MiB}$ được tổ chức theo ánh xạ liên kết tập hợp $16\\text{ line/set}$ với kích thước mỗi line là $64\\text{ byte}$; bộ nhớ chính được đánh địa chỉ cho từng byte bằng $36\\text{ bit}$ địa chỉ. Giá trị biểu thức $P = \\text{số bit trường Set} + 2 \\times \\text{số bit trường Tag}$ bằng bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "45",
+      "46",
+      "47",
+      "48"
+    ],
+    "correctIndex": 2,
+    "correctIndices": [
+      2
+    ],
+    "explanation": "<p>• Kích thước line $= 64\\text{ byte} = 2^6 \\Rightarrow \\text{Word} = 6\\text{ bit}$.<br>• Tổng số line $= 8\\text{ MiB} / 64\\text{ B} = 2^{23} / 2^6 = 2^{17}$ line.<br>• Số Set $= 2^{17} / 16 = 2^{17} / 2^4 = 2^{13} \\Rightarrow \\text{Set} = \\mathbf{13\\text{ bit}}$.<br>• $\\text{Tag} = 36 - 13 - 6 = \\mathbf{17\\text{ bit}}$.<br>• Vậy $P = 13 + 2 \\times 17 = \\mathbf{47}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-021",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.21",
+    "source": "cuối kì 20212 (B2-4)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính có $64\\text{ KB}$ bộ nhớ chính đánh địa chỉ theo byte, bộ nhớ Cache gồm $16$ line tổ chức ánh xạ trực tiếp, kích thước mỗi line là $8\\text{ byte}$.<br>1) Số bit các trường <code>Tag / Line / Word</code> là bao nhiêu?<br>2) Byte nhớ có địa chỉ nhị phân <code>1100 0011 0011 0100</code> ánh xạ vào line nào?<br>3) Byte nhớ <code>0x1A15</code> nạp vào cache cùng những byte nào trong cùng line?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 6; cùng line: 0x1A10 đến 0x1A17",
+      "Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 3; cùng line: 0x1A10 đến 0x1A17",
+      "Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 12; cùng line: 0x1A00 đến 0x1A0F",
+      "Tag = 8 bit, Line = 4 bit, Word = 4 bit; Line 6; cùng line: 0x1A10 đến 0x1A1F"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>1) $64\\text{ KB} = 2^{16}\\text{ B}$ ($16$ bit địa chỉ). Line $8\\text{ B} = 2^3 \\Rightarrow \\text{Word} = 3\\text{ bit}$. $16$ line $= 2^4 \\Rightarrow \\text{Line} = 4\\text{ bit}$. $\\text{Tag} = 16 - 4 - 3 = 9\\text{ bit}$.<br>2) Địa chỉ <code>1100 0011 0011 0100</code> có 4 bit $[6:3] = 0110_2 = \\text{Line } 6$.<br>3) Line $8\\text{ byte}$ nên các byte cùng block với <code>0x1A15</code> có 3 bit cuối thay đổi từ $000$ đến $111$: <code>0x1A10</code> – <code>0x1A17</code>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-022",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.22",
+    "source": "cuối kì 20241 (#2e789d); ôn tập cuối kì 20251 (Câu 20); ôn tập cuối kì 20251 (Câu 22); ôn tập cuối kì 20252 (P2-38)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Chỉ ra phương pháp ánh xạ mà mỗi Block của bộ nhớ chính được phép nạp vào Line bất kỳ của bộ nhớ cache ?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Ánh xạ liên kết toàn phần (Fully Associative)",
+      "Ánh xạ trực tiếp (Direct Mapped)",
+      "Ánh xạ liên kết tập hợp (Set Associative)",
+      "Không có phương pháp nào cho phép điều này"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong <strong>ánh xạ liên kết toàn phần (Fully Associative)</strong>, một block từ bộ nhớ chính có thể được nạp vào <strong>bất kỳ line nào</strong> còn trống (hoặc thay thế theo thuật toán) trong Cache.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-023",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.23",
+    "source": "cuối kì 20251 (#05f48a); thi thử kì 20251 (Câu 10); ôn tập cuối kì 20251 (Câu 46); ôn tập cuối kì 20252 (P2-37)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho một CPU với địa chỉ bộ nhớ 32 bit A[31..0]. Nó có bộ nhớ đệm (cache) thiết kế theo kiểu tập liên kết 4 đường (4-way set associative) với tổng kích thước dữ liệu cache là 16 KiB và kích thước khối (block size) là 64 bytes. Kích thước (tính bằng bit) của bộ nhớ đệm này là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "64 × 4 × (1 + 20 + 32 × 16)",
+      "64 × 2 × (1 + 20 + 32 × 16)",
+      "64 × 2 × (1 + 20 + 32 × 8)",
+      "64 × 4 × (1 + 19 + 16 × 16)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>• Tổng số block $= 16\\text{ KiB} / 64\\text{ B} = 256$ block.<br>• Cache $4\\text{-way} \\Rightarrow 256 / 4 = \\mathbf{64}$ Set ($6$ bit Index), mỗi Set có $\\mathbf{4}$ line.<br>• Block $64\\text{ B} = 2^6 \\Rightarrow 6$ bit Offset; dữ liệu mỗi block $= 64 \\times 8 = 512\\text{ bit} = \\mathbf{32 \\times 16}$ bit.<br>• $\\text{Tag} = 32 - 6 - 6 = \\mathbf{20}$ bit, cộng $1$ bit hợp lệ (Valid).<br>Tổng kích thước Cache $= \\mathbf{64 \\times 4 \\times (1 + 20 + 32 \\times 16)}$ bit.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-024",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.24",
+    "source": "cuối kì 20251 (#c38eef); thi thử kì 20251 (Câu 17); ôn tập cuối kì 20251 (Câu 28); ôn tập cuối kì 20252 (P2-7)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho một CPU với địa chỉ bộ nhớ 32-bit A[31..0] và bộ nhớ đệm (cache) ánh xạ trực tiếp (direct-mapped) dung lượng 16 KiB với kích thước khối (block size) là 32 bytes. Khi truy cập một từ (word) trong bộ nhớ, những bit địa chỉ nào sẽ được sử dụng để xác định khối cache tương ứng (locate the corresponding cache block)?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "A[13..5]",
+      "A[13..6]",
+      "A[14..6]",
+      "A[14..5]"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Block $32\\text{ B} = 2^5 \\Rightarrow$ Offset dùng $5$ bit thấp $A[4..0]$.<br>Số block Cache $= 16\\text{ KiB} / 32\\text{ B} = 512 = 2^9 \\Rightarrow$ Index cần $9$ bit kế tiếp là $\\mathbf{A[13..5]}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-025",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.25",
+    "source": "ôn tập cuối kì 20251 (Câu 17); ôn tập cuối kì 20252 (P2-22)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Đề bài: Cho một CPU có không gian địa chỉ bộ nhớ 32-bit và bộ nhớ đệm (cache) ánh xạ trực tiếp (direct-mapped) dung lượng 16 KiB với kích thước khối (block size) là 64 bytes.\nCâu hỏi: Tổng kích thước (tính bằng bit) của toàn bộ bộ nhớ đệm, bao gồm các trường: bit hợp lệ (valid bit), thẻ (tag) và dữ liệu (data) là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "256 × (1 + 18 + 32 × 16)",
+      "256 × (1 + 19 + 32 × 16)",
+      "256 × (1 + 18 + 32 × 8)",
+      "256 × (1 + 20 + 32 × 16)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số block $= 16\\text{ KiB} / 64\\text{ B} = \\mathbf{256}$ ($8$ bit Index). Offset $= 6$ bit ($64\\text{ B} = 512\\text{ bit} = \\mathbf{32 \\times 16}$ bit). $\\text{Tag} = 32 - 8 - 6 = \\mathbf{18}$ bit $+\\; 1$ Valid bit $\\Rightarrow \\mathbf{256 \\times (1 + 18 + 32 \\times 16)}$ bit.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-026",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.26",
+    "source": "ôn tập cuối kì 20251 (Câu 34); ôn tập cuối kì 20252 (P2-58)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập giá trị P (vd: 57):",
+    "acceptedAnswers": [
+      "57"
+    ],
+    "question": "Máy tính đánh địa chỉ theo byte với không gian bộ nhớ chính $4\\text{ GiB}$, Cache $256\\text{ KiB}$, kích thước Line $= 32\\text{ byte}$. Tính tổng $P = \\text{Tag}_{\\text{trực tiếp}} + \\text{Tag}_{\\text{liên kết toàn phần}} + \\text{Tag}_{\\text{tập hợp 4 đường}}$?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Địa chỉ $32$ bit, Offset $= \\log_2(32) = 5$ bit, tổng số line $= 256\\text{ KiB}/32\\text{ B} = 8192 = 2^{13}$:<br>• Direct-mapped: $\\text{Index} = 13 \\Rightarrow \\text{Tag}_1 = 32 - 13 - 5 = 14$.<br>• Fully-associative: $\\text{Index} = 0 \\Rightarrow \\text{Tag}_2 = 32 - 5 = 27$.<br>• 4-way Set-associative: $2^{13}/4 = 2^{11}$ Set $\\Rightarrow \\text{Tag}_3 = 32 - 11 - 5 = 16$.<br>Tổng $P = 14 + 27 + 16 = \\mathbf{57}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-027",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.27",
+    "source": "ôn tập cuối kì 20251 (Câu 50); ôn tập cuối kì 20252 (P2-55)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số bit trường Tag (vd: 17):",
+    "acceptedAnswers": [
+      "17",
+      "17 bit"
+    ],
+    "question": "Máy tính có địa chỉ bộ nhớ chính $32\\text{-bit}$ (đánh địa chỉ theo byte). Bộ nhớ Cache $128\\text{ KiB}$ tổ chức theo ánh xạ liên kết tập hợp $4\\text{ line/set}$, gồm $1024$ Set ($S_0\\text{–}S_{1023}$). Số bit của trường <code>Tag</code> là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Số line $= 1024 \\times 4 = 4096$. Kích thước 1 line $= 128\\text{ KiB}/4096 = 32\\text{ B} \\Rightarrow \\text{Offset} = 5\\text{ bit}$.<br>$1024\\text{ Set} = 2^{10} \\Rightarrow \\text{Set} = 10\\text{ bit}$.<br>$\\text{Tag} = 32 - 10 - 5 = \\mathbf{17}$ bit.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-028",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.28",
+    "source": "cuối kì 20212 (B3-5)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính có $64\\text{ KB}$ bộ nhớ chính đánh địa chỉ theo byte, bộ nhớ Cache gồm $32$ line ánh xạ trực tiếp, kích thước mỗi line là $16\\text{ byte}$.<br>1) Số bit các trường <code>Tag / Line / Word</code> là bao nhiêu?<br>2) Bốn địa chỉ <code>1101 0001 0001 0010</code>, <code>0010 1011 0011 0110</code>, <code>1101 0110 1001 1100</code>, <code>1110 1010 1000 1011</code> lần lượt nạp vào các line nào?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 1, Line 3, Line 9, Line 8",
+      "Tag = 9 bit, Line = 4 bit, Word = 3 bit; Line 2, Line 6, Line 18, Line 17",
+      "Tag = 7 bit, Line = 5 bit, Word = 4 bit; Line 1, Line 6, Line 9, Line 8",
+      "Tag = 8 bit, Line = 4 bit, Word = 4 bit; Line 1, Line 3, Line 9, Line 10"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>1) $64\\text{ KB}$ ($16$ bit địa chỉ), line $16\\text{ B} = 2^4 \\Rightarrow \\text{Word} = 4\\text{ bit}$, $32$ line $= 2^5 \\Rightarrow \\text{Line} = 5\\text{ bit}$, $\\text{Tag} = 16 - 5 - 4 = 7\\text{ bit}$.<br>2) Lấy 5 bit $[8:4]$ làm chỉ số Line: <code>00001</code> ($1$), <code>00011</code> ($3$), <code>01001</code> ($9$), <code>01000</code> ($8$).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-029",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.29",
+    "source": "ôn tập cuối kì 20251 (Câu 74); ôn tập cuối kì 20252 (P2-61)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập chỉ số Set (vd: 21):",
+    "acceptedAnswers": [
+      "21"
+    ],
+    "question": "Máy tính có địa chỉ bộ nhớ chính $32\\text{-bit}$ (đánh địa chỉ theo byte). Bộ nhớ Cache $128\\text{ KiB}$ tổ chức theo ánh xạ liên kết tập hợp $4\\text{ line/set}$, gồm $1024$ Set ($S_0\\text{–}S_{1023}$). Byte nhớ có địa chỉ <code>0x003D02AF</code> được ánh xạ vào Set số mấy?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Block $= 32\\text{ B}$ ($5$ bit Offset $[4:0]$), $1024$ Set ($10$ bit Set $[14:5]$).<br><code>0x003D02AF</code> có 16 bit thấp $= \\text{0x02AF} = 0000\\;0010\\;1010\\;1111_2$.<br>10 bit $[14:5]$ là <code>0000010101</code> $= \\text{0x15} = \\mathbf{21}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-030",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.30",
+    "source": "ôn tập cuối kì 20252 (P2-3)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Chỉ ra phương pháp ánh xạ mà mỗi Block của bộ nhớ chính chỉ được phép nạp vào <strong>duy nhất 1 Line</strong> cố định của bộ nhớ Cache?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Ánh xạ trực tiếp (Direct Mapped)",
+      "Ánh xạ liên kết toàn phần (Fully Associative)",
+      "Ánh xạ liên kết tập hợp (Set Associative)",
+      "Cả ba phương pháp trên"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong <strong>ánh xạ trực tiếp</strong>, mỗi Block bộ nhớ chính ánh xạ cố định vào duy nhất $1$ Line xác định bởi công thức $\\text{Line} = \\text{Block} \\bmod \\text{Số lượng Line}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-031",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.31",
+    "source": "cuối kì 20212 (B4-5); ôn tập cuối kì 20251 (Câu 65); ôn tập cuối kì 20252 (P2-24)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Cho máy tính có bộ nhớ chính $4\\text{ GB}$ (đánh địa chỉ theo byte), bộ nhớ Cache $512\\text{ KB}$ tổ chức theo ánh xạ liên kết tập hợp $8\\text{ line/set}$ và có tất cả $1024$ Set ($S_0\\text{–}S_{1023}$). Số bit của các trường <code>Tag / Set / Word</code> và chỉ số Set của byte nhớ <code>0x10250A03</code> lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 16 bit, Set = 10 bit, Word = 6 bit; ánh xạ vào Set 40",
+      "Tag = 15 bit, Set = 10 bit, Word = 7 bit; ánh xạ vào Set 20",
+      "Tag = 16 bit, Set = 10 bit, Word = 6 bit; ánh xạ vào Set 25",
+      "Tag = 17 bit, Set = 10 bit, Word = 5 bit; ánh xạ vào Set 80"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Bộ nhớ $4\\text{ GB} \\Rightarrow 32$ bit địa chỉ. Kích thước mỗi line $= \\frac{512\\text{ KB}}{1024 \\times 8} = 64\\text{ B} = 2^6 \\Rightarrow \\text{Word} = 6\\text{ bit}$.<br>$1024\\text{ Set} = 2^{10} \\Rightarrow \\text{Set} = 10\\text{ bit}$. $\\text{Tag} = 32 - 10 - 6 = 16\\text{ bit}$.<br>10 bit $[15:6]$ của <code>0x10250A03</code> (tức <code>0x0A03 >> 6</code> $= 2563 // 64$) $= \\text{0x028} = \\mathbf{40}$ (Set $40$).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-032",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.32",
+    "source": "cuối kì 20212 (B6-5)",
+    "examTags": [
+      "CK"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Máy tính có bộ nhớ chính $4\\text{ GB}$ đánh địa chỉ theo byte, bộ nhớ Cache tổ chức theo ánh xạ liên kết toàn phần (Fully-Associative), kích thước mỗi line là $32\\text{ byte}$. Số bit trường <code>Tag / Word</code> và giá trị Tag (thập phân) của hai địa chỉ <code>0x0149C003</code>, <code>0x10390135</code> lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Tag = 27 bit, Word = 5 bit; Tag = 674816 và 8507401",
+      "Tag = 26 bit, Word = 6 bit; Tag = 337408 và 4253700",
+      "Tag = 27 bit, Word = 5 bit; Tag = 1349632 và 17014802",
+      "Tag = 22 bit, Word = 5 bit; Tag = 674816 và 8507401"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Liên kết toàn phần không có trường Index/Set: $32\\text{ B} = 2^5 \\Rightarrow \\text{Word} = 5\\text{ bit}$, $\\text{Tag} = 32 - 5 = 27\\text{ bit}$.<br>Giá trị Tag $= \\text{addr} \\gg 5$: <code>0x0149C003 >> 5 = 0x000A4E00 = 674816</code>; <code>0x10390135 >> 5 = 0x0081C809 = 8507401</code>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-033",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.33",
+    "source": "cuối kì 20222 (#c9ea55); cuối kì 20241 (#7196b2); cuối kì 20242 (#c9ea55); ôn tập cuối kì 20251 (Câu 9); ôn tập cuối kì 20251 (Câu 37); ôn tập cuối kì 20252 (P2-54)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Máy tính có bộ nhớ Cache $8\\text{ MiB}$ tổ chức theo ánh xạ liên kết tập hợp $16\\text{ line/set}$, kích thước mỗi line là $128\\text{ byte}$; bộ nhớ chính đánh địa chỉ theo từng byte bằng $36\\text{ bit}$ địa chỉ. Số bit của trường <code>Set</code> và trường <code>Tag</code> lần lượt là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [
+      "Set = 12 bit và Tag = 17 bit",
+      "Set = 13 bit và Tag = 16 bit",
+      "Set = 12 bit và Tag = 16 bit",
+      "Set = 13 bit và Tag = 17 bit"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>• Kích thước line $= 128\\text{ B} = 2^7\\text{ B} \\Rightarrow \\text{Offset (Word)} = 7\\text{ bit}$.<br>• Tổng số line $= \\frac{8\\text{ MiB}}{128\\text{ B}} = \\frac{2^{23}}{2^7} = 2^{16}$ line.<br>• Mỗi Set gồm $16 = 2^4$ line $\\Rightarrow$ Số Set $= \\frac{2^{16}}{2^4} = 2^{12} \\Rightarrow \\mathbf{\\text{Set} = 12\\text{ bit}}$.<br>• $\\mathbf{\\text{Tag} = 36 - 12 - 7 = 17\\text{ bit}}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-034",
+    "chapter": 6,
+    "groupId": "6.2",
+    "groupTitle": "Nhóm 2: Ánh xạ Cache, Tách bit địa chỉ (Tag/Index/Offset) & Kích thước phần cứng",
+    "exerciseCode": "Bài tập 6.34",
+    "source": "cuối kì 20231 (#6bc3f0); ôn tập cuối kì 20251 (Câu 33); ôn tập cuối kì 20252 (P2-44); cuối kì 20232 (#6bc3f0); cuối kì 20251 (#3c3218); thi thử kì 20251 (Câu 19)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.2",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập số bit trường Tag (vd: 18):",
+    "acceptedAnswers": [
+      "18",
+      "18 bit",
+      "18 bits"
+    ],
+    "question": "Cho một CPU hệ RISC-V với không gian địa chỉ bộ nhớ $32\\text{-bit}$ và bộ nhớ Cache ánh xạ trực tiếp (direct-mapped) dung lượng $16\\text{ KiB}$ với kích thước khối (block size) là $64\\text{ byte}$. Kích thước (tính bằng bit) của trường <code>Tag</code> trong mỗi khối cache là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": "<svg viewBox=\"0 0 600 84\" width=\"580\" height=\"80\" role=\"img\" aria-label=\"Cấu trúc địa chỉ Cache Tag Index Offset\"><rect x=\"16\" y=\"16\" width=\"220\" height=\"44\" rx=\"5\" class=\"svg-box-primary\"/><text x=\"126\" y=\"36\" text-anchor=\"middle\" class=\"svg-title-primary\">TAG</text><text x=\"126\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">A - Index - Offset</text><rect x=\"240\" y=\"16\" width=\"176\" height=\"44\" rx=\"5\" class=\"svg-box-accent\"/><text x=\"328\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">INDEX (Set/Line)</text><text x=\"328\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(N_set)</text><rect x=\"420\" y=\"16\" width=\"164\" height=\"44\" rx=\"5\" class=\"svg-box\"/><text x=\"502\" y=\"36\" text-anchor=\"middle\" class=\"svg-title\">OFFSET</text><text x=\"502\" y=\"52\" text-anchor=\"middle\" class=\"svg-sub\">log2(BlockSize)</text></svg>",
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Offset $= \\log_2(64) = 6\\text{ bit}$.<br>Số block $= 16\\text{ KiB} / 64\\text{ B} = 256 = 2^8 \\Rightarrow \\text{Index} = 8\\text{ bit}$.<br>Vậy $\\text{Tag} = 32 - 8 - 6 = \\mathbf{18}$ bit.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-035",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.35",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.3 (Write-Through & Write-Back)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khi xảy ra <strong>Cache Hit</strong> trong thao tác ghi dữ liệu, đặc điểm nào sau đây mô tả đúng chính sách <strong>Ghi trả sau (Write-Back)</strong>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Dữ liệu luôn được ghi đồng thời vào cả Cache và bộ nhớ chính ngay lập tức để đảm bảo nhất quán",
+      "Dữ liệu chỉ được ghi vào Cache (và đánh dấu bằng bit Dirty); khối dữ liệu chỉ được ghi trả về bộ nhớ chính khi khối đó bị thay thế ra khỏi Cache",
+      "Dữ liệu chỉ được ghi trực tiếp vào bộ nhớ chính mà không cập nhật vào Cache",
+      "Tốc độ ghi chậm hơn Write-Through và gây lưu lượng cao trên bus bộ nhớ"
+    ],
+    "correctIndex": 1,
+    "correctIndices": [
+      1
+    ],
+    "explanation": "<p>Theo Slide 52 (CA.RISCV.2025):<br>• <strong>Ghi xuyên qua (Write-Through):</strong> Ghi đồng thời vào cả Cache và bộ nhớ chính $\\Rightarrow$ đơn giản, nhất quán nhưng tốc độ chậm và tốn băng thông bus.<br>• <strong>Ghi trả sau (Write-Back):</strong> Chỉ ghi vào Cache (đánh dấu bit <code>Dirty</code>), tốc độ rất nhanh; chỉ khi block đó bị thay thế khỏi Cache mới ghi trả toàn bộ block về bộ nhớ chính.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-036",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.36",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.3 (Phân loại lỗi Cache 3C)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong mô hình phân loại lỗi trượt Cache <strong>3C</strong> (Compulsory, Capacity, Conflict), giải pháp phần cứng nào sau đây trực tiếp giúp giảm <strong>lỗi xung đột (Conflict Miss)</strong> mà không nhất thiết phải tăng tổng dung lượng Cache?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Tăng bậc liên kết tập hợp (associativity), ví dụ chuyển từ ánh xạ trực tiếp sang liên kết tập hợp 4 đường hoặc 8 đường",
+      "Chuyển từ ánh xạ liên kết tập hợp sang ánh xạ trực tiếp (direct-mapped)",
+      "Giảm kích thước của mỗi block (line) xuống mức tối thiểu",
+      "Sử dụng chính sách Write-Through thay cho Write-Back"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Trong mô hình <strong>3C Misses</strong>:<br>• <strong>Compulsory (Cold) Miss:</strong> Lần truy cập đầu tiên vào block $\\Rightarrow$ giảm bằng cách tăng kích thước block (tận dụng tính cục bộ không gian) hoặc prefetching.<br>• <strong>Capacity Miss:</strong> Dung lượng Cache không đủ chứa toàn bộ tập làm việc $\\Rightarrow$ giảm bằng cách tăng dung lượng Cache.<br>• <strong>Conflict Miss:</strong> Nhiều block ánh xạ vào cùng một vị trí/Set dù Cache vẫn còn chỗ trống ở Set khác $\\Rightarrow$ giảm trực tiếp bằng cách <strong>tăng bậc liên kết (associativity)</strong>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-037",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.37",
+    "source": "thi thử kì 20251 (Câu 9); ôn tập cuối kì 20251 (Câu 16); ôn tập cuối kì 20252 (P2-12)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập % miss rate (vd: 9.375):",
+    "acceptedAnswers": [
+      "9.375",
+      "9.375%"
+    ],
+    "question": "Cho đoạn mã C chạy trên CPU có bộ nhớ đệm liên kết toàn phần (fully associative cache) dung lượng $16\\text{ KiB}$, kích thước khối $64\\text{ byte}$ (không có xung đột khác). Tỷ lệ trượt trung bình ($\\%$) khi truy cập cả hai mảng <code>A</code> và <code>B</code> là bao nhiêu? (Chỉ nhập số, vd: <code>9.375</code>)",
+    "codeBlock": "int i, sum = 0;\nint A[128];\nint B[256];\nfor (i = 0; i < 128; i++)\n    B[i*2] = A[i];",
+    "codeLang": "c",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Block $64\\text{ B}$ chứa $16$ số <code>int</code> ($4\\text{ B/int}$):<br>• Mảng <code>A[i]</code> ($128$ lần truy cập liên tiếp, stride 4B): miss $128/16 = 8$ lần.<br>• Mảng <code>B[i*2]</code> ($128$ lần truy cập cách quãng 8B): miss $128/8 = 16$ lần.<br>Tổng miss $= 8 + 16 = 24$ trên tổng $256$ lần truy cập $\\Rightarrow \\frac{24}{256} = \\mathbf{9.375\\%}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-038",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.38",
+    "source": "ôn tập cuối kì 20251 (Câu 30); ôn tập cuối kì 20252 (P2-56)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập tỉ số (vd: 2.72):",
+    "acceptedAnswers": [
+      "2.72"
+    ],
+    "question": "Cho CPU có tỉ lệ trượt cache lệnh (I-cache miss rate) $= 2\\%$, tỉ lệ trượt cache dữ liệu (D-cache miss rate) $= 4\\%$, thời gian phạt (miss penalty) $= 100$ chu kỳ, $\\text{CPI}_{\\text{base}}$ (cache lý tưởng) $= 2$, tỉ lệ lệnh Load/Store chiếm $36\\%$. Tỉ số $\\text{Actual CPI} / \\text{Base CPI}$ bằng bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$\\text{Actual CPI} = 2 + (0.02 + 0.36 \\times 0.04) \\times 100 = 2 + 2 + 1.44 = 5.44$.<br>Tỉ số $\\frac{5.44}{2} = \\mathbf{2.72}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-039",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.39",
+    "source": "ôn tập cuối kì 20251 (Câu 55); ôn tập cuối kì 20252 (P2-47)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Phương pháp thay thế block trong cache nào là tối ưu nhất?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "LRU (Least Recently Used)",
+      "LFU (Least Frequently Used)",
+      "Random",
+      "FIFO (First-In First-Out)"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p><strong>LRU</strong> (thay thế khối ít được sử dụng nhất gần đây) tận dụng tốt nhất nguyên lý cục bộ thời gian nên cho tỉ lệ hit cao nhất trong các chiến lược thông dụng.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-040",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.40",
+    "source": "ôn tập cuối kì 20251 (Câu 73); ôn tập cuối kì 20252 (P2-30)",
+    "examTags": [
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập AMAT theo ns (vd: 2):",
+    "acceptedAnswers": [
+      "2",
+      "2 ns",
+      "2.0"
+    ],
+    "question": "Một CPU có chu kỳ xung nhịp $1\\text{ ns}$, thời gian trúng (hit time) $= 1$ chu kỳ, thời gian phạt trượt (miss penalty) $= 20$ chu kỳ, tỉ lệ trượt I-cache miss rate $= 5\\%$. Thời gian truy cập bộ nhớ trung bình (AMAT) bằng bao nhiêu nano-giây?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$\\text{AMAT} = \\text{Hit Time} + \\text{Miss Rate} \\times \\text{Miss Penalty} = 1 + 0.05 \\times 20 = 2\\text{ chu kỳ} = \\mathbf{2\\text{ ns}}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-041",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.41",
+    "source": "cuối kì 20231 (#c92c74); cuối kì 20232 (#c92c74); cuối kì 20251 (#bf6243); cuối kì 20251 (#24cd84); thi thử kì 20251 (Câu 2); ôn tập cuối kì 20251 (Câu 8); ôn tập cuối kì 20252 (P2-57)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập % miss rate (vd: 6.25):",
+    "acceptedAnswers": [
+      "6.25",
+      "6.25%"
+    ],
+    "question": "Cho đoạn mã C chạy trên CPU RISC-V với bộ nhớ Cache ánh xạ trực tiếp dung lượng $1\\text{ KiB}$ và kích thước khối $64\\text{ byte}$ (giả sử không có xung đột chương trình khác). Tỷ lệ trượt (miss rate, đơn vị $\\%$) khi truy cập mảng <code>A</code> là bao nhiêu? (Chỉ nhập số, vd: <code>10.5</code>)",
+    "codeBlock": "int i, sum = 0;\nint A[128];\nfor (i = 0; i < 128; i++)\n    sum += A[i];",
+    "codeLang": "c",
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Mỗi phần tử <code>int</code> chiếm $4\\text{ byte}$. Một block $64\\text{ B}$ chứa được $64 / 4 = 16$ phần tử liên tiếp.<br>Khi duyệt tuần tự <code>A[0..127]</code>, mỗi nhóm $16$ phần tử bị miss lần đầu ($1$ lần) và hit $15$ lần sau $\\Rightarrow \\text{Miss Rate} = \\frac{1}{16} = \\mathbf{6.25\\%}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-042",
+    "chapter": 6,
+    "groupId": "6.3",
+    "groupTitle": "Nhóm 3: Chính sách ghi, Thay thế, Lỗi 3C & Hiệu năng Cache (AMAT / CPI)",
+    "exerciseCode": "Bài tập 6.42",
+    "source": "cuối kì 20231 (#c7a320); cuối kì 20232 (#c7a320); ôn tập cuối kì 20251 (Câu 32); ôn tập cuối kì 20252 (P2-36)",
+    "examTags": [
+      "CK",
+      "OT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.3",
+    "questionType": "fill",
+    "canFillBlank": true,
+    "fillPrompt": "Nhập effective CPI (vd: 2.5):",
+    "acceptedAnswers": [
+      "2.5"
+    ],
+    "question": "Cho một CPU RISC-V có chỉ số CPI cơ bản (base CPI) bằng $1$, thời gian phạt khi trượt cache (miss penalty) là $100$ chu kỳ. Khi thực thi chương trình, tỷ lệ trượt cache lệnh (instruction miss rate) là $1\\%$, tỷ lệ trượt cache dữ liệu (data miss rate) là $10\\%$, và các lệnh truy nhập dữ liệu (load/store) chiếm $5\\%$ tổng số lệnh. Chỉ số CPI hiệu dụng (effective CPI) là bao nhiêu?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>$\\text{CPI}_{\\text{eff}} = \\text{CPI}_{\\text{base}} + \\text{I-miss stall} + \\text{D-miss stall} = 1 + (0.01 \\times 100) + (0.05 \\times 0.10 \\times 100) = 1 + 1 + 0.5 = \\mathbf{2.5}$.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-043",
+    "chapter": 6,
+    "groupId": "6.4",
+    "groupTitle": "Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) & TLB",
+    "exerciseCode": "Bài tập 6.43",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Bảng trang đảo)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Ưu điểm cốt lõi của cấu trúc <strong>Bảng trang đảo (Inverted Page Table)</strong> so với bảng trang truyền thống trong bộ nhớ ảo là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Mỗi tiến trình có một bảng trang riêng có kích thước tỉ lệ thuận với toàn bộ không gian địa chỉ ảo",
+      "Không cần sử dụng bất kỳ cơ chế băm (hash) hay tìm kiếm nào khi dịch địa chỉ",
+      "Chỉ duy trì đúng một mục cho mỗi khung trang vật lý (physical frame) trong RAM và dùng hàm băm để tra cứu, giúp giảm mạnh dung lượng bộ nhớ cần thiết để lưu bảng trang",
+      "Loại bỏ hoàn toàn hiện tượng lỗi trang (Page Fault) trên hệ thống"
+    ],
+    "correctIndex": 2,
+    "correctIndices": [
+      2
+    ],
+    "explanation": "<p>Theo Slide 70 (CA.RISCV.2025):<br>Trong <strong>Bảng trang đảo (Inverted Page Table)</strong>, thay vì lưu bảng trang theo số trang ảo của từng tiến trình (rất lớn với địa chỉ 32/64-bit), hệ thống chỉ lưu <strong>một mục duy nhất cho mỗi khung trang vật lý</strong> trong RAM (kèm Process ID, Page #, Control bits và chuỗi liên kết Chain) và sử dụng <strong>hàm băm (Hash function)</strong> để tra cứu, giúp tiết kiệm đáng kể dung lượng bộ nhớ lưu bảng trang.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-044",
+    "chapter": 6,
+    "groupId": "6.4",
+    "groupTitle": "Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) & TLB",
+    "exerciseCode": "Bài tập 6.44",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Bộ nhớ ảo & Phân trang)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong kỹ thuật <strong>phân trang (Paging)</strong> của hệ thống bộ nhớ ảo (Virtual Memory), khẳng định nào sau đây là <strong>ĐÚNG</strong>?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Các trang (Page) của cùng một tiến trình bắt buộc phải được cấp phát vào các khung trang (Frame) nằm liên tiếp nhau trong bộ nhớ vật lý",
+      "Kích thước trang (Page) có thể thay đổi linh hoạt cho từng đoạn chương trình và có thể gối lên nhau",
+      "Bộ nhớ vật lý được chia thành các khung trang (Frame) bằng nhau, tiến trình được chia thành các trang (Page) cùng kích thước (thông dụng 4 KiB) và không yêu cầu cấp phát các khung trang liên tiếp",
+      "Toàn bộ các trang của một tiến trình phải được nạp hết vào RAM trước khi tiến trình bắt đầu thực thi"
+    ],
+    "correctIndex": 2,
+    "correctIndices": [
+      2
+    ],
+    "explanation": "<p>Theo Slide 63–64 &amp; 67 (CA.RISCV.2025):<br>• Kỹ thuật <strong>phân trang (Paging)</strong> chia không gian địa chỉ ảo thành các <strong>trang (Page)</strong> và bộ nhớ vật lý thành các <strong>khung trang (Frame)</strong> có kích thước bằng nhau (thông dụng $4\\text{ KiB}$).<br>• Các trang của tiến trình <strong>không cần nằm trên các khung trang vật lý liên tiếp</strong> và được quản lý thông qua <strong>Bảng trang (Page Table)</strong>.<br>• Nhờ phân trang theo yêu cầu (Demand Paging), không cần nạp toàn bộ tiến trình vào RAM cùng lúc.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-045",
+    "chapter": 6,
+    "groupId": "6.4",
+    "groupTitle": "Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) & TLB",
+    "exerciseCode": "Bài tập 6.45",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Dịch địa chỉ phân trang)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Khi hệ thống phân trang dịch một <strong>địa chỉ ảo (Virtual/Logical Address)</strong> gồm hai phần <code>(Page Number, Offset)</code> sang <strong>địa chỉ vật lý (Physical Address)</strong>, thao tác nào được thực hiện?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Tra cứu Bảng trang (Page Table) bằng Page Number để lấy Frame Number, sau đó ghép Frame Number với phần Offset giữ nguyên",
+      "Tra cứu Bảng trang bằng phần Offset để lấy Frame Number, giữ nguyên Page Number",
+      "Cộng trực tiếp Page Number với địa chỉ cơ sở của hệ điều hành và bỏ phần Offset",
+      "Dịch trái Page Number rồi XOR với Offset để tạo ra địa chỉ vật lý"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo Slide 66 (CA.RISCV.2025):<br>Địa chỉ ảo gồm <code>[Virtual Page Number (VPN) | Page Offset]</code>. Hệ thống dùng <code>VPN</code> làm chỉ số tra vào <strong>Bảng trang (Page Table)</strong> của tiến trình để thu được <code>Physical Frame Number (PFN)</code>, còn phần <strong>Offset (địa chỉ tương đối trong trang) được giữ nguyên</strong> để ghép thành địa chỉ vật lý <code>[PFN | Offset]</code>.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-046",
+    "chapter": 6,
+    "groupId": "6.4",
+    "groupTitle": "Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) & TLB",
+    "exerciseCode": "Bài tập 6.46",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Bài tập phân trang)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Một hệ thống máy tính sử dụng không gian địa chỉ ảo $32\\text{-bit}$ (đánh địa chỉ theo byte) và cơ chế phân trang với kích thước mỗi trang là $4\\text{ KiB}$. Số bit dành cho phần độ lệch trong trang (<code>Page Offset</code>), số bit của số hiệu trang ảo (<code>VPN</code>) và số lượng mục (entry) tối đa trong bảng trang đơn cấp lần lượt là:",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Offset = 10 bit, VPN = 22 bit, tối đa 2^22 mục",
+      "Offset = 12 bit, VPN = 20 bit, tối đa 2^20 mục",
+      "Offset = 12 bit, VPN = 20 bit, tối đa 2^12 mục",
+      "Offset = 14 bit, VPN = 18 bit, tối đa 2^18 mục"
+    ],
+    "correctIndex": 1,
+    "correctIndices": [
+      1
+    ],
+    "explanation": "<p>• Kích thước mỗi trang $= 4\\text{ KiB} = 2^{12}\\text{ byte} \\Rightarrow$ số bit trường <code>Offset</code> $= \\mathbf{12\\text{ bit}}$.<br>• Địa chỉ ảo dài $32\\text{ bit} \\Rightarrow$ số bit trường <code>VPN</code> $= 32 - 12 = \\mathbf{20\\text{ bit}}$.<br>• Do có $2^{20}$ trang ảo khác nhau (từ $0$ đến $2^{20}-1$), bảng trang đơn cấp cần tối đa $\\mathbf{2^{20}}$ mục (entry).</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-047",
+    "chapter": 6,
+    "groupId": "6.4",
+    "groupTitle": "Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) & TLB",
+    "exerciseCode": "Bài tập 6.47",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (Lỗi trang & Thrashing)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Trong hệ thống bộ nhớ ảo phân trang, hiện tượng <strong>Lỗi trang (Page Fault)</strong> xảy ra khi nào và hiện tượng <strong>Thrashing (Thất bại)</strong> có đặc trưng gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Page Fault xảy ra khi trang yêu cầu không có trong bộ nhớ chính (HĐH phải hoán đổi trang từ đĩa vào); Thrashing xảy ra khi có quá nhiều tiến trình trong bộ nhớ quá nhỏ khiến HĐH tốn gần như toàn bộ thời gian để hoán đổi trang mà ít thực hiện công việc hữu ích",
+      "Page Fault xảy ra khi Cache L1 bị trượt; Thrashing xảy ra khi CPU chạy ở tần số xung nhịp quá cao",
+      "Page Fault xảy ra khi kích thước trang lớn hơn 4 KiB; Thrashing là lỗi hỏng vật lý của ổ đĩa cứng",
+      "Page Fault chỉ xảy ra ở lệnh ghi dữ liệu; Thrashing xảy ra khi tắt cơ chế bộ nhớ ảo"
+    ],
+    "correctIndex": 0,
+    "correctIndices": [
+      0
+    ],
+    "explanation": "<p>Theo Slide 67–68 (CA.RISCV.2025):<br>• <strong>Lỗi trang (Page Fault):</strong> Xảy ra khi trang được CPU tham chiếu hiện không nằm trong bộ nhớ chính (bit Valid = 0). Hệ điều hành phải nạp trang đó từ bộ nhớ ngoài vào RAM (và có thể phải hoán đổi một trang khác ra đĩa).<br>• <strong>Thất bại (Thrashing):</strong> Khi có quá nhiều tiến trình cùng chạy trong dung lượng RAM quá nhỏ, HĐH liên tục phải hoán đổi trang (đĩa hoạt động liên tục) làm hiệu năng hệ thống sụp đổ. Giải pháp: giảm số tiến trình, bổ sung RAM hoặc cải tiến thuật toán thay trang.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  },
+  {
+    "id": "c6-048",
+    "chapter": 6,
+    "groupId": "6.4",
+    "groupTitle": "Nhóm 4: Bộ nhớ ảo (Virtual Memory), Phân trang (Paging) & TLB",
+    "exerciseCode": "Bài tập 6.48",
+    "source": "Lý thuyết slide CA.RISCV.2025 - Mục 6.5 (TLB)",
+    "examTags": [
+      "LT"
+    ],
+    "pdfPage": null,
+    "printedPage": null,
+    "relatedTheoryId": "6.4",
+    "questionType": "single",
+    "canFillBlank": false,
+    "fillPrompt": "",
+    "acceptedAnswers": [],
+    "question": "Vai trò chính của bộ đệm dịch địa chỉ <strong>TLB (Translation Lookaside Buffer)</strong> trong hệ thống bộ nhớ ảo phân trang là gì?",
+    "codeBlock": null,
+    "codeLang": null,
+    "svgDiagram": null,
+    "options": [
+      "Lưu trữ toàn bộ dữ liệu của các tiến trình đang tạm dừng thay cho ổ đĩa cứng",
+      "Đóng vai trò bộ nhớ Cache phần cứng tốc độ cao lưu các mục ánh xạ bảng trang (VPN → PFN) hay dùng gần đây, giúp tăng tốc quá trình dịch địa chỉ ảo sang vật lý mà không cần truy cập bảng trang trong RAM mỗi lần",
+      "Thay thế hoàn toàn bảng trang (Page Table) trong bộ nhớ chính và quản lý các khung trang trống",
+      "Mã hóa địa chỉ vật lý trước khi gửi ra bus địa chỉ để chống tràn số"
+    ],
+    "correctIndex": 1,
+    "correctIndices": [
+      1
+    ],
+    "explanation": "<p>Do <strong>Bảng trang (Page Table)</strong> nằm trong bộ nhớ chính (RAM), nếu không có TLB thì mỗi lần CPU truy cập dữ liệu sẽ cần tới <strong>2 lần truy cập RAM</strong> (1 lần đọc bảng trang để dịch địa chỉ, 1 lần đọc dữ liệu thực). <strong>TLB</strong> là bộ đệm Cache chuyên dụng bên trong MMU lưu các ánh xạ <code>VPN → PFN</code> được sử dụng gần đây nhất (tận dụng nguyên lý cục bộ), giúp dịch địa chỉ trong 1 chu kỳ khi TLB hit.</p>",
+    "archivedChapter": 6,
+    "archivedReason": "CA.RISCV.2025 Chương 6 (đã chuẩn hóa & khử trùng lặp)"
+  }
+]
